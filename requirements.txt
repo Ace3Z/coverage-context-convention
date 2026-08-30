@@ -1,0 +1,2 @@
+# Pin dependencies as the project settles, e.g.
+#   transformers==4.44.2
