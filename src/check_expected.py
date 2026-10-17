@@ -1,0 +1,148 @@
+"""Fail the run if any headline value differs from the frozen reference results.
+
+Checks counts exactly, proportions to 0.00005 and McNemar p-values to 0.0005.
+Usage: python src/check_expected.py
+"""
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+PROP_TOL, P_TOL = 0.00005, 0.0005
+POPS = ("accuracy", "lexicon_ambiguous", "attested_ambiguous", "minority_reading")
+
+# (folder, test) -> population -> n, frequency, word, left, bilateral (means over seeds 1-3), oracle
+EXPECTED = {
+    ("results_wikipron", "soliloquies"): {
+        "accuracy": (15480, .8869, .8887, .8892, .8895, .9408),
+        "lexicon_ambiguous": (5946, .8806, .8854, .8865, .8874, .9992),
+        "attested_ambiguous": (4633, .8707, .8714, .8736, .8759, 1.0),
+        "minority_reading": (640, .0047, .0094, .0380, .0635, 1.0),
+    },
+    ("results_wikipron", "tauber_beowulf"): {
+        "accuracy": (17361, .8944, .8944, .8936, .8934, .9273),
+        "lexicon_ambiguous": (4434, .8872, .8873, .8841, .8836, 1.0),
+        "attested_ambiguous": (3394, .9057, .9067, .9061, .9070, 1.0),
+        "minority_reading": (358, .0251, .0317, .0428, .0540, 1.0),
+    },
+    ("results_training_only", "soliloquies"): {
+        "accuracy": (15480, .8723, .8725, .8729, .8737, .9208),
+        "lexicon_ambiguous": (5547, .8825, .8829, .8841, .8864, .9991),
+        "attested_ambiguous": (4633, .8707, .8719, .8744, .8782, 1.0),
+        "minority_reading": (640, .0047, .0135, .0411, .0745, 1.0),
+    },
+    ("results_training_only", "tauber_beowulf"): {
+        "accuracy": (17361, .8275, .8279, .8279, .8276, .8532),
+        "lexicon_ambiguous": (4085, .9114, .9128, .9131, .9115, 1.0),
+        "attested_ambiguous": (3394, .9057, .9069, .9073, .9071, 1.0),
+        "minority_reading": (358, .0251, .0363, .0624, .0773, 1.0),
+    },
+}
+
+# (folder, test) -> pair -> (a_wrong_b_right, a_right_b_wrong, p)
+MCNEMAR = {
+    ("results_wikipron", "soliloquies"): {
+        "frequency_vs_word_seed1": (43, 15, 0.000307),
+        "frequency_vs_left_seed1": (64, 33, 0.00215),
+        "frequency_vs_sentence_seed1": (80, 46, 0.00313),
+        "word_seed1_vs_left_seed1": (22, 19, 0.755),
+        "word_seed1_vs_sentence_seed1": (39, 33, 0.556),
+        "left_seed1_vs_sentence_seed1": (31, 28, 0.795),
+    },
+    ("results_wikipron", "tauber_beowulf"): {
+        "frequency_vs_word_seed1": (51, 51, 1.0),
+        "frequency_vs_left_seed1": (54, 71, 0.152),
+        "frequency_vs_sentence_seed1": (59, 78, 0.124),
+        "word_seed1_vs_left_seed1": (11, 28, 0.00948),
+        "word_seed1_vs_sentence_seed1": (20, 39, 0.0183),
+        "left_seed1_vs_sentence_seed1": (14, 16, 0.856),
+    },
+}
+MIN_P_TRAINING_ONLY = {"soliloquies": 0.10, "tauber_beowulf": 0.12}
+
+# folder -> (aligned, all agreement, all kappa, ambiguous n, ambiguous agreement, ambiguous kappa)
+AGREEMENT = {
+    "results_wikipron": (16832, .9773, .9733, 4420, .9604, .9419),
+    "results_training_only": (16832, .9773, .9733, 4076, .9585, .9366),
+}
+
+
+def acc(d, pop):
+    return d["accuracy"] if pop == "accuracy" else d[pop]["accuracy"]
+
+
+def main() -> int:
+    errors, checked = [], 0
+
+    def close(label, got, want, tol):
+        nonlocal checked
+        checked += 1
+        if got is None or abs(got - want) > tol:
+            errors.append(f"{label}: got {got}, expected {want}")
+
+    def equal(label, got, want):
+        nonlocal checked
+        checked += 1
+        if got != want:
+            errors.append(f"{label}: got {got}, expected {want}")
+
+    metrics = {}
+    for folder in ("results_wikipron", "results_training_only"):
+        path = ROOT / folder / "metrics.json"
+        if not path.exists():
+            errors.append(f"missing {path}")
+            continue
+        metrics[folder] = json.loads(path.read_text(encoding="utf8"))
+
+    for (folder, test), pops in EXPECTED.items():
+        d = metrics.get(folder, {}).get(test)
+        if d is None:
+            errors.append(f"{folder}/{test}: missing")
+            continue
+        for pop, (n, fr, wo, le, bi, orc) in pops.items():
+            tag = f"{folder}/{test}/{pop}"
+            equal(tag + "/n", d["frequency"]["n"] if pop == "accuracy" else d["frequency"][pop]["n"], n)
+            close(tag + "/frequency", acc(d["frequency"], pop), fr, PROP_TOL)
+            close(tag + "/oracle", acc(d["oracle"], pop), orc, PROP_TOL)
+            for arm, want in (("word", wo), ("left", le), ("sentence", bi)):
+                close(f"{tag}/{arm}_mean", d["seed_summary"][arm][pop]["mean"], want, PROP_TOL)
+
+    for (folder, test), pairs in MCNEMAR.items():
+        d = metrics.get(folder, {}).get(test, {}).get("mcnemar_seed1", {})
+        for pair, (b01, b10, p) in pairs.items():
+            r = d.get(pair)
+            if r is None:
+                errors.append(f"{folder}/{test}/mcnemar/{pair}: missing")
+                continue
+            equal(f"{folder}/{test}/mcnemar/{pair}/a_wrong_b_right", r["a_wrong_b_right"], b01)
+            equal(f"{folder}/{test}/mcnemar/{pair}/a_right_b_wrong", r["a_right_b_wrong"], b10)
+            close(f"{folder}/{test}/mcnemar/{pair}/p", r["p_exact"], p, P_TOL * max(1, p))
+    for test, floor in MIN_P_TRAINING_ONLY.items():
+        d = metrics.get("results_training_only", {}).get(test, {}).get("mcnemar_seed1", {})
+        for pair, r in d.items():
+            checked += 1
+            if r["p_exact"] < floor:
+                errors.append(f"results_training_only/{test}/mcnemar/{pair}: p={r['p_exact']} < {floor}")
+
+    for folder, (al, ag, ka, an, aag, aka) in AGREEMENT.items():
+        e = metrics.get(folder, {}).get("editor_agreement")
+        if e is None:
+            errors.append(f"{folder}/editor_agreement: missing")
+            continue
+        equal(f"{folder}/agreement/aligned", e["aligned"], al)
+        close(f"{folder}/agreement/all", e["all"]["agreement"], ag, PROP_TOL)
+        close(f"{folder}/agreement/all_kappa", e["all"]["cohen_kappa"], ka, PROP_TOL)
+        equal(f"{folder}/agreement/ambiguous_n", e["lexicon_ambiguous"]["n"], an)
+        close(f"{folder}/agreement/ambiguous", e["lexicon_ambiguous"]["agreement"], aag, PROP_TOL)
+        close(f"{folder}/agreement/ambiguous_kappa", e["lexicon_ambiguous"]["cohen_kappa"], aka, PROP_TOL)
+
+    if errors:
+        print(f"check_expected: FAILED ({len(errors)} of {checked} checks)")
+        print("\n".join(errors))
+        return 1
+    print(f"check_expected: PASSED ({checked} checks)")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

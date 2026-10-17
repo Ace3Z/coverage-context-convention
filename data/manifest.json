@@ -1,0 +1,192 @@
+{
+  "sources": {
+    "hs_beowulf": {
+      "work": "Beowulf",
+      "editor": "Harrison & Sharp",
+      "year": 1883,
+      "genre": "verse",
+      "length_convention_in_source": "macron",
+      "licence": "Public domain (Project Gutenberg; PG header and licence removed)",
+      "origin": "https://www.gutenberg.org/ebooks/9701",
+      "units": 689,
+      "tokens": 17682,
+      "long_vowel_marks": 7560,
+      "sha256": "9663f9349e3f8144824c65a6e8b9f2b3d4526dd519241d1c42e0c8397db67d3d",
+      "cleaning": {}
+    },
+    "wyatt_beowulf": {
+      "work": "Beowulf",
+      "editor": "Wyatt",
+      "year": 1894,
+      "genre": "verse",
+      "length_convention_in_source": "macron",
+      "licence": "CC BY-SA 4.0 (Wikisource transcription of a public-domain edition)",
+      "origin": "https://en.wikisource.org/wiki/Beowulf_(Wyatt)",
+      "units": 727,
+      "tokens": 17569,
+      "long_vowel_marks": 7339,
+      "sha256": "7a257cfcbc6e7fbfe1dc5abb6d214db3e0f7edaedb5f662e86711fcddb43e74b",
+      "cleaning": {
+        "dropped_mark_U+0302": 1,
+        "dropped_mark_stray_macron": 1,
+        "dropped_mark_U+0326": 1,
+        "dropped_mark_U+030C": 1,
+        "dropped_mark_U+0308": 1
+      }
+    },
+    "zupitza_grammar": {
+      "work": "Ælfric's Grammar",
+      "editor": "Zupitza",
+      "year": 1880,
+      "genre": "prose",
+      "length_convention_in_source": "circumflex",
+      "licence": "Public domain (Project Gutenberg; PG header and licence removed)",
+      "origin": "https://www.gutenberg.org/ebooks/45861",
+      "units": 1916,
+      "tokens": 23940,
+      "long_vowel_marks": 10257,
+      "sha256": "56fdbe8130129c08995c45c594bee7fd1c5bc65ca7084f7febfcf6657e24cf3d",
+      "cleaning": {
+        "dropped_line_lat": 287,
+        "dropped_words_lat": 724,
+        "dropped_line_eng": 169,
+        "dropped_words_eng": 315,
+        "dropped_mark_U+0307": 1,
+        "dropped_sentence_mixed": 2
+      }
+    },
+    "bright_reader": {
+      "work": "Anglo-Saxon Reader (selections)",
+      "editor": "Bright",
+      "year": 1913,
+      "genre": "mixed",
+      "length_convention_in_source": "macron",
+      "licence": "CC BY-SA 4.0 (Wikisource transcription of a public-domain edition)",
+      "origin": "https://en.wikisource.org/wiki/Bright%27s_Anglo-Saxon_Reader",
+      "units": 1186,
+      "tokens": 38495,
+      "long_vowel_marks": 16863,
+      "sha256": "10c990a91841f2b2a7fdabb44d95e3c189764e298abbdbb04318f67b21cd8ee1",
+      "cleaning": {
+        "dropped_line_eng": 26,
+        "dropped_words_eng": 565,
+        "dropped_mark_U+0301": 1,
+        "dropped_line_lat": 3,
+        "dropped_words_lat": 26,
+        "dropped_mark_U+0300": 1,
+        "dropped_sentence_latin_words": 1,
+        "dropped_sentence_mixed": 4,
+        "dropped_mark_U+0328": 63
+      }
+    },
+    "matthew_ws": {
+      "work": "Gospel of Matthew (West Saxon)",
+      "editor": "Bright",
+      "year": 1904,
+      "genre": "prose",
+      "length_convention_in_source": "macron",
+      "licence": "CC BY-SA 4.0 (Wikisource transcription of a public-domain edition)",
+      "origin": "https://en.wikisource.org/wiki/Evangelium_Secundum_Mattheum",
+      "units": 1223,
+      "tokens": 20648,
+      "long_vowel_marks": 9406,
+      "sha256": "9608132656b49212b84a8da8f8fde927c0bb56f6445e17745e20fed1d4d9610a",
+      "cleaning": {
+        "dropped_mark_U+0303": 1,
+        "dropped_line_eng": 1,
+        "dropped_words_eng": 13,
+        "dropped_sentence_mixed": 1,
+        "dropped_mark_U+0306": 1
+      }
+    },
+    "soliloquies": {
+      "work": "Alfred's Soliloquies",
+      "editor": "Hargrove",
+      "year": 1902,
+      "genre": "prose",
+      "length_convention_in_source": "macron",
+      "licence": "CC BY-SA 4.0 (Wikisource transcription of a public-domain edition)",
+      "origin": "https://en.wikisource.org/wiki/King_Alfred%27s_Old_English_Version_of_St._Augustine%27s_Soliloquies",
+      "units": 711,
+      "tokens": 15480,
+      "long_vowel_marks": 6740,
+      "sha256": "cd86a579f8e15ffde764e5722efac1817ab2c2aaff3ce9dca06e25d51b011d7e",
+      "cleaning": {
+        "dropped_line_lat": 474,
+        "dropped_words_lat": 6809,
+        "dropped_line_eng": 15,
+        "dropped_words_eng": 124,
+        "dropped_mark_U+030C": 1,
+        "dropped_mark_U+0302": 1,
+        "dropped_mark_U+0301": 1,
+        "dropped_sentence_mixed": 2,
+        "dropped_sentence_latin_words": 1,
+        "dropped_mark_U+030B": 1
+      }
+    },
+    "sweet_primer": {
+      "work": "Anglo-Saxon Primer (texts)",
+      "editor": "Sweet",
+      "year": 1905,
+      "genre": "mixed",
+      "length_convention_in_source": "macron",
+      "licence": "Public domain (Project Gutenberg; PG header and licence removed)",
+      "origin": "https://www.gutenberg.org/ebooks/34316",
+      "units": 345,
+      "tokens": 9003,
+      "long_vowel_marks": 3958,
+      "sha256": "e197ad1979f10891a526ac09f76a13ec5cb7fddb529c6b7686af1462f8de0590",
+      "cleaning": {
+        "dropped_line_eng": 6,
+        "dropped_words_eng": 15,
+        "dropped_mark_U+0307": 1069,
+        "dropped_mark_U+0328": 260,
+        "dropped_mark_U+0306": 1,
+        "dropped_line_lat": 5,
+        "dropped_words_lat": 34,
+        "dropped_unit_overlaps_matthew": 12
+      }
+    },
+    "physiologus": {
+      "work": "Old English Physiologus",
+      "editor": "Cook & Pitman",
+      "year": 1921,
+      "genre": "verse",
+      "length_convention_in_source": "macron",
+      "licence": "Public domain (Project Gutenberg; PG header and licence removed)",
+      "origin": "https://www.gutenberg.org/ebooks/14529",
+      "units": 47,
+      "tokens": 952,
+      "long_vowel_marks": 394,
+      "sha256": "dfcabf8aae33b9e8da15c1f1ffac42ae8c36bb4f3dc3d0fcd5b1a9c34594f8d6",
+      "cleaning": {}
+    }
+  },
+  "splits": {
+    "beowulf_hs": {
+      "units": 689,
+      "tokens": 17682,
+      "sha256": "9663f9349e3f8144824c65a6e8b9f2b3d4526dd519241d1c42e0c8397db67d3d"
+    },
+    "beowulf_wyatt": {
+      "units": 727,
+      "tokens": 17569,
+      "sha256": "7a257cfcbc6e7fbfe1dc5abb6d214db3e0f7edaedb5f662e86711fcddb43e74b"
+    },
+    "dev": {
+      "units": 416,
+      "tokens": 8459,
+      "sha256": "b7a9caebbf8c34a4cff2a0a3cae09df1e25798b8298a87b5c439dc5fb736049f"
+    },
+    "test": {
+      "units": 400,
+      "tokens": 9733,
+      "sha256": "4e105901777a55d64e6e17eb260b32b490f26ba7660b13885bb20ba4bef7eec9"
+    },
+    "train": {
+      "units": 4612,
+      "tokens": 90326,
+      "sha256": "d02f0dab73c849cf8f589199859608e2c2d4e7a1e9f654647e1504e699833ae7"
+    }
+  }
+}

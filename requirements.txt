@@ -1,2 +1,4 @@
-# Pin dependencies as the project settles, e.g.
-#   transformers==4.44.2
+scikit-learn==1.8.0
+scipy==1.16.3
+numpy==2.3.5
+matplotlib==3.10.8

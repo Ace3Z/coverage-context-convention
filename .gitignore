@@ -1,22 +1,11 @@
-# Python
 __pycache__/
 *.py[cod]
 .venv/
-venv/
-*.egg-info/
-
-# Notebooks
-.ipynb_checkpoints/
-
-# Data and model artifacts — keep large files out of git
-data/
-models/
-*.ckpt
-*.pt
-*.bin
-
-# Environment / editor
-.env
+.pytest_cache/
 .DS_Store
-.vscode/
-.idea/
+report/main.aux
+report/main.log
+report/main.out
+report/main.pdf
+my_tests/
+.Rhistory
