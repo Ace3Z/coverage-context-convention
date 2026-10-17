@@ -8,4 +8,5 @@ report/main.log
 report/main.out
 report/main.pdf
 my_tests/
+data/raw/
 .Rhistory

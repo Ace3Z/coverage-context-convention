@@ -37,6 +37,30 @@ EXPECTED = {
         "attested_ambiguous": (3394, .9057, .9069, .9073, .9071, 1.0),
         "minority_reading": (358, .0251, .0363, .0624, .0773, 1.0),
     },
+    ("results_proposal", "soliloquies"): {
+        "accuracy": (15480, .8799, .8958, .8958, .8939, .9580),
+        "lexicon_ambiguous": (9069, .8655, .8926, .8925, .8894, .9969),
+        "attested_ambiguous": (4633, .8707, .8718, .8721, .8722, 1.0),
+        "minority_reading": (640, .0047, .0172, .0198, .0266, 1.0),
+    },
+    ("results_proposal", "tauber_beowulf"): {
+        "accuracy": (17361, .8434, .8854, .8837, .8834, .9433),
+        "lexicon_ambiguous": (8412, .7902, .8768, .8733, .8727, .9955),
+        "attested_ambiguous": (3394, .9057, .9054, .9053, .9051, 1.0),
+        "minority_reading": (358, .0251, .0447, .0419, .0410, 1.0),
+    },
+    ("results_all", "soliloquies"): {
+        "accuracy": (15480, .8799, .8995, .8996, .8979, .9623),
+        "lexicon_ambiguous": (9149, .8589, .8920, .8923, .8893, .9965),
+        "attested_ambiguous": (4633, .8707, .8718, .8723, .8724, 1.0),
+        "minority_reading": (640, .0047, .0172, .0219, .0271, 1.0),
+    },
+    ("results_all", "tauber_beowulf"): {
+        "accuracy": (17361, .8434, .8967, .8942, .8936, .9597),
+        "lexicon_ambiguous": (8697, .7653, .8717, .8667, .8654, .9968),
+        "attested_ambiguous": (3394, .9057, .9054, .9053, .9050, 1.0),
+        "minority_reading": (358, .0251, .0447, .0419, .0410, 1.0),
+    },
 }
 
 # (folder, test) -> pair -> (a_wrong_b_right, a_right_b_wrong, p)
@@ -57,6 +81,38 @@ MCNEMAR = {
         "word_seed1_vs_sentence_seed1": (20, 39, 0.0183),
         "left_seed1_vs_sentence_seed1": (14, 16, 0.856),
     },
+    ("results_proposal", "soliloquies"): {
+        "frequency_vs_word_seed1": (366, 121, 0.0),
+        "frequency_vs_left_seed1": (378, 131, 0.0),
+        "frequency_vs_sentence_seed1": (397, 173, 0.0),
+        "word_seed1_vs_left_seed1": (19, 17, 0.868),
+        "word_seed1_vs_sentence_seed1": (40, 61, 0.046),
+        "left_seed1_vs_sentence_seed1": (26, 49, 0.0106),
+    },
+    ("results_proposal", "tauber_beowulf"): {
+        "frequency_vs_word_seed1": (1080, 342, 0.0),
+        "frequency_vs_left_seed1": (1058, 356, 0.0),
+        "frequency_vs_sentence_seed1": (1057, 363, 0.0),
+        "word_seed1_vs_left_seed1": (30, 66, 0.000306),
+        "word_seed1_vs_sentence_seed1": (52, 96, 0.000373),
+        "left_seed1_vs_sentence_seed1": (39, 47, 0.451),
+    },
+    ("results_all", "soliloquies"): {
+        "frequency_vs_word_seed1": (433, 130, 0.0),
+        "frequency_vs_left_seed1": (445, 141, 0.0),
+        "frequency_vs_sentence_seed1": (455, 178, 0.0),
+        "word_seed1_vs_left_seed1": (21, 20, 1.0),
+        "word_seed1_vs_sentence_seed1": (34, 60, 0.00955),
+        "left_seed1_vs_sentence_seed1": (22, 49, 0.00182),
+    },
+    ("results_all", "tauber_beowulf"): {
+        "frequency_vs_word_seed1": (1289, 350, 0.0),
+        "frequency_vs_left_seed1": (1259, 368, 0.0),
+        "frequency_vs_sentence_seed1": (1252, 372, 0.0),
+        "word_seed1_vs_left_seed1": (37, 85, 1.65e-05),
+        "word_seed1_vs_sentence_seed1": (64, 123, 1.91e-05),
+        "left_seed1_vs_sentence_seed1": (53, 64, 0.355),
+    },
 }
 MIN_P_TRAINING_ONLY = {"soliloquies": 0.10, "tauber_beowulf": 0.12}
 
@@ -64,6 +120,8 @@ MIN_P_TRAINING_ONLY = {"soliloquies": 0.10, "tauber_beowulf": 0.12}
 AGREEMENT = {
     "results_wikipron": (16832, .9773, .9733, 4420, .9604, .9419),
     "results_training_only": (16832, .9773, .9733, 4076, .9585, .9366),
+    "results_proposal": (16832, .9773, .9733, 8363, .9635, .9545),
+    "results_all": (16832, .9773, .9733, 8649, .9636, .9551),
 }
 
 
@@ -87,7 +145,7 @@ def main() -> int:
             errors.append(f"{label}: got {got}, expected {want}")
 
     metrics = {}
-    for folder in ("results_wikipron", "results_training_only"):
+    for folder in ("results_wikipron", "results_training_only", "results_proposal", "results_all"):
         path = ROOT / folder / "metrics.json"
         if not path.exists():
             errors.append(f"missing {path}")

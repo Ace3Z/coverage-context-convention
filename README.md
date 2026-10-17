@@ -20,10 +20,13 @@ bash run_all.sh
 
 1. **Inputs.** Uses `data/brunetti-length.txt` (Tauber's *Beowulf* gold) and `data/ang_latn_broad.tsv` (WikiPron Old
    English) if present, otherwise downloads them. Prints their SHA-256.
-2. **Unit tests** (12 tests, none skipped when the inputs are present).
-3. **WikiPron conversion:** IPA length marks to spellings, giving `data/lex_wikipron.csv`.
-4. **Experiments:** both dictionaries × both test sets, one test set per run.
-5. **`src/check_expected.py`:** fails if any of 156 headline values differs from the frozen results.
+2. **Unit tests** (13 tests, none skipped when the inputs are present).
+3. **Dictionaries:** WikiPron IPA length marks to spellings (`data/lex_wikipron.csv`), plus the three dictionaries named
+   in the proposal: Clark Hall, Wiktionary inflection tables and Bosworth–Toller (`data/lex_clarkhall.csv`,
+   `lex_wiktionary.csv`, `lex_bt.csv`; rebuilt from the original sources with `python src/build_lexicons.py`).
+4. **Experiments:** four dictionary settings (training only, + WikiPron, + the three proposal dictionaries, + all four)
+   × both test sets, one test set per run.
+5. **`src/check_expected.py`:** fails if any of 336 headline values differs from the frozen results.
 6. **`src/build_report.py`:** writes `report/generated/` (numbers, tables, figure), checks the worked examples
    against the predictions, and compiles `REPORT.pdf` if `pdflatex` is installed. Without LaTeX, upload `report/`
    to Overleaf and compile `main.tex`.
@@ -34,6 +37,15 @@ A single experiment can also be run on its own. Results for the same `--out` fol
 python src/experiment.py --data data --out results_wikipron --lexicon data/lex_wikipron.csv --tests soliloquies
 python src/experiment.py --data data --out results_wikipron --lexicon data/lex_wikipron.csv --tests tauber_beowulf
 ```
+
+## Neural experiments (Colab GPU)
+
+The encoder experiment (ByT5-small fine-tuned on the word only, the left context, or the whole sentence) and the
+CharsiuG2P error analysis need a GPU. Open `colab/run_encoder_and_charsiu.ipynb` in Google Colab, choose a T4 GPU,
+Run all, and upload this project as a zip when asked. It writes `results_encoder/` and `results_charsiu/`; the
+outputs of our run are included, and `run_all.sh` checks them. GPU training is not bit-for-bit repeatable, so a new
+run can differ slightly. CPU smoke tests without downloads: `python src/encoder_experiment.py --tiny --out /tmp/t`
+and `python src/charsiu_g2p.py predict --tiny`. Extra libraries: `pip install -r requirements-neural.txt`.
 
 ## Try it on your own sentences
 
@@ -74,13 +86,20 @@ versions tested (scikit-learn 1.9.1, scipy 1.18.1).
   Built from Project Gutenberg (public domain) and Wikisource (CC BY-SA 4.0); released as CC BY-SA 4.0.
 - Tauber gold: https://github.com/old-english-learner-texts/old-english-texts (CC BY-SA 4.0).
 - WikiPron: https://github.com/CUNY-CL/wikipron (Apache-2.0).
+- Clark Hall, *A Concise Anglo-Saxon Dictionary*, TEI conversion by Serg078 (Unlicense):
+  https://github.com/Serg078/Conversion-of-The-Clark-Hall-Dictionary-of-Old-English-to-TEI
+- Wiktionary Old English entries via kaikki.org (CC BY-SA 4.0): https://kaikki.org/dictionary/Old%20English/
+- Bosworth–Toller data dump, Tichý et al., LINDAT (CC BY 4.0): http://hdl.handle.net/11234/1-3532
+- CharsiuG2P (MIT): https://github.com/lingjzhu/CharsiuG2P; `data/charsiu_ang_dict_words.txt` lists the words of its
+  Old English training dictionary, used only to split the error analysis into seen and unseen words.
 
 ## Layout
 
 ```
 data/            corpus (by_source/), manifest, Tauber and WikiPron inputs
-src/             experiment.py, wikipron_to_marked.py, fetch_tauber.py, check_expected.py, build_report.py,
-                 try_text.py
+src/             experiment.py, wikipron_to_marked.py, build_lexicons.py, fetch_tauber.py, check_expected.py,
+                 build_report.py, try_text.py, encoder_experiment.py, charsiu_g2p.py
+colab/           notebook for the GPU experiments
 tests/           unit tests
 report/          main.tex (+ generated/ tables, numbers, figure)
 results_*/       metrics.json, per-word CSVs, token-level predictions, run logs
