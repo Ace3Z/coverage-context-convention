@@ -5,7 +5,7 @@ Like the logistic models, it is candidate-constrained: the dictionary (training 
 the length patterns, the fine-tuned model scores each one (sum of log-probabilities of the pattern string,
 e.g. "01"), and the best-scoring pattern wins. Words with one candidate take it; unknown words stay short.
 
-Run on a GPU (free Colab T4: about 1 hour for all three):
+Run on a GPU (free Colab T4: about 1-1.5 hours for all three; results are saved after each arm):
   python src/encoder_experiment.py                    -> results_encoder/metrics.json + predictions
 Quick CPU smoke test with a tiny random model (no download, a few minutes):
   python src/encoder_experiment.py --tiny --out /tmp/enc_test
@@ -13,6 +13,7 @@ Quick CPU smoke test with a tiny random model (no download, a few minutes):
 import argparse
 import json
 import math
+import os
 import random
 import sys
 import time
@@ -57,7 +58,8 @@ def main():
     ap.add_argument("--model", default="google/byt5-small")
     ap.add_argument("--out", default=str(ROOT / "results_encoder"))
     ap.add_argument("--epochs", type=int, default=1)
-    ap.add_argument("--batch", type=int, default=32)
+    ap.add_argument("--batch", type=int, default=32, help="examples per optimizer step (same for every arm)")
+    ap.add_argument("--micro", type=int, default=8, help="examples per forward pass; lower it if the GPU runs out of memory")
     ap.add_argument("--lr", type=float, default=3e-4)
     ap.add_argument("--max-bytes", type=int, default=256)
     ap.add_argument("--seed", type=int, default=1)
@@ -65,6 +67,7 @@ def main():
     ap.add_argument("--tiny", action="store_true", help="tiny random model + small data subset (CPU smoke test)")
     a = ap.parse_args()
 
+    os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
     import torch
     from transformers import AutoTokenizer, T5Config, T5ForConditionalGeneration, get_linear_schedule_with_warmup
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -116,18 +119,22 @@ def main():
         for _ in range(a.epochs):
             for b in range(0, len(order), a.batch):
                 batch = [examples[j] for j in order[b:b + a.batch]]
-                x = enc([make_input(r, arm, a.max_bytes) for r in batch], a.max_bytes + 8)
-                y = enc([r["gold_pattern"] for r in batch], 32).input_ids
-                y[y == tok.pad_token_id] = -100
-                loss = model(**x, labels=y).loss
-                loss.backward()
+                loss_sum = 0.0
+                for m in range(0, len(batch), a.micro):  # gradient accumulation: same step as one batch of a.batch
+                    part = batch[m:m + a.micro]
+                    x = enc([make_input(r, arm, a.max_bytes) for r in part], a.max_bytes + 8)
+                    y = enc([r["gold_pattern"] for r in part], 32).input_ids
+                    y[y == tok.pad_token_id] = -100
+                    loss = model(**x, labels=y).loss * len(part) / len(batch)
+                    loss.backward()
+                    loss_sum += loss.item()
                 torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
                 opt.step()
                 sched.step()
                 opt.zero_grad()
                 step += 1
                 if step % 100 == 0 or step == steps:
-                    print(f"[{arm}] step {step}/{steps} loss {loss.item():.4f} ({time.time() - t0:.0f}s)", flush=True)
+                    print(f"[{arm}] step {step}/{steps} loss {loss_sum:.4f} ({time.time() - t0:.0f}s)", flush=True)
         train_seconds = time.time() - t0
 
         model.eval()
@@ -144,8 +151,8 @@ def main():
                     preds.append(opts[0] if opts else fallback)
             scores = {}
             with torch.no_grad():
-                for b in range(0, len(pairs), 128):
-                    chunk = pairs[b:b + 128]
+                for b in range(0, len(pairs), 4 * a.micro):
+                    chunk = pairs[b:b + 4 * a.micro]
                     x = enc([make_input(rows[k], arm, a.max_bytes) for k, _ in chunk], a.max_bytes + 8)
                     y = enc([p for _, p in chunk], 32).input_ids
                     logits = model(**x, labels=y).logits
@@ -167,6 +174,7 @@ def main():
                                  for name, v in pops.items()}
             print(f"[{arm}] {test}: " + ", ".join(f"{n}={d['accuracy']}" for n, d in arm_summary[test].items()), flush=True)
         summary["arms"][arm] = arm_summary
+        (out / "metrics.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf8")  # save after each arm
         del model, opt
         if device == "cuda":
             torch.cuda.empty_cache()
