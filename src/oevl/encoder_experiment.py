@@ -11,11 +11,12 @@ Quick CPU smoke test with a tiny random model (no download, a few minutes):
   python -m oevl.encoder_experiment --tiny --out /tmp/enc_test
 """
 import argparse
+import hashlib
 import json
 import math
 import os
 import random
-import sys
+import re
 import time
 from pathlib import Path
 
@@ -28,14 +29,16 @@ MARK_L, MARK_R = "[[", "]]"
 
 
 def make_input(r, arm, max_bytes):
-    """Text the encoder sees for token r. The target word is wrapped in [[ ]] when context is shown."""
+    """Text the encoder sees for token r. The target word is wrapped in [[ ]] when context is shown.
+    localK shows at most K whole words on each side of the target."""
     words, i = [w.lower() for w in r["sentence"]], r["index"]
     target = words[i]
     if arm == "word":
         return target
     core = f"{MARK_L}{target}{MARK_R}"
-    left = " ".join(words[:i])
-    right = " ".join(words[i + 1:]) if arm == "sentence" else ""
+    k = int(arm[5:]) if arm.startswith("local") else len(words)
+    left = " ".join(words[max(0, i - k):i])
+    right = " ".join(words[i + 1:i + 1 + k]) if arm != "left" else ""
     room = max(0, max_bytes - len(core.encode()) - 2)
     lb, rb = left.encode(), right.encode()
     keep_l = min(len(lb), room) if arm == "left" else min(len(lb), max(room // 2, room - len(rb)))
@@ -46,6 +49,15 @@ def make_input(r, arm, max_bytes):
     if keep_r < len(rb):
         r_txt = r_txt.rpartition(" ")[0]
     return " ".join(x for x in (l_txt, core, r_txt) if x)
+
+
+def limit(examples, n):
+    """A fixed subset of n examples, kept in corpus order. It depends only on n, never on --seed, --arms or
+    --max-bytes, so every arm of a pilot trains on the same examples."""
+    if n is None or n >= len(examples):
+        return examples
+    keep = sorted(random.Random(0).sample(range(len(examples)), n))
+    return [examples[j] for j in keep]
 
 
 def candidates(r, lex):
@@ -63,9 +75,13 @@ def main():
     ap.add_argument("--lr", type=float, default=3e-4)
     ap.add_argument("--max-bytes", type=int, default=256)
     ap.add_argument("--seed", type=int, default=1)
-    ap.add_argument("--arms", default=",".join(ARMS))
+    ap.add_argument("--arms", default=",".join(ARMS), help="comma list of word, left, sentence, localK (K words each side)")
+    ap.add_argument("--train-limit", type=int, help="train on a fixed subset of this many examples (see limit())")
     ap.add_argument("--tiny", action="store_true", help="tiny random model + small data subset (CPU smoke test)")
     a = ap.parse_args()
+    bad = [x for x in a.arms.split(",") if x not in ARMS and not re.fullmatch(r"local[1-9][0-9]*", x)]
+    if bad:
+        ap.error(f"unknown arm(s) {bad}: use word, left, sentence or localK")
 
     os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
     import torch
@@ -82,6 +98,7 @@ def main():
         random.Random(0).shuffle(examples)
         examples = examples[:256]
         tests = {k: v[:300] for k, v in tests.items()}
+    examples = limit(examples, a.train_limit)
     order = list(range(len(examples)))
     random.Random(a.seed).shuffle(order)  # the same order for every arm: identical data, identical schedule
 
@@ -106,7 +123,9 @@ def main():
 
     summary = {"model": "tiny-random" if a.tiny else a.model, "lexicon": "training + WikiPron", "seed": a.seed,
                "epochs": a.epochs, "batch": a.batch, "lr": a.lr, "max_bytes": a.max_bytes,
-               "train_examples": len(examples), "arms": {}}
+               "train_examples": len(examples), "train_limit": a.train_limit,
+               "train_subset_sha256": hashlib.sha256("\n".join(r["id"] for r in examples).encode()).hexdigest(),
+               "arms": {}}
     all_preds = {t: {r["id"]: {} for r in rows} for t, rows in tests.items()}
     for arm in a.arms.split(","):
         torch.manual_seed(a.seed)
