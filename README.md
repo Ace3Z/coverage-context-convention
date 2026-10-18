@@ -98,6 +98,13 @@ changed instead of reporting accuracy.
 
 - Corpus: `data/by_source/`. Built from Project Gutenberg (public domain) and Wikisource (CC BY-SA 4.0); released as
   CC BY-SA 4.0. A Hugging Face copy is planned at `oe-vowel-length/old-english-vowel-length` but is not published yet.
+  `PYTHONPATH=src python -m oevl.build_corpus --source <name> --out data/by_source` fetches an edition into
+  `data/raw/corpus/` and rebuilds its file and manifest entry (URL, retrieval date and SHA-256 of each input, and the
+  work's `role`: train, dev, test or agreement). The original extraction scripts were not kept, so the rules were
+  inferred from the files: `matthew_ws`, `bright_reader`, `physiologus` and `hs_beowulf` rebuild byte for byte. The
+  other four rebuilds contain 65,988 of their 65,992 committed tokens in order but differ in some sentences, mostly
+  where the original language filter dropped short lines (the module docstring says more); they were not overwritten. `john_ws.jsonl` (Gospel of John, Bright 1904, the dev set) is built by the same procedure as Matthew.
+  The `split` field inside the files is a stale sentence-level split; use the manifest `role`.
 - Tauber gold: https://github.com/old-english-learner-texts/old-english-texts (CC BY-SA 4.0).
 - WikiPron: https://github.com/CUNY-CL/wikipron (Apache-2.0).
 - Clark Hall, *A Concise Anglo-Saxon Dictionary*, TEI conversion by Serg078 (Unlicense):
@@ -112,7 +119,7 @@ changed instead of reporting accuracy.
 ```
 src/oevl/            the package
   experiment.py        data, dictionaries, frequency/logistic models, metrics (the traditional system)
-  wikipron_to_marked.py, build_lexicons.py, fetch_tauber.py    inputs and dictionaries
+  build_corpus.py, wikipron_to_marked.py, build_lexicons.py, fetch_tauber.py    corpus, inputs and dictionaries
   check_expected.py, build_report.py                           frozen-value check, report tables and figure
   encoder_experiment.py, charsiu_g2p.py                        neural experiments (GPU)
   pilot.py                                                     the GPU pilot runner used by the notebooks

@@ -12,7 +12,16 @@
       "tokens": 17682,
       "long_vowel_marks": 7560,
       "sha256": "9663f9349e3f8144824c65a6e8b9f2b3d4526dd519241d1c42e0c8397db67d3d",
-      "cleaning": {}
+      "cleaning": {},
+      "role": "agreement",
+      "inputs": [
+        {
+          "url": "https://www.gutenberg.org/cache/epub/9701/pg9701-images.html",
+          "retrieved": "2026-10-18",
+          "file": "pg9701-images.html",
+          "sha256": "b37b563f170521f1fa7a17ccb0f550e2db0ec1e0af2c8399487b420b13485a09"
+        }
+      ]
     },
     "wyatt_beowulf": {
       "work": "Beowulf",
@@ -32,7 +41,8 @@
         "dropped_mark_U+0326": 1,
         "dropped_mark_U+030C": 1,
         "dropped_mark_U+0308": 1
-      }
+      },
+      "role": "agreement"
     },
     "zupitza_grammar": {
       "work": "Ælfric's Grammar",
@@ -53,7 +63,8 @@
         "dropped_words_eng": 315,
         "dropped_mark_U+0307": 1,
         "dropped_sentence_mixed": 2
-      }
+      },
+      "role": "train"
     },
     "bright_reader": {
       "work": "Anglo-Saxon Reader (selections)",
@@ -69,15 +80,179 @@
       "sha256": "10c990a91841f2b2a7fdabb44d95e3c189764e298abbdbb04318f67b21cd8ee1",
       "cleaning": {
         "dropped_line_eng": 26,
-        "dropped_words_eng": 565,
+        "dropped_words_eng": 541,
         "dropped_mark_U+0301": 1,
-        "dropped_line_lat": 3,
-        "dropped_words_lat": 26,
         "dropped_mark_U+0300": 1,
         "dropped_sentence_latin_words": 1,
+        "dropped_line_lat": 2,
+        "dropped_words_lat": 10,
         "dropped_sentence_mixed": 4,
         "dropped_mark_U+0328": 63
-      }
+      },
+      "role": "train",
+      "inputs": [
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FFrom+the+Gospels%3A+St.+Mark%2C+Chap.+IV",
+          "retrieved": "2026-10-18",
+          "file": "00.json",
+          "sha256": "e7ca81c04e90641d98074f64a3f7454b3a8de04d8d6337767db0b276169ccb65",
+          "revid": 11958844
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FOrpheus+and+Eurydice",
+          "retrieved": "2026-10-18",
+          "file": "01.json",
+          "sha256": "9c4756b0fe4776caf1a38adb27c7f012b57c64b412910fd46d835ba1ee3eedff",
+          "revid": 11958849
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FAccount+of+the+Poet+C%C3%A6dmon",
+          "retrieved": "2026-10-18",
+          "file": "02.json",
+          "sha256": "f6d4b1854415bb5f8329c3f0a79219760065b7d5520b960101707a20f6d0a15b",
+          "revid": 11958843
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FCynewulf+and+Cyneheard",
+          "retrieved": "2026-10-18",
+          "file": "03.json",
+          "sha256": "206031e74d62f05f6e740aeee92a6d0d77561839fe10df09bf55cdedcf357caf",
+          "revid": 11958841
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FWars+of+Alfred+the+Great",
+          "retrieved": "2026-10-18",
+          "file": "04.json",
+          "sha256": "94bb1ae5bb6283d037e2999715724f8538d14b52e14dd0fb9c628eadc9680d9a",
+          "revid": 11958866
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FAlfred%27s+Preface+to+the+Pastoral+Care",
+          "retrieved": "2026-10-18",
+          "file": "05.json",
+          "sha256": "65b12a50bd3c243f11578f80ddcf0111c105570aa4d81dbc3f6420b3c7280580",
+          "revid": 11958838
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FFrom+the+Pastoral+Care",
+          "retrieved": "2026-10-18",
+          "file": "06.json",
+          "sha256": "e5e8551c3619d45ba6188e9a99182f26a5347372295440cc02258c6d1154e520",
+          "revid": 11958873
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FThe+Voyages+of+Ohthere+and+Wulfstan",
+          "retrieved": "2026-10-18",
+          "file": "07.json",
+          "sha256": "a7baf65f752b01fdec9e49ae43a7d0b2bc61710ba7eacb5884a7c1f08ecf16d8",
+          "revid": 13475135
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FIt+is+better+to+suffer+an+Injury+than+to+inflict+one",
+          "retrieved": "2026-10-18",
+          "file": "08.json",
+          "sha256": "75bb5efbeea5b601b63e7cd119f84e52c371d85ffebaa07c82fce186bf6be6f9",
+          "revid": 11958846
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FProvidence+and+Fate",
+          "retrieved": "2026-10-18",
+          "file": "09.json",
+          "sha256": "93b3339f1f4fdbf640771dcc3e3730430afae8dd7a48ccece671a405c0bad786",
+          "revid": 11958851
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FThe+Nature+of+God",
+          "retrieved": "2026-10-18",
+          "file": "10.json",
+          "sha256": "75a820815f5cb0bdffba7f31ef66e2fba4f68b1268e8d6b5b67c3127eb36652e",
+          "revid": 11958860
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FThe+Conversion+of+Edwin",
+          "retrieved": "2026-10-18",
+          "file": "11.json",
+          "sha256": "309281e7a7850af487c2db5e319b1da93f482461b3ecfbe74985ebbe15609aae",
+          "revid": 11958854
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FA+Blickling+Homily",
+          "retrieved": "2026-10-18",
+          "file": "12.json",
+          "sha256": "65b49b9ac6d6a277c0635809a01710f5f5b755a9cec6ca4f6c5ba150d36c7799",
+          "revid": 11958837
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2F%C3%86lfric%27s+Homily+on+the+Assumption+of+St.+John+the+Apostle",
+          "retrieved": "2026-10-18",
+          "file": "13.json",
+          "sha256": "dc075e87d49661163d84db56cfb793ed641e7cd5ba4ff180574b632ab2ff6410",
+          "revid": 11958868
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2F%C3%86lfric%27s+Homily+on+St.+Gregory+the+Great",
+          "retrieved": "2026-10-18",
+          "file": "14.json",
+          "sha256": "93000093d89814ededda759348d78fbdc2596d4688080517c5af842eb9213b92",
+          "revid": 11958867
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2F%C3%86lfric%27s+Life+of+King+Oswald",
+          "retrieved": "2026-10-18",
+          "file": "15.json",
+          "sha256": "2f3a695d4d10b579fb5feaf88bf7aba2f28d18e50721084952cd0bc1080de873",
+          "revid": 11958869
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2F%C3%86lfric%27s+Preface+to+Genesis",
+          "retrieved": "2026-10-18",
+          "file": "16.json",
+          "sha256": "29b3c90abc77fb782744931f95d6376d4927252f9d3467086327442bb23cf093",
+          "revid": 15019123
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FThe+Legend+of+St.+Andrew",
+          "retrieved": "2026-10-18",
+          "file": "17.json",
+          "sha256": "39b94051f9c5538c6ee09b66260ecc9a989d21c266e511c212b7d283c99cbfb0",
+          "revid": 11958859
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FThe+Harrowing+of+Hell",
+          "retrieved": "2026-10-18",
+          "file": "18.json",
+          "sha256": "e22281a3fc085c67458231edfd77dce27930ca6646e30e4c3c141db26bcec1e1",
+          "revid": 11958858
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FC%C3%A6dmon%27s+Genesis%3A+The+Offering+of+Isaac",
+          "retrieved": "2026-10-18",
+          "file": "19.json",
+          "sha256": "0636ebf4240d824a356e1d9d85bf0cf3a44a34445706f58f6bbdb04881f058d5",
+          "revid": 14883945
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FThe+Battle+of+Brunanburh",
+          "retrieved": "2026-10-18",
+          "file": "20.json",
+          "sha256": "d57dea30bcb9c262befd1bef9464d85041d13430b978fb05de1c017c9aaf51b7",
+          "revid": 14883894
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FThe+Wanderer",
+          "retrieved": "2026-10-18",
+          "file": "21.json",
+          "sha256": "fe97633267f3bd8f508833f990e948bf2d02ef20d671e3f1037b908c218036c5",
+          "revid": 15736565
+        },
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FThe+Ph%C5%93nix",
+          "retrieved": "2026-10-18",
+          "file": "22.json",
+          "sha256": "ba3823915c0cf8b80218e9202e70bee3e5dac8dc56319ff7d43c027419dafce3",
+          "revid": 13090960
+        }
+      ]
     },
     "matthew_ws": {
       "work": "Gospel of Matthew (West Saxon)",
@@ -97,7 +272,20 @@
         "dropped_words_eng": 13,
         "dropped_sentence_mixed": 1,
         "dropped_mark_U+0306": 1
-      }
+      },
+      "role": "train",
+      "inputs": [
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text&contentmodel=wikitext&title=Evangelium+Secundum+Mattheum%3A+the+Gospel+of+Saint+Matthew+in+West-Saxon&disablelimitreport=1&text=%3Cpages+index%3D%22Gospel+of+Saint+Matthew+in+West-Saxon.djvu%22+from%3D%2214%22+to%3D%22160%22+%2F%3E",
+          "retrieved": "2026-10-18",
+          "file": "pages.json",
+          "sha256": "407f38ad93d6a78b598cb2303f1d610a322ae503401a933b9dd833c211f6d743",
+          "page_quality": {
+            "3": 44,
+            "4": 103
+          }
+        }
+      ]
     },
     "soliloquies": {
       "work": "Alfred's Soliloquies",
@@ -122,7 +310,8 @@
         "dropped_sentence_mixed": 2,
         "dropped_sentence_latin_words": 1,
         "dropped_mark_U+030B": 1
-      }
+      },
+      "role": "test"
     },
     "sweet_primer": {
       "work": "Anglo-Saxon Primer (texts)",
@@ -145,7 +334,8 @@
         "dropped_line_lat": 5,
         "dropped_words_lat": 34,
         "dropped_unit_overlaps_matthew": 12
-      }
+      },
+      "role": "train"
     },
     "physiologus": {
       "work": "Old English Physiologus",
@@ -159,7 +349,46 @@
       "tokens": 952,
       "long_vowel_marks": 394,
       "sha256": "dfcabf8aae33b9e8da15c1f1ffac42ae8c36bb4f3dc3d0fcd5b1a9c34594f8d6",
-      "cleaning": {}
+      "cleaning": {},
+      "role": "train",
+      "inputs": [
+        {
+          "url": "https://www.gutenberg.org/cache/epub/14529/pg14529-images.html",
+          "retrieved": "2026-10-18",
+          "file": "pg14529-images.html",
+          "sha256": "43d7dac937353b8296669d996931c3dc9e7d72b1cda769dc6a0ed08fa6018499"
+        }
+      ]
+    },
+    "john_ws": {
+      "work": "Gospel of John (West Saxon)",
+      "editor": "Bright & Harris",
+      "year": 1904,
+      "genre": "prose",
+      "length_convention_in_source": "macron",
+      "licence": "CC BY-SA 4.0 (Wikisource transcription of a public-domain edition)",
+      "origin": "https://en.wikisource.org/wiki/Index:Gospel_of_Saint_John_in_West-Saxon.djvu",
+      "units": 1057,
+      "tokens": 17310,
+      "long_vowel_marks": 7315,
+      "sha256": "f2faed92a0f097fed49dca2724ce5439d176a78ef9fffc8410cbdfbf31b19990",
+      "cleaning": {
+        "dropped_mark_U+0323": 1,
+        "dropped_mark_U+0328": 3,
+        "dropped_mark_U+030A": 1
+      },
+      "role": "dev",
+      "inputs": [
+        {
+          "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text&contentmodel=wikitext&title=The+Gospel+of+Saint+John+in+West-Saxon&disablelimitreport=1&text=%3Cpages+index%3D%22Gospel+of+Saint+John+in+West-Saxon.djvu%22+from%3D%2245%22+to%3D%22157%22+%2F%3E",
+          "retrieved": "2026-10-18",
+          "file": "pages.json",
+          "sha256": "cd8058cbd2a5528ef1998ee761e476f2de54627012489bff26fd158b757bcd40",
+          "page_quality": {
+            "3": 113
+          }
+        }
+      ]
     }
   },
   "splits": {
@@ -174,9 +403,9 @@
       "sha256": "7a257cfcbc6e7fbfe1dc5abb6d214db3e0f7edaedb5f662e86711fcddb43e74b"
     },
     "dev": {
-      "units": 416,
-      "tokens": 8459,
-      "sha256": "b7a9caebbf8c34a4cff2a0a3cae09df1e25798b8298a87b5c439dc5fb736049f"
+      "units": 1473,
+      "tokens": 25769,
+      "sha256": "d0d61c59de985584415273c4c33c9b033a889fb24d3a88e12051ff2e31bd3913"
     },
     "test": {
       "units": 400,
