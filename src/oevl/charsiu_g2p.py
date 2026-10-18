@@ -2,7 +2,7 @@
 
 Step 1 (needs torch + transformers; a few minutes on a Colab GPU, done once):
   python -m oevl.charsiu_g2p predict      -> results/charsiu/ipa.tsv (one IPA string per test word type)
-  python -m oevl.charsiu_g2p predict --tiny   (smoke test with a tiny random model, no download)
+  python -m oevl.charsiu_g2p predict --tiny   (smoke test, tiny random model, writes ipa_tiny.tsv)
 Step 2 (no neural libraries needed; run_all.sh runs this):
   python -m oevl.charsiu_g2p analyse      -> results/charsiu/metrics.json
 
@@ -44,8 +44,9 @@ def predict(batch_size=64, tiny=False):
         model = T5ForConditionalGeneration.from_pretrained(MODEL).eval()
     if torch.cuda.is_available():
         model = model.cuda()
-    OUT.mkdir(exist_ok=True)
-    with open(OUT / "ipa.tsv", "w", encoding="utf8", newline="") as f:
+    OUT.mkdir(parents=True, exist_ok=True)
+    path = OUT / ("ipa_tiny.tsv" if tiny else "ipa.tsv")  # the smoke test must not replace the GPU output
+    with open(path, "w", encoding="utf8", newline="") as f:
         w = csv.writer(f, delimiter="\t")
         w.writerow(["word", "ipa"])
         for i in range(0, len(words), batch_size):
@@ -56,7 +57,7 @@ def predict(batch_size=64, tiny=False):
             for word, ipa in zip(chunk, tok.batch_decode(ids.tolist(), skip_special_tokens=True)):
                 w.writerow([word, ipa])
             print(f"{min(i + batch_size, len(words))}/{len(words)}", end="\r", flush=True)
-    print(f"\nwrote {len(words)} predictions to {OUT / 'ipa.tsv'}")
+    print(f"\nwrote {len(words)} predictions to {path}")
 
 
 def analyse():

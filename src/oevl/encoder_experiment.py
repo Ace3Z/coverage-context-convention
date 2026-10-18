@@ -1,5 +1,5 @@
-"""The proposal's key experiment: fine-tune the same ByT5 checkpoint on identical data three times,
-seeing only the word, the word with its left context, or the whole sentence.
+"""The proposal's key experiment: fine-tune the same ByT5 checkpoint on identical data once per arm,
+seeing only the word, the word with its left context, the whole sentence, or K words either side (localK).
 
 Like the logistic models, it is candidate-constrained: the dictionary (training forms + WikiPron) proposes
 the length patterns, the fine-tuned model scores each one (sum of log-probabilities of the pattern string,
@@ -7,7 +7,7 @@ e.g. "01"), and the best-scoring pattern wins. Words with one candidate take it;
 
 Run on a GPU (free Colab T4: about 1-1.5 hours for all three; results are saved after each arm):
   python -m oevl.encoder_experiment                    -> results/encoder/metrics.json + predictions
-Quick CPU smoke test with a tiny random model (no download, a few minutes):
+Quick CPU smoke test with a tiny random model (no download, under a minute):
   python -m oevl.encoder_experiment --tiny --out /tmp/enc_test
 """
 import argparse
@@ -79,9 +79,12 @@ def main():
     ap.add_argument("--train-limit", type=int, help="train on a fixed subset of this many examples (see limit())")
     ap.add_argument("--tiny", action="store_true", help="tiny random model + small data subset (CPU smoke test)")
     a = ap.parse_args()
+    a.arms = ",".join(dict.fromkeys(a.arms.split(",")))
     bad = [x for x in a.arms.split(",") if x not in ARMS and not re.fullmatch(r"local[1-9][0-9]*", x)]
     if bad:
         ap.error(f"unknown arm(s) {bad}: use word, left, sentence or localK")
+    if a.train_limit is not None and a.train_limit < 1:
+        ap.error("--train-limit must be at least 1")
 
     os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
     import torch

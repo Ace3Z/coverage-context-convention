@@ -1,6 +1,6 @@
 """Add Old English long-vowel marks (macrons) to your own sentences.
 
-Usage (inside oe_project, with the venv active):
+Usage (from the repository root, with the venv active and src on PYTHONPATH):
   python -m oevl.try_text my_sentences.txt
   python -m oevl.try_text my_sentences.txt --gold my_sentences_marked.txt --tsv words.tsv
 
