@@ -27,8 +27,10 @@ SAMPLING = ("An error is a lexicon-ambiguous token (two or more length patterns 
             "encoder_sentence: ByT5 sentence arm, seed 1, --max-bytes 2560, lr 3e-4, 5 epochs, zupitza_grammar left "
             "out of training (the selected configuration), lexicon = the other four training works plus WikiPron, "
             "pool 917 errors (468 prose, 449 verse). charsiug2p: CharsiuG2P IPA mapped to a length pattern, lexicon "
-            "= all five training works plus WikiPron as in charsiu_g2p.analyse, pool 2,625 errors (1,607 prose, "
-            "1,018 verse). Ten tokens appear in both samples and were typed separately.")
+            "= all five training works plus WikiPron as charsiu_g2p.analyse used before D3, pool 2,625 errors (1,607 "
+            "prose, 1,018 verse). charsiu_g2p.analyse now uses the D3 training set, which gives a pool of 2,589 "
+            "(1,583 prose, 1,006 verse), and 2 of the 200 sampled tokens are not lexicon-ambiguous there. Ten tokens "
+            "appear in both samples and were typed separately.")
 
 
 def main():
