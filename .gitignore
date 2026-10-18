@@ -16,3 +16,4 @@ results/charsiu/ipa_tiny.tsv
 *.zip
 *.egg-info/
 build/
+release/hf/

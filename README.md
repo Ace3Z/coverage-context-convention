@@ -112,9 +112,13 @@ changed instead of reporting accuracy.
 
 ## Data and licences
 
+The code is MIT (`LICENSE`). The data is CC BY-SA 4.0 unless `data/LICENSE.md` says otherwise. That file gives the
+licence of every file in `data/` and the licence text or source page each statement was checked against.
+
 - Corpus: `data/by_source/`, cleaned by `python -m oevl.clean_corpus` (explicit character mappings, counted in
-  `data/manifest.json`). Built from Project Gutenberg (public domain) and Wikisource (CC BY-SA 4.0); released as
-  CC BY-SA 4.0. A Hugging Face copy is planned at `oe-vowel-length/old-english-vowel-length` but is not published yet.
+  `data/manifest.json`). Built from Project Gutenberg editions (public domain in the USA) and Wikisource
+  transcriptions (CC BY-SA 4.0); released as CC BY-SA 4.0. A Hugging Face copy is planned at
+  `oe-vowel-length/old-english-vowel-length` but is not published yet (see "Publishing the dataset").
   `PYTHONPATH=src python -m oevl.build_corpus --source <name> --out data/by_source` fetches an edition into
   `data/raw/corpus/` and rebuilds its file and manifest entry (URL, retrieval date and SHA-256 of each input, and the
   work's `role`: train, dev, test or agreement). The original extraction scripts were not kept, so the rules were
@@ -124,15 +128,39 @@ changed instead of reporting accuracy.
   docstring says more); they were not overwritten. `john_ws.jsonl` (Gospel of John, Bright 1904, the dev set) is built
   by the same procedure as Matthew. The builder still writes the old sentence-level `split` field, which
   `clean_corpus` removes; the split is by work, as the manifest `role` says.
-- Tauber gold: https://github.com/old-english-learner-texts/old-english-texts (CC BY-SA 4.0).
-- WikiPron: https://github.com/CUNY-CL/wikipron (Apache-2.0).
-- Clark Hall, *A Concise Anglo-Saxon Dictionary*, TEI conversion by Serg078 (Unlicense):
-  https://github.com/Serg078/Conversion-of-The-Clark-Hall-Dictionary-of-Old-English-to-TEI
-- Wiktionary Old English entries via kaikki.org (CC BY-SA 4.0): https://kaikki.org/dictionary/Old%20English/
+- Tauber gold: https://github.com/old-english-learner-texts/old-english-texts (CC BY-SA 4.0, attribution to James
+  Tauber).
+- WikiPron: https://github.com/CUNY-CL/wikipron. The code is Apache-2.0, but the scraped data is Wiktionary content
+  with Wiktionary's own terms, so `data/ang_latn_broad.tsv` and `data/lex_wikipron.csv` are CC BY-SA 4.0.
+- Clark Hall, *A Concise Anglo-Saxon Dictionary* (Project Gutenberg 31543, public domain in the USA), TEI conversion
+  by Serg078 (Unlicense): https://github.com/Serg078/Conversion-of-The-Clark-Hall-Dictionary-of-Old-English-to-TEI
+- Wiktionary Old English entries via kaikki.org (Wiktionary content, CC BY-SA 4.0):
+  https://kaikki.org/dictionary/Old%20English/
 - Bosworth–Toller data dump, Tichý et al., LINDAT (CC BY 4.0): http://hdl.handle.net/11234/1-3532
+- The dictionary unions `data/lex_proposal.csv` and `data/lex_all.csv` take the strictest licence of their sources,
+  CC BY-SA 4.0.
 - CharsiuG2P (MIT): https://github.com/lingjzhu/CharsiuG2P; `data/charsiu_ang_dict_words.txt` lists the words of its
   Old English training dictionary, used only to split the error analysis into seen and unseen words.
   `data/charsiu_ang_test.tsv` is its `data/test/ang.tsv` at commit `0c929390759fb94f8ecdfc05cc0bc5f2ff2dc0f4`.
+  CharsiuG2P took its Old English data from WikiPron, so both files are CC BY-SA 4.0.
+
+## Publishing the dataset
+
+`PYTHONPATH=src python -m oevl.export_hf --out release/hf` writes the Hugging Face copy of the data to `release/hf/`
+(gitignored, regenerated on each run): one JSONL file per split (`train`, `dev`, `test_prose` = *Soliloquies*,
+`test_verse` = Tauber's *Beowulf*, `agreement` = the Harrison & Sharp and Wyatt *Beowulf*) and the dataset card
+`README.md`, made from `release/hf_card.md` with the token counts read from the written files. Sentences that the
+leakage audit leaves out of evaluation are kept, with `leakage_excluded` set to true.
+
+The upload has not been run, and nothing has been published. It needs a Hugging Face account with write access to
+the `oe-vowel-length` namespace, and the agreement of all three authors. Then, from the repository root:
+
+```bash
+hf upload oe-vowel-length/old-english-vowel-length release/hf . --repo-type=dataset
+```
+
+`hf` is the command line of `huggingface_hub`. Version 1.0 removed the older `huggingface-cli`. With a 0.x version
+the same upload is `huggingface-cli upload oe-vowel-length/old-english-vowel-length release/hf . --repo-type=dataset`.
 
 ## Layout
 
@@ -146,11 +174,13 @@ src/oevl/            the package
   encoder_experiment.py, charsiu_g2p.py                        neural experiments (GPU)
   pilot.py                                                     the GPU pilot runner used by the notebooks
   try_text.py                                                  macrons for your own sentences
+  export_hf.py                                                 the Hugging Face copy of the data (release/hf/)
 notebooks/           thin Kaggle and Colab launchers for oevl.pilot
 tests/               unit tests
 data/                corpus (by_source/), manifest, Tauber and WikiPron inputs, dictionaries (lex_*.csv),
                      ambiguity classes (ambiguity_classes.csv and .json)
 results/             one folder per experiment: metrics.json, per-word CSVs, token-level predictions, run logs
 report/              main.tex (+ generated/ tables, numbers, figure)
+release/             hf_card.md, the template of the Hugging Face dataset card
 run_all.sh           the whole traditional pipeline, from inputs to REPORT.pdf
 ```
