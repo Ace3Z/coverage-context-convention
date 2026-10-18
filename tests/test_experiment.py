@@ -33,3 +33,12 @@ class RegressionTests(unittest.TestCase):
  def test_autojunk_alignment(self):
   import inspect
   self.assertIn('autojunk=False',inspect.getsource(agreement))
+ def test_prior_backoff_to_lexicon_sources(self):
+  import tempfile
+  with tempfile.TemporaryDirectory() as d:
+   p=Path(d)/'lex.csv';p.write_text('marked_form,sources\ngōd,clarkhall bt\ngod,wiktionary\nmān,bt\nman,wiktionary\nstān,bt\n',encoding='utf8')
+   train=[{'key':'stan','gold_pattern':'0'}]*2  # seen in train: training counts win over the lexicon
+   lex,counts=lexicon(train,str(p))
+  test=[{'key':k,'gold':k,'gold_pattern':zeros(k)} for k in ('god','man','stan','wæter')]
+  # unseen: most sources, then fewest long (tie), seen, out of lexicon -> all short
+  self.assertEqual(predict(train,test,lex,counts,'frequency'),['1','0','0','00'])

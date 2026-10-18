@@ -90,8 +90,10 @@ changed instead of reporting accuracy.
   Splits are by work. No *Beowulf* text is used for training. Dev and test sentences that share a word 6-gram
   (bare, lower-cased, ð folded to þ) with a training work are left out of evaluation. For the *Soliloquies* that is
   one sentence of 49 tokens, for *Beowulf* none (`python -m oevl.audit_splits`).
-- **Systems:** frequency prior; candidate-constrained logistic classifiers (word / +2 left words / +2 left and
-  2 right words), seeds 1–3; oracle with the same all-short fallback for unknown words.
+- **Systems:** frequency prior (most frequent pattern in training, and for a word not seen in training the pattern
+  attested by the most dictionaries, then the one with the fewest long vowels); candidate-constrained logistic
+  classifiers (word / +2 left words / +2 left and 2 right words), seeds 1–3; oracle with the same all-short fallback
+  for unknown words.
 - **Populations:** lexicon-ambiguous, attested-ambiguous, minority-reading.
 - **Statistics:** mean ± sample SD over seeds; exact McNemar on seed 1 (token level).
 - **Dictionaries:** the report's tables use training forms only (`results/training_only`) and training forms +
