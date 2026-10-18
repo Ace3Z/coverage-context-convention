@@ -23,13 +23,15 @@ relative to the repository) or prefix commands with `PYTHONPATH=src`.
 `run_all.sh` takes a few minutes and does six steps:
 
 1. **Inputs.** Uses `data/brunetti-length.txt` (Tauber's *Beowulf* gold) and `data/ang_latn_broad.tsv` (WikiPron Old
-   English) if present, otherwise downloads them. Prints their SHA-256.
+   English) if present, otherwise downloads them. Prints their SHA-256. `oevl.audit_splits` then prints the word
+   6-gram overlap of each held-out set with each training work and writes `data/leakage_excluded.json`.
 2. **Unit tests** (`tests/`).
 3. **Dictionaries:** WikiPron IPA length marks to spellings (`data/lex_wikipron.csv`), plus the three dictionaries named
    in the proposal: Clark Hall, Wiktionary inflection tables and Bosworth–Toller (`data/lex_clarkhall.csv`,
    `lex_wiktionary.csv`, `lex_bt.csv`; rebuilt from the original sources with `python -m oevl.build_lexicons`).
 4. **Experiments:** four dictionary settings (training only, + WikiPron, + the three proposal dictionaries, + all four)
-   × both test sets, one test set per run, written to `results/<setting>/`.
+   × both test sets, and the John dev set once `data/by_source/john_ws.jsonl` exists, one set per run, written to
+   `results/<setting>/`.
 5. **`oevl.check_expected`:** fails if any of 336 headline values differs from the frozen results.
 6. **`oevl.build_report`:** writes `report/generated/` (numbers, tables, figure), checks the worked examples against
    the predictions, and compiles `REPORT.pdf` if `pdflatex` is installed. Without LaTeX, upload `report/` to Overleaf
@@ -49,7 +51,8 @@ They need `pip install -r requirements-neural.txt` (pins `transformers==4.57.6`)
 - **Encoder, full data:** ByT5-small fine-tuned on the same examples with the word only, the left context or the whole
   sentence. `PYTHONPATH=src python -m oevl.encoder_experiment` writes `results/encoder/`. No full-data encoder output
   is committed yet. Other context arms: `--arms local2,local5` (two or five words either side); a fixed training
-  subset: `--train-limit N`.
+  subset: `--train-limit N`. Add the dev set with `--tests john_ws,soliloquies,tauber_beowulf` (it needs
+  `results/wikipron/john_ws_predictions.jsonl` from `run_all.sh`).
 - **Encoder pilot:** the five context arms on 10,000 training examples, run from `notebooks/` on Kaggle or Colab.
   See `notebooks/README.md`. The logic is `oevl.pilot`.
 - **CharsiuG2P error analysis:** `PYTHONPATH=src python -m oevl.charsiu_g2p predict` writes `results/charsiu/ipa.tsv`
@@ -81,9 +84,12 @@ changed instead of reporting accuracy.
 ## Protocol
 
 - **Train:** Bright's *Reader*, Matthew (West Saxon), Sweet's *Primer*, *Physiologus*, Zupitza's Ælfric
-  *Grammar* (93,038 tokens). **Prose test:** Alfred's *Soliloquies* (15,480). **Verse test:** Tauber's
+  *Grammar* (93,038 tokens). **Dev:** Gospel of John (`john_ws`), scored like the test sets.
+  **Prose test:** Alfred's *Soliloquies* (15,431 of 15,480 tokens). **Verse test:** Tauber's
   *Beowulf* (17,361 tokens from 17,244 rows). **Editor agreement only:** Harrison & Sharp and Wyatt *Beowulf*.
-  Splits are by work. No *Beowulf* text is used for training.
+  Splits are by work. No *Beowulf* text is used for training. Dev and test sentences that share a word 6-gram
+  (bare, lower-cased, ð folded to þ) with a training work are left out of evaluation. For the *Soliloquies* that is
+  one sentence of 49 tokens, for *Beowulf* none (`python -m oevl.audit_splits`).
 - **Systems:** frequency prior; candidate-constrained logistic classifiers (word / +2 left words / +2 left and
   2 right words), seeds 1–3; oracle with the same all-short fallback for unknown words.
 - **Populations:** lexicon-ambiguous, attested-ambiguous, minority-reading.
@@ -96,15 +102,18 @@ changed instead of reporting accuracy.
 
 ## Data and licences
 
-- Corpus: `data/by_source/`. Built from Project Gutenberg (public domain) and Wikisource (CC BY-SA 4.0); released as
+- Corpus: `data/by_source/`, cleaned by `python -m oevl.clean_corpus` (explicit character mappings, counted in
+  `data/manifest.json`). Built from Project Gutenberg (public domain) and Wikisource (CC BY-SA 4.0); released as
   CC BY-SA 4.0. A Hugging Face copy is planned at `oe-vowel-length/old-english-vowel-length` but is not published yet.
   `PYTHONPATH=src python -m oevl.build_corpus --source <name> --out data/by_source` fetches an edition into
   `data/raw/corpus/` and rebuilds its file and manifest entry (URL, retrieval date and SHA-256 of each input, and the
   work's `role`: train, dev, test or agreement). The original extraction scripts were not kept, so the rules were
-  inferred from the files: `matthew_ws`, `bright_reader`, `physiologus` and `hs_beowulf` rebuild byte for byte. The
-  other four rebuilds contain 65,988 of their 65,992 committed tokens in order but differ in some sentences, mostly
-  where the original language filter dropped short lines (the module docstring says more); they were not overwritten. `john_ws.jsonl` (Gospel of John, Bright 1904, the dev set) is built by the same procedure as Matthew.
-  The `split` field inside the files is a stale sentence-level split; use the manifest `role`.
+  inferred from the files: `matthew_ws`, `bright_reader`, `physiologus` and `hs_beowulf` rebuild byte for byte once
+  `clean_corpus` has run on the output. The other four rebuilds contain 65,988 of their 65,992 committed tokens in
+  order but differ in some sentences, mostly where the original language filter dropped short lines (the module
+  docstring says more); they were not overwritten. `john_ws.jsonl` (Gospel of John, Bright 1904, the dev set) is built
+  by the same procedure as Matthew. The builder still writes the old sentence-level `split` field, which
+  `clean_corpus` removes; the split is by work, as the manifest `role` says.
 - Tauber gold: https://github.com/old-english-learner-texts/old-english-texts (CC BY-SA 4.0).
 - WikiPron: https://github.com/CUNY-CL/wikipron (Apache-2.0).
 - Clark Hall, *A Concise Anglo-Saxon Dictionary*, TEI conversion by Serg078 (Unlicense):
@@ -120,6 +129,7 @@ changed instead of reporting accuracy.
 src/oevl/            the package
   experiment.py        data, dictionaries, frequency/logistic models, metrics (the traditional system)
   build_corpus.py, wikipron_to_marked.py, build_lexicons.py, fetch_tauber.py    corpus, inputs and dictionaries
+  clean_corpus.py, audit_splits.py                             corpus clean-up and the 6-gram leakage audit
   check_expected.py, build_report.py                           frozen-value check, report tables and figure
   encoder_experiment.py, charsiu_g2p.py                        neural experiments (GPU)
   pilot.py                                                     the GPU pilot runner used by the notebooks

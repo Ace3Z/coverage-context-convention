@@ -20,7 +20,7 @@ import re
 import time
 from pathlib import Path
 
-from oevl.experiment import build_data, flags, lexicon, load_tauber, mcnemar, zeros
+from oevl.experiment import TESTS, build_data, flags, heldout, lexicon, mcnemar, zeros
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -77,6 +77,7 @@ def main():
     ap.add_argument("--seed", type=int, default=1)
     ap.add_argument("--arms", default=",".join(ARMS), help="comma list of word, left, sentence, localK (K words each side)")
     ap.add_argument("--train-limit", type=int, help="train on a fixed subset of this many examples (see limit())")
+    ap.add_argument("--tests", default="soliloquies,tauber_beowulf", help="comma list of john_ws (dev), soliloquies, tauber_beowulf")
     ap.add_argument("--tiny", action="store_true", help="tiny random model + small data subset (CPU smoke test)")
     a = ap.parse_args()
     a.arms = ",".join(dict.fromkeys(a.arms.split(",")))
@@ -85,6 +86,8 @@ def main():
         ap.error(f"unknown arm(s) {bad}: use word, left, sentence or localK")
     if a.train_limit is not None and a.train_limit < 1:
         ap.error("--train-limit must be at least 1")
+    if set(a.tests.split(",")) - set(TESTS):
+        ap.error(f"unknown --tests {sorted(set(a.tests.split(',')) - set(TESTS))}: use {','.join(TESTS)}")
 
     os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
     import torch
@@ -93,8 +96,8 @@ def main():
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
 
-    train, prose, _, _ = build_data(ROOT / "data")
-    tests = {"soliloquies": prose, "tauber_beowulf": load_tauber(ROOT / "data/brunetti-length.txt")}
+    train, _, _, _ = build_data(ROOT / "data")
+    tests = {t: heldout(ROOT / "data", t) for t in a.tests.split(",")}
     lex, counts = lexicon(train, str(ROOT / "data/lex_wikipron.csv"))
     examples = [r for r in train if r["gold_pattern"] and len(lex.get(r["key"], set())) >= 2]
     if a.tiny:

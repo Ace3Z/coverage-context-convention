@@ -21,6 +21,7 @@ Path('data/wikipron_provenance.json').write_text(json.dumps({'url': url,
 PY
 fi
 sha256sum data/brunetti-length.txt data/ang_latn_broad.tsv 2>/dev/null || shasum -a 256 data/brunetti-length.txt data/ang_latn_broad.tsv
+python -m oevl.audit_splits   # data/leakage_excluded.json: dev/test sentences sharing a 6-gram with train
 
 echo "== 2/6 unit tests"
 python -m unittest discover -s tests -v
@@ -35,7 +36,9 @@ fi
 
 echo "== 4/6 experiments (one test set per run)"
 rm -rf results/training_only results/wikipron results/proposal results/all
-for t in soliloquies tauber_beowulf; do
+tests="soliloquies tauber_beowulf"
+if [[ -s data/by_source/john_ws.jsonl ]]; then tests="john_ws $tests"; else echo "   no dev set: data/by_source/john_ws.jsonl is missing"; fi
+for t in $tests; do
   python -m oevl.experiment --data data --tauber data/brunetti-length.txt --out results/training_only --tests "$t" > "results_training_only_$t.log"
   for lex in wikipron proposal all; do
     python -m oevl.experiment --data data --tauber data/brunetti-length.txt --out "results/$lex" --lexicon "data/lex_$lex.csv" --tests "$t" > "results_${lex}_$t.log"

@@ -1,0 +1,31 @@
+{
+ "ngram": 6,
+ "text": "bare tokens, lower-cased, ð folded to þ, 6-grams within a sentence",
+ "train": [
+  "bright_reader",
+  "matthew_ws",
+  "sweet_primer",
+  "physiologus",
+  "zupitza_grammar"
+ ],
+ "excluded": {
+  "soliloquies": [
+   "soliloquies:00331"
+  ],
+  "tauber_beowulf": []
+ },
+ "counts": {
+  "soliloquies": {
+   "sentences": 1,
+   "of_sentences": 711,
+   "tokens": 49,
+   "of_tokens": 15480
+  },
+  "tauber_beowulf": {
+   "sentences": 0,
+   "of_sentences": 761,
+   "tokens": 0,
+   "of_tokens": 17361
+  }
+ }
+}

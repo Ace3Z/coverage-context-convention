@@ -17,12 +17,19 @@ def tokens(rows):
   for i,(w,b) in enumerate(zip(ts,bs)):
    if bare(w)!=norm(b):raise ValueError('Gold/input mismatch: '+r['id'])
    yield {'id':r['id']+':'+str(i),'sentence_id':r['id'],'source':r['source'],'index':i,'gold':w,'bare':b,'sentence':bs,'gold_pattern':pattern(w),'key':key(b)}
+TRAIN=['bright_reader','matthew_ws','sweet_primer','physiologus','zupitza_grammar']
+TESTS=['john_ws','soliloquies','tauber_beowulf']  # john_ws is the dev set, scored like the tests
+def heldout(root,name,tauber=None):
+ # A dev or test set without the sentences that share a 6-gram with train (python -m oevl.audit_splits)
+ ex=set(json.loads((Path(root)/'leakage_excluded.json').read_text(encoding='utf8'))['excluded'][name])
+ rows=load_tauber(tauber or Path(root)/'brunetti-length.txt') if name=='tauber_beowulf' else list(tokens(load(Path(root)/'by_source'/(name+'.jsonl'))))
+ return [r for r in rows if r['sentence_id'] not in ex]
 def build_data(root):
- src=Path(root)/'by_source'; names=['bright_reader','matthew_ws','sweet_primer','physiologus','zupitza_grammar']
- train=list(tokens([r for name in names for r in load(src/(name+'.jsonl'))]))
- prose=list(tokens(load(src/'soliloquies.jsonl')))
+ src=Path(root)/'by_source'
+ train=list(tokens([r for name in TRAIN for r in load(src/(name+'.jsonl'))]))
+ prose=heldout(root,'soliloquies')
  hs=list(tokens(load(src/'hs_beowulf.jsonl'))); wy=list(tokens(load(src/'wyatt_beowulf.jsonl')))
- assert not ({r['source'] for r in train}&{'soliloquies','hs_beowulf','wyatt_beowulf'})
+ assert not ({r['source'] for r in train}&{'john_ws','soliloquies','hs_beowulf','wyatt_beowulf'})
  return train,prose,hs,wy
 
 def lexicon(train,external=None):
@@ -139,15 +146,14 @@ def per_word(train,test,pred,lex,counts,top=20):
  return out
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--data',default='data');p.add_argument('--out',default='results/experiment');p.add_argument('--tauber',default='data/brunetti-length.txt');p.add_argument('--lexicon',help='Optional externally sourced lexicon TSV/CSV');p.add_argument('--tests',default='soliloquies,tauber_beowulf',help='Comma list: soliloquies, tauber_beowulf (run one at a time to keep each run short)');a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--data',default='data');p.add_argument('--out',default='results/experiment');p.add_argument('--tauber',default='data/brunetti-length.txt');p.add_argument('--lexicon',help='Optional externally sourced lexicon TSV/CSV');p.add_argument('--tests',default='soliloquies,tauber_beowulf',help='Comma list: john_ws (dev), soliloquies, tauber_beowulf (run one at a time to keep each run short)');a=p.parse_args()
  wanted=set(a.tests.split(','))
+ if wanted-set(TESTS):p.error(f'unknown --tests {sorted(wanted-set(TESTS))}: use {",".join(TESTS)}')
  train,prose,hs,wy=build_data(a.data);lex,counts=lexicon(train,a.lexicon);out=Path(a.out);out.mkdir(parents=True,exist_ok=True)
  summary={'dataset':{'train':len(train),'test_prose':len(prose),'agreement_hs':len(hs),'agreement_wyatt':len(wy),'lexicon_origin':'training attested forms'+(' + external file' if a.lexicon else ' (proxy; NOT Clark Hall/Wiktionary/Bosworth-Toller)')}}
  tauber_path=Path(a.tauber)
- tests=[('soliloquies',prose)] if 'soliloquies' in wanted else []
- if 'tauber_beowulf' in wanted:
-  if not tauber_path.exists():raise SystemExit('Tauber gold missing: put brunetti-length.txt in data/ or run python -m oevl.fetch_tauber')
-  tests.append(('tauber_beowulf',load_tauber(tauber_path)))
+ if 'tauber_beowulf' in wanted and not tauber_path.exists():raise SystemExit('Tauber gold missing: put brunetti-length.txt in data/ or run python -m oevl.fetch_tauber')
+ tests=[(name,heldout(a.data,name,tauber_path)) for name in TESTS if name in wanted]
  for name,test in tests:
   pred={'frequency':predict(train,test,lex,counts,'frequency'),'oracle':oracle(test,lex)}
   for arm in ['word','left','sentence']:

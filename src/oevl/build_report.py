@@ -164,7 +164,7 @@ for tag, toks in found.items():
 from oevl import experiment as E  # noqa: E402
 train_toks, _, _, _ = E.build_data(str(ROOT / "data"))
 lex_t, _ = E.lexicon(train_toks)
-beo = E.load_tauber(ROOT / "data" / "brunetti-length.txt")
+beo = E.heldout(ROOT / "data", "tauber_beowulf")
 no_cand = sum(r["gold_pattern"] not in lex_t.get(r["key"], set()) for r in beo)
 unknown = sum(not lex_t.get(r["key"]) for r in beo)
 num["BeoNoCandTrue"] = f"{100 * no_cand / len(beo):.1f}"

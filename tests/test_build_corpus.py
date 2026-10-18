@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from oevl import build_corpus as bc  # noqa: E402
+from oevl.clean_corpus import clean_record  # noqa: E402
 
 
 class TestBuildCorpus(unittest.TestCase):
@@ -71,6 +72,7 @@ class TestBuildCorpus(unittest.TestCase):
     @unittest.skipUnless((ROOT / "data/raw/corpus/matthew_ws/pages.json").exists(), "Wikisource download not cached")
     def test_matthew_rebuilds_byte_for_byte(self):
         rows, _, _ = bc.build("matthew_ws", ROOT / "data/raw/corpus")
+        rows = [clean_record(r, collections.Counter()) for r in rows]  # the committed files are cleaned
         data = "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows).encode("utf8")
         self.assertEqual(data, (ROOT / "data/by_source/matthew_ws.jsonl").read_bytes())
 

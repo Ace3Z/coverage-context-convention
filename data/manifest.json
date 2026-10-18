@@ -11,8 +11,10 @@
       "units": 689,
       "tokens": 17682,
       "long_vowel_marks": 7560,
-      "sha256": "9663f9349e3f8144824c65a6e8b9f2b3d4526dd519241d1c42e0c8397db67d3d",
-      "cleaning": {},
+      "sha256": "39f0cf45755814716a95af3a92d6d9ddf7fb05d627da0b16290f1b6b4b6e204c",
+      "cleaning": {
+        "removed_field_split": 689
+      },
       "role": "agreement",
       "inputs": [
         {
@@ -32,15 +34,17 @@
       "licence": "CC BY-SA 4.0 (Wikisource transcription of a public-domain edition)",
       "origin": "https://en.wikisource.org/wiki/Beowulf_(Wyatt)",
       "units": 727,
-      "tokens": 17569,
-      "long_vowel_marks": 7339,
-      "sha256": "7a257cfcbc6e7fbfe1dc5abb6d214db3e0f7edaedb5f662e86711fcddb43e74b",
+      "tokens": 17568,
+      "long_vowel_marks": 7340,
+      "sha256": "2384eefac0e509e74f475c80bc6c6fa3c28c909adda8f7ed1b678e7db9212f0b",
       "cleaning": {
         "dropped_mark_U+0302": 1,
         "dropped_mark_stray_macron": 1,
         "dropped_mark_U+0326": 1,
         "dropped_mark_U+030C": 1,
-        "dropped_mark_U+0308": 1
+        "dropped_mark_U+0308": 1,
+        "removed_field_split": 727,
+        "repaired_word_Hr¯wðel": 1
       },
       "role": "agreement"
     },
@@ -55,14 +59,15 @@
       "units": 1916,
       "tokens": 23940,
       "long_vowel_marks": 10257,
-      "sha256": "56fdbe8130129c08995c45c594bee7fd1c5bc65ca7084f7febfcf6657e24cf3d",
+      "sha256": "6da39f2ea03da7b7b501f09f2bbed9e7bfa64707cfaa5468d1e06ae3aa160a0e",
       "cleaning": {
         "dropped_line_lat": 287,
         "dropped_words_lat": 724,
         "dropped_line_eng": 169,
         "dropped_words_eng": 315,
         "dropped_mark_U+0307": 1,
-        "dropped_sentence_mixed": 2
+        "dropped_sentence_mixed": 2,
+        "removed_field_split": 1916
       },
       "role": "train"
     },
@@ -77,7 +82,7 @@
       "units": 1186,
       "tokens": 38495,
       "long_vowel_marks": 16863,
-      "sha256": "10c990a91841f2b2a7fdabb44d95e3c189764e298abbdbb04318f67b21cd8ee1",
+      "sha256": "46e7ec5c90655b6b77a7aff1ee75dd6912b86c49e0211d5727ff6b1420896a17",
       "cleaning": {
         "dropped_line_eng": 26,
         "dropped_words_eng": 541,
@@ -87,7 +92,8 @@
         "dropped_line_lat": 2,
         "dropped_words_lat": 10,
         "dropped_sentence_mixed": 4,
-        "dropped_mark_U+0328": 63
+        "dropped_mark_U+0328": 63,
+        "removed_field_split": 1186
       },
       "role": "train",
       "inputs": [
@@ -265,13 +271,15 @@
       "units": 1223,
       "tokens": 20648,
       "long_vowel_marks": 9406,
-      "sha256": "9608132656b49212b84a8da8f8fde927c0bb56f6445e17745e20fed1d4d9610a",
+      "sha256": "afef00147ba8a7fad3a246abce32193ea45e29e0e08b658f890031db1cf24c28",
       "cleaning": {
         "dropped_mark_U+0303": 1,
         "dropped_line_eng": 1,
         "dropped_words_eng": 13,
         "dropped_sentence_mixed": 1,
-        "dropped_mark_U+0306": 1
+        "dropped_mark_U+0306": 1,
+        "removed_field_split": 1223,
+        "mapped_U+0110_to_U+00D0": 207
       },
       "role": "train",
       "inputs": [
@@ -298,7 +306,7 @@
       "units": 711,
       "tokens": 15480,
       "long_vowel_marks": 6740,
-      "sha256": "cd86a579f8e15ffde764e5722efac1817ab2c2aaff3ce9dca06e25d51b011d7e",
+      "sha256": "5dd6df877fee410d58c5b9005f33f6caf64f068c586ce1babf551d3db968419e",
       "cleaning": {
         "dropped_line_lat": 474,
         "dropped_words_lat": 6809,
@@ -309,7 +317,11 @@
         "dropped_mark_U+0301": 1,
         "dropped_sentence_mixed": 2,
         "dropped_sentence_latin_words": 1,
-        "dropped_mark_U+030B": 1
+        "dropped_mark_U+030B": 1,
+        "removed_field_split": 711,
+        "mapped_U+0110_to_U+00D0": 45,
+        "mapped_U+043E_to_U+006F": 2,
+        "mapped_U+0441_to_U+0063": 1
       },
       "role": "test"
     },
@@ -323,8 +335,8 @@
       "origin": "https://www.gutenberg.org/ebooks/34316",
       "units": 345,
       "tokens": 9003,
-      "long_vowel_marks": 3958,
-      "sha256": "e197ad1979f10891a526ac09f76a13ec5cb7fddb529c6b7686af1462f8de0590",
+      "long_vowel_marks": 3959,
+      "sha256": "44bf516e81da3e8601d872dc86ca5b521e7aaa4ef324723e0471c5f992457595",
       "cleaning": {
         "dropped_line_eng": 6,
         "dropped_words_eng": 15,
@@ -333,7 +345,9 @@
         "dropped_mark_U+0306": 1,
         "dropped_line_lat": 5,
         "dropped_words_lat": 34,
-        "dropped_unit_overlaps_matthew": 12
+        "dropped_unit_overlaps_matthew": 12,
+        "removed_field_split": 345,
+        "repaired_word_þˉa": 1
       },
       "role": "train"
     },
@@ -348,8 +362,10 @@
       "units": 47,
       "tokens": 952,
       "long_vowel_marks": 394,
-      "sha256": "dfcabf8aae33b9e8da15c1f1ffac42ae8c36bb4f3dc3d0fcd5b1a9c34594f8d6",
-      "cleaning": {},
+      "sha256": "e0efa4a5f07e9391ef3d1b642a76940193691e43b36d228741b6cc2708e7f242",
+      "cleaning": {
+        "removed_field_split": 47
+      },
       "role": "train",
       "inputs": [
         {
@@ -389,33 +405,6 @@
           }
         }
       ]
-    }
-  },
-  "splits": {
-    "beowulf_hs": {
-      "units": 689,
-      "tokens": 17682,
-      "sha256": "9663f9349e3f8144824c65a6e8b9f2b3d4526dd519241d1c42e0c8397db67d3d"
-    },
-    "beowulf_wyatt": {
-      "units": 727,
-      "tokens": 17569,
-      "sha256": "7a257cfcbc6e7fbfe1dc5abb6d214db3e0f7edaedb5f662e86711fcddb43e74b"
-    },
-    "dev": {
-      "units": 1473,
-      "tokens": 25769,
-      "sha256": "d0d61c59de985584415273c4c33c9b033a889fb24d3a88e12051ff2e31bd3913"
-    },
-    "test": {
-      "units": 400,
-      "tokens": 9733,
-      "sha256": "4e105901777a55d64e6e17eb260b32b490f26ba7660b13885bb20ba4bef7eec9"
-    },
-    "train": {
-      "units": 4612,
-      "tokens": 90326,
-      "sha256": "d02f0dab73c849cf8f589199859608e2c2d4e7a1e9f654647e1504e699833ae7"
     }
   }
 }
