@@ -39,7 +39,9 @@ relative to the repository) or prefix commands with `PYTHONPATH=src`.
    the Zupitza ablation × three sets, and the editor agreement of each *Beowulf* pair).
 6. **`oevl.build_report`:** writes `report/generated/` (numbers, tables, figure), checks the worked examples against
    the predictions, and compiles `REPORT.pdf` if `pdflatex` is installed. Without LaTeX, upload `report/` to Overleaf
-   and compile `main.tex`.
+   and compile `main.tex`. Before it, `oevl.error_typing`, `oevl.encoder_summary --from-tsv` and `oevl.select_config`
+   rebuild the error table, the encoder table and numbers, and the encoder selection record from committed files (no
+   GPU, see below).
 
 A single experiment can also be run on its own. Results for the same `--out` folder are merged:
 
@@ -53,11 +55,15 @@ PYTHONPATH=src python -m oevl.experiment --data data --out results/wikipron --le
 They need `pip install -r requirements-neural.txt` (pins `transformers==4.57.6`) and a GPU.
 
 - **Encoder, full data:** ByT5-small fine-tuned on the same examples with the word only, the left context or the whole
-  sentence. `PYTHONPATH=src python -m oevl.encoder_experiment` writes `results/encoder/`. No full-data encoder output
-  is committed yet. Like `run_all.sh` it trains without Zupitza by default (D3), and `--exclude-train ""` trains
-  on all five works. Other context arms: `--arms local2,local5` (two or five words either side); a fixed training
-  subset: `--train-limit N`. It scores the John dev set and both test sets (`--tests` picks fewer) and reads
-  `results/wikipron/<set>_predictions.jsonl` from `run_all.sh`.
+  sentence. `PYTHONPATH=src python -m oevl.encoder_experiment` runs it. Like `run_all.sh` it trains without Zupitza
+  by default (D3), and `--exclude-train ""` trains on all five works. Other context arms: `--arms local2,local5` (two
+  or five words either side); a fixed training subset: `--train-limit N`. It scores the John dev set and both test
+  sets (`--tests` picks fewer) and reads `results/wikipron/<set>_predictions.jsonl` from `run_all.sh`.
+  `bash scripts/encoder_grid.sh` holds the exact commands behind `results/encoder/`: 24 dev selection runs, whose rule
+  `oevl.select_config` applies (`selection.json`), then 39 runs of the chosen setting, which
+  `oevl.encoder_summary --runs` pools into `summary.json`, per-token prediction tables (`*_predictions.tsv.gz`),
+  `report/generated/tab_encoder.tex` and `numbers_encoder.tex`. The run folders are not committed: `run_all.sh`
+  rebuilds all of these from the committed tables and run records.
 - **Encoder pilot:** the five context arms on 10,000 training examples, run from `notebooks/` on Kaggle or Colab.
   See `notebooks/README.md`. The logic is `oevl.pilot`. The pilots ran before D3, so `oevl.pilot` still trains on all
   five works.
@@ -193,9 +199,12 @@ src/oevl/            the package
   agreement.py                                                 editor agreement on Beowulf and the gate
   check_expected.py, build_report.py                           frozen-value check, report tables and figure
   encoder_experiment.py, charsiu_g2p.py                        neural experiments (GPU)
+  encoder_summary.py, select_config.py, stats.py               encoder pooling, selection rule, sentence bootstrap
+  error_typing.py                                              error typing kappa and table from the labels
   pilot.py                                                     the GPU pilot runner used by the notebooks
   try_text.py                                                  macrons for your own sentences
   export_hf.py                                                 the Hugging Face copy of the data (release/hf/)
+scripts/encoder_grid.sh  the GPU commands behind results/encoder/
 notebooks/           thin Kaggle and Colab launchers for oevl.pilot
 tests/               unit tests
 data/                corpus (by_source/), manifest, Tauber and WikiPron inputs, dictionaries (lex_*.csv),
