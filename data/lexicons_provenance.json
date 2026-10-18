@@ -4,20 +4,20 @@
     "file": "clark_hall_tei_rdfa.xml",
     "license": "Unlicense",
     "sha256": "070f13ef137b4f69d08b303e0067da5562e220dc1782f33072b3652bb5aeccf4",
-    "forms": 33896
+    "forms": 34287
   },
   "wiktionary": {
     "url": "https://kaikki.org/dictionary/Old%20English/kaikki.org-dictionary-OldEnglish.jsonl",
     "file": "kaikki.org-dictionary-OldEnglish.jsonl",
     "license": "CC BY-SA 4.0 (Wiktionary)",
     "sha256": "ab5b4373a4e4aaf4d9d4bf639d80a4bfce2701701fcd66a084c9c7cfe4b3621f",
-    "forms": 125295
+    "forms": 127899
   },
   "bt": {
     "url": "https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/3010b742-b2c4-4152-870a-716ce1652e7c/content",
     "file": "bosworth_entries_export.csv",
     "license": "CC BY 4.0",
     "sha256": "1e01962280c33490e869cf65b94012de4cc32b9074e9a1183f37f8b45acae5b1",
-    "forms": 46421
+    "forms": 45187
   }
 }

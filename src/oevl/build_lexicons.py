@@ -1,6 +1,7 @@
 """Build the candidate-spelling lists named in the proposal: Clark Hall, Wiktionary tables, Bosworth-Toller.
 
-Each output is a one-column CSV (marked_form) that experiment.py reads with --lexicon.
+Each output is a CSV with a marked_form column that experiment.py reads with --lexicon. The two unions add a
+sources column (space-separated names) so the frequency prior can back off to the pattern most sources attest.
   data/lex_clarkhall.csv   headwords of Clark Hall's Concise Anglo-Saxon Dictionary (TEI conversion)
   data/lex_wiktionary.csv  headwords + inflection-table forms of Old English Wiktionary entries (kaikki.org)
   data/lex_bt.csv          headwords of Bosworth-Toller (LINDAT dump; acute accents mark length -> macrons)
@@ -28,22 +29,32 @@ SOURCES = {
     "bt": ("https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/3010b742-b2c4-4152-870a-716ce1652e7c/content",
            "bosworth_entries_export.csv", "CC BY 4.0"),
 }
-WORD = re.compile(r"[a-zþðæāēīōūȳǣ]+")
+WORD = re.compile(r"[abcdefghiklmnopqrstuwxyzþðæāēīōūȳǣ]+")  # Old English letters only (no j, v)
 ACUTE_TO_MACRON = str.maketrans("áéíóúýǽ", "āēīōūȳǣ")
+BT_DIGRAPHS = (("eá", "ēa"), ("eó", "ēo"), ("ié", "īe"), ("ió", "īo"))  # long diphthongs, accent on the 2nd letter
+TEACHING_MARKS = str.maketrans("ċġęǫ", "cgeo")  # palatal dots and hooks (PLAN S2), only length is scored
 SKIP_TAGS = {"table-tags", "inflection-template", "class"}
 
 
 def clean(form, acute=False):
-    """Lower-case, NFC, drop hyphens/apostrophes; return None unless it is one Old English word."""
-    s = unicodedata.normalize("NFC", form).lower().replace("-", "").replace("'", "").replace("’", "").strip()
-    if acute:
+    """Lower-case, NFC, PLAN S2 rules, join hyphens; return None unless it is one Old English word."""
+    s = unicodedata.normalize("NFC", form).lower().strip()
+    if s.startswith("-") or s.endswith("-"):  # affixes and partial variants are not words
+        return None
+    if acute:  # digraphs first, and before hyphens are joined, so ge-ánlǽcan keeps its ā
+        for a, b in BT_DIGRAPHS:
+            s = s.replace(a, b)
         s = s.translate(ACUTE_TO_MACRON)
+    s = s.translate(TEACHING_MARKS).replace("-", "").replace("'", "").replace("’", "")
     return s if WORD.fullmatch(s) else None
 
 
 def clarkhall(path):
     text = path.read_text(encoding="utf8")
-    return {w for w in (clean(m) for m in re.findall(r"<tei:orth[^>]*>(.*?)</tei:orth>", text)) if w}
+    # A headword with a ge- marker (+ or ±) or a homograph number is a multi-line orth with <tei:lbl> inside.
+    orths = re.findall(r"<tei:orth[^>]*>(.*?)</tei:orth>", text, re.S)
+    orths = [re.sub(r"<[^>]+>", "", re.sub(r"<tei:lbl[^>]*>.*?</tei:lbl>", "", m, flags=re.S)) for m in orths]
+    return {w for w in (clean(m) for m in orths) if w}
 
 
 def wiktionary(path):
@@ -53,7 +64,10 @@ def wiktionary(path):
             d = json.loads(line)
             if d.get("lang_code") not in (None, "ang"):
                 continue
-            forms = [d["word"]] + [x["form"] for x in d.get("forms", []) if not SKIP_TAGS & set(x.get("tags", []))]
+            forms = [x["form"] for x in d.get("forms", []) if not SKIP_TAGS & set(x.get("tags", []))]
+            # The page title has no macrons. It is the headword only when kaikki gives no canonical (marked) form.
+            if not any("canonical" in x.get("tags", []) for x in d.get("forms", [])):
+                forms.append(d["word"])
             out |= {w for w in (clean(x) for x in forms) if w}
     return out
 
@@ -72,11 +86,11 @@ def bosworth_toller(path):
     return out
 
 
-def write(path, forms):
+def write(path, forms, lists=None):
     with open(path, "w", encoding="utf8", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["marked_form"])
-        w.writerows([x] for x in sorted(forms))
+        w.writerow(["marked_form"] + (["sources"] if lists else []))
+        w.writerows([x] + ([" ".join(n for n in lists if x in lists[n])] if lists else []) for x in sorted(forms))
 
 
 def read(path):
@@ -115,12 +129,13 @@ def main():
 
 def write_unions(lists):
     proposal = lists["clarkhall"] | lists["wiktionary"] | lists["bt"]
-    write(ROOT / "data/lex_proposal.csv", proposal)
+    write(ROOT / "data/lex_proposal.csv", proposal, lists)
     print(f"proposal (union of the three): {len(proposal)} forms")
     wp = ROOT / "data/lex_wikipron.csv"
     if wp.exists():
-        allf = proposal | read(wp)
-        write(ROOT / "data/lex_all.csv", allf)
+        lists = {**lists, "wikipron": read(wp)}
+        allf = proposal | lists["wikipron"]
+        write(ROOT / "data/lex_all.csv", allf, lists)
         print(f"all (three + WikiPron): {len(allf)} forms")
 
 
