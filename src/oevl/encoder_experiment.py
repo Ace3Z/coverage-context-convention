@@ -20,7 +20,7 @@ import re
 import time
 from pathlib import Path
 
-from oevl.experiment import EXCLUDE_D3, TESTS, TRAIN, build_data, flags, heldout, lexicon, load_classes, mcnemar, predict, zeros
+from oevl.experiment import EXCLUDE_D3, TESTS, TRAIN, build_data, flags, heldout, lexicon, load_classes, predict, zeros
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -150,13 +150,6 @@ def main():
         tok = AutoTokenizer.from_pretrained(a.model)
     print(f"device={device} model={'tiny-random' if a.tiny else a.model} train_examples={len(examples)}", flush=True)
 
-    freq = {}
-    for test in tests:
-        with open(ROOT / "results" / "wikipron" / f"{test}_predictions.jsonl", encoding="utf8") as f:
-            for line in f:
-                d = json.loads(line)
-                freq[d["id"]] = d
-
     def enc(texts, n):
         return tok(texts, padding=True, truncation=True, max_length=n, return_tensors="pt").to(device)
 
@@ -241,19 +234,7 @@ def main():
         if device == "cuda":
             torch.cuda.empty_cache()
 
-    summary["mcnemar"] = {}
-    for test, rows in tests.items():
-        gold = [r["gold_pattern"] for r in rows]
-        cols = {"frequency": prior[test],  # the logistic models below are run_all.sh's, trained without Zupitza (D3)
-                "logistic_word": [freq[r["id"]]["word_seed1_prediction"] for r in rows],
-                "logistic_bilateral": [freq[r["id"]]["sentence_seed1_prediction"] for r in rows]}
-        for arm in summary["arms"]:
-            cols[f"encoder_{arm}"] = [all_preds[test][r["id"]][f"encoder_{arm}"] for r in rows]
-        pairs = [("frequency", f"encoder_{x}") for x in summary["arms"]]
-        pairs += [("encoder_word", f"encoder_{x}") for x in summary["arms"] if x != "word"]
-        pairs += [("logistic_word", "encoder_word"), ("logistic_bilateral", "encoder_sentence")]
-        summary["mcnemar"][test] = {f"{p}_vs_{q}": mcnemar(cols[p], cols[q], gold)
-                                    for p, q in pairs if p in cols and q in cols}
+    for test, rows in tests.items():  # paired tests: oevl.encoder_summary, from these files
         with open(out / f"{test}_predictions.jsonl", "w", encoding="utf8") as f:
             for r, fp in zip(rows, prior[test]):
                 fl = flags(r, lex, counts)

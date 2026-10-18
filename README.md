@@ -58,7 +58,7 @@ They need `pip install -r requirements-neural.txt` (pins `transformers==4.57.6`)
   sentence. `PYTHONPATH=src python -m oevl.encoder_experiment` runs it. Like `run_all.sh` it trains without Zupitza
   by default (D3), and `--exclude-train ""` trains on all five works. Other context arms: `--arms local2,local5` (two
   or five words either side); a fixed training subset: `--train-limit N`. It scores the John dev set and both test
-  sets (`--tests` picks fewer) and reads `results/wikipron/<set>_predictions.jsonl` from `run_all.sh`.
+  sets (`--tests` picks fewer).
   `bash scripts/encoder_grid.sh` holds the exact commands behind `results/encoder/`: 24 dev selection runs, whose rule
   `oevl.select_config` applies (`selection.json`), then 39 runs of the chosen setting, which
   `oevl.encoder_summary --runs` pools into `summary.json`, per-token prediction tables (`*_predictions.tsv.gz`),
