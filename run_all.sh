@@ -50,6 +50,8 @@ for d in training_only wikipron proposal all; do mv results_${d}_*.log "results/
 if [[ -s results/charsiu/ipa.tsv ]]; then
   python -m oevl.charsiu_g2p analyse > results/charsiu/analyse.log   # uses the shipped CharsiuG2P outputs (made on Colab)
 fi
+mkdir -p results/agreement
+python -m oevl.agreement > results/agreement/agreement.log   # three Beowulf editions, kappa and the S7 gate
 
 echo "== 5/6 check all headline values"
 python -m oevl.check_expected
