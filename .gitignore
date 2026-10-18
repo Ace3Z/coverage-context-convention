@@ -11,6 +11,8 @@ my_tests/
 data/raw/
 .Rhistory
 REPORT.pdf
+results/charsiu/analyse.log
+results/charsiu/ipa_tiny.tsv
 *.zip
 *.egg-info/
 build/

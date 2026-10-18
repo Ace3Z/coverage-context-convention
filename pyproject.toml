@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "oevl"
 version = "0.1.0"
 description = "Old English vowel-length restoration (UZH, Essentials in Text and Speech Processing, HS26)"
-requires-python = ">=3.11"
+requires-python = ">=3.11,<3.15"  # the pinned numpy/scipy/scikit-learn have no 3.15 wheels
 
 [tool.setuptools.packages.find]
 where = ["src"]

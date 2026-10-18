@@ -2,7 +2,7 @@
 
 The encoder pilot needs a GPU, so it runs on Kaggle or Colab. Both notebooks only put the project on the machine,
 install `requirements-neural.txt` and call `python -m oevl.pilot`; the logic, checks and resume behaviour are in
-`src/oevl/pilot.py`.
+`src/oevl/pilot.py`. Make the project zip in the repository with `git archive -o oe_project.zip HEAD`.
 
 | Notebook | Platform | How the project gets there |
 |---|---|---|
@@ -14,9 +14,12 @@ local5), the same 10,000 training examples for every arm, one epoch, batch 32, m
 seed 1. Run 128 first. The 256 run answers a question only if it is compared with the 128 run of the same arms.
 
 After every finished arm the results folder is packed into `encoder_pilot_<bytes>_results.zip`. Download it. To
-resume in a new session, add that zip as input (Kaggle) or upload it to `/content` (Colab); finished arms are
-validated and skipped. An arm that was interrupted starts again from the beginning.
+resume in a new session, add that zip, a renamed copy such as `... (1).zip`, or its extracted folder as input (Kaggle),
+or upload the zip to `/content` (Colab). Finished arms are copied in, validated and skipped; an arm that was interrupted
+starts again from the beginning. No new arm starts after 9 hours of the notebook session, counted from the first cell,
+so an arm cannot run into Kaggle's 12-hour limit.
 
-These pilots are exploratory and have not yet been run on a GPU in this form. A full CPU dry run of the same loop:
+These pilots are exploratory. With only 10,000 examples and one epoch, an arm's score also reflects how fast it learns,
+so do not read the pilot's ranking of arms as the full-data ranking. A full CPU dry run of the same loop:
 
     PYTHONPATH=src python -m oevl.pilot --tiny --allow-cpu --skip-model-check --max-bytes 128 --out /tmp/pilot

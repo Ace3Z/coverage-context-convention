@@ -7,7 +7,7 @@ One command reproduces every number, table and the figure in the report (`REPORT
 
 ## Setup
 
-Python 3.11 or newer (check with `python3 --version`).
+Python 3.11 to 3.14 (check with `python3 --version`); the pinned packages have no 3.15 builds yet.
 
 ```bash
 python3 -m venv .venv
@@ -17,7 +17,8 @@ bash run_all.sh
 ```
 
 The code is the package `oevl` in `src/oevl/`. `run_all.sh` puts `src` on `PYTHONPATH`, so nothing has to be
-installed. To run modules by hand, either `pip install -e .` once or prefix commands with `PYTHONPATH=src`.
+installed. To run modules by hand, either `pip install -e .` once (editable only: the code finds `data/` and `results/`
+relative to the repository) or prefix commands with `PYTHONPATH=src`.
 
 `run_all.sh` takes a few minutes and does six steps:
 
@@ -55,9 +56,9 @@ They need `pip install -r requirements-neural.txt` (pins `transformers==4.57.6`)
   (committed, made on Colab); `run_all.sh` runs the `analyse` step on it.
 
 GPU training is not bit-for-bit repeatable, so a new run can differ slightly. CPU smoke tests without downloads:
-`python -m oevl.encoder_experiment --tiny --out /tmp/t`, and
-`python -m oevl.pilot --tiny --allow-cpu --skip-model-check --max-bytes 128 --out /tmp/pilot` for the whole pilot loop.
-Note that `python -m oevl.charsiu_g2p predict --tiny` overwrites `results/charsiu/ipa.tsv`; run it in a copy.
+`PYTHONPATH=src python -m oevl.encoder_experiment --tiny --out /tmp/t`,
+`PYTHONPATH=src python -m oevl.pilot --tiny --allow-cpu --skip-model-check --max-bytes 128 --out /tmp/pilot` for the whole
+pilot loop, and `PYTHONPATH=src python -m oevl.charsiu_g2p predict --tiny`, which writes `results/charsiu/ipa_tiny.tsv`.
 
 ## Try it on your own sentences
 
