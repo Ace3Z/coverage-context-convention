@@ -26,14 +26,15 @@ def build_data(root):
  return train,prose,hs,wy
 
 def lexicon(train,external=None):
- lex=collections.defaultdict(set); counts=collections.defaultdict(collections.Counter)
+ # lex[skeleton][pattern] = the lexicon sources that attest it (empty if only training attests it)
+ lex=collections.defaultdict(dict); counts=collections.defaultdict(collections.Counter)
  for r in train:
-  lex[r['key']].add(r['gold_pattern']);counts[r['key']][r['gold_pattern']]+=1
+  lex[r['key']].setdefault(r['gold_pattern'],set());counts[r['key']][r['gold_pattern']]+=1
  if external:
   with open(external,encoding='utf8') as f:
    for row in csv.DictReader(f,delimiter='\t' if external.endswith('.tsv') else ','):
     form=row.get('marked_form') or row.get('marked') or row.get('form')
-    if form and re.fullmatch(r'[a-zA-ZþðæāēīōūȳǣĀĒĪŌŪȲǢ]+',form):lex[key(form)].add(pattern(form))
+    if form and re.fullmatch(r'[a-zA-ZþðæāēīōūȳǣĀĒĪŌŪȲǢ]+',form):lex[key(form)].setdefault(pattern(form),set()).update((row.get('sources') or 'file').split())
  return lex,counts
 
 def flags(r,lex,counts):
@@ -56,7 +57,8 @@ def i32(X):
  X.indices=X.indices.astype('int32');X.indptr=X.indptr.astype('int32');return X
 def predict(train,test,lex,counts,arm,seed=42):
  if arm=='frequency':
-  return [max(lex.get(r['key'],{zeros(r['gold'])}),key=lambda p:(counts[r['key']][p],-p.count('1'),p)) if lex.get(r['key']) else '0'*len(r['gold_pattern']) for r in test]
+  # PLAN S8: most frequent in train; for a skeleton unseen in train, the pattern most lexicon sources attest; then fewest long
+  return [max(lex.get(r['key'],{zeros(r['gold'])}),key=lambda p:(counts[r['key']][p],0 if counts[r['key']] else len(lex[r['key']][p]),-p.count('1'),p)) if lex.get(r['key']) else '0'*len(r['gold_pattern']) for r in test]
  from sklearn.feature_extraction import DictVectorizer
  from sklearn.linear_model import SGDClassifier
  # Learn length patterns for observed tokens; candidate constraints at inference.
