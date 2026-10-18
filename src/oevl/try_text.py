@@ -17,7 +17,7 @@ import sys
 import unicodedata
 from pathlib import Path
 
-from oevl.experiment import LONG, SHORT, bare, build_data, key, lexicon, norm, pattern, predict
+from oevl.experiment import EXCLUDE_D3, LONG, SHORT, bare, build_data, key, lexicon, norm, pattern, predict
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -69,7 +69,7 @@ def main():
         sys.exit(f"{ext} not found: run `bash run_all.sh` once first (or use --lexicon none)")
 
     print("training the model (takes under a minute) ...", file=sys.stderr)
-    train, _, _, _ = build_data(ROOT / "data")
+    train, _, _, _ = build_data(ROOT / "data", EXCLUDE_D3)
     lex, counts = lexicon(train, ext)
 
     test, skipped = [], []

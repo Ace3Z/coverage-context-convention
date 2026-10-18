@@ -151,6 +151,7 @@ def run_arm(out, arm, a):
     cmd = [sys.executable, "-m", "oevl.encoder_experiment", "--model", a.model, "--arms", arm,
            "--train-limit", str(a.train_limit), "--epochs", str(a.epochs), "--max-bytes", str(a.max_bytes),
            "--batch", str(a.batch), "--micro", str(a.micro), "--lr", str(a.lr), "--seed", str(a.seed),
+           "--exclude-train", "",  # the pilots ran on all five works, before PLAN D3 was decided
            "--out", str(out)] + (["--tiny"] if a.tiny else [])
     with open(out / "train.log", "w", encoding="utf8") as log:
         p = subprocess.Popen(cmd, cwd=ROOT, env=env(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,

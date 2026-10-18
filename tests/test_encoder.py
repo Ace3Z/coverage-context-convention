@@ -141,13 +141,13 @@ class TestSummary(unittest.TestCase):
 @unittest.skipUnless(importlib.util.find_spec("transformers"), "needs torch and transformers (requirements-neural.txt)")
 class TestTinySmoke(unittest.TestCase):
     def test_two_seeds_then_summary(self):
-        """The CPU smoke test: tiny random encoder, all arms on two seeds and one D3 run, then encoder_summary."""
+        """The CPU smoke test: tiny random encoder, all arms on two seeds (D3 default) and one run on all five works, then encoder_summary."""
         from oevl import encoder_experiment
         arms = ("word", "left", "sentence", "local2", "local5")
         with tempfile.TemporaryDirectory() as d:
             d = Path(d)
             for cfg, seed, which, extra in (("cap128", 1, arms, []), ("cap128", 2, arms, []),
-                                            ("cap128_nozup", 1, ("sentence",), ["--exclude-train", "zupitza_grammar"])):
+                                            ("cap128_zup", 1, ("sentence",), ["--exclude-train", ""])):
                 out = d / f"{cfg}_s{seed}"
                 run(encoder_experiment.main, "--tiny", "--max-bytes", "128", "--seed", str(seed),
                     "--arms", ",".join(which), "--out", str(out), *extra)
@@ -158,12 +158,12 @@ class TestTinySmoke(unittest.TestCase):
             s = json.loads((d / "enc/summary.json").read_text())
             self.assertEqual(list(s["cap128"]["arms"]), list(arms))
             self.assertEqual(s["cap128"]["arms"]["local5"]["seeds"], [1, 2])
-            self.assertEqual(s["cap128_nozup"]["settings"]["exclude_train"], ["zupitza_grammar"])
-            self.assertIsNone(s["cap128_nozup"]["arms"]["sentence"]["sets"]["soliloquies"]["accuracy"]["sd"])
+            self.assertEqual(s["cap128_zup"]["settings"]["exclude_train"], [])
+            self.assertIsNone(s["cap128_zup"]["arms"]["sentence"]["sets"]["soliloquies"]["accuracy"]["sd"])
             self.assertLessEqual({"sentence-word", "left-word", "sentence-left", "local2-word", "local5-word",
                                   "word-frequency"}, set(s["cap128"]["paired"]["tauber_beowulf"]["class_B"]))
             run1 = json.loads((d / "cap128_s1/metrics.json").read_text())
-            self.assertEqual(run1["exclude_train"], [])
+            self.assertEqual(run1["exclude_train"], ["zupitza_grammar"])
             self.assertEqual(len(run1["arms"]["left"]["train_loss_per_epoch"]), 1)
             self.assertIn(run1["arms"]["left"]["collapsed"], (True, False))
             # a number recomputed from the committed table alone
@@ -172,7 +172,7 @@ class TestTinySmoke(unittest.TestCase):
             amb = [r for r in rows if r["cap128:lexicon_ambiguous"] == "1"]
             self.assertAlmostEqual(sum(r["cap128/sentence_s2"] == r["gold"] for r in amb) / len(amb),
                                    s["cap128"]["arms"]["sentence"]["sets"]["soliloquies"]["lexicon_ambiguous"]["values"][1])
-            # without --exclude-train the encoder's prior is the one run_all.sh wrote
+            # by default (D3) the encoder's prior is the one run_all.sh wrote
             with open(ROOT / "results/wikipron/soliloquies_predictions.jsonl", encoding="utf8") as f:
                 ref = {x["id"]: x["frequency_prediction"] for x in map(json.loads, f)}
             self.assertEqual([r["cap128:frequency"] for r in rows], [ref[r["id"]] for r in rows])

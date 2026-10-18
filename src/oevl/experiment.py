@@ -19,6 +19,7 @@ def tokens(rows):
    yield {'id':r['id']+':'+str(i),'sentence_id':r['id'],'source':r['source'],'index':i,'gold':w,'bare':b,'sentence':bs,'gold_pattern':pattern(w),'key':key(b)}
 TRAIN=['bright_reader','matthew_ws','sweet_primer','physiologus','zupitza_grammar']
 TESTS=['john_ws','soliloquies','tauber_beowulf']  # john_ws is the dev set, scored like the tests
+EXCLUDE_D3=('zupitza_grammar',)  # PLAN D3, decided on dev: the final systems train without Zupitza's Grammar
 def heldout(root,name,tauber=None):
  # A dev or test set without the sentences that share a 6-gram with train (python -m oevl.audit_splits)
  ex=set(json.loads((Path(root)/'leakage_excluded.json').read_text(encoding='utf8'))['excluded'][name])
