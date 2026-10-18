@@ -33,3 +33,22 @@ class RegressionTests(unittest.TestCase):
  def test_autojunk_alignment(self):
   import inspect
   self.assertIn('autojunk=False',inspect.getsource(agreement))
+
+class ClassTests(unittest.TestCase):
+ def test_class_accuracy(self):
+  lex={'a':{'0','1'},'b':{'0','1'},'c':{'0'}};cts=collections.defaultdict(collections.Counter)
+  test=[{'key':'a','gold_pattern':'1'},{'key':'a','gold_pattern':'0'},{'key':'b','gold_pattern':'0'},{'key':'c','gold_pattern':'0'}]
+  out=evaluate(test,['1','1','0','0'],lex,cts,{'a':'C','c':'A'})
+  self.assertEqual(out['class_C'],{'n':2,'accuracy':0.5});self.assertEqual(out['class_A'],{'n':0,'accuracy':None})
+  self.assertEqual(out['class_unlisted'],{'n':1,'accuracy':1.0})
+  self.assertEqual(sum(out['class_'+c]['n'] for c in ['A','B','C','unlisted']),out['lexicon_ambiguous']['n'])
+  self.assertNotIn('class_A',evaluate(test,['1','1','0','0'],lex,cts))
+ def test_class_file(self):
+  from sklearn.metrics import cohen_kappa_score
+  d=Path(__file__).resolve().parents[1]/'data'
+  rows=list(csv.DictReader(open(d/'ambiguity_classes.csv',encoding='utf8')));meta=json.loads((d/'ambiguity_classes.json').read_text(encoding='utf8'))
+  a=[r['label_a'] for r in rows];b=[r['label_b'] for r in rows];final=[r['final'] for r in rows]
+  self.assertEqual(len(rows),meta['n_skeletons']);self.assertEqual(load_classes(d/'ambiguity_classes.csv'),dict(zip([r['skeleton'] for r in rows],final)))
+  self.assertAlmostEqual(cohen_kappa_score(a,b),meta['cohen_kappa'],places=6);self.assertAlmostEqual(sum(x==y for x,y in zip(a,b))/len(a),meta['agreement'],places=6)
+  self.assertEqual({c:final.count(c) for c in 'ABC'},meta['counts']['final'])
+  self.assertTrue(all(f in ('A','B','C') and (f==x==y or (x!=y and r['adjudication_note']!='agreed')) for r,f,x,y in zip(rows,final,a,b)))

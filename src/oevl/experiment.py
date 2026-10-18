@@ -71,11 +71,18 @@ def predict(train,test,lex,counts,arm,seed=42):
   out.append(max(opts,key=lambda p:(ps[classes.index(p)] if p in classes else 0,counts[r['key']][p])) if opts else fallback)
  return out
 
-def evaluate(test,preds,lex,counts):
+def load_classes(path):
+ with open(path,encoding='utf8') as f:return {r['skeleton']:r['final'] for r in csv.DictReader(f)}
+
+def evaluate(test,preds,lex,counts,cls=None):
  out={'n':len(test),'accuracy':sum(p==r['gold_pattern'] for r,p in zip(test,preds))/len(test)}
  for label in ['lexicon_ambiguous','attested_ambiguous','minority_reading']:
   ix=[i for i,r in enumerate(test) if flags(r,lex,counts)[label]]
   out[label]={'n':len(ix),'accuracy':sum(preds[i]==test[i]['gold_pattern'] for i in ix)/len(ix) if ix else None}
+ # S6 classes split the lexicon-ambiguous tokens; 'unlisted' are ambiguous skeletons outside the class file
+ for c in (['A','B','C','unlisted'] if cls else []):
+  ix=[i for i,r in enumerate(test) if len(lex.get(r['key'],()))>=2 and cls.get(r['key'],'unlisted')==c]
+  out['class_'+c]={'n':len(ix),'accuracy':sum(preds[i]==test[i]['gold_pattern'] for i in ix)/len(ix) if ix else None}
  return out
 
 def oracle(test,lex):
@@ -141,7 +148,7 @@ def per_word(train,test,pred,lex,counts,top=20):
 def main():
  p=argparse.ArgumentParser();p.add_argument('--data',default='data');p.add_argument('--out',default='results/experiment');p.add_argument('--tauber',default='data/brunetti-length.txt');p.add_argument('--lexicon',help='Optional externally sourced lexicon TSV/CSV');p.add_argument('--tests',default='soliloquies,tauber_beowulf',help='Comma list: soliloquies, tauber_beowulf (run one at a time to keep each run short)');a=p.parse_args()
  wanted=set(a.tests.split(','))
- train,prose,hs,wy=build_data(a.data);lex,counts=lexicon(train,a.lexicon);out=Path(a.out);out.mkdir(parents=True,exist_ok=True)
+ train,prose,hs,wy=build_data(a.data);lex,counts=lexicon(train,a.lexicon);cls=load_classes(Path(a.data)/'ambiguity_classes.csv');out=Path(a.out);out.mkdir(parents=True,exist_ok=True)
  summary={'dataset':{'train':len(train),'test_prose':len(prose),'agreement_hs':len(hs),'agreement_wyatt':len(wy),'lexicon_origin':'training attested forms'+(' + external file' if a.lexicon else ' (proxy; NOT Clark Hall/Wiktionary/Bosworth-Toller)')}}
  tauber_path=Path(a.tauber)
  tests=[('soliloquies',prose)] if 'soliloquies' in wanted else []
@@ -152,11 +159,11 @@ def main():
   pred={'frequency':predict(train,test,lex,counts,'frequency'),'oracle':oracle(test,lex)}
   for arm in ['word','left','sentence']:
    for seed in (1,2,3):pred[f'{arm}_seed{seed}']=predict(train,test,lex,counts,arm,seed)
-  summary[name]={arm:evaluate(test,values,lex,counts) for arm,values in pred.items()}
+  summary[name]={arm:evaluate(test,values,lex,counts,cls) for arm,values in pred.items()}
   summary[name]['seed_summary']={}
   for arm in ['word','left','sentence']:
    summary[name]['seed_summary'][arm]={}
-   for label in ['accuracy','lexicon_ambiguous','attested_ambiguous','minority_reading']:
+   for label in ['accuracy','lexicon_ambiguous','attested_ambiguous','minority_reading']+['class_A','class_B','class_C','class_unlisted']:
     vals=[summary[name][f'{arm}_seed{s}']['accuracy' if label=='accuracy' else label]['accuracy'] if label!='accuracy' else summary[name][f'{arm}_seed{s}']['accuracy'] for s in (1,2,3)]
     summary[name]['seed_summary'][arm][label]={'mean':statistics.mean(vals) if all(v is not None for v in vals) else None,'sd':statistics.stdev(vals) if all(v is not None for v in vals) else None}
   gold=[r['gold_pattern'] for r in test]

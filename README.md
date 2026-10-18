@@ -86,7 +86,10 @@ changed instead of reporting accuracy.
   Splits are by work. No *Beowulf* text is used for training.
 - **Systems:** frequency prior; candidate-constrained logistic classifiers (word / +2 left words / +2 left and
   2 right words), seeds 1–3; oracle with the same all-short fallback for unknown words.
-- **Populations:** lexicon-ambiguous, attested-ambiguous, minority-reading.
+- **Populations:** lexicon-ambiguous, attested-ambiguous, minority-reading. The lexicon-ambiguous tokens are also
+  split by ambiguity class (`class_A`, `class_B`, `class_C` in `metrics.json`) for the 60 skeletons in
+  `data/ambiguity_classes.csv`, and `class_unlisted` for the rest. The class labels come from two automated
+  annotators and an automated adjudicator and still need review by the team (`data/ambiguity_classes.json`).
 - **Statistics:** mean ± sample SD over seeds; exact McNemar on seed 1 (token level).
 - **Dictionaries:** the report's tables use training forms only (`results/training_only`) and training forms +
   WikiPron (`results/wikipron`). `run_all.sh` also runs the three proposal dictionaries (`results/proposal`) and all
@@ -119,7 +122,8 @@ src/oevl/            the package
   try_text.py                                                  macrons for your own sentences
 notebooks/           thin Kaggle and Colab launchers for oevl.pilot
 tests/               unit tests
-data/                corpus (by_source/), manifest, Tauber and WikiPron inputs, dictionaries (lex_*.csv)
+data/                corpus (by_source/), manifest, Tauber and WikiPron inputs, dictionaries (lex_*.csv),
+                     ambiguity classes (ambiguity_classes.csv and .json)
 results/             one folder per experiment: metrics.json, per-word CSVs, token-level predictions, run logs
 report/              main.tex (+ generated/ tables, numbers, figure)
 run_all.sh           the whole traditional pipeline, from inputs to REPORT.pdf
