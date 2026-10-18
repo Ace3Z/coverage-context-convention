@@ -24,9 +24,10 @@ def heldout(root,name,tauber=None):
  ex=set(json.loads((Path(root)/'leakage_excluded.json').read_text(encoding='utf8'))['excluded'][name])
  rows=load_tauber(tauber or Path(root)/'brunetti-length.txt') if name=='tauber_beowulf' else list(tokens(load(Path(root)/'by_source'/(name+'.jsonl'))))
  return [r for r in rows if r['sentence_id'] not in ex]
-def build_data(root):
+def build_data(root,exclude=()):
+ # exclude: training works left out (PLAN D3); the lexicon's training forms and the prior counts follow from train
  src=Path(root)/'by_source'
- train=list(tokens([r for name in TRAIN for r in load(src/(name+'.jsonl'))]))
+ train=list(tokens([r for name in TRAIN if name not in exclude for r in load(src/(name+'.jsonl'))]))
  prose=heldout(root,'soliloquies')
  hs=list(tokens(load(src/'hs_beowulf.jsonl'))); wy=list(tokens(load(src/'wyatt_beowulf.jsonl')))
  assert not ({r['source'] for r in train}&{'john_ws','soliloquies','hs_beowulf','wyatt_beowulf'})
@@ -154,12 +155,14 @@ def per_word(train,test,pred,lex,counts,top=20,cls=None):
  return out
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--data',default='data');p.add_argument('--out',default='results/experiment');p.add_argument('--tauber',default='data/brunetti-length.txt');p.add_argument('--lexicon',help='Optional externally sourced lexicon TSV/CSV');p.add_argument('--tests',default='soliloquies,tauber_beowulf',help='Comma list: john_ws (dev), soliloquies, tauber_beowulf (run one at a time to keep each run short)');a=p.parse_args()
- wanted=set(a.tests.split(','))
+ p=argparse.ArgumentParser();p.add_argument('--data',default='data');p.add_argument('--out',default='results/experiment');p.add_argument('--tauber',default='data/brunetti-length.txt');p.add_argument('--lexicon',help='Optional externally sourced lexicon TSV/CSV');p.add_argument('--tests',default='soliloquies,tauber_beowulf',help='Comma list: john_ws (dev), soliloquies, tauber_beowulf (run one at a time to keep each run short)');p.add_argument('--exclude-train',default='',help='Comma list of training works to leave out, e.g. zupitza_grammar');a=p.parse_args()
+ wanted=set(a.tests.split(','));exclude=[x for x in a.exclude_train.split(',') if x]
  if wanted-set(TESTS):p.error(f'unknown --tests {sorted(wanted-set(TESTS))}: use {",".join(TESTS)}')
+ if set(exclude)-set(TRAIN):p.error(f'unknown --exclude-train {sorted(set(exclude)-set(TRAIN))}: use {",".join(TRAIN)}')
  cpath=Path(a.data)/'ambiguity_classes.csv'  # optional: without it no per-class accuracy is reported
- train,prose,hs,wy=build_data(a.data);lex,counts=lexicon(train,a.lexicon);cls=load_classes(cpath) if cpath.exists() else None;out=Path(a.out);out.mkdir(parents=True,exist_ok=True)
+ train,prose,hs,wy=build_data(a.data,exclude);lex,counts=lexicon(train,a.lexicon);cls=load_classes(cpath) if cpath.exists() else None;out=Path(a.out);out.mkdir(parents=True,exist_ok=True)
  summary={'dataset':{'train':len(train),'test_prose':len(prose),'agreement_hs':len(hs),'agreement_wyatt':len(wy),'lexicon_origin':'training attested forms'+(' + external file' if a.lexicon else ' (proxy; NOT Clark Hall/Wiktionary/Bosworth-Toller)')}}
+ if exclude:summary['dataset']['exclude_train']=exclude  # only when set: the default metrics.json stays as before
  tauber_path=Path(a.tauber)
  if 'tauber_beowulf' in wanted and not tauber_path.exists():raise SystemExit('Tauber gold missing: put brunetti-length.txt in data/ or run python -m oevl.fetch_tauber')
  tests=[(name,heldout(a.data,name,tauber_path)) for name in TESTS if name in wanted]
@@ -188,7 +191,7 @@ def main():
  mpath=out/'metrics.json'
  if mpath.exists():  # runs with --tests one at a time add their test to the same file
   merged=json.loads(mpath.read_text(encoding='utf8'))
-  if merged.get('dataset',{}).get('lexicon_origin')!=summary['dataset']['lexicon_origin']:raise SystemExit(f'{mpath} was made with a different lexicon; use another --out folder')
+  if any(merged.get('dataset',{}).get(k)!=summary['dataset'].get(k) for k in ('lexicon_origin','exclude_train')):raise SystemExit(f'{mpath} was made with a different lexicon or training set; use another --out folder')
   merged.update(summary);summary=merged
  mpath.write_text(json.dumps(summary,ensure_ascii=False,indent=2),encoding='utf8')
  print(json.dumps(summary,ensure_ascii=False,indent=2))

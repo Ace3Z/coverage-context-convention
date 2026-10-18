@@ -136,7 +136,7 @@ class TestCli(unittest.TestCase):
     def test_encoder_rejects_bad_arguments(self):
         import subprocess
         env = {**os.environ, "PYTHONPATH": str(ROOT / "src")}
-        for args in (["--arms", "sentense"], ["--train-limit", "0"]):
+        for args in (["--arms", "sentense"], ["--train-limit", "0"], ["--exclude-train", "zupitza"]):
             p = subprocess.run([sys.executable, "-m", "oevl.encoder_experiment", *args], cwd=ROOT, env=env,
                                capture_output=True, text=True)
             self.assertEqual(p.returncode, 2, (args, p.stderr))

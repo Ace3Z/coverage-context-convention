@@ -1,0 +1,80 @@
+{
+  "provenance": "label_a and label_b come from two independent automated annotators, final and note from an automated adjudicator that resolved every disagreement. All labels are pending review by the team.",
+  "sampling_rule": "An error is a lexicon-ambiguous token (two or more length patterns for its skeleton in the system's own lexicon) of the soliloquies and tauber_beowulf test sets, pooled, whose predicted length pattern differs from gold. john_ws is not used. For each system, 200 errors were drawn with random.Random(1).sample. encoder_sentence: ByT5 sentence arm, seed 1, --max-bytes 2560, lr 3e-4, 5 epochs, zupitza_grammar left out of training (the selected configuration), lexicon = the other four training works plus WikiPron, pool 917 errors (468 prose, 449 verse). charsiug2p: CharsiuG2P IPA mapped to a length pattern, lexicon = all five training works plus WikiPron as in charsiu_g2p.analyse, pool 2,625 errors (1,607 prose, 1,018 verse). Ten tokens appear in both samples and were typed separately.",
+  "types": [
+    "ceiling",
+    "segment",
+    "truncation",
+    "gold_in_doubt",
+    "homograph",
+    "grammatical",
+    "editorial",
+    "other"
+  ],
+  "agreement": {
+    "encoder_sentence": {
+      "n": 200,
+      "agreement": 0.99,
+      "cohen_kappa": 0.986217352353387,
+      "disagreements": 2
+    },
+    "charsiug2p": {
+      "n": 200,
+      "agreement": 0.98,
+      "cohen_kappa": 0.9705210406072665,
+      "disagreements": 4
+    },
+    "overall": {
+      "n": 400,
+      "agreement": 0.985,
+      "cohen_kappa": 0.9787478969273001,
+      "disagreements": 6
+    }
+  },
+  "counts": {
+    "encoder_sentence": {
+      "ceiling": 4,
+      "segment": 0,
+      "truncation": 0,
+      "gold_in_doubt": 16,
+      "homograph": 64,
+      "grammatical": 56,
+      "editorial": 59,
+      "other": 1
+    },
+    "charsiug2p": {
+      "ceiling": 0,
+      "segment": 0,
+      "truncation": 0,
+      "gold_in_doubt": 5,
+      "homograph": 52,
+      "grammatical": 71,
+      "editorial": 71,
+      "other": 1
+    },
+    "overall": {
+      "ceiling": 4,
+      "segment": 0,
+      "truncation": 0,
+      "gold_in_doubt": 21,
+      "homograph": 116,
+      "grammatical": 127,
+      "editorial": 130,
+      "other": 2
+    }
+  },
+  "sample_by_set": {
+    "encoder_sentence": {
+      "soliloquies": 96,
+      "tauber_beowulf": 104
+    },
+    "charsiug2p": {
+      "soliloquies": 111,
+      "tauber_beowulf": 89
+    },
+    "overall": {
+      "soliloquies": 207,
+      "tauber_beowulf": 193
+    }
+  }
+}

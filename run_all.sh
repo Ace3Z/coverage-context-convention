@@ -55,4 +55,5 @@ echo "== 5/6 check all headline values"
 python -m oevl.check_expected
 
 echo "== 6/6 report tables, numbers and figure"
+python -m oevl.error_typing   # error typing table from the adjudicated labels in results/error_typing/labels.tsv
 python -m oevl.build_report

@@ -14,6 +14,12 @@ class Tests(unittest.TestCase):
  def test_source_split(self):
   tr,pr,hs,wy=build_data(str(Path(__file__).resolve().parents[1]/'data'))
   self.assertTrue(tr and pr and hs and wy);self.assertNotIn('soliloquies',{r['source'] for r in tr})
+ def test_exclude_train(self):
+  import os,subprocess,sys
+  root=Path(__file__).resolve().parents[1];tr,_,_,_=build_data(str(root/'data'),('zupitza_grammar',))
+  self.assertEqual({r['source'] for r in tr},set(TRAIN)-{'zupitza_grammar'})
+  p=subprocess.run([sys.executable,'-m','oevl.experiment','--exclude-train','zupitza'],env={**os.environ,'PYTHONPATH':str(root/'src')},capture_output=True,text=True)
+  self.assertEqual(p.returncode,2,p.stderr)
 if __name__=='__main__':unittest.main()
 
 class RegressionTests(unittest.TestCase):

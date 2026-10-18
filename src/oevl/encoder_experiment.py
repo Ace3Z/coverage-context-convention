@@ -20,7 +20,7 @@ import re
 import time
 from pathlib import Path
 
-from oevl.experiment import TESTS, build_data, flags, heldout, lexicon, mcnemar, zeros
+from oevl.experiment import TESTS, TRAIN, build_data, flags, heldout, lexicon, load_classes, mcnemar, predict, zeros
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -65,6 +65,31 @@ def candidates(r, lex):
     return sorted(p for p in lex.get(r["key"], set()) if len(p) == len(fallback)), fallback
 
 
+def score(rows, preds, prior, lex, counts, cls):
+    """Accuracy per population (the classes split the lexicon-ambiguous tokens, as in experiment.evaluate), plus two
+    checks for a collapsed run on the lexicon-ambiguous tokens: the share whose pick has the most long marks among
+    its candidates, and the share whose pick equals the frequency prior."""
+    pops = {k: [] for k in ("accuracy", "lexicon_ambiguous", "attested_ambiguous", "minority_reading",
+                            "class_A", "class_B", "class_C", "class_unlisted")}
+    most_long, same = [], []
+    for r, p, f in zip(rows, preds, prior):
+        ok = p == r["gold_pattern"]
+        pops["accuracy"].append(ok)
+        fl = flags(r, lex, counts)
+        for name, on in fl.items():
+            if on:
+                pops[name].append(ok)
+        if fl["lexicon_ambiguous"]:
+            pops["class_" + cls.get(r["key"], "unlisted")].append(ok)
+            opts = candidates(r, lex)[0] or [p]
+            most_long.append(p.count("1") == max(o.count("1") for o in opts))
+            same.append(p == f)
+    out = {k: {"n": len(v), "accuracy": round(sum(v) / len(v), 6) if v else None} for k, v in pops.items()}
+    out["most_long_share"] = round(sum(most_long) / len(most_long), 6) if most_long else None
+    out["prior_agreement"] = round(sum(same) / len(same), 6) if same else None
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="google/byt5-small")
@@ -78,6 +103,8 @@ def main():
     ap.add_argument("--arms", default=",".join(ARMS), help="comma list of word, left, sentence, localK (K words each side)")
     ap.add_argument("--train-limit", type=int, help="train on a fixed subset of this many examples (see limit())")
     ap.add_argument("--tests", default=",".join(TESTS), help="comma list of john_ws (dev), soliloquies, tauber_beowulf")
+    ap.add_argument("--exclude-train", default="", help="comma list of training works to leave out (PLAN D3), "
+                    "e.g. zupitza_grammar: they leave the training set, the lexicon's training forms and the prior")
     ap.add_argument("--tiny", action="store_true", help="tiny random model + small data subset (CPU smoke test)")
     a = ap.parse_args()
     a.arms = ",".join(dict.fromkeys(a.arms.split(",")))
@@ -88,6 +115,9 @@ def main():
         ap.error("--train-limit must be at least 1")
     if set(a.tests.split(",")) - set(TESTS):
         ap.error(f"unknown --tests {sorted(set(a.tests.split(',')) - set(TESTS))}: use {','.join(TESTS)}")
+    exclude = [x for x in a.exclude_train.split(",") if x]
+    if set(exclude) - set(TRAIN):
+        ap.error(f"unknown --exclude-train {sorted(set(exclude) - set(TRAIN))}: use {','.join(TRAIN)}")
 
     os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
     import torch
@@ -96,7 +126,7 @@ def main():
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
 
-    train, _, _, _ = build_data(ROOT / "data")
+    train, _, _, _ = build_data(ROOT / "data", exclude)
     tests = {t: heldout(ROOT / "data", t) for t in a.tests.split(",")}
     lex, counts = lexicon(train, str(ROOT / "data/lex_wikipron.csv"))
     examples = [r for r in train if r["gold_pattern"] and len(lex.get(r["key"], set())) >= 2]
@@ -104,6 +134,8 @@ def main():
         random.Random(0).shuffle(examples)
         examples = examples[:256]
         tests = {k: v[:300] for k, v in tests.items()}
+    prior = {t: predict(train, rows, lex, counts, "frequency") for t, rows in tests.items()}  # follows --exclude-train
+    cls = load_classes(ROOT / "data" / "ambiguity_classes.csv")
     examples = limit(examples, a.train_limit)
     order = list(range(len(examples)))
     random.Random(a.seed).shuffle(order)  # the same order for every arm: identical data, identical schedule
@@ -128,6 +160,7 @@ def main():
         return tok(texts, padding=True, truncation=True, max_length=n, return_tensors="pt").to(device)
 
     summary = {"model": "tiny-random" if a.tiny else a.model, "lexicon": "training + WikiPron", "seed": a.seed,
+               "exclude_train": exclude,
                "epochs": a.epochs, "batch": a.batch, "lr": a.lr, "max_bytes": a.max_bytes,
                "train_examples": len(examples), "train_limit": a.train_limit,
                "train_subset_sha256": hashlib.sha256("\n".join(r["id"] for r in examples).encode()).hexdigest(),
@@ -140,8 +173,9 @@ def main():
         steps = a.epochs * math.ceil(len(order) / a.batch)
         sched = get_linear_schedule_with_warmup(opt, int(0.05 * steps), steps)
         model.train()
-        t0, step = time.time(), 0
-        for _ in range(a.epochs):
+        t0, step, epoch_losses = time.time(), 0, []
+        for e in range(a.epochs):
+            epoch_loss = 0.0
             for b in range(0, len(order), a.batch):
                 batch = [examples[j] for j in order[b:b + a.batch]]
                 loss_sum = 0.0
@@ -158,12 +192,17 @@ def main():
                 sched.step()
                 opt.zero_grad()
                 step += 1
+                epoch_loss += loss_sum
                 if step % 100 == 0 or step == steps:
                     print(f"[{arm}] step {step}/{steps} loss {loss_sum:.4f} ({time.time() - t0:.0f}s)", flush=True)
+            epoch_losses.append(round(epoch_loss / math.ceil(len(order) / a.batch), 6))
+            print(f"[{arm}] epoch {e + 1}/{a.epochs} mean training loss {epoch_losses[-1]:.4f}", flush=True)
         train_seconds = time.time() - t0
 
         model.eval()
-        arm_summary = {"train_seconds": round(train_seconds)}
+        # final_train_loss: mean step loss over the last epoch
+        arm_summary = {"train_seconds": round(train_seconds), "train_loss_per_epoch": epoch_losses,
+                       "final_train_loss": epoch_losses[-1]}
         for test, rows in tests.items():
             pairs = []  # (row index, candidate) for tokens the model must decide
             preds = []
@@ -187,17 +226,14 @@ def main():
                         scores.setdefault(k, []).append((s, p))
             for k, sc in scores.items():
                 preds[k] = max(sc)[1]
-            pops = {"accuracy": [], "lexicon_ambiguous": [], "attested_ambiguous": [], "minority_reading": []}
             for r, p in zip(rows, preds):
-                ok = p == r["gold_pattern"]
-                pops["accuracy"].append(ok)
-                for name, on in flags(r, lex, counts).items():
-                    if on:
-                        pops[name].append(ok)
                 all_preds[test][r["id"]][f"encoder_{arm}"] = p
-            arm_summary[test] = {name: {"n": len(v), "accuracy": round(sum(v) / len(v), 6) if v else None}
-                                 for name, v in pops.items()}
-            print(f"[{arm}] {test}: " + ", ".join(f"{n}={d['accuracy']}" for n, d in arm_summary[test].items()), flush=True)
+            arm_summary[test] = score(rows, preds, prior[test], lex, counts, cls)
+            print(f"[{arm}] {test}: " + ", ".join(f"{n}={d['accuracy'] if isinstance(d, dict) else d}"
+                                                   for n, d in arm_summary[test].items()), flush=True)
+        # A run that collapsed to "most long marks" (seen at 1 epoch, lr 3e-4) is flagged on the prose test set
+        sol = arm_summary.get("soliloquies", {}).get("most_long_share")
+        arm_summary["collapsed"] = None if sol is None else sol >= 0.9
         summary["arms"][arm] = arm_summary
         (out / "metrics.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf8")  # save after each arm
         del model, opt
@@ -207,7 +243,7 @@ def main():
     summary["mcnemar"] = {}
     for test, rows in tests.items():
         gold = [r["gold_pattern"] for r in rows]
-        cols = {"frequency": [freq[r["id"]]["frequency_prediction"] for r in rows],
+        cols = {"frequency": prior[test],  # the logistic models below always trained on all five works
                 "logistic_word": [freq[r["id"]]["word_seed1_prediction"] for r in rows],
                 "logistic_bilateral": [freq[r["id"]]["sentence_seed1_prediction"] for r in rows]}
         for arm in summary["arms"]:
@@ -218,9 +254,12 @@ def main():
         summary["mcnemar"][test] = {f"{p}_vs_{q}": mcnemar(cols[p], cols[q], gold)
                                     for p, q in pairs if p in cols and q in cols}
         with open(out / f"{test}_predictions.jsonl", "w", encoding="utf8") as f:
-            for r in rows:
-                f.write(json.dumps({"id": r["id"], "gold_pattern": r["gold_pattern"], **all_preds[test][r["id"]]},
-                                   ensure_ascii=False) + "\n")
+            for r, fp in zip(rows, prior[test]):
+                fl = flags(r, lex, counts)
+                f.write(json.dumps({"id": r["id"], "sentence_id": r["sentence_id"], "gold_pattern": r["gold_pattern"],
+                                    "frequency": fp, **fl,
+                                    "class": cls.get(r["key"], "unlisted") if fl["lexicon_ambiguous"] else None,
+                                    **all_preds[test][r["id"]]}, ensure_ascii=False) + "\n")
     (out / "metrics.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf8")
     print(f"wrote {out / 'metrics.json'}")
 
