@@ -7,7 +7,7 @@ One command reproduces every number, table and the figure in the report (`REPORT
 
 ## Setup
 
-Python 3.11, 3.12, 3.13 or 3.14 (check with `python3 --version`).
+Python 3.11 or newer (check with `python3 --version`).
 
 ```bash
 python3 -m venv .venv
@@ -16,44 +16,56 @@ pip install -r requirements.txt
 bash run_all.sh
 ```
 
+The code is the package `oevl` in `src/oevl/`. `run_all.sh` puts `src` on `PYTHONPATH`, so nothing has to be
+installed. To run modules by hand, either `pip install -e .` once or prefix commands with `PYTHONPATH=src`.
+
 `run_all.sh` takes a few minutes and does six steps:
 
 1. **Inputs.** Uses `data/brunetti-length.txt` (Tauber's *Beowulf* gold) and `data/ang_latn_broad.tsv` (WikiPron Old
    English) if present, otherwise downloads them. Prints their SHA-256.
-2. **Unit tests** (13 tests, none skipped when the inputs are present).
+2. **Unit tests** (`tests/`).
 3. **Dictionaries:** WikiPron IPA length marks to spellings (`data/lex_wikipron.csv`), plus the three dictionaries named
    in the proposal: Clark Hall, Wiktionary inflection tables and Bosworth–Toller (`data/lex_clarkhall.csv`,
-   `lex_wiktionary.csv`, `lex_bt.csv`; rebuilt from the original sources with `python src/build_lexicons.py`).
+   `lex_wiktionary.csv`, `lex_bt.csv`; rebuilt from the original sources with `python -m oevl.build_lexicons`).
 4. **Experiments:** four dictionary settings (training only, + WikiPron, + the three proposal dictionaries, + all four)
-   × both test sets, one test set per run.
-5. **`src/check_expected.py`:** fails if any of 336 headline values differs from the frozen results.
-6. **`src/build_report.py`:** writes `report/generated/` (numbers, tables, figure), checks the worked examples
-   against the predictions, and compiles `REPORT.pdf` if `pdflatex` is installed. Without LaTeX, upload `report/`
-   to Overleaf and compile `main.tex`.
+   × both test sets, one test set per run, written to `results/<setting>/`.
+5. **`oevl.check_expected`:** fails if any of 336 headline values differs from the frozen results.
+6. **`oevl.build_report`:** writes `report/generated/` (numbers, tables, figure), checks the worked examples against
+   the predictions, and compiles `REPORT.pdf` if `pdflatex` is installed. Without LaTeX, upload `report/` to Overleaf
+   and compile `main.tex`.
 
 A single experiment can also be run on its own. Results for the same `--out` folder are merged:
 
 ```bash
-python src/experiment.py --data data --out results_wikipron --lexicon data/lex_wikipron.csv --tests soliloquies
-python src/experiment.py --data data --out results_wikipron --lexicon data/lex_wikipron.csv --tests tauber_beowulf
+PYTHONPATH=src python -m oevl.experiment --data data --out results/wikipron --lexicon data/lex_wikipron.csv --tests soliloquies
+PYTHONPATH=src python -m oevl.experiment --data data --out results/wikipron --lexicon data/lex_wikipron.csv --tests tauber_beowulf
 ```
 
-## Neural experiments (Colab GPU)
+## Neural experiments (GPU)
 
-The encoder experiment (ByT5-small fine-tuned on the word only, the left context, or the whole sentence) and the
-CharsiuG2P error analysis need a GPU. Open `colab/run_encoder_and_charsiu.ipynb` in Google Colab, choose a T4 GPU,
-Run all, and upload this project as a zip when asked. It writes `results_encoder/` and `results_charsiu/`; the
-outputs of our run are included, and `run_all.sh` checks them. GPU training is not bit-for-bit repeatable, so a new
-run can differ slightly. CPU smoke tests without downloads: `python src/encoder_experiment.py --tiny --out /tmp/t`
-and `python src/charsiu_g2p.py predict --tiny`. Extra libraries: `pip install -r requirements-neural.txt`.
+They need `pip install -r requirements-neural.txt` (pins `transformers==4.57.6`) and a GPU.
+
+- **Encoder, full data:** ByT5-small fine-tuned on the same examples with the word only, the left context or the whole
+  sentence. `PYTHONPATH=src python -m oevl.encoder_experiment` writes `results/encoder/`. No full-data encoder output
+  is committed yet. Other context arms: `--arms local2,local5` (two or five words either side); a fixed training
+  subset: `--train-limit N`.
+- **Encoder pilot:** the five context arms on 10,000 training examples, run from `notebooks/` on Kaggle or Colab.
+  See `notebooks/README.md`. The logic is `oevl.pilot`.
+- **CharsiuG2P error analysis:** `PYTHONPATH=src python -m oevl.charsiu_g2p predict` writes `results/charsiu/ipa.tsv`
+  (committed, made on Colab); `run_all.sh` runs the `analyse` step on it.
+
+GPU training is not bit-for-bit repeatable, so a new run can differ slightly. CPU smoke tests without downloads:
+`python -m oevl.encoder_experiment --tiny --out /tmp/t`, and
+`python -m oevl.pilot --tiny --allow-cpu --skip-model-check --max-bytes 128 --out /tmp/pilot` for the whole pilot loop.
+Note that `python -m oevl.charsiu_g2p predict --tiny` overwrites `results/charsiu/ipa.tsv`; run it in a copy.
 
 ## Try it on your own sentences
 
 After `bash run_all.sh` has run once:
 
 ```bash
-python src/try_text.py my_tests/sentences.txt
-python src/try_text.py my_tests/sentences.txt --gold my_tests/sentences_marked.txt --tsv my_tests/words.tsv
+PYTHONPATH=src python -m oevl.try_text my_tests/sentences.txt
+PYTHONPATH=src python -m oevl.try_text my_tests/sentences.txt --gold my_tests/sentences_marked.txt --tsv my_tests/words.tsv
 ```
 
 - `sentences.txt`: one sentence per line. Any macrons in it are removed first.
@@ -75,15 +87,16 @@ changed instead of reporting accuracy.
   2 right words), seeds 1–3; oracle with the same all-short fallback for unknown words.
 - **Populations:** lexicon-ambiguous, attested-ambiguous, minority-reading.
 - **Statistics:** mean ± sample SD over seeds; exact McNemar on seed 1 (token level).
-- **Dictionaries:** training forms only, or training forms + WikiPron. Clark Hall and Bosworth–Toller are not used.
+- **Dictionaries:** the report's tables use training forms only (`results/training_only`) and training forms +
+  WikiPron (`results/wikipron`). `run_all.sh` also runs the three proposal dictionaries (`results/proposal`) and all
+  four together (`results/all`), and `check_expected` checks all four settings.
 
-Verified: all 156 checked values are identical on Python 3.11 and 3.14 with the pinned versions, and with the newest
-versions tested (scikit-learn 1.9.1, scipy 1.18.1).
+`check_expected` passes all 336 checks on Python 3.14 with the pinned versions in `requirements.txt`.
 
 ## Data and licences
 
-- Corpus: `data/by_source/`, also at https://huggingface.co/datasets/oe-vowel-length/old-english-vowel-length.
-  Built from Project Gutenberg (public domain) and Wikisource (CC BY-SA 4.0); released as CC BY-SA 4.0.
+- Corpus: `data/by_source/`. Built from Project Gutenberg (public domain) and Wikisource (CC BY-SA 4.0); released as
+  CC BY-SA 4.0. A Hugging Face copy is planned at `oe-vowel-length/old-english-vowel-length` but is not published yet.
 - Tauber gold: https://github.com/old-english-learner-texts/old-english-texts (CC BY-SA 4.0).
 - WikiPron: https://github.com/CUNY-CL/wikipron (Apache-2.0).
 - Clark Hall, *A Concise Anglo-Saxon Dictionary*, TEI conversion by Serg078 (Unlicense):
@@ -96,11 +109,17 @@ versions tested (scikit-learn 1.9.1, scipy 1.18.1).
 ## Layout
 
 ```
-data/            corpus (by_source/), manifest, Tauber and WikiPron inputs
-src/             experiment.py, wikipron_to_marked.py, build_lexicons.py, fetch_tauber.py, check_expected.py,
-                 build_report.py, try_text.py, encoder_experiment.py, charsiu_g2p.py
-colab/           notebook for the GPU experiments
-tests/           unit tests
-report/          main.tex (+ generated/ tables, numbers, figure)
-results_*/       metrics.json, per-word CSVs, token-level predictions, run logs
+src/oevl/            the package
+  experiment.py        data, dictionaries, frequency/logistic models, metrics (the traditional system)
+  wikipron_to_marked.py, build_lexicons.py, fetch_tauber.py    inputs and dictionaries
+  check_expected.py, build_report.py                           frozen-value check, report tables and figure
+  encoder_experiment.py, charsiu_g2p.py                        neural experiments (GPU)
+  pilot.py                                                     the GPU pilot runner used by the notebooks
+  try_text.py                                                  macrons for your own sentences
+notebooks/           thin Kaggle and Colab launchers for oevl.pilot
+tests/               unit tests
+data/                corpus (by_source/), manifest, Tauber and WikiPron inputs, dictionaries (lex_*.csv)
+results/             one folder per experiment: metrics.json, per-word CSVs, token-level predictions, run logs
+report/              main.tex (+ generated/ tables, numbers, figure)
+run_all.sh           the whole traditional pipeline, from inputs to REPORT.pdf
 ```
