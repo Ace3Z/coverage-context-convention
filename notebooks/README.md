@@ -1,7 +1,22 @@
-# GPU notebooks (experimental pilots)
+# GPU notebooks
 
-Four notebooks are supplied: Kaggle and Colab, each with a 128-byte and 256-byte input-cap variant. Each runs five arms (sentence, word, left, local ±2, local ±5), 10,000 seeded training examples, one epoch, batch 32, microbatch 8, LR 3e-4, seed 1. **Only the input cap differs between paired 128/256 pilots.** These are exploratory, not full-data results.
+The encoder pilot needs a GPU, so it runs on Kaggle or Colab. Both notebooks only put the project on the machine,
+install `requirements-neural.txt` and call `python -m oevl.pilot`; the logic, checks and resume behaviour are in
+`src/oevl/pilot.py`.
 
-The notebooks expect the **updated project** (including `src/encoder_context_windows.py` and `--train-limit` in `src/encoder_experiment.py`). Upload this release to Kaggle as a dataset or Colab as a zip. GPU availability and session limits are external constraints. Run 128 first; run 256 only if needed for a controlled input-length comparison. Do not run both simultaneously against the same output directory.
+| Notebook | Platform | How the project gets there |
+|---|---|---|
+| `pilot_kaggle.ipynb` | Kaggle, GPU T4 | the repository folder or a zip of it, added as an input dataset |
+| `pilot_colab.ipynb` | Colab, T4 GPU | a zip of the repository, uploaded when the first cell asks |
 
-**IMPORTANT:** The original Kaggle and Colab notebooks were adapted from previously supplied notebooks. Syntax was checked, but GPU execution, full setup, and end-to-end training have **not** been tested. Validate setup and smoke test before a long run. No mid-experiment checkpoints. The runner creates a ZIP after each completed arm; download it promptly.
+Set `MAX_BYTES` (128 or 256) in the first code cell. Everything else is fixed: five arms (sentence, word, left, local2,
+local5), the same 10,000 training examples for every arm, one epoch, batch 32, microbatch 8, learning rate 3e-4,
+seed 1. Run 128 first. The 256 run answers a question only if it is compared with the 128 run of the same arms.
+
+After every finished arm the results folder is packed into `encoder_pilot_<bytes>_results.zip`. Download it. To
+resume in a new session, add that zip as input (Kaggle) or upload it to `/content` (Colab); finished arms are
+validated and skipped. An arm that was interrupted starts again from the beginning.
+
+These pilots are exploratory and have not yet been run on a GPU in this form. A full CPU dry run of the same loop:
+
+    PYTHONPATH=src python -m oevl.pilot --tiny --allow-cpu --skip-model-check --max-bytes 128 --out /tmp/pilot
