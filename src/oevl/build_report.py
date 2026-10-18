@@ -206,13 +206,14 @@ with open(OUT / "numbers.tex", "w", encoding="utf8") as f:
         f.write(f"\\newcommand{{\\{name}}}{{{v}}}\n")
 
 # ---------------------------------------------------------------- tables
-ORDER = ["zupitza_grammar", "bright_reader", "matthew_ws", "sweet_primer", "physiologus", "soliloquies",
+ORDER = ["zupitza_grammar", "bright_reader", "matthew_ws", "sweet_primer", "physiologus", "john_ws", "soliloquies",
          "hs_beowulf", "wyatt_beowulf"]
 TITLES = {"zupitza_grammar": "Ælfric's \\textit{Grammar}", "bright_reader": "\\textit{Anglo-Saxon Reader}",
           "matthew_ws": "Gospel of Matthew (W.~Saxon)", "sweet_primer": "\\textit{Anglo-Saxon Primer}",
-          "physiologus": "\\textit{Physiologus}", "soliloquies": "Alfred's \\textit{Soliloquies}",
+          "physiologus": "\\textit{Physiologus}", "john_ws": "Gospel of John (W.~Saxon)",
+          "soliloquies": "Alfred's \\textit{Soliloquies}",
           "hs_beowulf": "\\textit{Beowulf}", "wyatt_beowulf": "\\textit{Beowulf}"}
-ROLE = {"soliloquies": "prose test", "hs_beowulf": "agreement", "wyatt_beowulf": "agreement"}
+ROLE = {"john_ws": "dev", "soliloquies": "prose test", "hs_beowulf": "agreement", "wyatt_beowulf": "agreement"}
 GENRE = {"prose": "prose", "verse": "verse", "mixed": "mixed"}
 rows = []
 for k in ORDER:
