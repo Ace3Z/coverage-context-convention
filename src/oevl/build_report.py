@@ -30,6 +30,7 @@ def load(folder):
 
 
 W, T = load("wikipron"), load("training_only")
+P, A, Z = load("proposal"), load("all"), load("wikipron_with_zupitza")  # proposal dictionaries, all four, D3 ablation
 
 
 def pct(x):
@@ -63,7 +64,7 @@ num["CorpusTokens"] = f"{sum(s['tokens'] for s in manifest.values()):,}"
 num["TrainTokens"] = f"{W['dataset']['train']:,}"
 num["ProseTokens"] = f"{W['dataset']['test_prose']:,}"
 num["BeoTokens"] = f"{n(W, 'tauber_beowulf', 'accuracy'):,}"
-for tag, m in (("W", W), ("T", T)):
+for tag, m in (("W", W), ("T", T), ("P", P), ("A", A), ("Z", Z)):
     for test, short in (("soliloquies", "Sol"), ("tauber_beowulf", "Beo")):
         for pop, p in (("accuracy", "All"), ("lexicon_ambiguous", "Lex"), ("minority_reading", "Min"),
                        ("attested_ambiguous", "Att")):
@@ -101,6 +102,84 @@ num["ClassKappa"] = f"{CLS['cohen_kappa']:.3f}"
 num["ClassAgree"] = pct(CLS["agreement"])
 for c in "ABC":
     num[f"Class{c}"] = str(CLS["counts"]["final"][c])
+
+# D3: what training on Zupitza does to the prior on the prose test (points)
+num["DThreeSolAllCost"] = f"{100 * (Z['soliloquies']['frequency']['accuracy'] - W['soliloquies']['frequency']['accuracy']):.2f}"
+
+
+def rjson(path):
+    return json.loads((ROOT / path).read_text(encoding="utf8"))
+
+
+# editor agreement of the three Beowulf pairs, the D2 gate and the checked HS-Wyatt sample (results/agreement)
+AG = rjson("results/agreement/metrics.json")
+for pair, short in (("hs-wyatt", "HW"), ("hs-tauber", "HT"), ("wyatt-tauber", "WT")):
+    num[f"Pair{short}Aligned"] = f"{AG['pairs'][pair]['aligned']:,}"
+    for pop, s in (("all", "All"), ("lexicon_ambiguous", "Lex"), ("class_A", "ClsA"), ("class_B", "ClsB"),
+                   ("class_C", "ClsC")):
+        r = AG["pairs"][pair][pop]
+        num[f"Pair{short}{s}"], num[f"Pair{short}{s}K"] = pct(r["agreement"]), f"{r['cohen_kappa']:.3f}"
+        num[f"Pair{short}{s}N"] = f"{r['n']:,}"
+    for k, g in AG["gate"][pair].items():
+        if k.startswith("lexicon_ambiguous_floor_vs_"):
+            ed = k.rsplit("_", 1)[1].title()
+            num[f"Gate{short}{ed}"], num[f"Gate{short}{ed}Floor"] = f"{g['gap_points']:.2f}", pct(g["floor"])
+HC = AG["hand_check_hs_wyatt"]["labels"]
+num["CheckN"] = str(AG["hand_check_hs_wyatt"]["n"])
+for label, s in (("genuine editorial difference", "Editorial"), ("normalisation fault", "Norm"),
+                 ("alignment fault", "Align"), ("other", "Other")):
+    num[f"Check{s}"] = str(HC.get(label, 0))
+
+# CharsiuG2P: its own benchmark (part 1) and length on our tokens (part 2)
+CB, CM = rjson("results/charsiu/benchmark.json"), rjson("results/charsiu/metrics.json")
+b20, b50 = CB["max_length_20"], CB["max_length_50"]
+if (b20["wer"], b20["per"]) != (CB["published"]["wer"], CB["published"]["per"]):
+    sys.exit("CharsiuG2P: the reproduction no longer matches the published WER and PER")
+num["CharsiuWer"], num["CharsiuPer"], num["CharsiuTrunc"] = f"{b20['wer']:.3f}", f"{b20['per']:.4f}", str(b20["truncation"])
+num["CharsiuWerFixed"], num["CharsiuLenShare"] = f"{b50['wer']:.3f}", f"{100 * b50['length_only_share']:.1f}"
+num["CharsiuLenOnly"], num["CharsiuWordErrors"] = str(b50["length_only"]), str(b50["word_errors"])
+num["CharsiuN"] = str(b20["n"])
+for test, short in (("soliloquies", "Sol"), ("tauber_beowulf", "Beo")):
+    e = CM[test]["experiment_populations"]
+    num[f"Charsiu{short}All"], num[f"Charsiu{short}Lex"] = pct(e["accuracy"]), pct(e["lexicon_ambiguous"]["accuracy"])
+
+# ByT5 model selection on dev and the D3 comparison (results/encoder/selection.json), grid size (summary.json)
+SEL = rjson("results/encoder/selection.json")
+num["SelRuns"], num["SelEpochs"] = str(len(SEL["runs"])), str(SEL["choice"]["epochs"])
+num["SelDevNoZup"] = f"{SEL['choice']['mean']:.2f}"
+num["SelDevZup"] = f"{max(c['mean'] for c in SEL['configs'] if c['zupitza']):.2f}"
+d3 = SEL["d3_logistic_john_ws"]
+for side, s in (("with_zupitza", "Zup"), ("without_zupitza", "NoZup")):
+    num[f"DevFreq{s}"] = f"{d3[side]['lexicon_ambiguous']['frequency']:.2f}"
+    num[f"DevBil{s}"] = f"{d3[side]['lexicon_ambiguous']['sentence']['mean']:.2f}"
+collapsed = [r for r in SEL["runs"] if r["collapsed"]]
+if len(collapsed) != 1:
+    sys.exit(f"selection.json: expected one collapsed run, found {len(collapsed)}")
+num["CollapseSolAll"], num["CollapseSolLex"] = f"{collapsed[0]['sol_all']:.2f}", f"{collapsed[0]['sol_lexamb']:.2f}"
+num["CollapseEpochs"] = str(collapsed[0]["epochs"])
+ENC = {c: C for c, C in rjson("results/encoder/summary.json").items() if c not in ("local_replicates", "replicate_spread")}
+num["GridRuns"] = str(sum(len(A["seeds"]) for C in ENC.values() for A in C["arms"].values()))
+num["GridCollapsed"] = str(sum(A["n_collapsed"] for C in ENC.values() for A in C["arms"].values()))
+num["EncTrainExamples"] = f"{ENC['capfull']['settings']['train_examples']:,}"
+num["EncFullCap"] = f"{ENC['capfull']['settings']['max_bytes']:,}"
+for test, short in (("soliloquies", "Sol"), ("tauber_beowulf", "Beo")):  # best context arm minus prior, all tokens
+    best = max(A["sets"][test]["accuracy"]["mean"] for C in ENC.values() for a, A in C["arms"].items() if a != "word")
+    num[f"EncBestCtxGain{short}"] = f"{100 * (best - ENC['capfull']['frequency'][test]['accuracy']['accuracy']):.2f}"
+num["BeoGainDict"] = f"{100 * (A['tauber_beowulf']['frequency']['accuracy'] - T['tauber_beowulf']['frequency']['accuracy']):.2f}"
+
+# leakage audit (data/leakage_excluded.json) and the dev set size
+LK = rjson("data/leakage_excluded.json")["counts"]
+num["LeakSolSent"], num["LeakSolTok"] = str(LK["soliloquies"]["sentences"]), str(LK["soliloquies"]["tokens"])
+num["LeakDevSent"], num["LeakDevTok"] = str(LK["john_ws"]["sentences"]), str(LK["john_ws"]["tokens"])
+num["DevTokens"] = f"{W['john_ws']['frequency']['n']:,}"
+
+# error typing (results/error_typing/summary.json): automated annotators, pending team review
+ET = rjson("results/error_typing/summary.json")
+for system, s in (("encoder_sentence", "Enc"), ("charsiug2p", "Charsiu")):
+    for t, k in ET["counts"][system].items():
+        num[f"Err{s}{''.join(w.title() for w in t.split('_'))}"] = str(k)
+num["ErrKappa"] = f"{ET['agreement']['overall']['cohen_kappa']:.3f}"
+num["ErrItems"] = str(ET["agreement"]["encoder_sentence"]["n"])
 
 # WikiPron conversion statistics, recomputed with the same converter used by run_all.sh
 import re  # noqa: E402
@@ -200,19 +279,38 @@ for toks in bysent.values():
             after_to.append(t)
 num["ToTheN"] = str(len(after_to))
 num["ToTheMissed"] = str(sum(t["left_seed1_prediction"] == "0" and t["sentence_seed1_prediction"] == "0" for t in after_to))
+# the same tokens in the ByT5 runs (results/encoder): fewest and most long þē after tō per arm, over its runs
+import gzip  # noqa: E402
+head, *enc_rows = gzip.decompress((ROOT / "results/encoder/soliloquies_predictions.tsv.gz").read_bytes()).decode(
+    "utf8").split("\n")[:-1]
+ENC_SOL = {r[0]: dict(zip(head.split("\t"), r)) for r in (line.split("\t") for line in enc_rows)}
+enc_runs = [c for c in head.split("\t") if "/" in c]
+for arm, short in (("word", "Word"), ("local2", "LocalTwo"), ("sentence", "Bil")):
+    hits = [sum(ENC_SOL[t["id"]][c] == "1" for t in after_to) for c in enc_runs if c.split("/")[1].startswith(arm + "_")]
+    num[f"ToTheEnc{short}Min"], num[f"ToTheEnc{short}Max"] = str(min(hits)), str(max(hits))
+    num[f"ToTheEnc{short}Runs"] = str(len(hits))
+# ex1, "tō þē ... þū þe": every local2 run gets both right, every word run marks both short
+ex1 = found["ex1"]
+the_long = next(t for i, t in enumerate(ex1) if t["key"] == "þe" and i > 0 and ex1[i - 1]["key"] == "to")
+the_rel = next(t for t in ex1 if t["key"] == "þe" and t["gold_pattern"] == "0")
+for c in enc_runs:
+    arm = c.split("/")[1].rsplit("_", 1)[0]
+    if arm == "local2" and (ENC_SOL[the_long["id"]][c], ENC_SOL[the_rel["id"]][c]) != ("1", "0"):
+        sys.exit(f"ex1: the local2 claim no longer holds for {c}")
+    if arm == "word" and (ENC_SOL[the_long["id"]][c], ENC_SOL[the_rel["id"]][c]) != ("0", "0"):
+        sys.exit(f"ex1: the word-arm claim no longer holds for {c}")
+# Beowulf 2796 "þē ic hēr on starie": gold and Harrison and Sharp long, Wyatt short, every full-cap ByT5 run short
+head, *rows = gzip.decompress((ROOT / "results/encoder/tauber_beowulf_predictions.tsv.gz").read_bytes()).decode(
+    "utf8").split("\n")[:-1]
+b2796 = next(dict(zip(head.split("\t"), r.split("\t"))) for r in rows if r.startswith("tauber:685:44\t"))
+lab = next(r for r in csv.DictReader(open(ROOT / "results/error_typing/labels.tsv", encoding="utf8"), delimiter="\t")
+           if r["id"] == "tauber:685:44")
+if (b2796["gold"], lab["hs_form"], lab["wyatt_form"], lab["final"]) != ("1", "þē", "þe", "gold_in_doubt") or any(
+        v != "0" for k, v in b2796.items() if k.startswith("capfull/")):
+    sys.exit("Beowulf 2796 example no longer holds")
 for a, short in (("word", "Word"), ("left", "Left"), ("sentence", "Bil")):
     num[f"SolGain{short}"] = f"{100 * (W['soliloquies']['seed_summary'][a]['accuracy']['mean'] - T['soliloquies']['seed_summary'][a]['accuracy']['mean']):.2f}"
     num[f"BeoGain{short}"] = f"{100 * (W['tauber_beowulf']['seed_summary'][a]['accuracy']['mean'] - T['tauber_beowulf']['seed_summary'][a]['accuracy']['mean']):.2f}"
-
-# ---------------------------------------------------------------- write numbers.tex
-OUT.mkdir(parents=True, exist_ok=True)
-with open(OUT / "numbers.tex", "w", encoding="utf8") as f:
-    f.write("% generated by src/oevl/build_report.py from results/*/metrics.json -- do not edit\n")
-    for k, v in sorted(num.items()):
-        name = "N" + "".join(ch for ch in k if ch.isalpha())
-        if name != "N" + k:
-            sys.exit(f"macro name must be letters only: {k}")
-        f.write(f"\\newcommand{{\\{name}}}{{{v}}}\n")
 
 # ---------------------------------------------------------------- tables
 ORDER = ["zupitza_grammar", "bright_reader", "matthew_ws", "sweet_primer", "physiologus", "john_ws", "soliloquies",
@@ -307,6 +405,23 @@ for x, y in PAIRS:
         for t, _ in TESTS for p, _ in BPOPS) + " \\\\")
 (OUT / "tab_bootstrap.tex").write_text("\n".join(bt) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf8")
 
+TAG = {"soliloquies": "Sol", "tauber_beowulf": "Beo", "lexicon_ambiguous": "Lex", "class_B": "ClsB", "frequency": "Freq",
+       "word": "Word", "left": "Left", "sentence": "Bil"}
+for (t, p, x, y), r in boot.items():
+    k = f"Boot{TAG[t]}{TAG[p]}{TAG[x]}Vs{TAG[y]}"
+    num[k], num[k + "Lo"], num[k + "Hi"] = (f"{100 * r[q]:+.2f}" for q in ("diff", "lo", "hi"))
+
+# ---------------------------------------------------------------- write numbers.tex
+OUT.mkdir(parents=True, exist_ok=True)
+with open(OUT / "numbers.tex", "w", encoding="utf8") as f:
+    f.write("% generated by src/oevl/build_report.py from results/*/metrics.json -- do not edit\n")
+    for k, v in sorted(num.items()):
+        name = "N" + "".join(ch for ch in k if ch.isalpha())
+        if name != "N" + k:
+            sys.exit(f"macro name must be letters only: {k}")
+        f.write(f"\\newcommand{{\\{name}}}{{{v}}}\n")
+
+
 # ---------------------------------------------------------------- figure (drawn at its printed size: 15 cm wide)
 # Dot plot (not bars): the left panel needs a zoomed axis, and bars must start at zero.
 plt.rcParams.update({"font.family": "serif", "font.serif": ["Liberation Serif", "Nimbus Roman", "Times New Roman",
@@ -350,7 +465,8 @@ print("worked examples verified against results/wikipron/soliloquies_predictions
 if shutil.which("pdflatex"):
     for _ in range(2):
         r = subprocess.run(["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "main.tex"],
-                           cwd=ROOT / "report", capture_output=True, text=True)
+                           cwd=ROOT / "report", capture_output=True, text=True,
+                           errors="replace")  # pdflatex echoes T1 bytes (þ, ý) that are not UTF-8
         if r.returncode:
             print(r.stdout[-3000:])
             sys.exit("pdflatex failed; see report/main.log")
