@@ -1,10 +1,17 @@
-"""Error analysis of CharsiuG2P (Zhu et al. 2022) on our two test sets.
+"""Error analysis of CharsiuG2P (Zhu et al. 2022): its own Old English benchmark, then our test sets.
 
-Step 1 (needs torch + transformers; a few minutes on a Colab GPU, done once):
+Part 1 (needs torch + transformers; about 15 minutes on a laptop CPU):
+  python -m oevl.charsiu_g2p benchmark    -> results/charsiu/benchmark.json and benchmark.tsv
+It runs the published checkpoint on the repository's 500 Old English test words with the repository's evaluation
+settings (prefix "<ang>:", one word per call, 5 beams, the default max_length of 20), then again with max_length=50,
+and types every word error: length only (equal once "ː" is removed from both sides), else truncation (decoding hit
+max_length before the end-of-sequence byte), else segment.
+
+Part 2, step 1 (needs torch + transformers; a few minutes on a GPU, done once):
   python -m oevl.charsiu_g2p predict      -> results/charsiu/ipa.tsv (one IPA string per test word type)
   python -m oevl.charsiu_g2p predict --tiny   (smoke test, tiny random model, writes ipa_tiny.tsv)
   The John dev set joins both steps once data/by_source/john_ws.jsonl exists.
-Step 2 (no neural libraries needed; run_all.sh runs this):
+Part 2, step 2 (no neural libraries needed; run_all.sh runs this):
   python -m oevl.charsiu_g2p analyse      -> results/charsiu/metrics.json
 
 The IPA output is turned into a vowel-length pattern with the same aligner we use for WikiPron
@@ -15,6 +22,7 @@ import collections
 import csv
 import json
 import sys
+import urllib.request
 from pathlib import Path
 
 from oevl.experiment import build_data, evaluate, lexicon, load, load_tauber, pattern, tokens
@@ -22,7 +30,11 @@ from oevl.wikipron_to_marked import mark
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "results" / "charsiu"
-MODEL, TOKENIZER, PREFIX = "charsiu/g2p_multilingual_byT5_small_100", "google/byt5-small", "<ang>:"  # as data_utils.py
+MODEL, REVISION = "charsiu/g2p_multilingual_byT5_small_100", "ed5cf99707fb39f5f3ccc461530d56b6fb531fd3"
+TOKENIZER, PREFIX = "google/byt5-small", "<ang>:"  # no space: data_utils.py builds '<'+language+'>:'+word
+REPO = "https://raw.githubusercontent.com/lingjzhu/CharsiuG2P/0c929390759fb94f8ecdfc05cc0bc5f2ff2dc0f4/"
+BENCH = ROOT / "data/charsiu_ang_test.tsv"  # REPO + data/test/ang.tsv
+PUBLISHED = {"per": 0.04102693178957966, "wer": 0.208}  # REPO + multilingual_results/multilingual/byt5_small_100, ang
 DEV = ROOT / "data/by_source/john_ws.jsonl"
 
 
@@ -34,21 +46,84 @@ def tests():
     return out
 
 
-def predict(batch_size=64, tiny=False):
+def load_model(tiny=False):
     import torch
     from transformers import AutoTokenizer, T5Config, T5ForConditionalGeneration
-    torch.manual_seed(0)
-    words = sorted({r["bare"].lower() for rows in tests().values() for r in rows if r["gold_pattern"]})
-    if tiny:  # smoke test: random tiny model, 200 words, no download
+    if tiny:  # smoke test: random tiny model, no download
         from transformers import ByT5Tokenizer
-        words, tok = words[:200], ByT5Tokenizer()
+        tok = ByT5Tokenizer()
         model = T5ForConditionalGeneration(T5Config(vocab_size=384, d_model=32, d_ff=64, num_layers=1, num_heads=2, d_kv=16,
                                                     decoder_start_token_id=0, pad_token_id=0, eos_token_id=1)).eval()
     else:
         tok = AutoTokenizer.from_pretrained(TOKENIZER)
-        model = T5ForConditionalGeneration.from_pretrained(MODEL).eval()
-    if torch.cuda.is_available():
-        model = model.cuda()
+        model = T5ForConditionalGeneration.from_pretrained(MODEL, revision=REVISION).eval()
+    return tok, model.cuda() if torch.cuda.is_available() else model
+
+
+def lev(a, b):
+    row = list(range(len(b) + 1))
+    for i, x in enumerate(a, 1):
+        prev, row[0] = row[0], i
+        for j, y in enumerate(b, 1):
+            prev, row[j] = row[j], min(row[j] + 1, row[j - 1] + 1, prev + (x != y))
+    return row[-1]
+
+
+def error_type(ref, hyp, truncated):
+    if ref == hyp:
+        return "correct"
+    if ref.replace("ː", "") == hyp.replace("ː", ""):  # before truncation: a complete output can fill max_length exactly
+        return "length_only"
+    return "truncation" if truncated else "segment"
+
+
+def score(refs, hyps, types):
+    c = collections.Counter(types)
+    errors = len(refs) - c["correct"]
+    return {"n": len(refs),
+            "per": sum(lev(r, h) for r, h in zip(refs, hyps)) / sum(map(len, refs)),  # jiwer cer, as in evaluate.py
+            "wer": sum(lev(r.split(), h.split()) for r, h in zip(refs, hyps)) / sum(len(r.split()) for r in refs),
+            "word_errors": errors, **{k: c[k] for k in ("length_only", "segment", "truncation")},
+            "length_only_share": round(c["length_only"] / errors, 4) if errors else None}
+
+
+def benchmark():
+    import torch
+    if not BENCH.exists():
+        urllib.request.urlretrieve(REPO + "data/test/ang.tsv", BENCH)
+    rows = [line.strip().split("\t") for line in BENCH.read_text(encoding="utf8").splitlines() if line.strip()]
+    words, refs = [w for w, _ in rows], [p.split(",")[0] for _, p in rows]  # first variant, as data_utils.py
+    tok, model = load_model()
+    summary = {"model": MODEL, "revision": REVISION, "tokenizer": TOKENIZER, "repository": REPO, "prefix": PREFIX,
+               "num_beams": 5, "published": PUBLISHED}
+    cols = {}
+    for max_length in (20, 50):  # 20 is the transformers default that evaluate.py runs with
+        hyps, types = [], []
+        for i, word in enumerate(words):  # one word per call, no padding, as evaluate.py
+            enc = tok([PREFIX + word], add_special_tokens=False, return_tensors="pt").to(model.device)
+            with torch.no_grad():
+                ids = model.generate(enc.input_ids, num_beams=5, max_length=max_length)[0].tolist()
+            hyps.append(tok.decode(ids, skip_special_tokens=True))
+            types.append(error_type(refs[i], hyps[-1], tok.eos_token_id not in ids))
+            print(f"max_length {max_length}: {i + 1}/{len(words)}", end="\r", flush=True)
+        summary[f"max_length_{max_length}"] = score(refs, hyps, types)
+        cols[f"prediction_max{max_length}"], cols[f"type_max{max_length}"] = hyps, types
+    OUT.mkdir(parents=True, exist_ok=True)
+    with open(OUT / "benchmark.tsv", "w", encoding="utf8", newline="") as f:
+        w = csv.writer(f, delimiter="\t")
+        w.writerow(["word", "reference", *cols])
+        w.writerows(zip(words, refs, *cols.values()))
+    (OUT / "benchmark.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf8")
+    print("\n" + json.dumps(summary, ensure_ascii=False, indent=2))
+
+
+def predict(batch_size=64, tiny=False):
+    import torch
+    torch.manual_seed(0)
+    words = sorted({r["bare"].lower() for rows in tests().values() for r in rows if r["gold_pattern"]})
+    tok, model = load_model(tiny)
+    if tiny:
+        words = words[:200]
     OUT.mkdir(parents=True, exist_ok=True)
     path = OUT / ("ipa_tiny.tsv" if tiny else "ipa.tsv")  # the smoke test must not replace the GPU output
     with open(path, "w", encoding="utf8", newline="") as f:
@@ -135,5 +210,7 @@ if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "analyse"
     if cmd == "predict":
         predict(tiny="--tiny" in sys.argv)
+    elif cmd == "benchmark":
+        benchmark()
     else:
         analyse()

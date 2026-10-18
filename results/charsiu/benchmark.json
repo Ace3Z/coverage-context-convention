@@ -1,0 +1,32 @@
+{
+  "model": "charsiu/g2p_multilingual_byT5_small_100",
+  "revision": "ed5cf99707fb39f5f3ccc461530d56b6fb531fd3",
+  "tokenizer": "google/byt5-small",
+  "repository": "https://raw.githubusercontent.com/lingjzhu/CharsiuG2P/0c929390759fb94f8ecdfc05cc0bc5f2ff2dc0f4/",
+  "prefix": "<ang>:",
+  "num_beams": 5,
+  "published": {
+    "per": 0.04102693178957966,
+    "wer": 0.208
+  },
+  "max_length_20": {
+    "n": 500,
+    "per": 0.04102693178957966,
+    "wer": 0.208,
+    "word_errors": 104,
+    "length_only": 69,
+    "segment": 23,
+    "truncation": 12,
+    "length_only_share": 0.6635
+  },
+  "max_length_50": {
+    "n": 500,
+    "per": 0.03347596274855273,
+    "wer": 0.188,
+    "word_errors": 94,
+    "length_only": 71,
+    "segment": 23,
+    "truncation": 0,
+    "length_only_share": 0.7553
+  }
+}

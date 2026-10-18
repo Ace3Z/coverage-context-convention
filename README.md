@@ -52,8 +52,11 @@ They need `pip install -r requirements-neural.txt` (pins `transformers==4.57.6`)
   subset: `--train-limit N`.
 - **Encoder pilot:** the five context arms on 10,000 training examples, run from `notebooks/` on Kaggle or Colab.
   See `notebooks/README.md`. The logic is `oevl.pilot`.
-- **CharsiuG2P error analysis:** `PYTHONPATH=src python -m oevl.charsiu_g2p predict` writes `results/charsiu/ipa.tsv`
-  (committed, made on Colab); `run_all.sh` runs the `analyse` step on it.
+- **CharsiuG2P error analysis:** `PYTHONPATH=src python -m oevl.charsiu_g2p benchmark` runs the published checkpoint
+  on the repository's own 500 Old English test words (`data/charsiu_ang_test.tsv`) and writes
+  `results/charsiu/benchmark.json` and a per-word `benchmark.tsv` (committed, about 15 minutes on a laptop CPU).
+  `PYTHONPATH=src python -m oevl.charsiu_g2p predict` writes `results/charsiu/ipa.tsv` for our test sets (committed,
+  made on a GPU); `run_all.sh` runs the `analyse` step on it.
 
 GPU training is not bit-for-bit repeatable, so a new run can differ slightly. CPU smoke tests without downloads:
 `PYTHONPATH=src python -m oevl.encoder_experiment --tiny --out /tmp/t`,
@@ -106,6 +109,7 @@ changed instead of reporting accuracy.
 - Bosworth–Toller data dump, Tichý et al., LINDAT (CC BY 4.0): http://hdl.handle.net/11234/1-3532
 - CharsiuG2P (MIT): https://github.com/lingjzhu/CharsiuG2P; `data/charsiu_ang_dict_words.txt` lists the words of its
   Old English training dictionary, used only to split the error analysis into seen and unseen words.
+  `data/charsiu_ang_test.tsv` is its `data/test/ang.tsv` at commit `0c929390759fb94f8ecdfc05cc0bc5f2ff2dc0f4`.
 
 ## Layout
 
