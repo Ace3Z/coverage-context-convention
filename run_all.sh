@@ -17,7 +17,7 @@ url = 'https://raw.githubusercontent.com/CUNY-CL/wikipron/master/data/scrape/tsv
 p = Path('data/ang_latn_broad.tsv'); urlretrieve(url, p)
 Path('data/wikipron_provenance.json').write_text(json.dumps({'url': url,
   'retrieved_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-  'sha256': hashlib.sha256(p.read_bytes()).hexdigest(), 'license': 'Apache-2.0'}, indent=2))
+  'sha256': hashlib.sha256(p.read_bytes()).hexdigest(), 'license': 'CC BY-SA 4.0 (Wiktionary data, see data/LICENSE.md; the WikiPron code is Apache-2.0)'}, indent=2))
 PY
 fi
 sha256sum data/brunetti-length.txt data/ang_latn_broad.tsv 2>/dev/null || shasum -a 256 data/brunetti-length.txt data/ang_latn_broad.tsv
