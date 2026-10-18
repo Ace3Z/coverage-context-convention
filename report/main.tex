@@ -104,11 +104,11 @@ gives the bare input. A word 6-gram audit % data/leakage_excluded.json, ngram
 
 \section{Candidates, populations and ambiguity classes}
 A word's pattern has one 0/1 slot per vowel letter, and a candidate source proposes the possible patterns for each
-bare word. All trained systems take their candidates from the training forms plus WikiPron \cite{lee2020}, whose
+bare word. Outside the coverage comparison, all systems take their candidates from the training forms plus WikiPron \cite{lee2020}, whose
 Old English IPA we convert to spellings by aligning vowels (\emph{ea, eo, ie, io} count as one) with IPA nuclei
 (\NWikiForms{} forms from \NWikiRows{} rows, \NWikiAligned\% aligned). The proposal named three dictionaries: Clark
 Hall in TEI \cite{clarkhall}, Wiktionary inflection tables via kaikki.org \cite{ylonen2022} and Bosworth-Toller
-\cite{bosworth}. They enter the coverage comparison (Section~\ref{sec:coverage}) but no trained system. The
+\cite{bosworth}. They enter only the coverage comparison (Section~\ref{sec:coverage}), where we rerun the prior and the bilateral model with them. The
 frequency prior picks a word's most frequent training pattern and, for an unseen word, the pattern most sources
 attest, then the one with fewest long vowels.
 
@@ -191,7 +191,7 @@ normalisation could align, \NCheckAlign{} alignment faults and \NCheckOther{} ot
 
 The proposal promised to report disagreement instead of a model if agreement was low. We fixed what counts as low
 only after measuring (agreement at least 10 points above the prior on ambiguous tokens), % results/agreement/metrics.json, gate.rule
-so the rule decided nothing. Only Harrison \& Sharp against Tauber clears it (\NGateHTHs{} points), the pair the
+so the rule decided nothing. Only Harrison \& Sharp against Tauber clears it, against the Harrison \& Sharp floor only (\NGateHTHs{} points, \NGateHTTauber{} against Tauber's), the pair the
 revision likely brought closer. Against Wyatt or Tauber the prior is only \NGateWTWyatt{} and \NGateWTTauber{} points
 below the agreement of these two editors.
 
@@ -276,7 +276,7 @@ prior (\NABeoLexBil\% against \NABeoLexFreq\%).
 \centering\small
 \setlength{\tabcolsep}{2.5pt}
 \caption{All-token accuracy (\%) by candidate source. Training: forms seen in training. + WikiPron: the source of
-all trained systems. + Proposal: the three proposal dictionaries instead of WikiPron. + All four: WikiPron and the
+all other results. + Proposal: the three proposal dictionaries instead of WikiPron. + All four: WikiPron and the
 three. Bil.: logistic bilateral model.}
 \label{tab:coverage}
 \begin{tabular}{@{}lrrrrrr@{}}
@@ -309,7 +309,7 @@ stops decoding after 20 steps and so cuts \NCharsiuTrunc{} of its \NCharsiuN{} o
 the reference only in vowel length, as the proposal expected. On our test tokens, with its \texttt{<ang>:} prefix and its IPA mapped to length patterns, it
 gets length right on \NCharsiuSolAll\% of prose and \NCharsiuBeoAll\% of verse tokens, and on \NCharsiuSolLex\% and
 \NCharsiuBeoLex\% of the ambiguous ones (our prior: \NWSolAllFreq\%, \NWBeoAllFreq\%, \NWSolLexFreq\%,
-\NWBeoLexFreq\%). Our word-only logistic model (seed~1) gets \NCharsiuSolLexWordFix{} of its \NCharsiuSolLexWrong{} length
+\NWBeoLexFreq\%). Our word-only logistic model (seed~1) gets \NCharsiuSolLexWordFix{} of CharsiuG2P's \NCharsiuSolLexWrong{} length
 errors on ambiguous prose tokens right (\NCharsiuSolLexWordFixShare\%) and the bilateral model \NCharsiuSolLexBilFix,
 so the edition's habit for the word, not context, repairs most of them. CharsiuG2P was built for
 word lists from Wiktionary transcriptions, not to follow an edition's conventions in running text, so this gap measures
@@ -338,11 +338,9 @@ and every full-cap ByT5 run chooses \emph{þe}. The automated annotators marked 
 agrees with one editor and is scored against another.
 
 \section{Deviations, limitations and conclusion}
-\paragraph{Deviations.} The proposal asked what context buys. The coverage results widened this to four limits, so the
-abstract reports all-token accuracy, which the proposal meant to keep secondary. The proposal had an encoder score the
-candidates. We fine-tune the encoder-decoder ByT5 and score each candidate by the log-probability of its pattern
-string, still choosing among candidates with one checkpoint trained on identical data per arm. The proposal's three dictionaries supply candidates only in the coverage comparison, and an extra BiLSTM baseline we had
-planned was not run. LLM-based annotators, not two of us, labelled the ambiguity classes, the error types and the
+\paragraph{Deviations.} The coverage results widened the proposal's question to four limits, so the abstract also
+reports all-token accuracy. Instead of an encoder, a fine-tuned encoder-decoder (ByT5) scores the candidates, one
+checkpoint per arm on identical data. The trained systems keep the candidate set of our first pipeline (training forms plus WikiPron), so the proposal's three dictionaries enter only the coverage comparison, and a planned BiLSTM baseline was not run. LLM-based annotators, not two of us, labelled the ambiguity classes, the error types and the
 disagreement sample. The dataset has a Hugging Face export script but is not uploaded.
 
 \paragraph{Limitations.} We predict editorial convention, not pronunciation: the dictionaries and the gold descend

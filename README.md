@@ -1,4 +1,4 @@
-# What Limits Vowel-Length Restoration in Old English? — code
+# What Limits Vowel-Length Restoration in Old English? (code)
 
 Course project, *Essentials in Text and Speech Processing*, UZH, HS 2026.
 Mahbod Tajdini, Hanna Miranovich, Arjun Singh Bhadoria.
