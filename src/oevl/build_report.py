@@ -1,7 +1,7 @@
 """Generate every number, table and the figure used in report/main.tex from the results files.
 
 Writes report/generated/{numbers.tex, tab_data.tex, tab_main.tex, tab_ablation.tex, tab_perword.tex,
-tab_classes.tex, fig_accuracy.pdf}. It also checks that the worked examples quoted in the report match the
+tab_classes.tex, tab_bootstrap.tex, fig_accuracy.pdf}. It also checks that the worked examples quoted in the report match the
 predictions, and compiles report/main.tex to REPORT.pdf when pdflatex is installed (otherwise upload report/ to
 Overleaf).
 Usage: python -m oevl.build_report
@@ -267,6 +267,37 @@ for t, tname in TESTS:
     cls.append("\\addlinespace" if t == "soliloquies" else "")
 (OUT / "tab_classes.tex").write_text("\n".join(cls) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf8")
 
+# Paired sentence bootstrap (oevl.stats) of the logistic models, + WikiPron run: each arm's per-token correctness is
+# its mean over seeds 1-3; differences in points with a 95% interval
+from oevl.stats import bootstrap_diff  # noqa: E402
+CLASSES = E.load_classes(ROOT / "data" / "ambiguity_classes.csv")
+PAIRS = (("word", "frequency"), ("left", "frequency"), ("sentence", "frequency"), ("left", "word"),
+         ("sentence", "word"), ("sentence", "left"))
+SHORT = {"frequency": "Freq.", "word": "Word", "left": "Left", "sentence": "Bil."}
+BPOPS = (("lexicon_ambiguous", "Lex.-amb."), ("class_B", "Class B"))
+boot, bn = {}, {}
+for t, _ in TESTS:
+    rows = preds if t == "soliloquies" else [json.loads(line) for line in open(
+        ROOT / "results" / "wikipron" / f"{t}_predictions.jsonl", encoding="utf8")]
+    for pop, _ in BPOPS:
+        sub = [r for r in rows if r["lexicon_ambiguous"] and (pop == "lexicon_ambiguous" or
+                                                              CLASSES.get(r["key"], "unlisted") == "B")]
+        bn[t, pop] = len(sub)
+        ok = {"frequency": [r["frequency_prediction"] == r["gold_pattern"] for r in sub]}
+        for a in ("word", "left", "sentence"):
+            ok[a] = [sum(r[f"{a}_seed{k}_prediction"] == r["gold_pattern"] for k in (1, 2, 3)) / 3 for r in sub]
+        for x, y in PAIRS:
+            boot[t, pop, x, y] = bootstrap_diff([r["sentence_id"] for r in sub], ok[x], ok[y])
+bt = ["\\begin{tabular}{@{}lllll@{}}\n\\toprule\n & \\multicolumn{2}{c}{\\textit{Soliloquies} (prose)} & "
+      "\\multicolumn{2}{c}{\\textit{Beowulf} (verse)} \\\\\n\\cmidrule(lr){2-3}\\cmidrule(l){4-5}\n"
+      "Difference & " + " & ".join(lab for _ in TESTS for _, lab in BPOPS) + " \\\\\n"
+      "\\textit{n} & " + " & ".join(f"{bn[t, p]:,}" for t, _ in TESTS for p, _ in BPOPS) + " \\\\\n\\midrule"]
+for x, y in PAIRS:
+    bt.append(f"{SHORT[x]} $-$ {SHORT[y]} & " + " & ".join(
+        "${:+.2f}\\ [{:+.2f}, {:+.2f}]$".format(*(100 * boot[t, p, x, y][k] for k in ("diff", "lo", "hi")))
+        for t, _ in TESTS for p, _ in BPOPS) + " \\\\")
+(OUT / "tab_bootstrap.tex").write_text("\n".join(bt) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf8")
+
 # ---------------------------------------------------------------- figure (drawn at its printed size: 15 cm wide)
 # Dot plot (not bars): the left panel needs a zoomed axis, and bars must start at zero.
 plt.rcParams.update({"font.family": "serif", "font.serif": ["Liberation Serif", "Nimbus Roman", "Times New Roman",
@@ -303,7 +334,7 @@ fig.tight_layout(rect=(0, 0.1, 1, 1), w_pad=1.5)
 fig.savefig(OUT / "fig_accuracy.pdf", metadata={"CreationDate": None})  # no timestamp: reruns are byte-identical
 plt.close(fig)
 
-print(f"wrote {len(num)} numbers, 5 tables and the figure to {OUT.relative_to(ROOT)}")
+print(f"wrote {len(num)} numbers, 6 tables and the figure to {OUT.relative_to(ROOT)}")
 print("worked examples verified against results/wikipron/soliloquies_predictions.jsonl")
 
 # ---------------------------------------------------------------- compile
