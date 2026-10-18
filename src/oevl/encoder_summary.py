@@ -11,6 +11,9 @@ cap256_nozup). Writes to --out:
 Every accuracy and paired statistic in summary.json is computed from these tables alone.
 Writes to --report: tab_encoder.tex and numbers_encoder.tex (numbers.tex is left alone).
 Usage: python -m oevl.encoder_summary --runs DIR --out results/encoder
+       python -m oevl.encoder_summary --from-tsv   (no GPU runs: recomputes summary.json and the .tex files from the
+         committed tables, taking from summary.json only what the tables cannot hold: settings, collapse flags,
+         losses, most_long_share and prior_agreement. run_all.sh does this.)
 """
 import argparse
 import gzip
@@ -80,6 +83,32 @@ def collect(runs):
         if len({json.dumps([d.get(k) for k in SETTINGS]) for d in runs_.values()}) > 1:
             raise SystemExit(f"{cfg}: runs differ in {SETTINGS}; put them in separate config folders")
     return tables, metrics
+
+
+def read_tables(out):
+    """The <set>_predictions.tsv.gz tables written by main(), back as collect() built them (every cell a string)."""
+    tables = {}
+    for s in TESTS:
+        p = Path(out) / f"{s}_predictions.tsv.gz"
+        if p.exists():
+            head, *lines = gzip.decompress(p.read_bytes()).decode("utf8").split("\n")[:-1]
+            cols = head.split("\t")
+            tables[s] = [dict(zip(cols, line.split("\t"), strict=True)) for line in lines]
+    return tables
+
+
+def runs_from_summary(summary):
+    """Each run's record in the shape collect() reads from metrics.json, rebuilt from summary.json. The per-seed
+    accuracies come along, so summarise() still checks the tables against them."""
+    metrics = {}
+    for cfg, C in summary.items():
+        for a, A in C["arms"].items():
+            for i, sd in enumerate(A["seeds"]):
+                arm = {k: A[k][i] for k in ("collapsed", "final_train_loss", "train_loss_per_epoch")}
+                for s, S in A["sets"].items():
+                    arm[s] = {k: v[i] if isinstance(v, list) else {"accuracy": v["values"][i]} for k, v in S.items()}
+                metrics.setdefault(cfg, {})[a, sd] = {**C["settings"], "seed": sd, "arms": {a: arm}}
+    return metrics
 
 
 def summarise(tables, metrics):
@@ -215,17 +244,24 @@ def table_tex(summary):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--runs", required=True, help="folder of <config>/<arm>_s<seed> runs")
+    ap.add_argument("--runs", help="folder of <config>/<arm>_s<seed> runs")
+    ap.add_argument("--from-tsv", action="store_true", help="recompute from the tables and summary.json in --out")
     ap.add_argument("--out", default=str(ROOT / "results" / "encoder"))
     ap.add_argument("--report", default=str(ROOT / "report" / "generated"), help="where the .tex files go")
     a = ap.parse_args()
-    tables, metrics = collect(a.runs)
-    if not metrics:
-        raise SystemExit(f"no <config>/<arm>_s<seed> runs under {a.runs}")
+    if a.from_tsv == bool(a.runs):
+        ap.error("give either --runs DIR or --from-tsv")
     out, rep = Path(a.out), Path(a.report)
+    if a.from_tsv:
+        tables = read_tables(out)
+        metrics = runs_from_summary(json.loads((out / "summary.json").read_text(encoding="utf8")))
+    else:
+        tables, metrics = collect(a.runs)
+    if not metrics:
+        raise SystemExit(f"no <config>/<arm>_s<seed> runs under {a.runs or out}")
     out.mkdir(parents=True, exist_ok=True)
     rep.mkdir(parents=True, exist_ok=True)
-    for s, table in tables.items():
+    for s, table in tables.items() if a.runs else ():
         cols = list(table[0])
         text = "\t".join(cols) + "\n" + "".join("\t".join(t[c] for c in cols) + "\n" for t in table)
         (out / f"{s}_predictions.tsv.gz").write_bytes(gzip.compress(text.encode("utf8"), mtime=0))  # byte-stable
@@ -233,7 +269,7 @@ def main():
     (out / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
     (rep / "tab_encoder.tex").write_text(table_tex(summary), encoding="utf8")
     (rep / "numbers_encoder.tex").write_text(numbers(summary), encoding="utf8")
-    print(f"wrote {out / 'summary.json'}, {len(tables)} prediction tables, {rep / 'tab_encoder.tex'} and "
+    print(f"wrote {out / 'summary.json'}, {len(tables) if a.runs else 0} prediction tables, {rep / 'tab_encoder.tex'} and "
           f"{rep / 'numbers_encoder.tex'}")
     for cfg, C in summary.items():
         for arm, A in C["arms"].items():

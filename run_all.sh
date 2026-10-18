@@ -59,4 +59,5 @@ python -m oevl.check_expected
 
 echo "== 6/6 report tables, numbers and figure"
 python -m oevl.error_typing   # error typing table from the adjudicated labels in results/error_typing/labels.tsv
+python -m oevl.encoder_summary --from-tsv   # encoder table and numbers from the committed GPU predictions (no GPU)
 python -m oevl.build_report

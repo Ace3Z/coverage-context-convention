@@ -5,6 +5,7 @@ import gzip
 import importlib.util
 import io
 import json
+import shutil
 import sys
 import tempfile
 import unittest
@@ -127,6 +128,21 @@ class TestSummary(unittest.TestCase):
             self.assertIn("\\newcommand{\\NEncCapOneTwoEightSolLexBilVsWord}{+33.33}",
                           (d / "gen/numbers_encoder.tex").read_text())
             self.assertIn("Bilateral & 2 & 1 & 100.00", (d / "gen/tab_encoder.tex").read_text())
+
+            # --from-tsv: the same three files from the tables and the run records alone (derived fields blanked)
+            s = json.loads((d / "enc/summary.json").read_text())
+            s["cap128"]["paired"], s["cap128"]["frequency"] = {}, {}
+            for v in (v for A in s["cap128"]["arms"].values() for S in A["sets"].values() for v in S.values()):
+                if isinstance(v, dict):
+                    v.update(n=None, mean=None, sd=None)
+            (d / "tsv").mkdir()
+            for f in (d / "enc").glob("*.tsv.gz"):
+                shutil.copy(f, d / "tsv")
+            (d / "tsv/summary.json").write_text(json.dumps(s))
+            run(encoder_summary.main, "--from-tsv", "--out", str(d / "tsv"), "--report", str(d / "gen2"))
+            for a, b in (("enc/summary.json", "tsv/summary.json"), ("gen/tab_encoder.tex", "gen2/tab_encoder.tex"),
+                         ("gen/numbers_encoder.tex", "gen2/numbers_encoder.tex")):
+                self.assertEqual((d / a).read_text(), (d / b).read_text(), b)
 
     def test_refuses_predictions_that_disagree_with_metrics(self):
         with tempfile.TemporaryDirectory() as d:
