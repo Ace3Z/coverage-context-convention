@@ -21,6 +21,22 @@
       "minority_reading": {
         "n": 640,
         "accuracy": 0.0046875
+      },
+      "class_A": {
+        "n": 475,
+        "accuracy": 0.9642105263157895
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.6009756097560975
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.9607666966157532
+      },
+      "class_unlisted": {
+        "n": 708,
+        "accuracy": 0.865819209039548
       }
     },
     "oracle": {
@@ -37,6 +53,22 @@
       "minority_reading": {
         "n": 640,
         "accuracy": 1.0
+      },
+      "class_A": {
+        "n": 475,
+        "accuracy": 1.0
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 1.0
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.9994010182689428
+      },
+      "class_unlisted": {
+        "n": 708,
+        "accuracy": 0.9957627118644068
       }
     },
     "word_seed1": {
@@ -53,6 +85,22 @@
       "minority_reading": {
         "n": 640,
         "accuracy": 0.015625
+      },
+      "class_A": {
+        "n": 475,
+        "accuracy": 0.9642105263157895
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.6009756097560975
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.9607666966157532
+      },
+      "class_unlisted": {
+        "n": 708,
+        "accuracy": 0.8714689265536724
       }
     },
     "word_seed2": {
@@ -69,6 +117,22 @@
       "minority_reading": {
         "n": 640,
         "accuracy": 0.015625
+      },
+      "class_A": {
+        "n": 475,
+        "accuracy": 0.9642105263157895
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.6009756097560975
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.9607666966157532
+      },
+      "class_unlisted": {
+        "n": 708,
+        "accuracy": 0.8714689265536724
       }
     },
     "word_seed3": {
@@ -85,6 +149,22 @@
       "minority_reading": {
         "n": 640,
         "accuracy": 0.009375
+      },
+      "class_A": {
+        "n": 475,
+        "accuracy": 0.9642105263157895
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.6009756097560975
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.9607666966157532
+      },
+      "class_unlisted": {
+        "n": 708,
+        "accuracy": 0.865819209039548
       }
     },
     "left_seed1": {
@@ -101,6 +181,22 @@
       "minority_reading": {
         "n": 640,
         "accuracy": 0.0390625
+      },
+      "class_A": {
+        "n": 475,
+        "accuracy": 0.9621052631578947
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.6107317073170732
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.9610661874812818
+      },
+      "class_unlisted": {
+        "n": 708,
+        "accuracy": 0.864406779661017
       }
     },
     "left_seed2": {
@@ -117,6 +213,22 @@
       "minority_reading": {
         "n": 640,
         "accuracy": 0.0375
+      },
+      "class_A": {
+        "n": 475,
+        "accuracy": 0.9642105263157895
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.6097560975609756
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.9610661874812818
+      },
+      "class_unlisted": {
+        "n": 708,
+        "accuracy": 0.8629943502824858
       }
     },
     "left_seed3": {
@@ -133,6 +245,22 @@
       "minority_reading": {
         "n": 640,
         "accuracy": 0.046875
+      },
+      "class_A": {
+        "n": 475,
+        "accuracy": 0.9621052631578947
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.6117073170731707
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.961665169212339
+      },
+      "class_unlisted": {
+        "n": 708,
+        "accuracy": 0.8629943502824858
       }
     },
     "sentence_seed1": {
@@ -149,6 +277,22 @@
       "minority_reading": {
         "n": 640,
         "accuracy": 0.0578125
+      },
+      "class_A": {
+        "n": 475,
+        "accuracy": 0.9578947368421052
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.6175609756097561
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.961665169212339
+      },
+      "class_unlisted": {
+        "n": 708,
+        "accuracy": 0.8615819209039548
       }
     },
     "sentence_seed2": {
@@ -165,6 +309,22 @@
       "minority_reading": {
         "n": 640,
         "accuracy": 0.06875
+      },
+      "class_A": {
+        "n": 475,
+        "accuracy": 0.96
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.6224390243902439
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.9613656783468104
+      },
+      "class_unlisted": {
+        "n": 708,
+        "accuracy": 0.8587570621468926
       }
     },
     "sentence_seed3": {
@@ -181,6 +341,22 @@
       "minority_reading": {
         "n": 640,
         "accuracy": 0.096875
+      },
+      "class_A": {
+        "n": 475,
+        "accuracy": 0.96
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.6302439024390244
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.9628631326744534
+      },
+      "class_unlisted": {
+        "n": 708,
+        "accuracy": 0.865819209039548
       }
     },
     "seed_summary": {
@@ -200,6 +376,22 @@
         "minority_reading": {
           "mean": 0.013541666666666667,
           "sd": 0.0036084391824351613
+        },
+        "class_A": {
+          "mean": 0.9642105263157895,
+          "sd": 0.0
+        },
+        "class_B": {
+          "mean": 0.6009756097560975,
+          "sd": 0.0
+        },
+        "class_C": {
+          "mean": 0.9607666966157532,
+          "sd": 0.0
+        },
+        "class_unlisted": {
+          "mean": 0.8695856873822976,
+          "sd": 0.0032618659276250385
         }
       },
       "left": {
@@ -218,6 +410,22 @@
         "minority_reading": {
           "mean": 0.04114583333333333,
           "sd": 0.005022734771350498
+        },
+        "class_A": {
+          "mean": 0.9628070175438597,
+          "sd": 0.001215474250925583
+        },
+        "class_B": {
+          "mean": 0.6107317073170732,
+          "sd": 0.0009756097560975618
+        },
+        "class_C": {
+          "mean": 0.9612658480583008,
+          "sd": 0.0003458222636655501
+        },
+        "class_unlisted": {
+          "mean": 0.8634651600753296,
+          "sd": 0.0008154664819062916
         }
       },
       "sentence": {
@@ -236,6 +444,22 @@
         "minority_reading": {
           "mean": 0.07447916666666667,
           "sd": 0.020151606377242816
+        },
+        "class_A": {
+          "mean": 0.9592982456140351,
+          "sd": 0.0012154742509255189
+        },
+        "class_B": {
+          "mean": 0.6234146341463415,
+          "sd": 0.006397500999319031
+        },
+        "class_C": {
+          "mean": 0.9619646600778676,
+          "sd": 0.0007923783501241799
+        },
+        "class_unlisted": {
+          "mean": 0.8620527306967984,
+          "sd": 0.003554535986473995
         }
       }
     },

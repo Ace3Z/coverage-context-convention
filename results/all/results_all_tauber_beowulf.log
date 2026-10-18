@@ -22,6 +22,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 640,
         "accuracy": 0.0046875
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.9743589743589743
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.6009756097560975
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.9607666966157532
+      },
+      "class_unlisted": {
+        "n": 4122,
+        "accuracy": 0.8219311014070839
       }
     },
     "oracle": {
@@ -38,6 +54,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 640,
         "accuracy": 1.0
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 1.0
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 1.0
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.9994010182689428
+      },
+      "class_unlisted": {
+        "n": 4122,
+        "accuracy": 0.992721979621543
       }
     },
     "word_seed1": {
@@ -54,6 +86,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 640,
         "accuracy": 0.0171875
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.9743589743589743
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.6009756097560975
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.9607666966157532
+      },
+      "class_unlisted": {
+        "n": 4122,
+        "accuracy": 0.8954391072295003
       }
     },
     "word_seed2": {
@@ -70,6 +118,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 640,
         "accuracy": 0.0171875
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.9743589743589743
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.6009756097560975
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.9607666966157532
+      },
+      "class_unlisted": {
+        "n": 4122,
+        "accuracy": 0.8956817079087821
       }
     },
     "word_seed3": {
@@ -86,6 +150,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 640,
         "accuracy": 0.0171875
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.9743589743589743
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.6009756097560975
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.9607666966157532
+      },
+      "class_unlisted": {
+        "n": 4122,
+        "accuracy": 0.8954391072295003
       }
     },
     "left_seed1": {
@@ -102,6 +182,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 640,
         "accuracy": 0.0203125
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.9728506787330317
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.6048780487804878
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.9610661874812818
+      },
+      "class_unlisted": {
+        "n": 4122,
+        "accuracy": 0.8947113051916545
       }
     },
     "left_seed2": {
@@ -118,6 +214,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 640,
         "accuracy": 0.021875
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.9743589743589743
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.6048780487804878
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.9610661874812818
+      },
+      "class_unlisted": {
+        "n": 4122,
+        "accuracy": 0.8947113051916545
       }
     },
     "left_seed3": {
@@ -134,6 +246,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 640,
         "accuracy": 0.0234375
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.9743589743589743
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.6039024390243902
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.961665169212339
+      },
+      "class_unlisted": {
+        "n": 4122,
+        "accuracy": 0.8949539058709365
       }
     },
     "sentence_seed1": {
@@ -150,6 +278,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 640,
         "accuracy": 0.0265625
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.9728506787330317
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.608780487804878
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.9607666966157532
+      },
+      "class_unlisted": {
+        "n": 4122,
+        "accuracy": 0.8874332848131975
       }
     },
     "sentence_seed2": {
@@ -166,6 +310,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 640,
         "accuracy": 0.025
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.971342383107089
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.6078048780487805
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.9607666966157532
+      },
+      "class_unlisted": {
+        "n": 4122,
+        "accuracy": 0.8884036875303251
       }
     },
     "sentence_seed3": {
@@ -182,6 +342,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 640,
         "accuracy": 0.0296875
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.971342383107089
+      },
+      "class_B": {
+        "n": 1025,
+        "accuracy": 0.6097560975609756
+      },
+      "class_C": {
+        "n": 3339,
+        "accuracy": 0.9607666966157532
+      },
+      "class_unlisted": {
+        "n": 4122,
+        "accuracy": 0.8876758854924793
       }
     },
     "seed_summary": {
@@ -201,6 +377,22 @@ Tauber validated: 17361 tokens, 7438 long marks
         "minority_reading": {
           "mean": 0.0171875,
           "sd": 0.0
+        },
+        "class_A": {
+          "mean": 0.9743589743589743,
+          "sd": 0.0
+        },
+        "class_B": {
+          "mean": 0.6009756097560975,
+          "sd": 0.0
+        },
+        "class_C": {
+          "mean": 0.9607666966157532,
+          "sd": 0.0
+        },
+        "class_unlisted": {
+          "mean": 0.8955199741225942,
+          "sd": 0.00014006556748895333
         }
       },
       "left": {
@@ -219,6 +411,22 @@ Tauber validated: 17361 tokens, 7438 long marks
         "minority_reading": {
           "mean": 0.021875,
           "sd": 0.0015624999999999997
+        },
+        "class_A": {
+          "mean": 0.9738562091503268,
+          "sd": 0.000870814885655541
+        },
+        "class_B": {
+          "mean": 0.6045528455284552,
+          "sd": 0.0005632685553069525
+        },
+        "class_C": {
+          "mean": 0.9612658480583008,
+          "sd": 0.0003458222636655501
+        },
+        "class_unlisted": {
+          "mean": 0.8947921720847485,
+          "sd": 0.00014006556748901743
         }
       },
       "sentence": {
@@ -237,6 +445,22 @@ Tauber validated: 17361 tokens, 7438 long marks
         "minority_reading": {
           "mean": 0.027083333333333334,
           "sd": 0.0023867581744561653
+        },
+        "class_A": {
+          "mean": 0.9718451483157365,
+          "sd": 0.000870814885655541
+        },
+        "class_B": {
+          "mean": 0.608780487804878,
+          "sd": 0.0009756097560975618
+        },
+        "class_C": {
+          "mean": 0.9607666966157532,
+          "sd": 0.0
+        },
+        "class_unlisted": {
+          "mean": 0.8878376192786673,
+          "sd": 0.0005050135855085076
         }
       }
     },
@@ -245,19 +469,19 @@ Tauber validated: 17361 tokens, 7438 long marks
         "a_wrong_b_right": 433,
         "a_right_b_wrong": 130,
         "discordant": 563,
-        "p_exact": 5.0114156645650506e-39
+        "p_exact": 5.0114156645650486e-39
       },
       "frequency_vs_left_seed1": {
         "a_wrong_b_right": 445,
         "a_right_b_wrong": 141,
         "discordant": 586,
-        "p_exact": 1.189412644551304e-37
+        "p_exact": 1.189412644551305e-37
       },
       "frequency_vs_sentence_seed1": {
         "a_wrong_b_right": 455,
         "a_right_b_wrong": 178,
         "discordant": 633,
-        "p_exact": 6.735594842853506e-29
+        "p_exact": 6.735594842853504e-29
       },
       "word_seed1_vs_left_seed1": {
         "a_wrong_b_right": 21,
@@ -758,6 +982,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 358,
         "accuracy": 0.025139664804469275
+      },
+      "class_A": {
+        "n": 387,
+        "accuracy": 0.8940568475452196
+      },
+      "class_B": {
+        "n": 420,
+        "accuracy": 0.680952380952381
+      },
+      "class_C": {
+        "n": 2654,
+        "accuracy": 0.9589299171062547
+      },
+      "class_unlisted": {
+        "n": 5236,
+        "accuracy": 0.6644385026737968
       }
     },
     "oracle": {
@@ -774,6 +1014,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 358,
         "accuracy": 1.0
+      },
+      "class_A": {
+        "n": 387,
+        "accuracy": 1.0
+      },
+      "class_B": {
+        "n": 420,
+        "accuracy": 1.0
+      },
+      "class_C": {
+        "n": 2654,
+        "accuracy": 1.0
+      },
+      "class_unlisted": {
+        "n": 5236,
+        "accuracy": 0.9946524064171123
       }
     },
     "word_seed1": {
@@ -790,6 +1046,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 358,
         "accuracy": 0.0446927374301676
+      },
+      "class_A": {
+        "n": 387,
+        "accuracy": 0.8940568475452196
+      },
+      "class_B": {
+        "n": 420,
+        "accuracy": 0.680952380952381
+      },
+      "class_C": {
+        "n": 2654,
+        "accuracy": 0.9589299171062547
+      },
+      "class_unlisted": {
+        "n": 5236,
+        "accuracy": 0.8437738731856379
       }
     },
     "word_seed2": {
@@ -806,6 +1078,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 358,
         "accuracy": 0.0446927374301676
+      },
+      "class_A": {
+        "n": 387,
+        "accuracy": 0.8940568475452196
+      },
+      "class_B": {
+        "n": 420,
+        "accuracy": 0.680952380952381
+      },
+      "class_C": {
+        "n": 2654,
+        "accuracy": 0.9589299171062547
+      },
+      "class_unlisted": {
+        "n": 5236,
+        "accuracy": 0.8399541634835752
       }
     },
     "word_seed3": {
@@ -822,6 +1110,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 358,
         "accuracy": 0.0446927374301676
+      },
+      "class_A": {
+        "n": 387,
+        "accuracy": 0.8940568475452196
+      },
+      "class_B": {
+        "n": 420,
+        "accuracy": 0.680952380952381
+      },
+      "class_C": {
+        "n": 2654,
+        "accuracy": 0.9589299171062547
+      },
+      "class_unlisted": {
+        "n": 5236,
+        "accuracy": 0.839572192513369
       }
     },
     "left_seed1": {
@@ -838,6 +1142,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 358,
         "accuracy": 0.04189944134078212
+      },
+      "class_A": {
+        "n": 387,
+        "accuracy": 0.8940568475452196
+      },
+      "class_B": {
+        "n": 420,
+        "accuracy": 0.680952380952381
+      },
+      "class_C": {
+        "n": 2654,
+        "accuracy": 0.9589299171062547
+      },
+      "class_unlisted": {
+        "n": 5236,
+        "accuracy": 0.8346065699006876
       }
     },
     "left_seed2": {
@@ -854,6 +1174,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 358,
         "accuracy": 0.04189944134078212
+      },
+      "class_A": {
+        "n": 387,
+        "accuracy": 0.8940568475452196
+      },
+      "class_B": {
+        "n": 420,
+        "accuracy": 0.680952380952381
+      },
+      "class_C": {
+        "n": 2654,
+        "accuracy": 0.9589299171062547
+      },
+      "class_unlisted": {
+        "n": 5236,
+        "accuracy": 0.8326967150496563
       }
     },
     "left_seed3": {
@@ -870,6 +1206,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 358,
         "accuracy": 0.04189944134078212
+      },
+      "class_A": {
+        "n": 387,
+        "accuracy": 0.8940568475452196
+      },
+      "class_B": {
+        "n": 420,
+        "accuracy": 0.680952380952381
+      },
+      "class_C": {
+        "n": 2654,
+        "accuracy": 0.9589299171062547
+      },
+      "class_unlisted": {
+        "n": 5236,
+        "accuracy": 0.8311688311688312
       }
     },
     "sentence_seed1": {
@@ -886,6 +1238,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 358,
         "accuracy": 0.03910614525139665
+      },
+      "class_A": {
+        "n": 387,
+        "accuracy": 0.8940568475452196
+      },
+      "class_B": {
+        "n": 420,
+        "accuracy": 0.680952380952381
+      },
+      "class_C": {
+        "n": 2654,
+        "accuracy": 0.9589299171062547
+      },
+      "class_unlisted": {
+        "n": 5236,
+        "accuracy": 0.832505729564553
       }
     },
     "sentence_seed2": {
@@ -902,6 +1270,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 358,
         "accuracy": 0.03910614525139665
+      },
+      "class_A": {
+        "n": 387,
+        "accuracy": 0.8940568475452196
+      },
+      "class_B": {
+        "n": 420,
+        "accuracy": 0.680952380952381
+      },
+      "class_C": {
+        "n": 2654,
+        "accuracy": 0.9589299171062547
+      },
+      "class_unlisted": {
+        "n": 5236,
+        "accuracy": 0.8288770053475936
       }
     },
     "sentence_seed3": {
@@ -918,6 +1302,22 @@ Tauber validated: 17361 tokens, 7438 long marks
       "minority_reading": {
         "n": 358,
         "accuracy": 0.0446927374301676
+      },
+      "class_A": {
+        "n": 387,
+        "accuracy": 0.8940568475452196
+      },
+      "class_B": {
+        "n": 420,
+        "accuracy": 0.680952380952381
+      },
+      "class_C": {
+        "n": 2654,
+        "accuracy": 0.9593067068575735
+      },
+      "class_unlisted": {
+        "n": 5236,
+        "accuracy": 0.8304048892284186
       }
     },
     "seed_summary": {
@@ -937,6 +1337,22 @@ Tauber validated: 17361 tokens, 7438 long marks
         "minority_reading": {
           "mean": 0.0446927374301676,
           "sd": 0.0
+        },
+        "class_A": {
+          "mean": 0.8940568475452196,
+          "sd": 0.0
+        },
+        "class_B": {
+          "mean": 0.680952380952381,
+          "sd": 0.0
+        },
+        "class_C": {
+          "mean": 0.9589299171062547,
+          "sd": 0.0
+        },
+        "class_unlisted": {
+          "mean": 0.841100076394194,
+          "sd": 0.002323438705232329
         }
       },
       "left": {
@@ -955,6 +1371,22 @@ Tauber validated: 17361 tokens, 7438 long marks
         "minority_reading": {
           "mean": 0.04189944134078212,
           "sd": 0.0
+        },
+        "class_A": {
+          "mean": 0.8940568475452196,
+          "sd": 0.0
+        },
+        "class_B": {
+          "mean": 0.680952380952381,
+          "sd": 0.0
+        },
+        "class_C": {
+          "mean": 0.9589299171062547,
+          "sd": 0.0
+        },
+        "class_unlisted": {
+          "mean": 0.8328240387063917,
+          "sd": 0.0017224025029881184
         }
       },
       "sentence": {
@@ -973,6 +1405,22 @@ Tauber validated: 17361 tokens, 7438 long marks
         "minority_reading": {
           "mean": 0.040968342644320296,
           "sd": 0.0032254204982660665
+        },
+        "class_A": {
+          "mean": 0.8940568475452196,
+          "sd": 0.0
+        },
+        "class_B": {
+          "mean": 0.680952380952381,
+          "sd": 0.0
+        },
+        "class_C": {
+          "mean": 0.9590555136900276,
+          "sd": 0.00021753966435175397
+        },
+        "class_unlisted": {
+          "mean": 0.8305958747135217,
+          "sd": 0.0018218854114150826
         }
       }
     },
@@ -987,7 +1435,7 @@ Tauber validated: 17361 tokens, 7438 long marks
         "a_wrong_b_right": 1259,
         "a_right_b_wrong": 368,
         "discordant": 1627,
-        "p_exact": 6.481776976914732e-114
+        "p_exact": 6.4817769769147334e-114
       },
       "frequency_vs_sentence_seed1": {
         "a_wrong_b_right": 1252,
@@ -1011,7 +1459,7 @@ Tauber validated: 17361 tokens, 7438 long marks
         "a_wrong_b_right": 53,
         "a_right_b_wrong": 64,
         "discordant": 117,
-        "p_exact": 0.35527968165224744
+        "p_exact": 0.35527968165224766
       }
     },
     "per_word": [
