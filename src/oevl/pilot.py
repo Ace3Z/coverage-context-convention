@@ -3,11 +3,11 @@
 This is the logic that used to live in the four Kaggle/Colab notebooks. The notebooks in notebooks/ now only put
 the project on the machine and call:
 
-  python -m oevl.pilot --max-bytes 128 --out /kaggle/working/encoder_pilot_128_results [--restore OLD.zip]
+  python -m oevl.pilot --max-bytes 128 --out /kaggle/working/encoder_pilot_128_results [--restore OLD.zip ...]
 
 Steps: check the GPU and the pinned transformers version, load the checkpoint, run a tiny CPU-sized smoke test,
 then train and evaluate each arm in its own process. A finished arm is validated, marked COMPLETE.json and packed
-into <out>.zip, so a later session resumes with --restore <out>.zip and skips it. There is no checkpoint inside
+into <out>.zip, so a later session resumes with --restore <zip or folder> and skips it. There is no checkpoint inside
 an arm: an arm that is interrupted starts again from the beginning.
 
 Defaults are the agreed pilot: arms sentence, word, left, local2, local5 (P1-P5), 10,000 training examples,
@@ -18,6 +18,7 @@ import argparse
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import time
@@ -91,17 +92,30 @@ def pack(base):
     return archive
 
 
-def restore(archive, base):
-    """Unpack an earlier <out>.zip into an empty <out>/; members outside <out>/ are refused."""
-    if any(base.iterdir()):
-        print("not restoring: output folder is not empty:", base)
-        return
-    with zipfile.ZipFile(archive) as z:
-        for member in z.namelist():
-            parts = Path(member).parts
-            if parts and parts[0] == base.name and ".." not in parts and not Path(member).is_absolute():
-                z.extract(member, base.parent)
-    print("Restored previous results from", archive)
+def restore(src, base):
+    """Copy finished arms (folders with COMPLETE.json) from an earlier <out>.zip or extracted <out>/ folder into
+    base. Arms already finished in base are kept, and nothing is written outside base. Returns the arms copied."""
+    copied = []
+    if src.is_dir():
+        for arm in sorted(p.parent for p in src.glob("*/COMPLETE.json")):
+            if not (base / arm.name / "COMPLETE.json").exists():
+                shutil.rmtree(base / arm.name, ignore_errors=True)
+                shutil.copytree(arm, base / arm.name)
+                copied.append(arm.name)
+    else:
+        with zipfile.ZipFile(src) as z:
+            names = [n for n in z.namelist() if ".." not in Path(n).parts and not Path(n).is_absolute()]
+            finished = {Path(n).parts[1] for n in names
+                        if Path(n).parts[0] == base.name and Path(n).name == "COMPLETE.json" and len(Path(n).parts) == 3}
+            for arm in sorted(finished):
+                if not (base / arm / "COMPLETE.json").exists():
+                    shutil.rmtree(base / arm, ignore_errors=True)
+                    for n in names:
+                        if Path(n).parts[:2] == (base.name, arm):
+                            z.extract(n, base.parent)
+                    copied.append(arm)
+    print(f"restored {', '.join(copied)} from {src}" if copied else f"nothing to restore from {src}")
+    return copied
 
 
 def validate(out, arm, a):
@@ -160,14 +174,14 @@ def main():
     ap.add_argument("--lr", type=float, default=3e-4)
     ap.add_argument("--seed", type=int, default=1)
     ap.add_argument("--model", default="google/byt5-small")
-    ap.add_argument("--restore", help="earlier <out>.zip to resume from; ignored unless <out>/ is empty")
+    ap.add_argument("--restore", action="append", default=[], help="earlier <out>.zip or <out>/ folder; repeatable")
     ap.add_argument("--max-hours", type=float, default=9.0, help="start no new arm after this many hours")
     ap.add_argument("--tiny", action="store_true", help="tiny random model on a small subset (CPU dry run)")
     ap.add_argument("--allow-cpu", action="store_true", help="do not stop when there is no GPU (dry runs only)")
     ap.add_argument("--skip-model-check", action="store_true", help="do not download the checkpoint in preflight")
     a = ap.parse_args()
-    sys.stdout.reconfigure(line_buffering=True)  # the notebooks read this through a pipe; show lines as they come
-    arms = a.arms.split(",")
+    getattr(sys.stdout, "reconfigure", lambda **_: None)(line_buffering=True)  # notebooks read this through a pipe
+    arms = list(dict.fromkeys(a.arms.split(",")))
     if [x for x in arms if x not in ARMS]:
         ap.error(f"--arms must come from {', '.join(ARMS)}")
 
@@ -176,8 +190,8 @@ def main():
     base.mkdir(parents=True, exist_ok=True)
     preflight(a)
     smoke_test(base.with_name(base.name + "_smoke"))
-    if a.restore:
-        restore(Path(a.restore), base)
+    for src in a.restore:
+        restore(Path(src), base)
 
     shas = set()
     for arm in arms:
@@ -186,11 +200,14 @@ def main():
         out.mkdir(exist_ok=True)
         if (out / "COMPLETE.json").exists():
             shas.add(validate(out, arm, a))
+            if len(shas) > 1:
+                sys.exit(f"STOP: {eid} {arm} trained on a different subset from the other arms: {sorted(shas)}")
             print("SKIP completed", eid, arm, flush=True)
             continue
         if time.time() - start > a.max_hours * 3600:
             pack(base)
-            print(f"SAFE STOP: over {a.max_hours} h since start. Download the archive and resume with --restore.")
+            print(f"SAFE STOP: no time left to start another arm (--max-hours {a.max_hours:.2f}). "
+                  "Download the archive and resume in a new session with --restore.")
             break
         print("START", eid, arm, a.max_bytes, "bytes", a.epochs, "epoch(s)", flush=True)
         t0 = time.time()
@@ -198,7 +215,14 @@ def main():
         if status:
             pack(base)
             sys.exit(f"{eid} {arm} failed ({status}): the archive holds the finished arms; see {out / 'train.log'}")
-        shas.add(validate(out, arm, a))
+        try:
+            shas.add(validate(out, arm, a))
+        except AssertionError:
+            pack(base)  # keep the unvalidated outputs; without COMPLETE.json a resume reruns this arm
+            raise
+        if len(shas) > 1:
+            pack(base)
+            sys.exit(f"STOP: {eid} {arm} trained on a different subset from the other arms: {sorted(shas)}")
         (out / "COMPLETE.json").write_text(json.dumps({
             "id": eid, "arm": arm, "max_bytes": a.max_bytes, "train_limit": a.train_limit, "epochs": a.epochs,
             "seed": a.seed, "duration_seconds": round(time.time() - t0), "status": "completed"}, indent=2))
@@ -206,8 +230,6 @@ def main():
         print("COMPLETE", eid, arm, "minutes", round((time.time() - t0) / 60, 1), flush=True)
     else:
         print(f"ALL {len(arms)} {a.max_bytes}-BYTE PILOT ARMS COMPLETED")
-    if len(shas) > 1:
-        sys.exit(f"STOP: arms trained on different subsets: {sorted(shas)}")
 
     for arm in arms:  # summary of what is finished
         out = base / ARMS[arm]
