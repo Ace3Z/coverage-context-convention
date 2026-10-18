@@ -30,10 +30,13 @@ relative to the repository) or prefix commands with `PYTHONPATH=src`.
    in the proposal: Clark Hall, Wiktionary inflection tables and Bosworth–Toller (`data/lex_clarkhall.csv`,
    `lex_wiktionary.csv`, `lex_bt.csv`; rebuilt from the original sources with `python -m oevl.build_lexicons`).
 4. **Experiments:** four dictionary settings (training only, + WikiPron, + the three proposal dictionaries, + all four)
-   × the John dev set and both test sets, one set per run, written to `results/<setting>/`. Then `oevl.agreement` compares the three *Beowulf* editions (Harrison & Sharp, Wyatt, the
-   Tauber gold) pairwise and applies the gate of plan rule D2, written to `results/agreement/`.
-5. **`oevl.check_expected`:** fails if any of 528 headline values differs from the frozen results (four settings × three
-   sets, and the editor agreement of each *Beowulf* pair).
+   × the John dev set and both test sets, one set per run, written to `results/<setting>/`. All four train without
+   Zupitza (`--exclude-train zupitza_grammar`, see D3 under Protocol). One ablation keeps all five training works:
+   `results/wikipron_with_zupitza/` is the WikiPron setting with Zupitza, on the same three sets. Then
+   `oevl.agreement` compares the three *Beowulf* editions (Harrison & Sharp, Wyatt, the Tauber gold) pairwise and
+   applies the gate of plan rule D2, written to `results/agreement/`.
+5. **`oevl.check_expected`:** fails if any of 660 headline values differs from the frozen results (four settings and
+   the Zupitza ablation × three sets, and the editor agreement of each *Beowulf* pair).
 6. **`oevl.build_report`:** writes `report/generated/` (numbers, tables, figure), checks the worked examples against
    the predictions, and compiles `REPORT.pdf` if `pdflatex` is installed. Without LaTeX, upload `report/` to Overleaf
    and compile `main.tex`.
@@ -51,11 +54,13 @@ They need `pip install -r requirements-neural.txt` (pins `transformers==4.57.6`)
 
 - **Encoder, full data:** ByT5-small fine-tuned on the same examples with the word only, the left context or the whole
   sentence. `PYTHONPATH=src python -m oevl.encoder_experiment` writes `results/encoder/`. No full-data encoder output
-  is committed yet. Other context arms: `--arms local2,local5` (two or five words either side); a fixed training
+  is committed yet. Like `run_all.sh` it trains without Zupitza by default (D3), and `--exclude-train ""` trains
+  on all five works. Other context arms: `--arms local2,local5` (two or five words either side); a fixed training
   subset: `--train-limit N`. It scores the John dev set and both test sets (`--tests` picks fewer) and reads
   `results/wikipron/<set>_predictions.jsonl` from `run_all.sh`.
 - **Encoder pilot:** the five context arms on 10,000 training examples, run from `notebooks/` on Kaggle or Colab.
-  See `notebooks/README.md`. The logic is `oevl.pilot`.
+  See `notebooks/README.md`. The logic is `oevl.pilot`. The pilots ran before D3, so `oevl.pilot` still trains on all
+  five works.
 - **CharsiuG2P error analysis:** `PYTHONPATH=src python -m oevl.charsiu_g2p benchmark` runs the published checkpoint
   on the repository's own 500 Old English test words (`data/charsiu_ang_test.tsv`) and writes
   `results/charsiu/benchmark.json` and a per-word `benchmark.tsv` (committed, about 15 minutes on a laptop CPU).
@@ -87,14 +92,27 @@ changed instead of reporting accuracy.
 
 ## Protocol
 
-- **Train:** Bright's *Reader*, Matthew (West Saxon), Sweet's *Primer*, *Physiologus*, Zupitza's Ælfric
-  *Grammar* (93,038 tokens). **Dev:** Gospel of John (`john_ws`, 16,649 of 17,310 tokens), scored like the test sets.
+- **Train:** Bright's *Reader*, Matthew (West Saxon), Sweet's *Primer*, *Physiologus* (69,098 tokens). Zupitza's
+  Ælfric *Grammar* (23,940 tokens) stays in the corpus and the dataset release but is left out of training (D3
+  below), except in the ablation `results/wikipron_with_zupitza` (93,038 training tokens).
+  **Dev:** Gospel of John (`john_ws`, 16,649 of 17,310 tokens), scored like the test sets.
   **Prose test:** Alfred's *Soliloquies* (15,431 of 15,480 tokens). **Verse test:** Tauber's
   *Beowulf* (17,361 tokens from 17,244 rows). **Editor agreement only:** Harrison & Sharp and Wyatt *Beowulf*.
   Splits are by work. No *Beowulf* text is used for training. Dev and test sentences that share a word 6-gram
   (bare, lower-cased, ð folded to þ) with a training work are left out of evaluation. For John that is 34 sentences
   of 661 tokens (shared with Matthew and Sweet), for the *Soliloquies* one sentence of 49 tokens, for *Beowulf* none
   (`python -m oevl.audit_splits`).
+- **D3, Zupitza:** plan decision D3 kept Zupitza's *Grammar*, a Latin grammar written in Old English, out of dev and
+  test and left open whether to train on it. It was decided on the John dev set, on lexicon-ambiguous tokens with
+  training forms + WikiPron. The ByT5 sentence arm trained without Zupitza scored 96.00% (mean dev accuracy), against
+  95.06% for the best setting trained with it. The prior scored 95.60% without it and 94.87% with it, and the
+  bilateral logistic model 95.23% and 94.44% (means over seeds 1 to 3). So every system in `results/<setting>/`,
+  `oevl.agreement` (its floor is the prior), `oevl.try_text`, the encoder's default, the coverage numbers of
+  `oevl.build_report` and the CharsiuG2P populations use the training set without Zupitza.
+  `results/wikipron_with_zupitza` documents the comparison: it is the earlier headline run, unchanged. The leakage
+  audit still checks all five works, as the ablation needs. Zupitza shares no 6-gram with the dev or test sets, so
+  the exclusions are the same either way. The report's per-word table still shows how Zupitza marks each word,
+  counted from its corpus file.
 - **Systems:** frequency prior (most frequent pattern in training, and for a word not seen in training the pattern
   attested by the most dictionaries, then the one with the fewest long vowels); candidate-constrained logistic
   classifiers (word / +2 left words / +2 left and 2 right words), seeds 1–3; oracle with the same all-short fallback
@@ -102,13 +120,16 @@ changed instead of reporting accuracy.
 - **Populations:** lexicon-ambiguous, attested-ambiguous, minority-reading. The lexicon-ambiguous tokens are also
   split by ambiguity class (`class_A`, `class_B`, `class_C` in `metrics.json`) for the 60 skeletons in
   `data/ambiguity_classes.csv`, and `class_unlisted` for the rest. The class labels come from two automated
-  annotators and an automated adjudicator and still need review by the team (`data/ambiguity_classes.json`).
+  annotators and an automated adjudicator and still need review by the team (`data/ambiguity_classes.json`). The 60
+  were chosen by frequency over the corpus with Zupitza and are kept under D3. The `d3` block of that file records
+  that `hi` is no longer lexicon-ambiguous with the D3 training forms + WikiPron, and that 6,759 of the 36,203
+  lexicon-ambiguous tokens counted there fall outside the list.
 - **Statistics:** mean ± sample SD over seeds; exact McNemar on seed 1 (token level).
 - **Dictionaries:** the report's tables use training forms only (`results/training_only`) and training forms +
   WikiPron (`results/wikipron`). `run_all.sh` also runs the three proposal dictionaries (`results/proposal`) and all
-  four together (`results/all`), and `check_expected` checks all four settings.
+  four together (`results/all`), and `check_expected` checks all four settings and the Zupitza ablation.
 
-`check_expected` passes all 528 checks on Python 3.14 with the pinned versions in `requirements.txt`.
+`check_expected` passes all 660 checks on Python 3.14 with the pinned versions in `requirements.txt`.
 
 ## Data and licences
 
