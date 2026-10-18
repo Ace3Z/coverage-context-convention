@@ -19,11 +19,16 @@
 \usepackage{xurl}
 \setlength{\tabcolsep}{4.5pt}
 \setlength{\emergencystretch}{2em}
+\setlength{\textfloatsep}{12pt plus 2pt minus 2pt}
+\captionsetup[table]{skip=5pt}
 % abstract at full 11pt (the article default sets it, and its heading, in \small)
 \renewenvironment{abstract}{\begin{center}\textbf{Abstract}\end{center}\begin{quotation}\noindent\ignorespaces}{\end{quotation}}
 \input{generated/numbers.tex}
 \input{generated/numbers_encoder.tex}
 \newcommand{\iv}[2]{$[#1,\,#2]$}  % a 95% bootstrap interval (math mode: a true minus, no line break)
+% Table 3 cells from the generated macros: \pmsd{X} prints \X with its SD macro \XSd; \encrow is one table row
+\newcommand{\pmsd}[1]{\csname #1\endcsname$\pm$\csname #1Sd\endcsname}
+\newcommand{\encrow}[3]{#1 & \pmsd{N#2All#3} & \pmsd{N#2Lex#3} & \pmsd{N#2ClsA#3} & \pmsd{N#2ClsB#3} & \pmsd{N#2ClsC#3} \\}
 
 \title{What Limits Vowel-Length Restoration in Old English?}
 \author{Mahbod Tajdini \and Hanna Miranovich \and Arjun Singh Bhadoria\\[2pt]
@@ -35,15 +40,17 @@ Essentials in Text and Speech Processing, University of Zurich, HS 2026}
 
 \begin{abstract}
 Editors of Old English add macrons for long vowels that the manuscripts do not write. We ask what limits automatic
-restoration of these marks and measure four levers on the same held-out tokens: dictionary coverage, sentence
-context, editorial convention and disagreement between editors. Coverage moves the most: a frequency prior on
-Tauber's \textit{Beowulf} rises from \NTBeoAllFreq\% to \NABeoAllFreq\% of tokens when dictionaries supply the
-candidates. Context helps where grammar decides the reading. On grammatical homographs in Alfred's
-\textit{Soliloquies}, a ByT5 scorer that sees two words on either side reaches \NEncRepSolClsBLocalTwo\%, against
-\NEncCapfullSolClsBWord\% for the word alone, but it gains nothing on lexical or editorial homographs, and on
-\textit{Beowulf} the word alone does as well as any context. The Harrison and Sharp and Wyatt editions of
-\textit{Beowulf} agree on \NPairHWLex\% of ambiguous tokens and on only \NPairHWClsB\% of grammatical ones, so part of what remains is
-editorial convention that no model can read from the text.
+restoration of these marks and measure four limits: disagreement between editors, editorial convention, sentence
+context and dictionary coverage. Coverage moves the most on verse: a frequency prior on Tauber's \textit{Beowulf}
+rises from \NTBeoAllFreq\% to \NABeoAllFreq\% of tokens when dictionaries supply the candidates. Context helps where
+grammar decides the reading. On grammatical homographs in Alfred's \textit{Soliloquies} (a class assigned by LLM-based
+annotators and not yet reviewed by us), a ByT5 scorer that sees two words on either side reaches
+\NEncRepSolClsBLocalTwo\%, against \NEncCapfullSolClsBWord\% for the word alone. It gains nothing on lexical or
+editorial homographs, and on all ambiguous \textit{Beowulf} tokens the word alone does as well as any context arm.
+Wyatt's and Klaeber's editions of \textit{Beowulf} agree on \NPairWTLex\% of ambiguous tokens and on only
+\NPairWTClsB\% of grammatical ones, so part of what remains is editorial convention that no model can read from the
+text. CharsiuG2P's published Old English word error rate of \NCharsiuWer{} partly reflects a 20-step decoding limit
+(\NCharsiuWerFixed{} without it), and \NCharsiuLenShare\% of its remaining word errors concern vowel length only.
 \end{abstract}
 
 \noindent Code, corpus, splits and a Hugging Face export script:\\
@@ -53,70 +60,67 @@ editorial convention that no model can read from the text.
 \section{Introduction}
 Old English manuscripts do not mark vowel length. Modern editions add macrons, and the marks separate words that are
 otherwise spelled alike: \emph{god} `God' and \emph{gōd} `good', the relative particle \emph{þe} and the pronoun
-\emph{þē} `thee'. Restoring them means choosing among candidate length patterns for each bare word. Readers, metrical
-analysis and grapheme-to-phoneme (G2P) tools need the marks, but Old English NLP corpora lack them.
+\emph{þē} `thee'. Metrical analysis and grapheme-to-phoneme (G2P) conversion both depend on these lengths. Restoring
+them means choosing among candidate length patterns for each bare word.
 
-We ask what limits this restoration and measure four levers on the same tokens: whether the right candidate exists
-(coverage), whether neighbouring words decide among candidates (context), whether training and test editions mark a
-word alike (editorial convention), and how far two editors agree (the ceiling). We contribute a cleaned, length-marked
-corpus of \NCorpusTokens{} tokens from nine editions % data/manifest.json
-with work-level splits and a leakage audit, an editor-agreement measurement for \textit{Beowulf}, a controlled
-comparison of ByT5 context windows, a coverage ablation and an error analysis of our model and of CharsiuG2P.
+We ask what limits this restoration and measure four limits: how far two editors agree (the ceiling), whether
+training and test editions mark a word alike (editorial convention), whether neighbouring words decide among
+candidates (context), and whether the right candidate exists at all (coverage). We also contribute a cleaned,
+length-marked corpus of \NCorpusTokens{} tokens from nine editions % data/manifest.json
+with work-level splits and a leakage audit.
 
 \paragraph{Related work.} Yarowsky \cite{yarowsky1994} restored Spanish and French accents with decision lists over
 local context. For Latin, Winge \cite{winge2015} combines a tagger, a lemmatiser and a morphological analyser and
 agrees with a human annotator on about 98\% of vowel lengths. Thörn Cleland and Cullhed \cite{cleland2026} propagate
 Ancient Greek length marks across the forms of a lexeme and train a small character transformer on the result.
 Esmail et al.\ \cite{esmail2022} measure how much lookahead matters for Arabic diacritisation, the question our
-left-context arm asks for Old English. CharsiuG2P \cite{zhu2022} covers Old English in a 100-language ByT5 G2P model whose Old English data come
-from WikiPron \cite{lee2020}, but it reads isolated words. Tauber \cite{tauber2021} aligned \textit{Beowulf} token by token with
-length marks, which gives us a gold standard. We know of no evaluation on Old English running text that sets a model
-against the disagreement between editors.
+left-context arm asks for Old English. CharsiuG2P \cite{zhu2022} covers Old English in a 100-language ByT5 G2P model
+whose Old English data come from WikiPron \cite{lee2020}, but it reads isolated words. Tauber \cite{tauber2021} added
+the vowel lengths of the Perseus text of Klaeber's edition \cite{klaeber1922} to Brunetti's token-level tagging of
+\textit{Beowulf}, which gives us a gold standard. We know of no evaluation on Old English running text that sets a
+model against the disagreement between editors.
 
 \section{Data}
 Table~\ref{tab:data} lists the nine editions, all transcriptions from Project Gutenberg or Wikisource
 \cite{editions}. Four works train the models (\NTrainTokens{} tokens). Zupitza's Ælfric \textit{Grammar} stays in the
-corpus but not in training (decision D3, Section~\ref{sec:systems}). We built the Gospel of John as development set
-with the procedure used for Matthew. Alfred's \textit{Soliloquies} is the prose test and Tauber's \textit{Beowulf}
-(\NBeoTokens{} tokens from \NTauberRows{} rows) the verse test, whose length marks Tauber took from the Perseus text of
-Klaeber's edition \cite{klaeber1922}. Two further editions of \textit{Beowulf}, each with the \textit{Finnsburh
-Fragment}, serve only to measure agreement. Splits are by work, and no \textit{Beowulf} text is used for training.
+corpus but not in training (Section~\ref{sec:systems}). We built the Gospel of John as the development set. Alfred's \textit{Soliloquies} is the prose test. The verse test is Tauber's
+\textit{Beowulf} (\NBeoTokens{} tokens), a tenth source not in Table~\ref{tab:data}. Two further editions of
+\textit{Beowulf}, each with the \textit{Finnsburh Fragment}, serve only to measure agreement. Splits are by work, and
+no \textit{Beowulf} text is used for training.
 
 \begin{table}[b]
 \centering\small
 \caption{The nine editions (tokens after clean-up). The Harrison \& Sharp file is the Project Gutenberg revision of
-their fourth edition, and its year that of their first (Section~\ref{sec:editors}).}
+their fourth edition, and the year given is that of their first edition (Section~\ref{sec:editors}).}
 \label{tab:data}
 \input{generated/tab_data.tex}
 \end{table}
 
 A clean-up script applies explicit character mappings, each counted in the corpus manifest (for example a crossed D
-typed for eth, Cyrillic look-alike letters and palatal dots), and Zupitza's circumflexes become macrons. Long vowels are
-written \emph{ā ē ī ō ū ȳ ǣ}, and a
-test checks on every token that removing the macrons gives the bare input. A word 6-gram audit % data/leakage_excluded.json, ngram
- against the five
-candidate training works removes \NLeakSolSent{} \textit{Soliloquies} sentence (\NLeakSolTok{} tokens) and
+typed for eth), writes long vowels as \emph{ā ē ī ō ū ȳ ǣ}, and a test checks on every token that removing the macrons
+gives the bare input. A word 6-gram audit % data/leakage_excluded.json, ngram
+ against the five candidate training works removes \NLeakSolSent{} \textit{Soliloquies} sentence (\NLeakSolTok{} tokens) and
 \NLeakDevSent{} John sentences (\NLeakDevTok{} tokens) from evaluation, and nothing from \textit{Beowulf}.
 
 \section{Candidates, populations and ambiguity classes}
 A word's pattern has one 0/1 slot per vowel letter, and a candidate source proposes the possible patterns for each
-bare word. Our headline source is the training forms plus WikiPron \cite{lee2020}, whose
-Old English IPA we convert to spellings by aligning vowels (\emph{ea, eo, ie, io} count as one) with IPA nuclei (\NWikiForms{} forms from
-\NWikiRows{} rows, \NWikiAligned\% aligned). The proposal named three dictionaries: Clark Hall in TEI
-\cite{clarkhall}, Wiktionary inflection tables via kaikki.org \cite{ylonen2022} and Bosworth-Toller \cite{bosworth}.
-We rebuilt all three after fixing three conversion bugs. The frequency prior picks a word's most frequent training
-pattern and, for an unseen word, the pattern most dictionaries attest, then the one with fewest long vowels.
+bare word. All trained systems take their candidates from the training forms plus WikiPron \cite{lee2020}, whose
+Old English IPA we convert to spellings by aligning vowels (\emph{ea, eo, ie, io} count as one) with IPA nuclei
+(\NWikiForms{} forms from \NWikiRows{} rows, \NWikiAligned\% aligned). The proposal named three dictionaries: Clark
+Hall in TEI \cite{clarkhall}, Wiktionary inflection tables via kaikki.org \cite{ylonen2022} and Bosworth-Toller
+\cite{bosworth}. They enter the coverage comparison (Section~\ref{sec:coverage}) but no trained system. The
+frequency prior picks a word's most frequent training pattern and, for an unseen word, the pattern most sources
+attest, then the one with fewest long vowels.
 
-We score four populations. A token is \emph{lexicon-ambiguous} when its word has at least two candidates
-(\NWSolLexN{} of \NWSolAllN{} prose and \NWBeoLexN{} of \NWBeoAllN{} verse tokens), \emph{attested-ambiguous} when two
-patterns each occur at least twice in training, and a \emph{minority reading} when its gold pattern occurs in training
-but is not the majority. The 60 % data/ambiguity_classes.json, n_skeletons
-most frequent ambiguous skeletons also carry a class: \NClassA{} \emph{lexical} (A,
-two words: \emph{god/gōd}), \NClassB{} \emph{grammatical} (B, closed-class words of different function:
-\emph{þe/þē}) and \NClassC{} \emph{editorial} (C, one word marked by habit: \emph{se/sē}). Two independent LLM-based
-annotators assigned the classes (Cohen's $\kappa=\NClassKappa$ \cite{cohen1960}), an automated adjudicator settled
-their two disagreements, % data/ambiguity_classes.json, n_disagreements
-and no team member has reviewed the labels yet.
+Besides all tokens we score two populations. A token is \emph{lexicon-ambiguous} when its word has at least two
+candidates (\NWSolLexN{} of \NWSolAllN{} prose and \NWBeoLexN{} of \NWBeoAllN{} verse tokens), and a \emph{minority
+reading} when its gold pattern occurs in training but is not the majority. The 60 % data/ambiguity_classes.json, n_skeletons
+most frequent ambiguous skeletons also carry a class: \NClassA{} \emph{lexical} (A, two words: \emph{god/gōd}),
+\NClassB{} \emph{grammatical} (B, closed-class words of different function: \emph{þe/þē}) and \NClassC{}
+\emph{editorial} (C, one word marked by habit: \emph{he/hē}). Two independent LLM-based annotators assigned the
+classes (Cohen's $\kappa=\NClassKappa$ \cite{cohen1960}), an automated adjudicator settled their two disagreements,
+% data/ambiguity_classes.json, n_disagreements
+and we have not yet reviewed the labels.
 
 \section{Systems and protocol}\label{sec:systems}
 All systems choose among the same candidates and predict all-short for a word without any. Besides the prior,
@@ -131,114 +135,149 @@ at 128, 256 % results/encoder/summary.json, settings.max_bytes
 or \NEncFullCap{} bytes (full). Local inputs never exceed 103 bytes, % results/encoder/summary.json, local_replicates.note
 so their runs at the three caps share inputs and we pool them.
 
-We chose the training setting on the development set only, with \NSelRuns{} sentence-arm runs that crossed learning
-rate, epochs, Zupitza in or out, and two seeds. The best mean ambiguous-token accuracy came from learning rate
-$3\cdot10^{-4}$, % results/encoder/selection.json, choice
-\NSelEpochs{} epochs and no Zupitza (\NSelDevNoZup\%, against \NSelDevZup\% at best with it). Dropping Zupitza also
-helps the prior (\NDevFreqZup\% to \NDevFreqNoZup\%) and the bilateral model (\NDevBilZup\% to \NDevBilNoZup\%) on
-development ambiguous tokens, so no final system trains on it. The price is coverage: the prior loses
-\NDThreeSolAllCost{} points on all prose test tokens. Three seeds per arm and cap, with the word arm run at the full cap only, make \NGridRuns{} runs.
+We chose the training setting on the development set only. Of \NSelRuns{} sentence-arm runs crossing learning rate,
+epochs, Zupitza in or out, and two seeds, learning rate $3\cdot10^{-4}$, % results/encoder/selection.json, choice
+\NSelEpochs{} epochs and no Zupitza gave the best mean ambiguous-token accuracy. On the \NDevLexShared{} ambiguous development tokens that both settings share,
+dropping Zupitza raises ByT5 from \NSelDevZupShared\% (its best setting with Zupitza) to \NSelDevNoZup\%, the prior
+from \NDevFreqZupShared\% to \NDevFreqNoZup\% and the bilateral model from \NDevBilZupShared\% to \NDevBilNoZup\%.
+The price is coverage: the prior loses \NDThreeSolAllCost{} points on all prose
+test tokens. Three seeds per arm and cap, with the word arm run at the full cap only, make \NGridRuns{} runs.
 
 We report means and standard deviations over seeds, and differences with a 95\% interval from a paired bootstrap
 \cite{efron1993} that resamples whole sentences 1,000 times, % src/oevl/stats.py
 using each token's correctness averaged over seeds. We do not rely on single-seed McNemar tests \cite{mcnemar1947},
-whose outcome flipped when one training token changed.
+because they ignore training variance.
 
 \section{Results}
-\subsection{Editor agreement and the gate}\label{sec:editors}
+\subsection{Editors: ceiling and convention}\label{sec:editors}
 Table~\ref{tab:editors} compares the three \textit{Beowulf} editions on the tokens each pair aligns. Harrison \& Sharp
-and Wyatt agree on \NPairHWLex\% of lexicon-ambiguous tokens, and Wyatt and Tauber almost exactly as often. Editors
-part on class B: Wyatt agrees with the other two on only \NPairHWClsB\% and \NPairWTClsB\% of grammatical homographs,
-mostly over \emph{ne/nē} and \emph{þe/þē}. % results/agreement/disagreements.tsv
-Harrison \& Sharp and Tauber agree far more closely, and the source likely explains part of it. Our Harrison \& Sharp file is
-the Project Gutenberg revision of their fourth edition, whose producer changed a listed set of quantities to modern
-values, among them \emph{ne} to \emph{nē} as a conjunction and \emph{se} to \emph{sē} as a relative \cite{editions}.
-That pair is not two independent nineteenth-century opinions, so we take Harrison \& Sharp against Wyatt as the
-two-editor reference.
+and Wyatt agree on \NPairHWLex\% of lexicon-ambiguous tokens, and Wyatt and Tauber equally often to two decimals.
+Editors diverge on class B: Wyatt agrees with the other two on only \NPairHWClsB\% and \NPairWTClsB\% of grammatical
+homographs, mostly over \emph{ne/nē} and \emph{þe/þē}. % results/agreement/disagreements.tsv
+Harrison \& Sharp and Tauber agree far more closely, and the source likely explains part of it. Our Harrison \& Sharp
+file is the Project Gutenberg revision of their fourth edition, whose producer changed a listed set of quantities to
+modern values, among them \emph{ne} to \emph{nē} as a conjunction \cite{editions}. Of the \NPairHWClsBDis{} class B
+disagreements between Harrison \& Sharp and Wyatt, \NPairHWClsBDisNe{} are this \emph{ne/nē}. Neither pair with
+Harrison \& Sharp is two independent editors, so we take Wyatt against Tauber's Klaeber text as the two-editor
+reference. It gives nearly the same figures.
 
 \begin{table}[t]
 \centering\small
-\caption{Editor agreement on aligned \textit{Beowulf} tokens (\%, Cohen's $\kappa$ in brackets). Gap: agreement on
-lexicon-ambiguous tokens minus the prior scored against the first edition of the pair.}
+\caption{Editor agreement on aligned \textit{Beowulf} tokens (\%, Cohen's $\kappa$ in brackets). Gap: ambiguous-token
+agreement minus the prior scored against the first or second edition. Class B: LLM-assigned (Section~3).}
 \label{tab:editors}
-\begin{tabular}{@{}lrrrrr@{}}
+\begin{tabular}{@{}lrrrrrr@{}}
 \toprule
-Pair & Aligned & All & Lex.-amb. & Class B & Gap \\
+ & & & & & \multicolumn{2}{c}{Gap} \\
+\cmidrule(l){6-7}
+Pair & Aligned & All & Lex.-amb. & Class B & 1st & 2nd \\
 \midrule
-Harrison \& Sharp, Wyatt & \NPairHWAligned & \NPairHWAll & \NPairHWLex{} (\NPairHWLexK) & \NPairHWClsB{} (\NPairHWClsBK) & \NGateHWHs \\
-Harrison \& Sharp, Tauber & \NPairHTAligned & \NPairHTAll & \NPairHTLex{} (\NPairHTLexK) & \NPairHTClsB{} (\NPairHTClsBK) & \NGateHTHs \\
-Wyatt, Tauber & \NPairWTAligned & \NPairWTAll & \NPairWTLex{} (\NPairWTLexK) & \NPairWTClsB{} (\NPairWTClsBK) & \NGateWTWyatt \\
+Harrison \& Sharp, Wyatt & \NPairHWAligned & \NPairHWAll & \NPairHWLex{} (\NPairHWLexK) & \NPairHWClsB{} (\NPairHWClsBK) & \NGateHWHs & \NGateHWWyatt \\
+Harrison \& Sharp, Tauber & \NPairHTAligned & \NPairHTAll & \NPairHTLex{} (\NPairHTLexK) & \NPairHTClsB{} (\NPairHTClsBK) & \NGateHTHs & \NGateHTTauber \\
+Wyatt, Tauber & \NPairWTAligned & \NPairWTAll & \NPairWTLex{} (\NPairWTLexK) & \NPairWTClsB{} (\NPairWTClsBK) & \NGateWTWyatt & \NGateWTTauber \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-An LLM-based assistant labelled a random \NCheckN{} of the Harrison \& Sharp and Wyatt disagreements as
-\NCheckEditorial{} editorial differences, \NCheckNorm{} macrons on the other letter of a digraph, \NCheckAlign{}
-alignment faults and \NCheckOther{} others, mostly probable slips. No team member has checked these labels.
+Convention shows when the gold edition changes. On the \NPairWTClsBN{} class B tokens that Wyatt and Tauber share, the
+prior agrees with Wyatt on \NPairWTClsBPriorWyatt\% and with Tauber on \NPairWTClsBPriorTauber\%. Swapping the gold
+edition moves its class B accuracy by \NPairWTClsBPriorGap{} points, about twice what context adds for ByT5 on verse
+class B (Section~\ref{sec:context}), and against Wyatt the prior agrees more often than the two editors do. Our
+training editions mark these words more like Wyatt than like Klaeber.
 
-Our plan foresaw a gate before modelling but fixed its rule only after the agreement numbers were in: continue if
-editor agreement beats the prior by at least 10 points on ambiguous tokens. % results/agreement/metrics.json, gate.rule
-The gate therefore decided nothing. Only Harrison \& Sharp against Tauber
-clears it (\NGateHTHs{} points over the Harrison \& Sharp floor), the pair the revision likely brought closer. The other gaps
-lie between \NGateHWWyatt{} and \NGateHTTauber{} points. Scored against Harrison \& Sharp or Wyatt, the prior is
-only \NGateHWWyatt{} to \NGateHWHs{} points below the level at which these two editors agree.
+An LLM-based assistant labelled a random sample of \NCheckN{} Harrison \& Sharp and Wyatt disagreements (not yet
+checked by us): \NCheckEditorial{} editorial, \NCheckNorm{} macrons on the other letter of a digraph that our
+normalisation could align, \NCheckAlign{} alignment faults and \NCheckOther{} others, mostly probable slips.
 
-\subsection{Context}
-Table~\ref{tab:encoder} gives the ByT5 grid. On prose every context arm beats the word arm and the prior on
-lexicon-ambiguous tokens: the full-cap sentence arm by $\NEncCapfullSolLexBilVsWord$ points over word
-\iv{\NEncCapfullSolLexBilVsWordLo}{\NEncCapfullSolLexBilVsWordHi}, pooled local2 by $\NEncRepSolLexLocalTwoVsWord$
-\iv{\NEncRepSolLexLocalTwoVsWordLo}{\NEncRepSolLexLocalTwoVsWordHi}. Almost all of it comes from class B, where local2
-beats word by $\NEncRepSolClsBLocalTwoVsWord$ points
-\iv{\NEncRepSolClsBLocalTwoVsWordLo}{\NEncRepSolClsBLocalTwoVsWordHi}. Classes A and C do not move: the prior and
-every full-cap arm score \NEncCapfullSolClsAFreq\% on class A, and class C stays between \NEncCapfullSolClsCFreq\% and
-\NEncCapfullSolClsCBil\%. Context lifts minority readings from \NEncCapfullSolMinFreq\% for the prior to
-\NEncRepSolMinLocalTwo\% for local2.
+The proposal promised to report disagreement instead of a model if agreement was low. We fixed what counts as low
+only after measuring (agreement at least 10 points above the prior on ambiguous tokens), % results/agreement/metrics.json, gate.rule
+so the rule decided nothing. Only Harrison \& Sharp against Tauber clears it (\NGateHTHs{} points), the pair the
+revision likely brought closer. Against Wyatt or Tauber the prior is only \NGateWTWyatt{} and \NGateWTTauber{} points
+below the agreement of these two editors.
+
+\subsection{Context}\label{sec:context}
+Table~\ref{tab:encoder} gives the ByT5 results. On prose every context arm, at every cap, beats the word arm and the
+prior on lexicon-ambiguous tokens on average: the full-cap sentence arm by $\NEncCapfullSolLexBilVsWord$ points over
+word \iv{\NEncCapfullSolLexBilVsWordLo}{\NEncCapfullSolLexBilVsWordHi}, pooled local2 by
+$\NEncRepSolLexLocalTwoVsWord$ \iv{\NEncRepSolLexLocalTwoVsWordLo}{\NEncRepSolLexLocalTwoVsWordHi}. Almost all of it
+comes from class B, where local2 beats word by $\NEncRepSolClsBLocalTwoVsWord$ points
+\iv{\NEncRepSolClsBLocalTwoVsWordLo}{\NEncRepSolClsBLocalTwoVsWordHi}. Classes A and C do not move, and context lifts
+minority readings from \NEncCapfullSolMinFreq\% for the prior to \NEncRepSolMinLocalTwo\% for local2. Following words
+add little. At full cap the sentence arm is $\NEncCapfullSolLexBilVsLeft$ points
+\iv{\NEncCapfullSolLexBilVsLeftLo}{\NEncCapfullSolLexBilVsLeftHi} above the left arm on prose ambiguous tokens, under
+the one-point limit set below, and $\NEncCapfullBeoLexBilVsLeft$
+\iv{\NEncCapfullBeoLexBilVsLeftLo}{\NEncCapfullBeoLexBilVsLeftHi} on verse.
 
 \begin{table}[t]
-\centering\footnotesize
-\setlength{\tabcolsep}{3.2pt}
-\caption{ByT5 accuracy (\%, mean $\pm$ SD over runs). Bilateral is the sentence arm, the whole sentence on both
-sides up to the byte cap. Local inputs never reach a cap, so their runs are pooled. Collapsed: runs that pick the
-candidate with most long marks for at least 90\% of ambiguous prose tokens.} % src/oevl/encoder_experiment.py
+\centering\small
+\setlength{\tabcolsep}{5pt}
+\caption{ByT5 accuracy (\%, mean $\pm$ SD) at the full byte cap, three runs per arm. Local 2 and 5 pool nine runs
+over the three caps. Classes: LLM-assigned (Section~3).} % run counts: results/encoder/summary.json
 \label{tab:encoder}
-\input{generated/tab_encoder.tex}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+ & All & Lex.-amb. & Class A & Class B & Class C \\
+\midrule
+\textit{Soliloquies}, \textit{n} & \NEncCapfullSolAllN & \NEncCapfullSolLexN & \NEncCapfullSolClsAN & \NEncCapfullSolClsBN & \NEncCapfullSolClsCN \\
+\quad Prior & \NEncCapfullSolAllFreq & \NEncCapfullSolLexFreq & \NEncCapfullSolClsAFreq & \NEncCapfullSolClsBFreq & \NEncCapfullSolClsCFreq \\
+\encrow{\quad Word}{EncCapfullSol}{Word}
+\encrow{\quad Left}{EncCapfullSol}{Left}
+\encrow{\quad Sentence}{EncCapfullSol}{Bil}
+\encrow{\quad Local 2}{EncRepSol}{LocalTwo}
+\encrow{\quad Local 5}{EncRepSol}{LocalFive}
+\addlinespace
+\textit{Beowulf}, \textit{n} & \NEncCapfullBeoAllN & \NEncCapfullBeoLexN & \NEncCapfullBeoClsAN & \NEncCapfullBeoClsBN & \NEncCapfullBeoClsCN \\
+\quad Prior & \NEncCapfullBeoAllFreq & \NEncCapfullBeoLexFreq & \NEncCapfullBeoClsAFreq & \NEncCapfullBeoClsBFreq & \NEncCapfullBeoClsCFreq \\
+\encrow{\quad Word}{EncCapfullBeo}{Word}
+\encrow{\quad Left}{EncCapfullBeo}{Left}
+\encrow{\quad Sentence}{EncCapfullBeo}{Bil}
+\encrow{\quad Local 2}{EncRepBeo}{LocalTwo}
+\encrow{\quad Local 5}{EncRepBeo}{LocalFive}
+\bottomrule
+\end{tabular}
 \end{table}
 
 On verse, context still helps class B (local2 beats word by $\NEncRepBeoClsBLocalTwoVsWord$ points
 \iv{\NEncRepBeoClsBLocalTwoVsWordLo}{\NEncRepBeoClsBLocalTwoVsWordHi}), but on all lexicon-ambiguous tokens the word
-arm (\NEncCapfullBeoLexWord\%) is as good as any context arm. The full-cap sentence arm is slightly worse
-($\NEncCapfullBeoLexBilVsWord$ \iv{\NEncCapfullBeoLexBilVsWordLo}{\NEncCapfullBeoLexBilVsWordHi}), and the best
-context number, left at 128 bytes (\NEncCapOneTwoEightBeoLexLeft\%), ties with it. We cannot show any effect of the
-byte cap, and two words on each side match the full sentence. Why verse differs we do not know. Its freer word order
-is one candidate that a breakdown by construction could test.
+arm (\NEncCapfullBeoLexWord\%) is as good as any context arm. The full-cap sentence arm is no better
+($\NEncCapfullBeoLexBilVsWord$ \iv{\NEncCapfullBeoLexBilVsWordLo}{\NEncCapfullBeoLexBilVsWordHi}, within the training
+variance discussed below), and the best context number, left at 128 bytes (\NEncCapOneTwoEightBeoLexLeft\%), ties
+with it. At 128 and 256 bytes the left and sentence arms score between \NEncCapOneTwoEightSolLexBil\% and
+\NEncCapTwoFiveSixSolLexBil\% on prose ambiguous tokens. We cannot show any effect of the byte cap, and two words on
+each side match the full sentence. Why verse differs we do not know. Its freer word order is one candidate.
 
-Run-to-run variance limits what the table can say. Local5 runs with identical inputs, data order and seed differ by
-up to \NEncRepSolClsBLocalFiveSpread{} points on prose class B (local2: \NEncRepSolClsBLocalTwoSpread). The bootstrap
-intervals leave out this training variance, so we do not claim differences between arms below about one point. None
-of the \NGridRuns{} grid runs collapsed, but in model selection one \NCollapseEpochs-epoch run nearly always chose the
-candidate with most long marks, scoring \NCollapseSolAll\% on all prose tokens and \NCollapseSolLex\% on ambiguous
-ones. An earlier exploratory sentence-arm result in our project had the same signature.
+Run-to-run variance limits what the table can say. Local5 runs with identical inputs, data order and seed differ by up
+to \NEncRepSolClsBLocalFiveSpread{} points on prose class B (local2: \NEncRepSolClsBLocalTwoSpread). We suspect
+non-deterministic GPU kernels but have not tested this. The bootstrap intervals leave out this training variance, so
+we do not claim differences between ByT5 arms below about one point. None of the \NGridRuns{} grid runs collapsed to
+the candidate with most long marks (at least 90\% of ambiguous prose tokens), % src/oevl/encoder_experiment.py
+but one \NCollapseEpochs-epoch selection run did. It chose that candidate for \NCollapseDevMostLong\% of ambiguous
+development tokens and scored \NCollapseDevLex\% on them.
 
-The logistic models split the same way with smaller gains. On prose the bilateral model beats the word model by
-$\NBootSolLexBilVsWord$ points \iv{\NBootSolLexBilVsWordLo}{\NBootSolLexBilVsWordHi} on ambiguous tokens and by
-$\NBootSolClsBBilVsWord$ \iv{\NBootSolClsBBilVsWordLo}{\NBootSolClsBBilVsWordHi} on class B, against
-$\NEncRepSolClsBLocalTwoVsWord$ for ByT5 local2. On verse the difference to the word model is $\NBootBeoLexBilVsWord$
-\iv{\NBootBeoLexBilVsWordLo}{\NBootBeoLexBilVsWordHi}.
+The logistic models, whose seed standard deviations stay at or below \NSdMaxMain{} points, split the same way with
+smaller gains. On prose the bilateral model beats the word model by $\NBootSolLexBilVsWord$ points
+\iv{\NBootSolLexBilVsWordLo}{\NBootSolLexBilVsWordHi} on ambiguous tokens and by $\NBootSolClsBBilVsWord$
+\iv{\NBootSolClsBBilVsWordLo}{\NBootSolClsBBilVsWordHi} on class B, and on verse it differs from it by
+$\NBootBeoLexBilVsWord$ \iv{\NBootBeoLexBilVsWordLo}{\NBootBeoLexBilVsWordHi}.
 
-\subsection{Coverage}
-Table~\ref{tab:coverage} runs the prior, the bilateral model and the oracle (the gold pattern whenever it is a
-candidate) with four candidate sources. With training forms alone, \NBeoUnknown\% of \textit{Beowulf} tokens are
+\subsection{Coverage}\label{sec:coverage}
+Table~\ref{tab:coverage} scores the prior, the bilateral model and the oracle (gold whenever it is a candidate)
+with four candidate sources. With training forms alone, \NBeoUnknown\% of \textit{Beowulf} tokens are
 unknown words and \NBeoNoCandTrue\% lack the gold candidate. With all four sources the verse prior gains
-\NBeoGainDict{} points, while the best context arm gains \NEncBestCtxGainBeo{} over all verse tokens. More candidates
-also mean more ambiguity: the proposal dictionaries raise the lexicon-ambiguous verse tokens from \NWBeoLexN{} to
-\NPBeoLexN{}, on which the bilateral model falls below the prior (\NPBeoLexBil\% against \NPBeoLexFreq\%). All ByT5 runs
-use training forms plus WikiPron, so their all-token numbers would likely rise with the larger dictionaries.
+\NBeoGainDict{} points, \NBeoGainDictWiki{} of them beyond WikiPron. Over the same WikiPron prior no ByT5 arm gains
+more than \NEncBestCtxGainBeo{} points on all verse tokens, and the word arm alone gains \NEncWordGainBeo. On prose the
+two limits are closer: beyond WikiPron the dictionaries add \NSolGainDictWiki{} points and the best context arm
+\NEncBestCtxGainSol. More candidates also mean more ambiguity. Adding the proposal dictionaries to WikiPron raises the
+lexicon-ambiguous verse tokens from \NWBeoLexN{} to \NABeoLexN{}, and on these the bilateral model falls below the
+prior (\NABeoLexBil\% against \NABeoLexFreq\%).
 
 \begin{table}[t]
 \begin{minipage}[t]{0.505\textwidth}
 \centering\small
 \setlength{\tabcolsep}{2.5pt}
-\caption{All-token accuracy (\%) by candidate source.}
+\caption{All-token accuracy (\%) by candidate source. Training: forms seen in training. + WikiPron: the source of
+all trained systems. + Proposal: the three proposal dictionaries instead of WikiPron. + All four: WikiPron and the
+three. Bil.: logistic bilateral model.}
 \label{tab:coverage}
 \begin{tabular}{@{}lrrrrrr@{}}
 \toprule
@@ -256,7 +295,8 @@ Training & \NTSolAllFreq & \NTSolAllBil & \NTSolAllOrc & \NTBeoAllFreq & \NTBeoA
 \begin{minipage}[t]{0.48\textwidth}
 \centering\footnotesize
 \setlength{\tabcolsep}{2pt}
-\caption{Types of \NErrItems{} sampled errors per system (automated labels).}
+\caption{Types of \NErrItems{} sampled ambiguous errors per system over both test sets (LLM-based labels).
+Ceiling: gold not a candidate. Segment and Truncation: CharsiuG2P only.}
 \label{tab:errors}
 \input{generated/tab_errors.tex}
 \end{minipage}
@@ -264,53 +304,60 @@ Training & \NTSolAllFreq & \NTSolAllBil & \NTSolAllOrc & \NTBeoAllFreq & \NTBeoA
 
 \subsection{CharsiuG2P}
 We reproduce CharsiuG2P's published Old English scores exactly (WER \NCharsiuWer, PER \NCharsiuPer). Its evaluation % results/charsiu/benchmark.json, max_length_20 and max_length_50
-stops decoding after 20 steps and so cuts \NCharsiuTrunc{} of its \NCharsiuN{} references short. With 50 steps the WER
-is \NCharsiuWerFixed, and \NCharsiuLenOnly{} of the \NCharsiuWordErrors{} word errors (\NCharsiuLenShare\%) differ from
-the reference only in vowel length. On our test tokens, with its \texttt{<ang>:} prefix and its IPA mapped to length
-patterns, it gets length right on \NCharsiuSolAll\% of prose and \NCharsiuBeoAll\% of verse tokens, below our prior
-(\NWSolAllFreq\% and \NWBeoAllFreq\%). CharsiuG2P was built for word lists from Wiktionary transcriptions, not to
-follow an edition's conventions in running text, so this gap measures a mismatch of task as much as of model. Its
-own benchmark confirms the proposal's expectation that a type-level model fails mostly on length.
+stops decoding after 20 steps and so cuts \NCharsiuTrunc{} of its \NCharsiuN{} outputs short. With 50 steps the WER is
+\NCharsiuWerFixed, and \NCharsiuLenOnly{} of the \NCharsiuWordErrors{} word errors (\NCharsiuLenShare\%) differ from
+the reference only in vowel length, as the proposal expected. On our test tokens, with its \texttt{<ang>:} prefix and its IPA mapped to length patterns, it
+gets length right on \NCharsiuSolAll\% of prose and \NCharsiuBeoAll\% of verse tokens, and on \NCharsiuSolLex\% and
+\NCharsiuBeoLex\% of the ambiguous ones (our prior: \NWSolAllFreq\%, \NWBeoAllFreq\%, \NWSolLexFreq\%,
+\NWBeoLexFreq\%). Our word-only logistic model (seed~1) gets \NCharsiuSolLexWordFix{} of its \NCharsiuSolLexWrong{} length
+errors on ambiguous prose tokens right (\NCharsiuSolLexWordFixShare\%) and the bilateral model \NCharsiuSolLexBilFix,
+so the edition's habit for the word, not context, repairs most of them. CharsiuG2P was built for
+word lists from Wiktionary transcriptions, not to follow an edition's conventions in running text, so this gap measures
+a mismatch of task as much as of model.
 
 \section{Error analysis}
-Two independent LLM-based annotators typed \NErrItems{} random lexicon-ambiguous errors each of the ByT5 sentence arm
-(full cap, seed~1) and of CharsiuG2P ($\kappa=\NErrKappa$). An automated adjudicator resolved their disagreements, and
-the labels await review by the team (Table~\ref{tab:errors}). The CharsiuG2P sample predates decision D3. ByT5 errors
-spread evenly over homographs (\NErrEncHomograph), grammatical pairs (\NErrEncGrammatical) and editorial habit
-(\NErrEncEditorial). For \NErrEncGoldInDoubt{} more, another edition supports the prediction, and for
-\NErrEncCeiling{} the gold is not a candidate.
+Two independent LLM-based annotators typed \NErrItems{} random lexicon-ambiguous errors from each of the ByT5 sentence
+arm (full cap, seed~1) and CharsiuG2P, pooled over both test sets ($\kappa=\NErrKappa$). An automated adjudicator
+resolved their disagreements, and we have not yet reviewed the labels (Table~\ref{tab:errors}). The CharsiuG2P sample
+was drawn before Zupitza left training. ByT5 errors spread evenly over homographs (\NErrEncHomograph), grammatical
+pairs (\NErrEncGrammatical) and editorial habit (\NErrEncEditorial). For \NErrEncGoldInDoubt{} more, another edition
+supports the prediction, and for \NErrEncCeiling{} the gold is not a candidate. CharsiuG2P, which sees no context, has
+more grammatical (\NErrCharsiuGrammatical) and editorial (\NErrCharsiuEditorial) errors and fewer homograph errors
+(\NErrCharsiuHomograph).
 
-Two examples show both ends. In the \textit{Soliloquies} sentence \emph{Ic clypie tō þē Drihten þū þe æall
-geworhtest} `I call to thee, Lord, thou who madest all', the first \emph{þe} is the pronoun and the second the
-relative particle. The prior, the logistic models and every word-arm run mark both short, and all
-\NToTheEncLocalTwoRuns{} local2 runs get both right. Of the \NToTheN{} long \emph{þē} after \emph{tō} in this text the
-word arm finds \NToTheEncWordMax, the local2 runs \NToTheEncLocalTwoMin{} to \NToTheEncLocalTwoMax, and the
-sentence-arm runs anywhere from \NToTheEncBilMin{} to \NToTheEncBilMax, the instability of the previous section in one
-word. In \textit{Beowulf} line 2796, % data/brunetti-length.txt
+Two examples show where context decides and where the gold itself is in doubt. In the \textit{Soliloquies} sentence
+\emph{Ic clypie tō þē, Drihten, þū þe æall geworhtest} `I call to thee, Lord, thou who madest all', the first
+\emph{þē} is the pronoun and the second \emph{þe} the relative particle. The prior, the logistic models and every
+word-arm run mark both short, and all \NToTheEncLocalTwoRuns{} local2 runs get both right. Of the \NToTheN{} long
+\emph{þē} after \emph{tō} in this text the word arm finds \NToTheEncWordMax, the local2 runs \NToTheEncLocalTwoMin{} to
+\NToTheEncLocalTwoMax, and the sentence-arm runs anywhere from \NToTheEncBilMin{} to \NToTheEncBilMax, the instability
+of the previous section in one word. In \textit{Beowulf} line 2796, % data/brunetti-length.txt
 \emph{ēcum dryhtne þē ic hēr on starie} `(thanks to) the eternal Lord (for the treasures) that I gaze on here',
-Tauber and Harrison \& Sharp print \emph{þē}, Wyatt prints \emph{þe}, and every full-cap ByT5 run chooses \emph{þe}.
-The annotators marked this error `gold in doubt': the model agrees with one editor and is scored against another.
+\emph{þē} is the relative `which', not `thee'. Tauber and Harrison \& Sharp print \emph{þē}, Wyatt prints \emph{þe},
+and every full-cap ByT5 run chooses \emph{þe}. The automated annotators marked this error `gold in doubt': the model
+agrees with one editor and is scored against another.
 
 \section{Deviations, limitations and conclusion}
-\paragraph{Deviations.} The plan described an encoder with a classification head per vowel slot. We built a
-sequence-to-sequence scorer instead, which still chooses among dictionary candidates and trains one checkpoint on
-identical data per arm. We did not run the planned BiLSTM sanity model. LLM-based annotators, not two team members,
-labelled the ambiguity classes, the error types and the disagreement sample. The gate rule was written after the
-agreement numbers, Zupitza left training by a development-set decision, and the dataset has a Hugging Face export
-script but is not uploaded.
+\paragraph{Deviations.} The proposal asked what context buys. The coverage results widened this to four limits, so the
+abstract reports all-token accuracy, which the proposal meant to keep secondary. The proposal had an encoder score the
+candidates. We fine-tune the encoder-decoder ByT5 and score each candidate by the log-probability of its pattern
+string, still choosing among candidates with one checkpoint trained on identical data per arm. The proposal's three dictionaries supply candidates only in the coverage comparison, and an extra BiLSTM baseline we had
+planned was not run. LLM-based annotators, not two of us, labelled the ambiguity classes, the error types and the
+disagreement sample. The dataset has a Hugging Face export script but is not uploaded.
 
 \paragraph{Limitations.} We predict editorial convention, not pronunciation: the dictionaries and the gold descend
-from the same nineteenth-century philology. Tauber's gold is a third editorial opinion, and one agreement edition is
-partly modernised. Three seeds do not capture the training variance of the context arms, and the 60 classified
-skeletons were chosen on a corpus that still included Zupitza.
+from the same nineteenth-century philology. Tauber's gold is Klaeber's editorial opinion, taken over from the Perseus
+text. The 60 classified skeletons were ranked on a corpus that still included Zupitza and
+counted the test tokens, though not their gold. % data/ambiguity_classes.json, counting_rule
 
-\paragraph{Conclusion.} Coverage is the largest lever: dictionaries add \NBeoGainDict{} points on \textit{Beowulf},
-while the best context arm adds \NEncBestCtxGainSol{} points on all prose tokens. Context resolves grammatical
-homographs such as \emph{þe/þē}, and two words on each side suffice, but it leaves lexical and editorial ambiguity
-untouched. The annotators label \NErrEncEditorial{} of \NErrItems{} sampled errors as editorial habit, and on
-grammatical words two editors agree on only \NPairHWClsB\% of tokens, so a single gold edition cannot tell a wrong
-model from a different convention. The next step is to train and test within one editorial tradition and to have the
-automated labels checked by the team.
+\paragraph{Conclusion.} Coverage is the largest limit on verse: over the same WikiPron prior, the proposal
+dictionaries add \NBeoGainDictWiki{} points on \textit{Beowulf} and the best context arm \NEncBestCtxGainBeo. On prose
+the two are closer (\NSolGainDictWiki{} against \NEncBestCtxGainSol). Context helps on grammatical homographs such as
+\emph{þe/þē} (\NEncCapfullSolClsBWord\% to \NEncRepSolClsBLocalTwo\% on prose), and two words on each side suffice,
+but it leaves lexical and editorial ambiguity untouched. The LLM-based annotators label \NErrEncEditorial{} of
+\NErrItems{} sampled ByT5 errors as editorial habit, and on grammatical words two independent editors agree on only
+\NPairWTClsB\% of tokens, so a single gold edition cannot tell a wrong model from a different convention. The next
+step is to train and test within one editorial tradition and to check the automated labels ourselves.
 
 \begin{thebibliography}{99}
 \raggedright
@@ -325,11 +372,20 @@ arXiv:2608.01935, 2026.
 Measurement}, 20(1):37--46, 1960.
 \bibitem{efron1993} B.~Efron and R.~J.~Tibshirani. \textit{An Introduction to the Bootstrap}. Chapman \& Hall, New
 York, 1993.
-\bibitem{editions} Project Gutenberg, \url{https://www.gutenberg.org/ebooks/}: 9701 (Harrison \& Sharp, fourth
-edition, revised Project Gutenberg version), 45861 (Zupitza), 34316 (Sweet), 14529 (Cook \& Pitman). Wikisource,
-\url{https://en.wikisource.org/wiki/}: \nolinkurl{Beowulf_(Wyatt)}, \nolinkurl{Bright's_Anglo-Saxon_Reader},
-\nolinkurl{Evangelium_Secundum_Mattheum}, \nolinkurl{Index:Gospel_of_Saint_John_in_West-Saxon.djvu},
-\nolinkurl{King_Alfred's_Old_English_Version_of_St._Augustine's_Soliloquies}.
+\bibitem{editions} The editions and the transcriptions we used. Project Gutenberg, \url{https://www.gutenberg.org/ebooks/}:
+J.~A.~Harrison and R.~Sharp, \textit{Bēowulf: An Anglo-Saxon Poem} and \textit{The Fight at Finnsburh}, fourth
+edition, revised, Ginn \& Company, Boston (copyright 1883), ebook 9701 in its revised Project Gutenberg version;
+J.~Zupitza, \textit{Ælfrics Grammatik und Glossar}, Weidmannsche Buchhandlung, Berlin, 1880, ebook 45861; H.~Sweet,
+\textit{An Anglo-Saxon Primer}, eighth edition, Clarendon Press, Oxford, 1905, ebook 34316; A.~S.~Cook and
+J.~H.~Pitman, \textit{The Old English Physiologus}, Yale University Press, New Haven, 1921, ebook 14529. Wikisource,
+\url{https://en.wikisource.org/wiki/}: A.~J.~Wyatt, \textit{Beowulf}, Cambridge University Press, 1894
+(\nolinkurl{Beowulf_(Wyatt)}); J.~W.~Bright, \textit{An Anglo-Saxon Reader}, third edition, Henry Holt, New York,
+1913 (\nolinkurl{Bright's_Anglo-Saxon_Reader}); J.~W.~Bright, \textit{The Gospel of Saint Matthew in West-Saxon},
+D.~C.~Heath, Boston, scan of the 1910 printing (\nolinkurl{Evangelium_Secundum_Mattheum}); J.~W.~Bright and
+L.~M.~Harris, \textit{The Gospel of Saint John in West-Saxon}, D.~C.~Heath, Boston, 1904
+(\nolinkurl{Index:Gospel_of_Saint_John_in_West-Saxon.djvu}); H.~L.~Hargrove, \textit{King Alfred's Old English
+Version of St.\ Augustine's Soliloquies}, Henry Holt, New York, 1902
+(\nolinkurl{King_Alfred's_Old_English_Version_of_St._Augustine's_Soliloquies}).
 \bibitem{esmail2022} S.~Esmail, K.~Bar and N.~Dershowitz. How much does lookahead matter for disambiguation? Partial
 Arabic diacritization case study. \textit{Computational Linguistics}, 48(4):1103--1123, 2022.
 \bibitem{klaeber1922} F.~Klaeber, editor. \textit{Beowulf and the Fight at Finnsburg}. D.~C.~Heath, Boston, 1922. Perseus
@@ -341,7 +397,8 @@ pages 4223--4228, 2020.
 percentages. \textit{Psychometrika}, 12(2):153--157, 1947.
 \bibitem{pedregosa2011} F.~Pedregosa et al. Scikit-learn: Machine learning in Python. \textit{Journal of Machine
 Learning Research}, 12:2825--2830, 2011.
-\bibitem{tauber2021} J.~Tauber. \textit{old-english-texts}, \texttt{beowulf/raw-data/brunetti-length.txt}, 2021.
+\bibitem{tauber2021} J.~Tauber. \textit{old-english-texts}, \texttt{beowulf/raw-data/brunetti-length.txt}, 2021:
+Brunetti's analysis and tagging of \textit{Beowulf} with vowel lengths added from the Perseus text.
 \url{https://github.com/old-english-learner-texts/old-english-texts}. CC BY-SA 4.0.
 \bibitem{winge2015} J.~Winge. \textit{Automatic annotation of Latin vowel length}. Bachelor's thesis in Language
 Technology, Uppsala University, 2015.

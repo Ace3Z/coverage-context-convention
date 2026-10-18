@@ -120,10 +120,24 @@ for pair, short in (("hs-wyatt", "HW"), ("hs-tauber", "HT"), ("wyatt-tauber", "W
         r = AG["pairs"][pair][pop]
         num[f"Pair{short}{s}"], num[f"Pair{short}{s}K"] = pct(r["agreement"]), f"{r['cohen_kappa']:.3f}"
         num[f"Pair{short}{s}N"] = f"{r['n']:,}"
+        for k, v in r.items():  # the prior scored against each edition of the pair
+            if k.startswith("prior_vs_"):
+                num[f"Pair{short}{s}Prior{k[len('prior_vs_'):].title()}"] = pct(v)
     for k, g in AG["gate"][pair].items():
         if k.startswith("lexicon_ambiguous_floor_vs_"):
             ed = k.rsplit("_", 1)[1].title()
             num[f"Gate{short}{ed}"], num[f"Gate{short}{ed}Floor"] = f"{g['gap_points']:.2f}", pct(g["floor"])
+wt_b = AG["pairs"]["wyatt-tauber"]["class_B"]
+num["PairWTClsBPriorGap"] = f"{100 * (wt_b['prior_vs_wyatt'] - wt_b['prior_vs_tauber']):.2f}"
+# class B disagreements between Harrison & Sharp and Wyatt, and how many are ne/nē (the PG revision's ne = nē)
+cls_b = {r["skeleton"] for r in csv.DictReader(open(ROOT / "data" / "ambiguity_classes.csv", encoding="utf8"))
+         if r["final"] == "B"}
+hw_b = [r for r in csv.DictReader(open(ROOT / "results/agreement/disagreements.tsv", encoding="utf8"), delimiter="\t")
+        if r["pair"] == "hs-wyatt" and r["key"] in cls_b]
+r = AG["pairs"]["hs-wyatt"]["class_B"]
+if len(hw_b) != r["n"] - round(r["agreement"] * r["n"]):
+    sys.exit("disagreements.tsv does not match the HS-Wyatt class B agreement")
+num["PairHWClsBDis"], num["PairHWClsBDisNe"] = str(len(hw_b)), str(sum(r["key"] == "ne" for r in hw_b))
 HC = AG["hand_check_hs_wyatt"]["labels"]
 num["CheckN"] = str(AG["hand_check_hs_wyatt"]["n"])
 for label, s in (("genuine editorial difference", "Editorial"), ("normalisation fault", "Norm"),
@@ -142,6 +156,11 @@ num["CharsiuN"] = str(b20["n"])
 for test, short in (("soliloquies", "Sol"), ("tauber_beowulf", "Beo")):
     e = CM[test]["experiment_populations"]
     num[f"Charsiu{short}All"], num[f"Charsiu{short}Lex"] = pct(e["accuracy"]), pct(e["lexicon_ambiguous"]["accuracy"])
+cs = CM["soliloquies"]  # its length errors on ambiguous prose tokens, and how many the logistic models get right
+num["CharsiuSolLexWrong"] = f"{cs['wrong_length_on_ambiguous']:,}"
+num["CharsiuSolLexWordFix"], num["CharsiuSolLexBilFix"] = (f"{cs[k]:,}" for k in (
+    "of_those_word_model_right", "of_those_bilateral_model_right"))
+num["CharsiuSolLexWordFixShare"] = pct(cs["of_those_word_model_right"] / cs["wrong_length_on_ambiguous"])
 
 # ByT5 model selection on dev and the D3 comparison (results/encoder/selection.json), grid size (summary.json)
 SEL = rjson("results/encoder/selection.json")
@@ -152,11 +171,19 @@ d3 = SEL["d3_logistic_john_ws"]
 for side, s in (("with_zupitza", "Zup"), ("without_zupitza", "NoZup")):
     num[f"DevFreq{s}"] = f"{d3[side]['lexicon_ambiguous']['frequency']:.2f}"
     num[f"DevBil{s}"] = f"{d3[side]['lexicon_ambiguous']['sentence']['mean']:.2f}"
+# the same comparison on the dev tokens both settings share (the set without Zupitza is a strict subset)
+sh = d3["with_zupitza"]["lexicon_ambiguous_shared_7639"]
+if sh["n"] != d3["without_zupitza"]["lexicon_ambiguous"]["n"]:
+    sys.exit("selection.json: the shared dev set is not the set without Zupitza")
+num["DevLexShared"] = f"{sh['n']:,}"
+num["DevFreqZupShared"], num["DevBilZupShared"] = f"{sh['frequency']:.2f}", f"{sh['sentence']['mean']:.2f}"
+num["SelDevZupShared"] = f"{max(c['mean_on_shared_7639'] for c in SEL['configs'] if c['zupitza']):.2f}"
 collapsed = [r for r in SEL["runs"] if r["collapsed"]]
 if len(collapsed) != 1:
     sys.exit(f"selection.json: expected one collapsed run, found {len(collapsed)}")
 num["CollapseSolAll"], num["CollapseSolLex"] = f"{collapsed[0]['sol_all']:.2f}", f"{collapsed[0]['sol_lexamb']:.2f}"
 num["CollapseEpochs"] = str(collapsed[0]["epochs"])
+num["CollapseDevLex"], num["CollapseDevMostLong"] = f"{collapsed[0]['dev_lexamb']:.2f}", f"{collapsed[0]['dev_most_long']:.2f}"
 ENC = {c: C for c, C in rjson("results/encoder/summary.json").items() if c not in ("local_replicates", "replicate_spread")}
 num["GridRuns"] = str(sum(len(A["seeds"]) for C in ENC.values() for A in C["arms"].values()))
 num["GridCollapsed"] = str(sum(A["n_collapsed"] for C in ENC.values() for A in C["arms"].values()))
@@ -165,7 +192,11 @@ num["EncFullCap"] = f"{ENC['capfull']['settings']['max_bytes']:,}"
 for test, short in (("soliloquies", "Sol"), ("tauber_beowulf", "Beo")):  # best context arm minus prior, all tokens
     best = max(A["sets"][test]["accuracy"]["mean"] for C in ENC.values() for a, A in C["arms"].items() if a != "word")
     num[f"EncBestCtxGain{short}"] = f"{100 * (best - ENC['capfull']['frequency'][test]['accuracy']['accuracy']):.2f}"
-num["BeoGainDict"] = f"{100 * (A['tauber_beowulf']['frequency']['accuracy'] - T['tauber_beowulf']['frequency']['accuracy']):.2f}"
+    word = ENC["capfull"]["arms"]["word"]["sets"][test]["accuracy"]["mean"]  # the word arm over the same prior
+    num[f"EncWordGain{short}"] = f"{100 * (word - ENC['capfull']['frequency'][test]['accuracy']['accuracy']):.2f}"
+    # the prior with all four candidate sources, over training forms only and over training forms + WikiPron
+    num[f"{short}GainDict"] = f"{100 * (A[test]['frequency']['accuracy'] - T[test]['frequency']['accuracy']):.2f}"
+    num[f"{short}GainDictWiki"] = f"{100 * (A[test]['frequency']['accuracy'] - W[test]['frequency']['accuracy']):.2f}"
 
 # leakage audit (data/leakage_excluded.json) and the dev set size
 LK = rjson("data/leakage_excluded.json")["counts"]
