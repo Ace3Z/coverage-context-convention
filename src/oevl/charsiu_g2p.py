@@ -3,6 +3,7 @@
 Step 1 (needs torch + transformers; a few minutes on a Colab GPU, done once):
   python -m oevl.charsiu_g2p predict      -> results/charsiu/ipa.tsv (one IPA string per test word type)
   python -m oevl.charsiu_g2p predict --tiny   (smoke test, tiny random model, writes ipa_tiny.tsv)
+  The John dev set joins both steps once data/by_source/john_ws.jsonl exists.
 Step 2 (no neural libraries needed; run_all.sh runs this):
   python -m oevl.charsiu_g2p analyse      -> results/charsiu/metrics.json
 
@@ -16,17 +17,21 @@ import json
 import sys
 from pathlib import Path
 
-from oevl.experiment import build_data, lexicon, load_tauber, pattern
+from oevl.experiment import build_data, evaluate, lexicon, load, load_tauber, pattern, tokens
 from oevl.wikipron_to_marked import mark
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "results" / "charsiu"
 MODEL, TOKENIZER, PREFIX = "charsiu/g2p_multilingual_byT5_small_100", "google/byt5-small", "<ang>:"  # as data_utils.py
+DEV = ROOT / "data/by_source/john_ws.jsonl"
 
 
 def tests():
     _, prose, _, _ = build_data(ROOT / "data")
-    return {"soliloquies": prose, "tauber_beowulf": load_tauber(ROOT / "data/brunetti-length.txt")}
+    out = {"soliloquies": prose, "tauber_beowulf": load_tauber(ROOT / "data/brunetti-length.txt")}
+    if DEV.exists():
+        out["john_ws"] = list(tokens(load(DEV)))
+    return out
 
 
 def predict(batch_size=64, tiny=False):
@@ -68,22 +73,25 @@ def analyse():
     if dict_path.exists():
         charsiu_train = set(dict_path.read_text(encoding="utf8").split())
     train, _, _, _ = build_data(ROOT / "data")
-    lex, _ = lexicon(train, str(ROOT / "data/lex_wikipron.csv"))
+    lex, counts = lexicon(train, str(ROOT / "data/lex_wikipron.csv"))
     summary = {"model": MODEL, "prefix": PREFIX}
     for test, rows in tests().items():
         preds = {}
         p = ROOT / "results" / "wikipron" / f"{test}_predictions.jsonl"
-        with open(p, encoding="utf8") as f:
-            for line in f:
-                d = json.loads(line)
-                preds[d["id"]] = d
+        if p.exists():  # the dev set has no experiment predictions yet
+            with open(p, encoding="utf8") as f:
+                for line in f:
+                    d = json.loads(line)
+                    preds[d["id"]] = d
         cats, amb_cats, seen_cats = collections.Counter(), collections.Counter(), collections.Counter()
         wrong_len_amb = fixed_by_word = fixed_by_bilateral = 0
         direction = collections.Counter()
+        pats = []  # predicted length pattern per token, None when not alignable
         for r in rows:
+            m = mark(r["bare"].lower(), ipa.get(r["bare"].lower(), ""))
+            pats.append(None if m is None else pattern(m))
             if not r["gold_pattern"]:
                 continue
-            m = mark(r["bare"].lower(), ipa.get(r["bare"].lower(), ""))
             if m is None:
                 cat = "not_alignable"
             elif pattern(m) == r["gold_pattern"]:
@@ -101,9 +109,10 @@ def analyse():
                 seen_cats[("seen" if r["bare"].lower() in charsiu_train else "unseen", cat)] += 1
             if cat == "wrong_length" and ambiguous:
                 wrong_len_amb += 1
-                d = preds[r["id"]]
-                fixed_by_word += d["word_seed1_prediction"] == r["gold_pattern"]
-                fixed_by_bilateral += d["sentence_seed1_prediction"] == r["gold_pattern"]
+                if preds:
+                    d = preds[r["id"]]
+                    fixed_by_word += d["word_seed1_prediction"] == r["gold_pattern"]
+                    fixed_by_bilateral += d["sentence_seed1_prediction"] == r["gold_pattern"]
         n, na = sum(cats.values()), sum(amb_cats.values())
         summary[test] = {
             "tokens_with_vowels": n,
@@ -116,6 +125,7 @@ def analyse():
             "of_those_word_model_right": fixed_by_word,
             "of_those_bilateral_model_right": fixed_by_bilateral,
             "by_charsiu_dictionary": {f"{a}/{b}": v for (a, b), v in sorted(seen_cats.items())},
+            "experiment_populations": evaluate(rows, pats, lex, counts),  # same n and subsets as experiment.py
         }
     (OUT / "metrics.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf8")
     print(json.dumps(summary, ensure_ascii=False, indent=2))

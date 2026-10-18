@@ -32,6 +32,22 @@
       "unseen/correct": 4444,
       "unseen/not_alignable": 261,
       "unseen/wrong_length": 2211
+    },
+    "experiment_populations": {
+      "n": 15480,
+      "accuracy": 0.7100129198966408,
+      "lexicon_ambiguous": {
+        "n": 5946,
+        "accuracy": 0.7295660948536832
+      },
+      "attested_ambiguous": {
+        "n": 4633,
+        "accuracy": 0.7405568745952946
+      },
+      "minority_reading": {
+        "n": 640,
+        "accuracy": 0.66875
+      }
     }
   },
   "tauber_beowulf": {
@@ -66,6 +82,22 @@
       "unseen/correct": 6131,
       "unseen/not_alignable": 8,
       "unseen/wrong_length": 2388
+    },
+    "experiment_populations": {
+      "n": 17361,
+      "accuracy": 0.7778353781464201,
+      "lexicon_ambiguous": {
+        "n": 4434,
+        "accuracy": 0.7704104645917907
+      },
+      "attested_ambiguous": {
+        "n": 3394,
+        "accuracy": 0.7925751325869181
+      },
+      "minority_reading": {
+        "n": 358,
+        "accuracy": 0.40782122905027934
+      }
     }
   }
 }
