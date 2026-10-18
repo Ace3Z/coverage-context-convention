@@ -23,6 +23,7 @@ class TestBuildCorpus(unittest.TestCase):
         self.assertEqual(bc.clean("gebrõþru  āsęcgan ċ ȳ n̄", log), "gebroþru āsecgan c ȳ n")
         self.assertEqual(log, {"dropped_mark_U+0303": 1, "dropped_mark_U+0328": 1, "dropped_mark_U+0307": 1,
                                "dropped_mark_stray_macron": 1})
+        self.assertEqual(bc.clean("þå weorc", log), "þå weorc")  # a ring is left for clean_corpus (þå -> þā)
         # Roman numerals go; a lone i (a letter name) and lone capitals stay
         self.assertEqual(bc.clean("ymb xxxi wintra, ān i oððe, Engliscra LXII, I.", log),
                          "ymb wintra, ān i oððe, Engliscra , I.")

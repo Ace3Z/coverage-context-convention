@@ -8,7 +8,8 @@ data/raw/corpus/<source>/ (gitignored) and goes through the same steps:
      dropped when it reads as English or Latin by function words, and a bracketed editor's note is English
   3. digits, brackets, daggers, asterisks, underscores and middle dots dropped
   4. sentence split after . ? ! followed by white space, inside one paragraph
-  5. NFC, combining marks other than the macron dropped (ę -> e, ċ -> c), Roman numerals dropped
+  5. NFC, combining marks other than the macron and the ring dropped (ę -> e, ċ -> c), Roman numerals dropped.
+     A ring is left for clean_corpus, which reads John's þå as þā
   6. sentence filters: in a paragraph with Old English sentences, a sentence of three or more words with no Old
      English letter and two or more capitalised words is dropped ("mixed": names and editors' notes, such as
      'Ic eom Abrahames God, and Isaaces God, and Iacobes God?'), and so is any sentence with four or more Latin
@@ -22,6 +23,7 @@ rebuild byte for byte. The other four differ where the original language filter 
 (and the reverse), and in the 12 Sweet sentences the original removed as overlapping Matthew.
 
 Usage: python -m oevl.build_corpus --source john_ws --out data/by_source [--raw data/raw/corpus]
+then python -m oevl.clean_corpus, which removes the old sentence-level split field and applies the character fixes.
 The manifest next to --out (<out>/../manifest.json) gets the source's entry, with URL, retrieval date and
 SHA-256 of every input.
 """
@@ -212,12 +214,12 @@ def editorial(text):
 
 
 def clean(text, log):
-    """NFC, then drop combining marks except a macron on a vowel, and Roman numerals. Runs after the split, so
-    a stray mark after a full stop (a caron in Wyatt's 'geweorces.') keeps two sentences together, as in
-    the files."""
+    """NFC, then drop combining marks except a macron on a vowel and a ring (clean_corpus maps it), and Roman
+    numerals. Runs after the split, so a stray mark after a full stop (a caron in Wyatt's 'geweorces.') keeps two
+    sentences together, as in the files."""
     out = []
     for ch in unicodedata.normalize("NFD", text):
-        if unicodedata.combining(ch) and ch != "\u0304":
+        if unicodedata.combining(ch) and ch not in "\u0304\u030a":
             log[f"dropped_mark_U+{ord(ch):04X}"] += 1
             continue
         out.append(ch)
@@ -380,7 +382,7 @@ def main():
     data = "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows).encode("utf8")
     (out / f"{args.source}.jsonl").write_bytes(data)
     mpath = out.parent / "manifest.json"
-    manifest = json.loads(mpath.read_text(encoding="utf8")) if mpath.exists() else {"sources": {}, "splits": {}}
+    manifest = json.loads(mpath.read_text(encoding="utf8")) if mpath.exists() else {"sources": {}}
     src = SOURCES[args.source]
     entry = manifest["sources"].setdefault(args.source, {})
     entry.update(work=src["work"], editor=src["editor"], year=src["year"], genre=src["genre"])
@@ -394,15 +396,6 @@ def main():
     entry.update(units=len(rows), tokens=sum(len(r["tokens"]) for r in rows),
                  long_vowel_marks=sum(c in LONG for r in rows for c in r["text"]),
                  sha256=hashlib.sha256(data).hexdigest(), cleaning=cleaning, role=src["role"], inputs=inputs)
-    by_split = collections.defaultdict(list)  # the 'splits' block hashes the lines of each split in source order
-    for name in manifest["sources"]:
-        if (out / f"{name}.jsonl").exists():
-            for line in (out / f"{name}.jsonl").read_text(encoding="utf8").splitlines(keepends=True):
-                r = json.loads(line)
-                by_split[r["split"]].append((line, len(r["tokens"])))
-    manifest["splits"] = {k: {"units": len(v), "tokens": sum(n for _, n in v),
-                              "sha256": hashlib.sha256("".join(x for x, _ in v).encode("utf8")).hexdigest()}
-                          for k, v in sorted(by_split.items())}
     mpath.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf8")
     print(f"{args.source}: {len(rows)} sentences, {entry['tokens']} tokens, "
           f"{entry['long_vowel_marks']} long vowels -> {out / (args.source + '.jsonl')}")
