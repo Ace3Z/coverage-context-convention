@@ -77,7 +77,7 @@ def main():
     ap.add_argument("--seed", type=int, default=1)
     ap.add_argument("--arms", default=",".join(ARMS), help="comma list of word, left, sentence, localK (K words each side)")
     ap.add_argument("--train-limit", type=int, help="train on a fixed subset of this many examples (see limit())")
-    ap.add_argument("--tests", default="soliloquies,tauber_beowulf", help="comma list of john_ws (dev), soliloquies, tauber_beowulf")
+    ap.add_argument("--tests", default=",".join(TESTS), help="comma list of john_ws (dev), soliloquies, tauber_beowulf")
     ap.add_argument("--tiny", action="store_true", help="tiny random model + small data subset (CPU smoke test)")
     a = ap.parse_args()
     a.arms = ",".join(dict.fromkeys(a.arms.split(",")))

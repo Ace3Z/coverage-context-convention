@@ -30,8 +30,7 @@ relative to the repository) or prefix commands with `PYTHONPATH=src`.
    in the proposal: Clark Hall, Wiktionary inflection tables and Bosworth–Toller (`data/lex_clarkhall.csv`,
    `lex_wiktionary.csv`, `lex_bt.csv`; rebuilt from the original sources with `python -m oevl.build_lexicons`).
 4. **Experiments:** four dictionary settings (training only, + WikiPron, + the three proposal dictionaries, + all four)
-   × both test sets, and the John dev set once `data/by_source/john_ws.jsonl` exists, one set per run, written to
-   `results/<setting>/`. Then `oevl.agreement` compares the three *Beowulf* editions (Harrison & Sharp, Wyatt, the
+   × the John dev set and both test sets, one set per run, written to `results/<setting>/`. Then `oevl.agreement` compares the three *Beowulf* editions (Harrison & Sharp, Wyatt, the
    Tauber gold) pairwise and applies the gate of plan rule D2, written to `results/agreement/`.
 5. **`oevl.check_expected`:** fails if any of 336 headline values differs from the frozen results.
 6. **`oevl.build_report`:** writes `report/generated/` (numbers, tables, figure), checks the worked examples against
@@ -52,8 +51,8 @@ They need `pip install -r requirements-neural.txt` (pins `transformers==4.57.6`)
 - **Encoder, full data:** ByT5-small fine-tuned on the same examples with the word only, the left context or the whole
   sentence. `PYTHONPATH=src python -m oevl.encoder_experiment` writes `results/encoder/`. No full-data encoder output
   is committed yet. Other context arms: `--arms local2,local5` (two or five words either side); a fixed training
-  subset: `--train-limit N`. Add the dev set with `--tests john_ws,soliloquies,tauber_beowulf` (it needs
-  `results/wikipron/john_ws_predictions.jsonl` from `run_all.sh`).
+  subset: `--train-limit N`. It scores the John dev set and both test sets (`--tests` picks fewer) and reads
+  `results/wikipron/<set>_predictions.jsonl` from `run_all.sh`.
 - **Encoder pilot:** the five context arms on 10,000 training examples, run from `notebooks/` on Kaggle or Colab.
   See `notebooks/README.md`. The logic is `oevl.pilot`.
 - **CharsiuG2P error analysis:** `PYTHONPATH=src python -m oevl.charsiu_g2p benchmark` runs the published checkpoint
@@ -88,12 +87,13 @@ changed instead of reporting accuracy.
 ## Protocol
 
 - **Train:** Bright's *Reader*, Matthew (West Saxon), Sweet's *Primer*, *Physiologus*, Zupitza's Ælfric
-  *Grammar* (93,038 tokens). **Dev:** Gospel of John (`john_ws`), scored like the test sets.
+  *Grammar* (93,038 tokens). **Dev:** Gospel of John (`john_ws`, 16,649 of 17,310 tokens), scored like the test sets.
   **Prose test:** Alfred's *Soliloquies* (15,431 of 15,480 tokens). **Verse test:** Tauber's
   *Beowulf* (17,361 tokens from 17,244 rows). **Editor agreement only:** Harrison & Sharp and Wyatt *Beowulf*.
   Splits are by work. No *Beowulf* text is used for training. Dev and test sentences that share a word 6-gram
-  (bare, lower-cased, ð folded to þ) with a training work are left out of evaluation. For the *Soliloquies* that is
-  one sentence of 49 tokens, for *Beowulf* none (`python -m oevl.audit_splits`).
+  (bare, lower-cased, ð folded to þ) with a training work are left out of evaluation. For John that is 34 sentences
+  of 661 tokens (shared with Matthew and Sweet), for the *Soliloquies* one sentence of 49 tokens, for *Beowulf* none
+  (`python -m oevl.audit_splits`).
 - **Systems:** frequency prior (most frequent pattern in training, and for a word not seen in training the pattern
   attested by the most dictionaries, then the one with the fewest long vowels); candidate-constrained logistic
   classifiers (word / +2 left words / +2 left and 2 right words), seeds 1–3; oracle with the same all-short fallback

@@ -34,11 +34,9 @@ else
   python -m oevl.build_lexicons                    # downloads the three sources into data/raw/ and converts them
 fi
 
-echo "== 4/6 experiments (one test set per run)"
+echo "== 4/6 experiments (one set per run: the John dev set and the two test sets)"
 rm -rf results/training_only results/wikipron results/proposal results/all
-tests="soliloquies tauber_beowulf"
-if [[ -s data/by_source/john_ws.jsonl ]]; then tests="john_ws $tests"; else echo "   no dev set: data/by_source/john_ws.jsonl is missing"; fi
-for t in $tests; do
+for t in john_ws soliloquies tauber_beowulf; do
   python -m oevl.experiment --data data --tauber data/brunetti-length.txt --out results/training_only --tests "$t" > "results_training_only_$t.log"
   for lex in wikipron proposal all; do
     python -m oevl.experiment --data data --tauber data/brunetti-length.txt --out "results/$lex" --lexicon "data/lex_$lex.csv" --tests "$t" > "results_${lex}_$t.log"

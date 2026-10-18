@@ -149,11 +149,10 @@ def analyse():
     for test, rows in tests().items():
         preds = {}
         p = ROOT / "results" / "wikipron" / f"{test}_predictions.jsonl"
-        if p.exists():  # the dev set has no experiment predictions yet
-            with open(p, encoding="utf8") as f:
-                for line in f:
-                    d = json.loads(line)
-                    preds[d["id"]] = d
+        with open(p, encoding="utf8") as f:
+            for line in f:
+                d = json.loads(line)
+                preds[d["id"]] = d
         cats, amb_cats, seen_cats = collections.Counter(), collections.Counter(), collections.Counter()
         wrong_len_amb = fixed_by_word = fixed_by_bilateral = 0
         direction = collections.Counter()
@@ -180,10 +179,9 @@ def analyse():
                 seen_cats[("seen" if r["bare"].lower() in charsiu_train else "unseen", cat)] += 1
             if cat == "wrong_length" and ambiguous:
                 wrong_len_amb += 1
-                if preds:
-                    d = preds[r["id"]]
-                    fixed_by_word += d["word_seed1_prediction"] == r["gold_pattern"]
-                    fixed_by_bilateral += d["sentence_seed1_prediction"] == r["gold_pattern"]
+                d = preds[r["id"]]
+                fixed_by_word += d["word_seed1_prediction"] == r["gold_pattern"]
+                fixed_by_bilateral += d["sentence_seed1_prediction"] == r["gold_pattern"]
         n, na = sum(cats.values()), sum(amb_cats.values())
         summary[test] = {
             "tokens_with_vowels": n,
