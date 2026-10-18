@@ -51,8 +51,32 @@
     "tokens": 108
   },
   "caveats": [
-    "Under D3 (Zupitza train-only and left out of ambiguity statistics) the list changes: 53 of the 60 stay, eom, gyt, hi, na, naman, oþrum and þes drop, and eode, hy, hyra, secge, sona, þon and þy come in. Which list to freeze is still open.",
+    "Under D3 (Zupitza train-only and left out of ambiguity statistics) the list changes: 53 of the 60 stay, eom, gyt, hi, na, naman, oþrum and þes drop, and eode, hy, hyra, secge, sona, þon and þy come in. The 60 are kept with their labels, and d3 records what changes under the D3 lexicon.",
     "The guideline examples (god, man, is, þe, se) are items in the list, so they came pre-labelled. without_guideline_examples gives kappa on the other 55.",
     "Many skeletons are near-unanimous in training (þa 17 short vs 2,505 long, þæt 1,946 short vs 6 long). They count as lexicon-ambiguous but most of that is dictionary noise."
-  ]
+  ],
+  "d3": {
+    "rule": "PLAN D3: the final systems train without zupitza_grammar. The 60 skeletons and their labels are kept. Counted as in counting_rule with zupitza_grammar left out of training, so out of the lexicon's training forms and out of the counted tokens. Two lexicons: the counting rule's (training forms + data/lex_wikipron.csv, as results/wikipron) and training forms only (as results/training_only).",
+    "tokens_counted": 101939,
+    "training_and_wikipron": {
+      "listed_not_ambiguous": [
+        "hi"
+      ],
+      "ambiguous_tokens": 36203,
+      "ambiguous_tokens_outside_list": 6759
+    },
+    "training_only": {
+      "listed_not_ambiguous": [
+        "is",
+        "hi",
+        "ac",
+        "hig",
+        "ofer",
+        "hyt",
+        "man"
+      ],
+      "ambiguous_tokens": 32428,
+      "ambiguous_tokens_outside_list": 4927
+    }
+  }
 }
