@@ -5,20 +5,20 @@
     "tauber": "Tauber gold (Klaeber 1922 via Perseus)"
   },
   "lexicon": "training forms + data/lex_wikipron.csv, as results/wikipron",
-  "classes": "skipped: data/ambiguity_classes.csv not found",
+  "classes": "data/ambiguity_classes.csv",
   "pairs": {
     "hs-wyatt": {
-      "aligned": 16832,
+      "aligned": 16833,
       "hs_total": 17682,
-      "wyatt_total": 17569,
-      "alignment_rate_hs": 0.9519285148738831,
-      "alignment_rate_wyatt": 0.9580511127554214,
+      "wyatt_total": 17568,
+      "alignment_rate_hs": 0.9519850695622667,
+      "alignment_rate_wyatt": 0.9581625683060109,
       "all": {
-        "n": 16832,
-        "agreement": 0.9773051330798479,
-        "cohen_kappa": 0.9733035239158769,
-        "prior_vs_hs": 0.8959125475285171,
-        "prior_vs_wyatt": 0.9004871673003803
+        "n": 16833,
+        "agreement": 0.9773064813164617,
+        "cohen_kappa": 0.9733051903496697,
+        "prior_vs_hs": 0.8958593239470088,
+        "prior_vs_wyatt": 0.9004336719539001
       },
       "lexicon_ambiguous": {
         "n": 4420,
@@ -33,6 +33,27 @@
         "cohen_kappa": 0.9279265422637487,
         "prior_vs_hs": 0.9066469719350074,
         "prior_vs_wyatt": 0.9163958641063515
+      },
+      "class_A": {
+        "n": 388,
+        "agreement": 0.9974226804123711,
+        "cohen_kappa": 0.9948658912574597,
+        "prior_vs_hs": 0.8943298969072165,
+        "prior_vs_wyatt": 0.8917525773195877
+      },
+      "class_B": {
+        "n": 419,
+        "agreement": 0.7852028639618138,
+        "cohen_kappa": 0.46923206846075893,
+        "prior_vs_hs": 0.6825775656324582,
+        "prior_vs_wyatt": 0.8591885441527446
+      },
+      "class_C": {
+        "n": 2654,
+        "agreement": 0.9837980406932931,
+        "cohen_kappa": 0.9717942329955226,
+        "prior_vs_hs": 0.9593067068575735,
+        "prior_vs_wyatt": 0.9476262245666918
       }
     },
     "hs-tauber": {
@@ -61,20 +82,41 @@
         "cohen_kappa": 0.9892813053431159,
         "prior_vs_hs": 0.9065392654523738,
         "prior_vs_tauber": 0.9074350552403703
+      },
+      "class_A": {
+        "n": 379,
+        "agreement": 1.0,
+        "cohen_kappa": 1.0,
+        "prior_vs_hs": 0.8944591029023746,
+        "prior_vs_tauber": 0.8944591029023746
+      },
+      "class_B": {
+        "n": 412,
+        "agreement": 0.9878640776699029,
+        "cohen_kappa": 0.9737539496483539,
+        "prior_vs_hs": 0.6820388349514563,
+        "prior_vs_tauber": 0.6844660194174758
+      },
+      "class_C": {
+        "n": 2626,
+        "agreement": 0.9942878903274943,
+        "cohen_kappa": 0.9900442461100779,
+        "prior_vs_hs": 0.9588728103579589,
+        "prior_vs_tauber": 0.9592536176694593
       }
     },
     "wyatt-tauber": {
-      "aligned": 16911,
-      "wyatt_total": 17569,
+      "aligned": 16912,
+      "wyatt_total": 17568,
       "tauber_total": 17361,
-      "alignment_rate_wyatt": 0.9625476691900506,
-      "alignment_rate_tauber": 0.9740798341109383,
+      "alignment_rate_wyatt": 0.9626593806921676,
+      "alignment_rate_tauber": 0.9741374344795807,
       "all": {
-        "n": 16911,
-        "agreement": 0.9766424220921294,
-        "cohen_kappa": 0.9724517001421538,
-        "prior_vs_wyatt": 0.9012477085920407,
-        "prior_vs_tauber": 0.8975814558571344
+        "n": 16912,
+        "agreement": 0.9766438032166509,
+        "cohen_kappa": 0.9724534330263307,
+        "prior_vs_wyatt": 0.9011944181646169,
+        "prior_vs_tauber": 0.8975283822138127
       },
       "lexicon_ambiguous": {
         "n": 4366,
@@ -89,6 +131,27 @@
         "cohen_kappa": 0.9271890989507868,
         "prior_vs_wyatt": 0.9156698564593302,
         "prior_vs_tauber": 0.9063995215311005
+      },
+      "class_A": {
+        "n": 379,
+        "agreement": 0.9973614775725593,
+        "cohen_kappa": 0.9948005981369953,
+        "prior_vs_wyatt": 0.8918205804749341,
+        "prior_vs_tauber": 0.8944591029023746
+      },
+      "class_B": {
+        "n": 415,
+        "agreement": 0.7807228915662651,
+        "cohen_kappa": 0.4597049944918953,
+        "prior_vs_wyatt": 0.8578313253012049,
+        "prior_vs_tauber": 0.6819277108433734
+      },
+      "class_C": {
+        "n": 2618,
+        "agreement": 0.983957219251337,
+        "cohen_kappa": 0.9720739432488156,
+        "prior_vs_wyatt": 0.9472880061115355,
+        "prior_vs_tauber": 0.959511077158136
       }
     }
   },

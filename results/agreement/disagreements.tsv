@@ -284,7 +284,7 @@ hs-wyatt	hs_beowulf:00535:10	wyatt_beowulf:00566:10	hæþcyn	Hæðcyn	Hǣðcyn	0
 hs-wyatt	hs_beowulf:00536:2	wyatt_beowulf:00568:2	geomorlic	geōmorlīc	gēomorlīc	0101	1001	0	0	ealdres linnan Swā bið [geōmorlīc] gomelum ceorle tō gebīdanne	ealdres linnan Swā bið [gēomorlīc] gomelum ceorle tō gebīdanne
 hs-wyatt	hs_beowulf:00538:25	wyatt_beowulf:00570:25	iu	iū	īu	01	10	1	0	in geardum swylce þǣr [iū] wǣron Gewīteð þonne on	in geardum swylce ðǣr [īu] wǣron Gewīteð þonne on
 hs-wyatt	hs_beowulf:00541:5	wyatt_beowulf:00573:5	þe	þē	þe	1	0	1	1	þā mid þǣre sorge [þē] him sīo sār belamp	ðā mid þǣre sorhge [þe] him sīo sār belamp
-hs-wyatt	hs_beowulf:00542:33	wyatt_beowulf:00574:34	hreosnabeorh	Hrēosnabeorh	Hreosnabeorh	10000	00000	0	0	heafo healdan ac ymb [Hrēosnabeorh] eatolne inwitscear oft gefremedon	heafo healdan ac ymb [Hreosnabeorh] eatolne inwitscear oft gefremedon
+hs-wyatt	hs_beowulf:00542:33	wyatt_beowulf:00574:33	hreosnabeorh	Hrēosnabeorh	Hreosnabeorh	10000	00000	0	0	heafo healdan ac ymb [Hrēosnabeorh] eatolne inwitscear oft gefremedon	heafo healdan ac ymb [Hreosnabeorh] eatolne inwitscear oft gefremedon
 hs-wyatt	hs_beowulf:00543:19	wyatt_beowulf:00575:19	hæþcynne	Hæðcynne	Hǣðcynne	000	100	0	0	ealdre gebohte heardan cēape [Hæðcynne] wearð Gēata dryhtne gūð	ealdre gebohte heardan cēape [Hǣðcynne] wearð Gēata dryhtne gūð
 hs-wyatt	hs_beowulf:00545:4	wyatt_beowulf:00577:4	þe	þē	þe	1	0	1	1	Ic him þā māðmas [þē] hē mē sealde geald	Ic him þā māðmas [þe] hē mē sealde geald
 hs-wyatt	hs_beowulf:00545:11	wyatt_beowulf:00577:11	swa	swā	swa	1	0	1	1	sealde geald æt gūðe [swā] mē gifeðe wæs lēohtan	sealde geald æt gūðe [swa] mē gifeðe wæs lēohtan
@@ -883,7 +883,7 @@ wyatt-tauber	wyatt_beowulf:00566:10	tauber:605:10	hæþcyn	Hǣðcyn	Hæðcyn	10	
 wyatt-tauber	wyatt_beowulf:00568:2	tauber:607:2	geomorlic	gēomorlīc	geōmorlīc	1001	0101	0	0	ealdres linnan Swā bið [gēomorlīc] gomelum ceorle tō gebīdanne	ealdres linnan Swā bið [geōmorlīc] gomelum ceorle tō gebīdanne
 wyatt-tauber	wyatt_beowulf:00570:25	tauber:609:26	iu	īu	iū	10	01	1	0	in geardum swylce ðǣr [īu] wǣron Gewīteð þonne on	in geardum swylce ðǣr [iū] wǣron Gewīteð þonne on
 wyatt-tauber	wyatt_beowulf:00573:5	tauber:612:5	þe	þe	þē	0	1	1	1	ðā mid þǣre sorhge [þe] him sīo sār belamp	ðā mid þǣre sorhge [þē] him sīo sār belamp
-wyatt-tauber	wyatt_beowulf:00574:21	tauber:613:21	ongenþeowes	Ongenðēowes	Ongenðeowes	00100	00000	0	0	wðel swealt oððe him [Ongenðēowes] eaferan Wǣran frome fyrdhwate	swealt oð ðe him [Ongenðeowes] eaferan wǣran frome fyrdhwate
+wyatt-tauber	wyatt_beowulf:00574:20	tauber:613:21	ongenþeowes	Ongenðēowes	Ongenðeowes	00100	00000	0	0	Hrēðel swealt oððe him [Ongenðēowes] eaferan Wǣran frome fyrdhwate	swealt oð ðe him [Ongenðeowes] eaferan wǣran frome fyrdhwate
 wyatt-tauber	wyatt_beowulf:00575:19	tauber:614:19	hæþcynne	Hǣðcynne	Hæðcynne	100	000	0	0	ealdre gebohte heardan cēape [Hǣðcynne] wearð Gēata dryhtne gūð	ealdre gebohte heardan cēape [Hæðcynne] wearð Gēata dryhtne gūð
 wyatt-tauber	wyatt_beowulf:00577:4	tauber:616:4	þe	þe	þē	0	1	1	1	Ic him þā māðmas [þe] hē mē sealde geald	Ic him þā māðmas [þē] hē mē sealde geald
 wyatt-tauber	wyatt_beowulf:00577:11	tauber:616:11	swa	swa	swā	0	1	1	1	sealde geald æt gūðe [swa] mē gifeðe wæs lēohtan	sealde geald æt gūðe [swā] mē gifeðe wæs lēohtan
