@@ -16,7 +16,7 @@ import json
 import sys
 from pathlib import Path
 
-from oevl.experiment import build_data, lexicon, load_tauber, pattern
+from oevl.experiment import build_data, heldout, lexicon, pattern
 from oevl.wikipron_to_marked import mark
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -26,7 +26,7 @@ MODEL, TOKENIZER, PREFIX = "charsiu/g2p_multilingual_byT5_small_100", "google/by
 
 def tests():
     _, prose, _, _ = build_data(ROOT / "data")
-    return {"soliloquies": prose, "tauber_beowulf": load_tauber(ROOT / "data/brunetti-length.txt")}
+    return {"soliloquies": prose, "tauber_beowulf": heldout(ROOT / "data", "tauber_beowulf")}
 
 
 def predict(batch_size=64, tiny=False):
