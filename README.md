@@ -144,6 +144,24 @@ licence of every file in `data/` and the licence text or source page each statem
   `data/charsiu_ang_test.tsv` is its `data/test/ang.tsv` at commit `0c929390759fb94f8ecdfc05cc0bc5f2ff2dc0f4`.
   CharsiuG2P took its Old English data from WikiPron, so both files are CC BY-SA 4.0.
 
+## Publishing the dataset
+
+`PYTHONPATH=src python -m oevl.export_hf --out release/hf` writes the Hugging Face copy of the data to `release/hf/`
+(gitignored, regenerated on each run): one JSONL file per split (`train`, `dev`, `test_prose` = *Soliloquies*,
+`test_verse` = Tauber's *Beowulf*, `agreement` = the Harrison & Sharp and Wyatt *Beowulf*) and the dataset card
+`README.md`, made from `release/hf_card.md` with the token counts read from the written files. Sentences that the
+leakage audit leaves out of evaluation are kept, with `leakage_excluded` set to true.
+
+The upload has not been run, and nothing has been published. It needs a Hugging Face account with write access to
+the `oe-vowel-length` namespace, and the agreement of all three authors. Then, from the repository root:
+
+```bash
+hf upload oe-vowel-length/old-english-vowel-length release/hf . --repo-type=dataset
+```
+
+`hf` is the command line of `huggingface_hub`. Version 1.0 removed the older `huggingface-cli`. With a 0.x version
+the same upload is `huggingface-cli upload oe-vowel-length/old-english-vowel-length release/hf . --repo-type=dataset`.
+
 ## Layout
 
 ```
@@ -156,11 +174,13 @@ src/oevl/            the package
   encoder_experiment.py, charsiu_g2p.py                        neural experiments (GPU)
   pilot.py                                                     the GPU pilot runner used by the notebooks
   try_text.py                                                  macrons for your own sentences
+  export_hf.py                                                 the Hugging Face copy of the data (release/hf/)
 notebooks/           thin Kaggle and Colab launchers for oevl.pilot
 tests/               unit tests
 data/                corpus (by_source/), manifest, Tauber and WikiPron inputs, dictionaries (lex_*.csv),
                      ambiguity classes (ambiguity_classes.csv and .json)
 results/             one folder per experiment: metrics.json, per-word CSVs, token-level predictions, run logs
 report/              main.tex (+ generated/ tables, numbers, figure)
+release/             hf_card.md, the template of the Hugging Face dataset card
 run_all.sh           the whole traditional pipeline, from inputs to REPORT.pdf
 ```
