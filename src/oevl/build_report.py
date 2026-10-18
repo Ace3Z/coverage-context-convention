@@ -300,7 +300,7 @@ handles, labels = axes[0].get_legend_handles_labels()
 fig.legend(handles, labels, loc="lower center", ncol=4, frameon=False, bbox_to_anchor=(0.5, -0.02),
            handletextpad=0.3, columnspacing=1.2)
 fig.tight_layout(rect=(0, 0.1, 1, 1), w_pad=1.5)
-fig.savefig(OUT / "fig_accuracy.pdf")
+fig.savefig(OUT / "fig_accuracy.pdf", metadata={"CreationDate": None})  # no timestamp: reruns are byte-identical
 plt.close(fig)
 
 print(f"wrote {len(num)} numbers, 5 tables and the figure to {OUT.relative_to(ROOT)}")
