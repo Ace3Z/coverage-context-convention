@@ -10,3 +10,7 @@ report/main.pdf
 my_tests/
 data/raw/
 .Rhistory
+REPORT.pdf
+*.zip
+*.egg-info/
+build/
