@@ -9,12 +9,54 @@
   "zupitza_grammar"
  ],
  "excluded": {
+  "john_ws": [
+   "john_ws:00051",
+   "john_ws:00060",
+   "john_ws:00165",
+   "john_ws:00181",
+   "john_ws:00198",
+   "john_ws:00208",
+   "john_ws:00210",
+   "john_ws:00266",
+   "john_ws:00295",
+   "john_ws:00323",
+   "john_ws:00349",
+   "john_ws:00418",
+   "john_ws:00424",
+   "john_ws:00449",
+   "john_ws:00501",
+   "john_ws:00504",
+   "john_ws:00506",
+   "john_ws:00514",
+   "john_ws:00557",
+   "john_ws:00604",
+   "john_ws:00628",
+   "john_ws:00690",
+   "john_ws:00701",
+   "john_ws:00709",
+   "john_ws:00757",
+   "john_ws:00819",
+   "john_ws:00908",
+   "john_ws:00918",
+   "john_ws:00947",
+   "john_ws:00955",
+   "john_ws:01022",
+   "john_ws:01030",
+   "john_ws:01032",
+   "john_ws:01051"
+  ],
   "soliloquies": [
    "soliloquies:00331"
   ],
   "tauber_beowulf": []
  },
  "counts": {
+  "john_ws": {
+   "sentences": 34,
+   "of_sentences": 1057,
+   "tokens": 661,
+   "of_tokens": 17310
+  },
   "soliloquies": {
    "sentences": 1,
    "of_sentences": 711,

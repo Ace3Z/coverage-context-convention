@@ -386,12 +386,14 @@
       "origin": "https://en.wikisource.org/wiki/Index:Gospel_of_Saint_John_in_West-Saxon.djvu",
       "units": 1057,
       "tokens": 17310,
-      "long_vowel_marks": 7315,
-      "sha256": "f2faed92a0f097fed49dca2724ce5439d176a78ef9fffc8410cbdfbf31b19990",
+      "long_vowel_marks": 7316,
+      "sha256": "17f52223701a7ef05cb29a46bb188550b107bd59bd64ae98c0ba0da7f00da798",
       "cleaning": {
         "dropped_mark_U+0323": 1,
         "dropped_mark_U+0328": 3,
-        "dropped_mark_U+030A": 1
+        "removed_field_split": 1057,
+        "mapped_U+0110_to_U+00D0": 162,
+        "repaired_word_þå": 1
       },
       "role": "dev",
       "inputs": [
