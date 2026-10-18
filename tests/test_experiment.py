@@ -61,3 +61,7 @@ class ClassTests(unittest.TestCase):
   self.assertAlmostEqual(cohen_kappa_score(a,b),meta['cohen_kappa'],places=6);self.assertAlmostEqual(sum(x==y for x,y in zip(a,b))/len(a),meta['agreement'],places=6)
   self.assertEqual({c:final.count(c) for c in 'ABC'},meta['counts']['final'])
   self.assertTrue(all(f in ('A','B','C') and (f==x==y or (x!=y and r['adjudication_note']!='agreed')) for r,f,x,y in zip(rows,final,a,b)))
+ def test_per_word_class(self):
+  lex={'ge':{'0':set(),'1':set()},'x':{'0':set(),'1':set()}};cts=collections.defaultdict(collections.Counter)
+  rows=per_word([],[{'key':'ge','gold_pattern':'1'},{'key':'x','gold_pattern':'0'}],{'frequency':['1','0']},lex,cts,cls={'ge':'B'})
+  self.assertEqual({r['word']:r['category_preliminary'] for r in rows},{'ge':'B','x':'unlisted'})

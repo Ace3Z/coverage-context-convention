@@ -139,14 +139,13 @@ def load_tauber(path):
  print('Tauber validated:',total,'tokens,',marks,'long marks')
  return result
 
-def per_word(train,test,pred,lex,counts,top=20):
+def per_word(train,test,pred,lex,counts,top=20,cls=None):
  subset=[(i,r) for i,r in enumerate(test) if flags(r,lex,counts)['lexicon_ambiguous']]
  most=collections.Counter(r['key'] for _,r in subset).most_common(top)
- groups={'god':'lexical','man':'lexical','þe':'grammatical','ne':'grammatical','se':'editorial','ge':'lexical','gyt':'unlabelled'}
  out=[]
  for word,n in most:
   indices=[i for i,r in subset if r['key']==word];gold=[test[i]['gold_pattern'] for i in indices]
-  row={'word':word,'n':n,'category_preliminary':groups.get(word,'unlabelled'),'test_pattern_counts':json.dumps(dict(collections.Counter(gold)),ensure_ascii=False)}
+  row={'word':word,'n':n,'category_preliminary':(cls or {}).get(word,'unlisted'),'test_pattern_counts':json.dumps(dict(collections.Counter(gold)),ensure_ascii=False)}
   for name,values in pred.items():row[name+'_accuracy']=round(sum(values[i]==test[i]['gold_pattern'] for i in indices)/n,6)
   for source in ['bright_reader','matthew_ws','sweet_primer','physiologus','zupitza_grammar']:
    ct=collections.Counter(r['gold_pattern'] for r in train if r['source']==source and r['key']==word)
@@ -178,7 +177,7 @@ def main():
   gold=[r['gold_pattern'] for r in test]
   pairs=[('frequency',f'{arm}_seed1') for arm in ['word','left','sentence']]+[(f'{x}_seed1',f'{y}_seed1') for x,y in [('word','left'),('word','sentence'),('left','sentence')]]
   summary[name]['mcnemar_seed1']={f'{x}_vs_{y}':mcnemar(pred[x],pred[y],gold) for x,y in pairs}
-  summary[name]['per_word']=per_word(train,test,pred,lex,counts)
+  summary[name]['per_word']=per_word(train,test,pred,lex,counts,cls=cls)
   with open(out/(name+'_predictions.jsonl'),'w',encoding='utf8') as f:
    for i,r in enumerate(test):f.write(json.dumps({**{k:v for k,v in r.items() if k!='sentence'},**flags(r,lex,counts),**{arm+'_prediction':values[i] for arm,values in pred.items()}},ensure_ascii=False)+'\n')
   with open(out/(name+'_per_word.csv'),'w',encoding='utf8',newline='') as f:
