@@ -1,0 +1,58 @@
+{
+  "provenance": "The labels come from two independent automated annotators (label_a, label_b) and an automated adjudicator (final, adjudication_note). They are pending review by the team.",
+  "classes": {
+    "A": "lexical: two different words (god/gōd, man/mān, is/īs)",
+    "B": "grammatical: same spelling, different word class or function, both with dictionary backing (þe relative particle vs þē \"thee\")",
+    "C": "editorial: same word marked long or short by editorial habit, mostly unstressed function words (se/sē)"
+  },
+  "n_skeletons": 60,
+  "agreement": 0.966667,
+  "cohen_kappa": 0.927007,
+  "n_disagreements": 2,
+  "without_guideline_examples": {
+    "excluded": [
+      "god",
+      "is",
+      "man",
+      "se",
+      "þe"
+    ],
+    "n_skeletons": 55,
+    "agreement": 0.963636,
+    "cohen_kappa": 0.910569
+  },
+  "counts": {
+    "label_a": {
+      "A": 12,
+      "B": 6,
+      "C": 42
+    },
+    "label_b": {
+      "A": 14,
+      "B": 4,
+      "C": 42
+    },
+    "final": {
+      "A": 13,
+      "B": 5,
+      "C": 42
+    }
+  },
+  "adjudication_rule": "Both annotators drew the A/B line the same way: B when both readings are closed-class words, A when at least one reading is a content word. The adjudicator applied that rule to the attested tokens of each disputed skeleton.",
+  "counting_rule": "The lexicon is experiment.lexicon(train, \"data/lex_wikipron.csv\"): every training gold pattern plus every WikiPron marked form, keyed by key(). Training is all 5 training sources, Zupitza included, as build_data() returns them. A skeleton is lexicon-ambiguous when the lexicon holds 2 or more patterns for it, the same test as flags(). Counted tokens are train plus soliloquies plus tauber_beowulf (load_tauber). hs_beowulf and wyatt_beowulf are agreement sets and are left out. Skeletons are ranked by their ambiguous token count, highest first, ties broken by skeleton in alphabetical order, and the first 60 are kept.",
+  "tokens_counted": 125879,
+  "ambiguous_tokens_counted": 43842,
+  "rank_60": {
+    "skeleton": "eom",
+    "tokens": 111
+  },
+  "rank_61": {
+    "skeleton": "þon",
+    "tokens": 108
+  },
+  "caveats": [
+    "Under D3 (Zupitza train-only and left out of ambiguity statistics) the list changes: 53 of the 60 stay, eom, gyt, hi, na, naman, oþrum and þes drop, and eode, hy, hyra, secge, sona, þon and þy come in. Which list to freeze is still open.",
+    "The guideline examples (god, man, is, þe, se) are items in the list, so they came pre-labelled. without_guideline_examples gives kappa on the other 55.",
+    "Many skeletons are near-unanimous in training (þa 17 short vs 2,505 long, þæt 1,946 short vs 6 long). They count as lexicon-ambiguous but most of that is dictionary noise."
+  ]
+}

@@ -1,8 +1,9 @@
 """Generate every number, table and the figure used in report/main.tex from the results files.
 
 Writes report/generated/{numbers.tex, tab_data.tex, tab_main.tex, tab_ablation.tex, tab_perword.tex,
-fig_accuracy.pdf}. It also checks that the worked examples quoted in the report match the predictions, and
-compiles report/main.tex to REPORT.pdf when pdflatex is installed (otherwise upload report/ to Overleaf).
+tab_classes.tex, fig_accuracy.pdf}. It also checks that the worked examples quoted in the report match the
+predictions, and compiles report/main.tex to REPORT.pdf when pdflatex is installed (otherwise upload report/ to
+Overleaf).
 Usage: python -m oevl.build_report
 """
 import csv
@@ -92,6 +93,13 @@ num["SdMaxMain"] = f"{100 * max(sds):.2f}"
 num["SdMaxMin"] = f"{100 * max(W[t]['seed_summary'][a]['minority_reading']['sd'] for t, _ in TESTS for a in ('word', 'left', 'sentence')):.2f}"
 num["EditorGap"] = f"{100 * (W['editor_agreement']['lexicon_ambiguous']['agreement'] - W['tauber_beowulf']['seed_summary']['word']['lexicon_ambiguous']['mean']):.1f}"
 num["AgrGap"] = f"{100 * (1 - W['editor_agreement']['lexicon_ambiguous']['agreement']):.1f}"
+
+# S6 ambiguity classes: annotator agreement and final counts
+CLS = json.loads((ROOT / "data" / "ambiguity_classes.json").read_text(encoding="utf8"))
+num["ClassKappa"] = f"{CLS['cohen_kappa']:.3f}"
+num["ClassAgree"] = pct(CLS["agreement"])
+for c in "ABC":
+    num[f"Class{c}"] = str(CLS["counts"]["final"][c])
 
 # WikiPron conversion statistics, recomputed with the same converter used by run_all.sh
 import re  # noqa: E402
@@ -248,6 +256,16 @@ for w in WORDS:
                f"{counts(r['bright_reader_pattern_counts'])} \\\\")
 (OUT / "tab_perword.tex").write_text("\n".join(pwr) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf8")
 
+cls = ["\\begin{tabular}{@{}llrrrrrr@{}}\n\\toprule\n"
+       "Test & Class & \\textit{n} & Freq. & Word & Left & Bil. & Oracle \\\\\n\\midrule"]
+for t, tname in TESTS:
+    for c, cname in (("A", "A lexical"), ("B", "B grammatical"), ("C", "C editorial"), ("unlisted", "Outside top 60")):
+        pop = "class_" + c
+        accs = " & ".join(val(W, t, s, pop) for s in ("frequency", "word", "left", "sentence", "oracle"))
+        cls.append(f"{tname if c == 'A' else ''} & {cname} & {n(W, t, pop):,} & {accs} \\\\")
+    cls.append("\\addlinespace" if t == "soliloquies" else "")
+(OUT / "tab_classes.tex").write_text("\n".join(cls) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf8")
+
 # ---------------------------------------------------------------- figure (drawn at its printed size: 15 cm wide)
 # Dot plot (not bars): the left panel needs a zoomed axis, and bars must start at zero.
 plt.rcParams.update({"font.family": "serif", "font.serif": ["Liberation Serif", "Nimbus Roman", "Times New Roman",
@@ -284,7 +302,7 @@ fig.tight_layout(rect=(0, 0.1, 1, 1), w_pad=1.5)
 fig.savefig(OUT / "fig_accuracy.pdf")
 plt.close(fig)
 
-print(f"wrote {len(num)} numbers, 4 tables and the figure to {OUT.relative_to(ROOT)}")
+print(f"wrote {len(num)} numbers, 5 tables and the figure to {OUT.relative_to(ROOT)}")
 print("worked examples verified against results/wikipron/soliloquies_predictions.jsonl")
 
 # ---------------------------------------------------------------- compile
