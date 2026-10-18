@@ -35,15 +35,18 @@ else
 fi
 
 echo "== 4/6 experiments (one set per run: the John dev set and the two test sets)"
-rm -rf results/training_only results/wikipron results/proposal results/all
+# PLAN D3, decided on dev: the four settings train without Zupitza, and results/wikipron_with_zupitza keeps all five works
+D3="--exclude-train zupitza_grammar"
+rm -rf results/training_only results/wikipron results/proposal results/all results/wikipron_with_zupitza
 for t in john_ws soliloquies tauber_beowulf; do
-  python -m oevl.experiment --data data --tauber data/brunetti-length.txt --out results/training_only --tests "$t" > "results_training_only_$t.log"
+  python -m oevl.experiment --data data --tauber data/brunetti-length.txt --out results/training_only --tests "$t" $D3 > "results_training_only_$t.log"
   for lex in wikipron proposal all; do
-    python -m oevl.experiment --data data --tauber data/brunetti-length.txt --out "results/$lex" --lexicon "data/lex_$lex.csv" --tests "$t" > "results_${lex}_$t.log"
+    python -m oevl.experiment --data data --tauber data/brunetti-length.txt --out "results/$lex" --lexicon "data/lex_$lex.csv" --tests "$t" $D3 > "results_${lex}_$t.log"
   done
+  python -m oevl.experiment --data data --tauber data/brunetti-length.txt --out results/wikipron_with_zupitza --lexicon data/lex_wikipron.csv --tests "$t" > "results_wikipron_with_zupitza_$t.log"
   echo "   done: $t"
 done
-for d in training_only wikipron proposal all; do mv results_${d}_*.log "results/$d/"; done
+for d in training_only wikipron proposal all wikipron_with_zupitza; do mv results_${d}_{john_ws,soliloquies,tauber_beowulf}.log "results/$d/"; done
 
 if [[ -s results/charsiu/ipa.tsv ]]; then
   python -m oevl.charsiu_g2p analyse > results/charsiu/analyse.log   # uses the shipped CharsiuG2P outputs (made on Colab)

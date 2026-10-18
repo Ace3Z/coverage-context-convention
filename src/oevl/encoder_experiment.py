@@ -20,7 +20,7 @@ import re
 import time
 from pathlib import Path
 
-from oevl.experiment import TESTS, TRAIN, build_data, flags, heldout, lexicon, load_classes, mcnemar, predict, zeros
+from oevl.experiment import EXCLUDE_D3, TESTS, TRAIN, build_data, flags, heldout, lexicon, load_classes, mcnemar, predict, zeros
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -103,8 +103,9 @@ def main():
     ap.add_argument("--arms", default=",".join(ARMS), help="comma list of word, left, sentence, localK (K words each side)")
     ap.add_argument("--train-limit", type=int, help="train on a fixed subset of this many examples (see limit())")
     ap.add_argument("--tests", default=",".join(TESTS), help="comma list of john_ws (dev), soliloquies, tauber_beowulf")
-    ap.add_argument("--exclude-train", default="", help="comma list of training works to leave out (PLAN D3), "
-                    "e.g. zupitza_grammar: they leave the training set, the lexicon's training forms and the prior")
+    ap.add_argument("--exclude-train", default=",".join(EXCLUDE_D3), help="comma list of training works to leave out: "
+                    "they leave the training set, the lexicon's training forms and the prior. Default zupitza_grammar "
+                    "(PLAN D3, as run_all.sh). Pass an empty string to train on all five works")
     ap.add_argument("--tiny", action="store_true", help="tiny random model + small data subset (CPU smoke test)")
     a = ap.parse_args()
     a.arms = ",".join(dict.fromkeys(a.arms.split(",")))
@@ -243,7 +244,7 @@ def main():
     summary["mcnemar"] = {}
     for test, rows in tests.items():
         gold = [r["gold_pattern"] for r in rows]
-        cols = {"frequency": prior[test],  # the logistic models below always trained on all five works
+        cols = {"frequency": prior[test],  # the logistic models below are run_all.sh's, trained without Zupitza (D3)
                 "logistic_word": [freq[r["id"]]["word_seed1_prediction"] for r in rows],
                 "logistic_bilateral": [freq[r["id"]]["sentence_seed1_prediction"] for r in rows]}
         for arm in summary["arms"]:

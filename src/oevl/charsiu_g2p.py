@@ -25,7 +25,7 @@ import sys
 import urllib.request
 from pathlib import Path
 
-from oevl.experiment import TESTS, build_data, evaluate, heldout, lexicon, pattern
+from oevl.experiment import EXCLUDE_D3, TESTS, build_data, evaluate, heldout, lexicon, pattern
 from oevl.wikipron_to_marked import mark
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -143,7 +143,7 @@ def analyse():
     dict_path = ROOT / "data/charsiu_ang_dict_words.txt"   # words in CharsiuG2P's own Old English dictionary
     if dict_path.exists():
         charsiu_train = set(dict_path.read_text(encoding="utf8").split())
-    train, _, _, _ = build_data(ROOT / "data")
+    train, _, _, _ = build_data(ROOT / "data", EXCLUDE_D3)  # populations as in results/wikipron
     lex, counts = lexicon(train, str(ROOT / "data/lex_wikipron.csv"))
     summary = {"model": MODEL, "prefix": PREFIX}
     for test, rows in tests().items():

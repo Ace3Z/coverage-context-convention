@@ -20,6 +20,23 @@ class Tests(unittest.TestCase):
   self.assertEqual({r['source'] for r in tr},set(TRAIN)-{'zupitza_grammar'})
   p=subprocess.run([sys.executable,'-m','oevl.experiment','--exclude-train','zupitza'],env={**os.environ,'PYTHONPATH':str(root/'src')},capture_output=True,text=True)
   self.assertEqual(p.returncode,2,p.stderr)
+ def test_excluded_work_never_reaches_training(self):
+  # PLAN D3, as run_all.sh runs it: only Zupitza marks 'god' long, so left out it adds no token, training form or prior count
+  import os,subprocess,sys,tempfile
+  root=Path(__file__).resolve().parents[1]
+  with tempfile.TemporaryDirectory() as d:
+   d=Path(d);(d/'by_source').mkdir()
+   for name in TRAIN+['soliloquies','hs_beowulf','wyatt_beowulf']:
+    ws=['gōd']*5 if name=='zupitza_grammar' else ['god','man','mān']
+    (d/'by_source'/(name+'.jsonl')).write_text(json.dumps({'id':name+':0','source':name,'tokens':ws,'tokens_bare':[bare(w) for w in ws]},ensure_ascii=False)+'\n',encoding='utf8')
+   (d/'leakage_excluded.json').write_text(json.dumps({'excluded':{t:[] for t in TESTS}}),encoding='utf8')
+   train=build_data(d,EXCLUDE_D3)[0];lex,counts=lexicon(train)
+   self.assertEqual(({r['source'] for r in train}&set(EXCLUDE_D3),set(lex['god']),counts['god']),(set(),{'0'},{'0':4}))
+   for out,flag,want in (('d3','zupitza_grammar',(12,False,'0')),('all5','',(17,True,'1'))):  # all5: the fixture can fail
+    p=subprocess.run([sys.executable,'-m','oevl.experiment','--data',str(d),'--out',str(d/out),'--tests','soliloquies','--exclude-train',flag],env={**os.environ,'PYTHONPATH':str(root/'src')},capture_output=True,text=True)
+    self.assertEqual(p.returncode,0,p.stderr)
+    god=json.loads((d/out/'soliloquies_predictions.jsonl').read_text(encoding='utf8').splitlines()[0])
+    self.assertEqual((json.loads((d/out/'metrics.json').read_text(encoding='utf8'))['dataset']['train'],god['lexicon_ambiguous'],god['frequency_prediction']),want)
 if __name__=='__main__':unittest.main()
 
 class RegressionTests(unittest.TestCase):

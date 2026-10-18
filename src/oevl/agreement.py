@@ -3,7 +3,8 @@
 Three length-marked editions of the poem: Harrison and Sharp (1883), Wyatt (1894) and the Tauber gold (marks
 from the Perseus text of Klaeber 1922, the set the models are scored against). Each pair is aligned token by token
 on bare forms, as in experiment.agreement, and aligned tokens are compared on their vowel-length patterns.
-Ambiguity uses the headline lexicon (training forms + WikiPron, as results/wikipron).
+Ambiguity and the floor (the prior) use the headline training set and lexicon, as results/wikipron: training forms
+without Zupitza (PLAN D3) + WikiPron.
 
   python -m oevl.agreement   -> results/agreement/metrics.json and disagreements.tsv
 
@@ -18,7 +19,7 @@ import json
 import random
 from pathlib import Path
 
-from oevl.experiment import build_data, flags, key, lexicon, load_tauber, predict
+from oevl.experiment import EXCLUDE_D3, build_data, flags, key, lexicon, load_tauber, predict
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "results" / "agreement"
@@ -116,12 +117,12 @@ def hand_check(path, rows):
 
 
 def main():
-    train, _, hs, wy = build_data(ROOT / "data")
+    train, _, hs, wy = build_data(ROOT / "data", EXCLUDE_D3)
     lex, counts = lexicon(train, str(ROOT / "data/lex_wikipron.csv"))
     eds = {"hs": hs, "wyatt": wy, "tauber": load_tauber(ROOT / "data/brunetti-length.txt")}
     cls = classes(ROOT / "data/ambiguity_classes.csv")
     metrics = {"editions": {"hs": "Harrison and Sharp 1883", "wyatt": "Wyatt 1894", "tauber": "Tauber gold (Klaeber 1922 via Perseus)"},
-               "lexicon": "training forms + data/lex_wikipron.csv, as results/wikipron",
+               "lexicon": "training forms without zupitza_grammar (PLAN D3) + data/lex_wikipron.csv, as results/wikipron",
                "classes": "data/ambiguity_classes.csv" if cls else "skipped: data/ambiguity_classes.csv not found",
                "pairs": {}, "gate": {"rule": GATE_RULE, "note": GATE_NOTE}}
     rows = []

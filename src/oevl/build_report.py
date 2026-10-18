@@ -6,6 +6,7 @@ predictions, and compiles report/main.tex to REPORT.pdf when pdflatex is install
 Overleaf).
 Usage: python -m oevl.build_report
 """
+import collections
 import csv
 import json
 import shutil
@@ -133,11 +134,20 @@ def counts(js):
     return f"{c.get('0', 0)}/{c.get('1', 0)}"
 
 
+# Zupitza is not trained on (PLAN D3), so the per-word CSVs hold no counts for it: its column counts the corpus file
+from oevl import experiment as E  # noqa: E402
+ZUP = collections.Counter((r["key"], r["gold_pattern"]) for r in E.tokens(E.load(ROOT / "data/by_source/zupitza_grammar.jsonl")))
+
+
+def zup(w):
+    return f"{ZUP[w, '0']}/{ZUP[w, '1']}"
+
+
 the = json.loads(pw["þæt"]["test_pattern_counts"])
 num["ThaetShort"] = str(the.get("0", 0))
 num["ThaetN"] = pw["þæt"]["n"]
 ge = pw["ge"]
-num["GeZup"] = counts(ge["zupitza_grammar_pattern_counts"])
+num["GeZup"] = zup("ge")
 num["GeMat"] = counts(ge["matthew_ws_pattern_counts"])
 num["GeSol"] = counts(ge["test_pattern_counts"])
 
@@ -169,8 +179,7 @@ for tag, toks in found.items():
         sys.exit(f"{tag}: relative 'þe' claim no longer holds: {rel}")
 
 # ---------------------------------------------------------------- coverage and þe facts recomputed from the data
-from oevl import experiment as E  # noqa: E402
-train_toks, _, _, _ = E.build_data(str(ROOT / "data"))
+train_toks, _, _, _ = E.build_data(str(ROOT / "data"), E.EXCLUDE_D3)
 lex_t, _ = E.lexicon(train_toks)
 beo = E.heldout(ROOT / "data", "tauber_beowulf")
 no_cand = sum(r["gold_pattern"] not in lex_t.get(r["key"], set()) for r in beo)
@@ -213,7 +222,7 @@ TITLES = {"zupitza_grammar": "Ælfric's \\textit{Grammar}", "bright_reader": "\\
           "physiologus": "\\textit{Physiologus}", "john_ws": "Gospel of John (W.~Saxon)",
           "soliloquies": "Alfred's \\textit{Soliloquies}",
           "hs_beowulf": "\\textit{Beowulf}", "wyatt_beowulf": "\\textit{Beowulf}"}
-ROLE = {"john_ws": "dev", "soliloquies": "prose test", "hs_beowulf": "agreement", "wyatt_beowulf": "agreement"}
+ROLE = {"zupitza_grammar": "ablation", "john_ws": "dev", "soliloquies": "prose test", "hs_beowulf": "agreement", "wyatt_beowulf": "agreement"}
 GENRE = {"prose": "prose", "verse": "verse", "mixed": "mixed"}
 rows = []
 for k in ORDER:
@@ -253,7 +262,7 @@ for w in WORDS:
     r = pw[w]
     pwr.append(f"\\textit{{{w}}} & {r['n']} & {counts(r['test_pattern_counts'])} & "
                f"{100 * float(r['frequency_accuracy']):.1f} & {100 * float(r['sentence_seed1_accuracy']):.1f} & "
-               f"{counts(r['zupitza_grammar_pattern_counts'])} & {counts(r['matthew_ws_pattern_counts'])} & "
+               f"{zup(w)} & {counts(r['matthew_ws_pattern_counts'])} & "
                f"{counts(r['bright_reader_pattern_counts'])} \\\\")
 (OUT / "tab_perword.tex").write_text("\n".join(pwr) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf8")
 
