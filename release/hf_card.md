@@ -70,8 +70,8 @@ Length is written only with ā ē ī ō ū ȳ ǣ (and their capitals). For examp
 | `john_ws` | dev | Gospel of John (West Saxon) | Bright & Harris, 1904 | https://en.wikisource.org/wiki/Index:Gospel_of_Saint_John_in_West-Saxon.djvu | Wikisource, CC BY-SA 4.0 |
 | `soliloquies` | test_prose | Alfred's *Soliloquies* | Hargrove, 1902 | https://en.wikisource.org/wiki/King_Alfred%27s_Old_English_Version_of_St._Augustine%27s_Soliloquies | Wikisource, CC BY-SA 4.0 |
 | `tauber_beowulf` | test_verse | *Beowulf* | Tauber, with the length marks of the Perseus text of Klaeber's 1922 edition | https://github.com/old-english-learner-texts/old-english-texts (`beowulf/raw-data/brunetti-length.txt`) | CC BY-SA 4.0, attribution to James Tauber |
-| `hs_beowulf` | agreement | *Beowulf* | Harrison & Sharp, 1883 | https://www.gutenberg.org/ebooks/9701 | Project Gutenberg, public domain in the USA |
-| `wyatt_beowulf` | agreement | *Beowulf* | Wyatt, 1894 | https://en.wikisource.org/wiki/Beowulf_(Wyatt) | Wikisource, CC BY-SA 4.0 |
+| `hs_beowulf` | agreement | *Beowulf*, *Finnsburh Fragment* | Harrison & Sharp, 1883 | https://www.gutenberg.org/ebooks/9701 | Project Gutenberg, public domain in the USA |
+| `wyatt_beowulf` | agreement | *Beowulf*, *Finnsburh Fragment* | Wyatt, 1894 | https://en.wikisource.org/wiki/Beowulf_(Wyatt) | Wikisource, CC BY-SA 4.0 |
 
 `oevl.build_corpus` reads Wikisource pages through the MediaWiki API and Project Gutenberg books from their HTML
 editions. The repository's `data/manifest.json` records each work's origin and cleaning counts, and for the works rebuilt with
@@ -99,8 +99,8 @@ editions. The repository's `data/manifest.json` records each work's origin and c
 $table
 
 The split is by work, never by sentence, and no *Beowulf* text is in `train`. `test_prose` is the prose test set and
-`test_verse` the verse test set. `agreement` holds two further editions of *Beowulf*, used only to measure how often
-two editors mark the same word the same way.
+`test_verse` the verse test set. `agreement` holds two further editions of *Beowulf* (each with the *Finnsburh Fragment*, 21 sentences and 484 tokens
+in all), used only to measure how often two editors mark the same word the same way.
 
 Nothing is left out. A dev or test sentence that shares a word 6-gram (bare, lower-cased, ð folded to þ) with any
 training work is kept with `leakage_excluded: true`. The project leaves these sentences out when it scores a system,
