@@ -29,7 +29,9 @@ relative to the repository) or prefix commands with `PYTHONPATH=src`.
    in the proposal: Clark Hall, Wiktionary inflection tables and Bosworth–Toller (`data/lex_clarkhall.csv`,
    `lex_wiktionary.csv`, `lex_bt.csv`; rebuilt from the original sources with `python -m oevl.build_lexicons`).
 4. **Experiments:** four dictionary settings (training only, + WikiPron, + the three proposal dictionaries, + all four)
-   × both test sets, one test set per run, written to `results/<setting>/`.
+   × both test sets, one test set per run, written to `results/<setting>/`. Then `oevl.agreement` compares the three
+   *Beowulf* editions (Harrison & Sharp, Wyatt, the Tauber gold) pairwise and applies the gate of plan rule D2,
+   written to `results/agreement/`.
 5. **`oevl.check_expected`:** fails if any of 336 headline values differs from the frozen results.
 6. **`oevl.build_report`:** writes `report/generated/` (numbers, tables, figure), checks the worked examples against
    the predictions, and compiles `REPORT.pdf` if `pdflatex` is installed. Without LaTeX, upload `report/` to Overleaf
@@ -113,6 +115,7 @@ changed instead of reporting accuracy.
 src/oevl/            the package
   experiment.py        data, dictionaries, frequency/logistic models, metrics (the traditional system)
   wikipron_to_marked.py, build_lexicons.py, fetch_tauber.py    inputs and dictionaries
+  agreement.py                                                 editor agreement on Beowulf and the gate
   check_expected.py, build_report.py                           frozen-value check, report tables and figure
   encoder_experiment.py, charsiu_g2p.py                        neural experiments (GPU)
   pilot.py                                                     the GPU pilot runner used by the notebooks

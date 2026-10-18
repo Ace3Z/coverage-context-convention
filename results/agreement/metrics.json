@@ -1,0 +1,201 @@
+{
+  "editions": {
+    "hs": "Harrison and Sharp 1883",
+    "wyatt": "Wyatt 1894",
+    "tauber": "Tauber gold (Klaeber 1922 via Perseus)"
+  },
+  "lexicon": "training forms + data/lex_wikipron.csv, as results/wikipron",
+  "classes": "skipped: data/ambiguity_classes.csv not found",
+  "pairs": {
+    "hs-wyatt": {
+      "aligned": 16832,
+      "hs_total": 17682,
+      "wyatt_total": 17569,
+      "alignment_rate_hs": 0.9519285148738831,
+      "alignment_rate_wyatt": 0.9580511127554214,
+      "all": {
+        "n": 16832,
+        "agreement": 0.9773051330798479,
+        "cohen_kappa": 0.9733035239158769,
+        "prior_vs_hs": 0.8959125475285171,
+        "prior_vs_wyatt": 0.9004871673003803
+      },
+      "lexicon_ambiguous": {
+        "n": 4420,
+        "agreement": 0.9604072398190046,
+        "cohen_kappa": 0.9419058690318701,
+        "prior_vs_hs": 0.8855203619909502,
+        "prior_vs_wyatt": 0.896606334841629
+      },
+      "attested_ambiguous": {
+        "n": 3385,
+        "agreement": 0.957754800590842,
+        "cohen_kappa": 0.9279265422637487,
+        "prior_vs_hs": 0.9066469719350074,
+        "prior_vs_wyatt": 0.9163958641063515
+      }
+    },
+    "hs-tauber": {
+      "aligned": 16573,
+      "hs_total": 17682,
+      "tauber_total": 17361,
+      "alignment_rate_hs": 0.9372808505825133,
+      "alignment_rate_tauber": 0.9546109095098209,
+      "all": {
+        "n": 16573,
+        "agreement": 0.9881735352682073,
+        "cohen_kappa": 0.98610442159869,
+        "prior_vs_hs": 0.8963977553852652,
+        "prior_vs_tauber": 0.8970614855487842
+      },
+      "lexicon_ambiguous": {
+        "n": 4366,
+        "agreement": 0.9876316994961063,
+        "cohen_kappa": 0.9818234664195473,
+        "prior_vs_hs": 0.8854786990380211,
+        "prior_vs_tauber": 0.8886852954649564
+      },
+      "attested_ambiguous": {
+        "n": 3349,
+        "agreement": 0.9937294714840251,
+        "cohen_kappa": 0.9892813053431159,
+        "prior_vs_hs": 0.9065392654523738,
+        "prior_vs_tauber": 0.9074350552403703
+      }
+    },
+    "wyatt-tauber": {
+      "aligned": 16911,
+      "wyatt_total": 17569,
+      "tauber_total": 17361,
+      "alignment_rate_wyatt": 0.9625476691900506,
+      "alignment_rate_tauber": 0.9740798341109383,
+      "all": {
+        "n": 16911,
+        "agreement": 0.9766424220921294,
+        "cohen_kappa": 0.9724517001421538,
+        "prior_vs_wyatt": 0.9012477085920407,
+        "prior_vs_tauber": 0.8975814558571344
+      },
+      "lexicon_ambiguous": {
+        "n": 4366,
+        "agreement": 0.9610627576729271,
+        "cohen_kappa": 0.9429383848799866,
+        "prior_vs_wyatt": 0.8960146587265231,
+        "prior_vs_tauber": 0.8877691250572607
+      },
+      "attested_ambiguous": {
+        "n": 3344,
+        "agreement": 0.9572368421052632,
+        "cohen_kappa": 0.9271890989507868,
+        "prior_vs_wyatt": 0.9156698564593302,
+        "prior_vs_tauber": 0.9063995215311005
+      }
+    }
+  },
+  "gate": {
+    "rule": "ceiling = editor agreement on ambiguous aligned tokens; floor = most-frequent-reading prior scored on the same tokens against one editor of the pair; continue to modelling if ceiling minus floor is at least 10 points on at least 500 tokens (PLAN.md D2)",
+    "note": "Applied after the fact: the rule was not written down before the agreement numbers were measured. These fields say which side of the bar each pair lands on. They do not decide the outcome.",
+    "hs-wyatt": {
+      "lexicon_ambiguous_floor_vs_hs": {
+        "n": 4420,
+        "ceiling": 0.9604072398190046,
+        "floor": 0.8855203619909502,
+        "gap_points": 7.49,
+        "clears_bar": false
+      },
+      "lexicon_ambiguous_floor_vs_wyatt": {
+        "n": 4420,
+        "ceiling": 0.9604072398190046,
+        "floor": 0.896606334841629,
+        "gap_points": 6.38,
+        "clears_bar": false
+      },
+      "attested_ambiguous_floor_vs_hs": {
+        "n": 3385,
+        "ceiling": 0.957754800590842,
+        "floor": 0.9066469719350074,
+        "gap_points": 5.11,
+        "clears_bar": false
+      },
+      "attested_ambiguous_floor_vs_wyatt": {
+        "n": 3385,
+        "ceiling": 0.957754800590842,
+        "floor": 0.9163958641063515,
+        "gap_points": 4.14,
+        "clears_bar": false
+      }
+    },
+    "hs-tauber": {
+      "lexicon_ambiguous_floor_vs_hs": {
+        "n": 4366,
+        "ceiling": 0.9876316994961063,
+        "floor": 0.8854786990380211,
+        "gap_points": 10.22,
+        "clears_bar": true
+      },
+      "lexicon_ambiguous_floor_vs_tauber": {
+        "n": 4366,
+        "ceiling": 0.9876316994961063,
+        "floor": 0.8886852954649564,
+        "gap_points": 9.89,
+        "clears_bar": false
+      },
+      "attested_ambiguous_floor_vs_hs": {
+        "n": 3349,
+        "ceiling": 0.9937294714840251,
+        "floor": 0.9065392654523738,
+        "gap_points": 8.72,
+        "clears_bar": false
+      },
+      "attested_ambiguous_floor_vs_tauber": {
+        "n": 3349,
+        "ceiling": 0.9937294714840251,
+        "floor": 0.9074350552403703,
+        "gap_points": 8.63,
+        "clears_bar": false
+      }
+    },
+    "wyatt-tauber": {
+      "lexicon_ambiguous_floor_vs_wyatt": {
+        "n": 4366,
+        "ceiling": 0.9610627576729271,
+        "floor": 0.8960146587265231,
+        "gap_points": 6.5,
+        "clears_bar": false
+      },
+      "lexicon_ambiguous_floor_vs_tauber": {
+        "n": 4366,
+        "ceiling": 0.9610627576729271,
+        "floor": 0.8877691250572607,
+        "gap_points": 7.33,
+        "clears_bar": false
+      },
+      "attested_ambiguous_floor_vs_wyatt": {
+        "n": 3344,
+        "ceiling": 0.9572368421052632,
+        "floor": 0.9156698564593302,
+        "gap_points": 4.16,
+        "clears_bar": false
+      },
+      "attested_ambiguous_floor_vs_tauber": {
+        "n": 3344,
+        "ceiling": 0.9572368421052632,
+        "floor": 0.9063995215311005,
+        "gap_points": 5.08,
+        "clears_bar": false
+      }
+    }
+  },
+  "hand_check_hs_wyatt": {
+    "n": 100,
+    "seed": 1,
+    "labels": {
+      "normalisation fault": 10,
+      "genuine editorial difference": 58,
+      "other": 32
+    },
+    "labelled_by": [
+      "automated assistant, not a team member"
+    ]
+  }
+}

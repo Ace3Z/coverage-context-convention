@@ -1,0 +1,27 @@
+Tauber validated: 17361 tokens, 7438 long marks
+hs-wyatt: aligned 16832 (95.19% of hs, 95.81% of wyatt)
+  all                  n  16832  agreement 97.73%  kappa 0.973
+  lexicon_ambiguous    n   4420  agreement 96.04%  kappa 0.942
+  attested_ambiguous   n   3385  agreement 95.78%  kappa 0.928
+hs-tauber: aligned 16573 (93.73% of hs, 95.46% of tauber)
+  all                  n  16573  agreement 98.82%  kappa 0.986
+  lexicon_ambiguous    n   4366  agreement 98.76%  kappa 0.982
+  attested_ambiguous   n   3349  agreement 99.37%  kappa 0.989
+wyatt-tauber: aligned 16911 (96.25% of wyatt, 97.41% of tauber)
+  all                  n  16911  agreement 97.66%  kappa 0.972
+  lexicon_ambiguous    n   4366  agreement 96.11%  kappa 0.943
+  attested_ambiguous   n   3344  agreement 95.72%  kappa 0.927
+gate: Applied after the fact: the rule was not written down before the agreement numbers were measured. These fields say which side of the bar each pair lands on. They do not decide the outcome.
+  hs-wyatt     lexicon_ambiguous_floor_vs_hs      n  4420  ceiling 96.04  floor 88.55  gap  7.49  below the bar
+  hs-wyatt     lexicon_ambiguous_floor_vs_wyatt   n  4420  ceiling 96.04  floor 89.66  gap  6.38  below the bar
+  hs-wyatt     attested_ambiguous_floor_vs_hs     n  3385  ceiling 95.78  floor 90.66  gap  5.11  below the bar
+  hs-wyatt     attested_ambiguous_floor_vs_wyatt  n  3385  ceiling 95.78  floor 91.64  gap  4.14  below the bar
+  hs-tauber    lexicon_ambiguous_floor_vs_hs      n  4366  ceiling 98.76  floor 88.55  gap 10.22  clears the bar
+  hs-tauber    lexicon_ambiguous_floor_vs_tauber  n  4366  ceiling 98.76  floor 88.87  gap  9.89  below the bar
+  hs-tauber    attested_ambiguous_floor_vs_hs     n  3349  ceiling 99.37  floor 90.65  gap  8.72  below the bar
+  hs-tauber    attested_ambiguous_floor_vs_tauber n  3349  ceiling 99.37  floor 90.74  gap  8.63  below the bar
+  wyatt-tauber lexicon_ambiguous_floor_vs_wyatt   n  4366  ceiling 96.11  floor 89.60  gap  6.50  below the bar
+  wyatt-tauber lexicon_ambiguous_floor_vs_tauber  n  4366  ceiling 96.11  floor 88.78  gap  7.33  below the bar
+  wyatt-tauber attested_ambiguous_floor_vs_wyatt  n  3344  ceiling 95.72  floor 91.57  gap  4.16  below the bar
+  wyatt-tauber attested_ambiguous_floor_vs_tauber n  3344  ceiling 95.72  floor 90.64  gap  5.08  below the bar
+hand check: {'n': 100, 'seed': 1, 'labels': {'normalisation fault': 10, 'genuine editorial difference': 58, 'other': 32}, 'labelled_by': ['automated assistant, not a team member']}
