@@ -32,7 +32,8 @@ relative to the repository) or prefix commands with `PYTHONPATH=src`.
 4. **Experiments:** four dictionary settings (training only, + WikiPron, + the three proposal dictionaries, + all four)
    × the John dev set and both test sets, one set per run, written to `results/<setting>/`. Then `oevl.agreement` compares the three *Beowulf* editions (Harrison & Sharp, Wyatt, the
    Tauber gold) pairwise and applies the gate of plan rule D2, written to `results/agreement/`.
-5. **`oevl.check_expected`:** fails if any of 336 headline values differs from the frozen results.
+5. **`oevl.check_expected`:** fails if any of 528 headline values differs from the frozen results (four settings × three
+   sets, and the editor agreement of each *Beowulf* pair).
 6. **`oevl.build_report`:** writes `report/generated/` (numbers, tables, figure), checks the worked examples against
    the predictions, and compiles `REPORT.pdf` if `pdflatex` is installed. Without LaTeX, upload `report/` to Overleaf
    and compile `main.tex`.
@@ -107,7 +108,7 @@ changed instead of reporting accuracy.
   WikiPron (`results/wikipron`). `run_all.sh` also runs the three proposal dictionaries (`results/proposal`) and all
   four together (`results/all`), and `check_expected` checks all four settings.
 
-`check_expected` passes all 336 checks on Python 3.14 with the pinned versions in `requirements.txt`.
+`check_expected` passes all 528 checks on Python 3.14 with the pinned versions in `requirements.txt`.
 
 ## Data and licences
 
