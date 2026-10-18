@@ -13,19 +13,19 @@
       "wrong_length": 0.2678,
       "not_alignable": 0.0075
     },
-    "lexicon_ambiguous_n": 7782,
+    "lexicon_ambiguous_n": 7639,
     "lexicon_ambiguous": {
-      "correct": 5470,
-      "wrong_length": 2241,
-      "not_alignable": 71
+      "correct": 5356,
+      "wrong_length": 2214,
+      "not_alignable": 69
     },
     "wrong_length_slots": {
       "too_long": 3453,
       "too_short": 1100
     },
-    "wrong_length_on_ambiguous": 2241,
-    "of_those_word_model_right": 2018,
-    "of_those_bilateral_model_right": 2022,
+    "wrong_length_on_ambiguous": 2214,
+    "of_those_word_model_right": 2032,
+    "of_those_bilateral_model_right": 2006,
     "by_charsiu_dictionary": {
       "seen/correct": 8183,
       "seen/not_alignable": 33,
@@ -38,16 +38,16 @@
       "n": 16649,
       "accuracy": 0.7246681482371313,
       "lexicon_ambiguous": {
-        "n": 7782,
-        "accuracy": 0.7029041377537908
+        "n": 7639,
+        "accuracy": 0.7011388925251997
       },
       "attested_ambiguous": {
-        "n": 6026,
-        "accuracy": 0.7147361433786923
+        "n": 5734,
+        "accuracy": 0.7488664108824555
       },
       "minority_reading": {
-        "n": 382,
-        "accuracy": 0.4319371727748691
+        "n": 321,
+        "accuracy": 0.4485981308411215
       }
     }
   },
@@ -63,19 +63,19 @@
       "wrong_length": 0.2737,
       "not_alignable": 0.0168
     },
-    "lexicon_ambiguous_n": 5968,
+    "lexicon_ambiguous_n": 5837,
     "lexicon_ambiguous": {
-      "correct": 4361,
-      "wrong_length": 1607,
+      "correct": 4254,
+      "wrong_length": 1583,
       "not_alignable": 0
     },
     "wrong_length_slots": {
       "too_long": 2981,
       "too_short": 1362
     },
-    "wrong_length_on_ambiguous": 1607,
-    "of_those_word_model_right": 1370,
-    "of_those_bilateral_model_right": 1376,
+    "wrong_length_on_ambiguous": 1583,
+    "of_those_word_model_right": 1372,
+    "of_those_bilateral_model_right": 1349,
     "by_charsiu_dictionary": {
       "seen/correct": 6538,
       "seen/wrong_length": 2017,
@@ -87,16 +87,16 @@
       "n": 15431,
       "accuracy": 0.7095457196552395,
       "lexicon_ambiguous": {
-        "n": 5968,
-        "accuracy": 0.7307305630026809
+        "n": 5837,
+        "accuracy": 0.7287990406030496
       },
       "attested_ambiguous": {
-        "n": 4658,
-        "accuracy": 0.7421640188922284
+        "n": 4500,
+        "accuracy": 0.7635555555555555
       },
       "minority_reading": {
-        "n": 638,
-        "accuracy": 0.6677115987460815
+        "n": 612,
+        "accuracy": 0.6977124183006536
       }
     }
   },
@@ -112,19 +112,19 @@
       "wrong_length": 0.2215,
       "not_alignable": 0.0007
     },
-    "lexicon_ambiguous_n": 4434,
+    "lexicon_ambiguous_n": 4400,
     "lexicon_ambiguous": {
-      "correct": 3416,
-      "wrong_length": 1018,
+      "correct": 3394,
+      "wrong_length": 1006,
       "not_alignable": 0
     },
     "wrong_length_slots": {
       "too_long": 2380,
       "too_short": 1598
     },
-    "wrong_length_on_ambiguous": 1018,
-    "of_those_word_model_right": 768,
-    "of_those_bilateral_model_right": 763,
+    "wrong_length_on_ambiguous": 1006,
+    "of_those_word_model_right": 786,
+    "of_those_bilateral_model_right": 760,
     "by_charsiu_dictionary": {
       "seen/correct": 7373,
       "seen/not_alignable": 4,
@@ -137,16 +137,16 @@
       "n": 17361,
       "accuracy": 0.7778353781464201,
       "lexicon_ambiguous": {
-        "n": 4434,
-        "accuracy": 0.7704104645917907
+        "n": 4400,
+        "accuracy": 0.7713636363636364
       },
       "attested_ambiguous": {
-        "n": 3394,
-        "accuracy": 0.7925751325869181
+        "n": 3268,
+        "accuracy": 0.8124235006119951
       },
       "minority_reading": {
-        "n": 358,
-        "accuracy": 0.40782122905027934
+        "n": 349,
+        "accuracy": 0.4584527220630373
       }
     }
   }

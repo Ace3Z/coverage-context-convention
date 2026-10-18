@@ -1,0 +1,1907 @@
+{
+  "dataset": {
+    "train": 93038,
+    "test_prose": 15431,
+    "agreement_hs": 17682,
+    "agreement_wyatt": 17568,
+    "lexicon_origin": "training attested forms + external file"
+  },
+  "john_ws": {
+    "frequency": {
+      "n": 16649,
+      "accuracy": 0.9588563877710373,
+      "lexicon_ambiguous": {
+        "n": 7782,
+        "accuracy": 0.948727833461835
+      },
+      "attested_ambiguous": {
+        "n": 6026,
+        "accuracy": 0.949220046465317
+      },
+      "minority_reading": {
+        "n": 382,
+        "accuracy": 0.0968586387434555
+      },
+      "class_A": {
+        "n": 688,
+        "accuracy": 0.9607558139534884
+      },
+      "class_B": {
+        "n": 1077,
+        "accuracy": 0.8857938718662952
+      },
+      "class_C": {
+        "n": 4920,
+        "accuracy": 0.9752032520325203
+      },
+      "class_unlisted": {
+        "n": 1097,
+        "accuracy": 0.8842297174111212
+      }
+    },
+    "oracle": {
+      "n": 16649,
+      "accuracy": 0.9875668208300799,
+      "lexicon_ambiguous": {
+        "n": 7782,
+        "accuracy": 0.9993574916473914
+      },
+      "attested_ambiguous": {
+        "n": 6026,
+        "accuracy": 1.0
+      },
+      "minority_reading": {
+        "n": 382,
+        "accuracy": 1.0
+      },
+      "class_A": {
+        "n": 688,
+        "accuracy": 1.0
+      },
+      "class_B": {
+        "n": 1077,
+        "accuracy": 1.0
+      },
+      "class_C": {
+        "n": 4920,
+        "accuracy": 0.9989837398373984
+      },
+      "class_unlisted": {
+        "n": 1097,
+        "accuracy": 1.0
+      }
+    },
+    "word_seed1": {
+      "n": 16649,
+      "accuracy": 0.9570544777464112,
+      "lexicon_ambiguous": {
+        "n": 7782,
+        "accuracy": 0.9448727833461835
+      },
+      "attested_ambiguous": {
+        "n": 6026,
+        "accuracy": 0.9495519415864587
+      },
+      "minority_reading": {
+        "n": 382,
+        "accuracy": 0.02617801047120419
+      },
+      "class_A": {
+        "n": 688,
+        "accuracy": 0.9607558139534884
+      },
+      "class_B": {
+        "n": 1077,
+        "accuracy": 0.8857938718662952
+      },
+      "class_C": {
+        "n": 4920,
+        "accuracy": 0.9752032520325203
+      },
+      "class_unlisted": {
+        "n": 1097,
+        "accuracy": 0.8568824065633546
+      }
+    },
+    "word_seed2": {
+      "n": 16649,
+      "accuracy": 0.956814223076461,
+      "lexicon_ambiguous": {
+        "n": 7782,
+        "accuracy": 0.9443587766640966
+      },
+      "attested_ambiguous": {
+        "n": 6026,
+        "accuracy": 0.9488881513441753
+      },
+      "minority_reading": {
+        "n": 382,
+        "accuracy": 0.02617801047120419
+      },
+      "class_A": {
+        "n": 688,
+        "accuracy": 0.9607558139534884
+      },
+      "class_B": {
+        "n": 1077,
+        "accuracy": 0.8857938718662952
+      },
+      "class_C": {
+        "n": 4920,
+        "accuracy": 0.9752032520325203
+      },
+      "class_unlisted": {
+        "n": 1097,
+        "accuracy": 0.853236098450319
+      }
+    },
+    "word_seed3": {
+      "n": 16649,
+      "accuracy": 0.9570544777464112,
+      "lexicon_ambiguous": {
+        "n": 7782,
+        "accuracy": 0.9448727833461835
+      },
+      "attested_ambiguous": {
+        "n": 6026,
+        "accuracy": 0.9495519415864587
+      },
+      "minority_reading": {
+        "n": 382,
+        "accuracy": 0.02617801047120419
+      },
+      "class_A": {
+        "n": 688,
+        "accuracy": 0.9607558139534884
+      },
+      "class_B": {
+        "n": 1077,
+        "accuracy": 0.8857938718662952
+      },
+      "class_C": {
+        "n": 4920,
+        "accuracy": 0.9752032520325203
+      },
+      "class_unlisted": {
+        "n": 1097,
+        "accuracy": 0.8568824065633546
+      }
+    },
+    "left_seed1": {
+      "n": 16649,
+      "accuracy": 0.9563937774040483,
+      "lexicon_ambiguous": {
+        "n": 7782,
+        "accuracy": 0.9434592649704446
+      },
+      "attested_ambiguous": {
+        "n": 6026,
+        "accuracy": 0.9482243611018918
+      },
+      "minority_reading": {
+        "n": 382,
+        "accuracy": 0.04712041884816754
+      },
+      "class_A": {
+        "n": 688,
+        "accuracy": 0.9607558139534884
+      },
+      "class_B": {
+        "n": 1077,
+        "accuracy": 0.8885793871866295
+      },
+      "class_C": {
+        "n": 4920,
+        "accuracy": 0.9745934959349594
+      },
+      "class_unlisted": {
+        "n": 1097,
+        "accuracy": 0.8468550592525068
+      }
+    },
+    "left_seed2": {
+      "n": 16649,
+      "accuracy": 0.9565139047390233,
+      "lexicon_ambiguous": {
+        "n": 7782,
+        "accuracy": 0.943716268311488
+      },
+      "attested_ambiguous": {
+        "n": 6026,
+        "accuracy": 0.9482243611018918
+      },
+      "minority_reading": {
+        "n": 382,
+        "accuracy": 0.049738219895287955
+      },
+      "class_A": {
+        "n": 688,
+        "accuracy": 0.9593023255813954
+      },
+      "class_B": {
+        "n": 1077,
+        "accuracy": 0.8895078922934077
+      },
+      "class_C": {
+        "n": 4920,
+        "accuracy": 0.9745934959349594
+      },
+      "class_unlisted": {
+        "n": 1097,
+        "accuracy": 0.8486782133090246
+      }
+    },
+    "left_seed3": {
+      "n": 16649,
+      "accuracy": 0.9564538410715359,
+      "lexicon_ambiguous": {
+        "n": 7782,
+        "accuracy": 0.9435877666409663
+      },
+      "attested_ambiguous": {
+        "n": 6026,
+        "accuracy": 0.9483903086624627
+      },
+      "minority_reading": {
+        "n": 382,
+        "accuracy": 0.049738219895287955
+      },
+      "class_A": {
+        "n": 688,
+        "accuracy": 0.9607558139534884
+      },
+      "class_B": {
+        "n": 1077,
+        "accuracy": 0.8885793871866295
+      },
+      "class_C": {
+        "n": 4920,
+        "accuracy": 0.9745934959349594
+      },
+      "class_unlisted": {
+        "n": 1097,
+        "accuracy": 0.8477666362807658
+      }
+    },
+    "sentence_seed1": {
+      "n": 16649,
+      "accuracy": 0.9570544777464112,
+      "lexicon_ambiguous": {
+        "n": 7782,
+        "accuracy": 0.9448727833461835
+      },
+      "attested_ambiguous": {
+        "n": 6026,
+        "accuracy": 0.9502157318287421
+      },
+      "minority_reading": {
+        "n": 382,
+        "accuracy": 0.08638743455497382
+      },
+      "class_A": {
+        "n": 688,
+        "accuracy": 0.9607558139534884
+      },
+      "class_B": {
+        "n": 1077,
+        "accuracy": 0.8978644382544104
+      },
+      "class_C": {
+        "n": 4920,
+        "accuracy": 0.975
+      },
+      "class_unlisted": {
+        "n": 1097,
+        "accuracy": 0.845943482224248
+      }
+    },
+    "sentence_seed2": {
+      "n": 16649,
+      "accuracy": 0.956814223076461,
+      "lexicon_ambiguous": {
+        "n": 7782,
+        "accuracy": 0.9443587766640966
+      },
+      "attested_ambiguous": {
+        "n": 6026,
+        "accuracy": 0.9497178891470296
+      },
+      "minority_reading": {
+        "n": 382,
+        "accuracy": 0.08376963350785341
+      },
+      "class_A": {
+        "n": 688,
+        "accuracy": 0.9607558139534884
+      },
+      "class_B": {
+        "n": 1077,
+        "accuracy": 0.8960074280408542
+      },
+      "class_C": {
+        "n": 4920,
+        "accuracy": 0.9747967479674797
+      },
+      "class_unlisted": {
+        "n": 1097,
+        "accuracy": 0.845031905195989
+      }
+    },
+    "sentence_seed3": {
+      "n": 16649,
+      "accuracy": 0.9565739684065109,
+      "lexicon_ambiguous": {
+        "n": 7782,
+        "accuracy": 0.9438447699820097
+      },
+      "attested_ambiguous": {
+        "n": 6026,
+        "accuracy": 0.949220046465317
+      },
+      "minority_reading": {
+        "n": 382,
+        "accuracy": 0.07591623036649214
+      },
+      "class_A": {
+        "n": 688,
+        "accuracy": 0.9607558139534884
+      },
+      "class_B": {
+        "n": 1077,
+        "accuracy": 0.89322191272052
+      },
+      "class_C": {
+        "n": 4920,
+        "accuracy": 0.9745934959349594
+      },
+      "class_unlisted": {
+        "n": 1097,
+        "accuracy": 0.845031905195989
+      }
+    },
+    "seed_summary": {
+      "word": {
+        "accuracy": {
+          "mean": 0.9569743928564278,
+          "sd": 0.0001387110983697816
+        },
+        "lexicon_ambiguous": {
+          "mean": 0.9447014477854879,
+          "sd": 0.0002967618962681371
+        },
+        "attested_ambiguous": {
+          "mean": 0.9493306781723643,
+          "sd": 0.0003832394750678074
+        },
+        "minority_reading": {
+          "mean": 0.02617801047120419,
+          "sd": 0.0
+        },
+        "class_A": {
+          "mean": 0.9607558139534884,
+          "sd": 0.0
+        },
+        "class_B": {
+          "mean": 0.8857938718662952,
+          "sd": 0.0
+        },
+        "class_C": {
+          "mean": 0.9752032520325203,
+          "sd": 0.0
+        },
+        "class_unlisted": {
+          "mean": 0.8556669705256761,
+          "sd": 0.0021051969706094016
+        }
+      },
+      "left": {
+        "accuracy": {
+          "mean": 0.9564538410715359,
+          "sd": 6.00636674875088e-05
+        },
+        "lexicon_ambiguous": {
+          "mean": 0.9435877666409663,
+          "sd": 0.0001285016705216968
+        },
+        "attested_ambiguous": {
+          "mean": 0.9482796769554154,
+          "sd": 9.580986876695186e-05
+        },
+        "minority_reading": {
+          "mean": 0.04886561954624782,
+          "sd": 0.0015113881392398556
+        },
+        "class_A": {
+          "mean": 0.9602713178294574,
+          "sd": 0.0008391719028918994
+        },
+        "class_B": {
+          "mean": 0.888888888888889,
+          "sd": 0.0005360726733422841
+        },
+        "class_C": {
+          "mean": 0.9745934959349594,
+          "sd": 0.0
+        },
+        "class_unlisted": {
+          "mean": 0.8477666362807658,
+          "sd": 0.000911577028258892
+        }
+      },
+      "sentence": {
+        "accuracy": {
+          "mean": 0.956814223076461,
+          "sd": 0.00024025466995014622
+        },
+        "lexicon_ambiguous": {
+          "mean": 0.9443587766640966,
+          "sd": 0.0005140066820868983
+        },
+        "attested_ambiguous": {
+          "mean": 0.9497178891470296,
+          "sd": 0.0004978426817125459
+        },
+        "minority_reading": {
+          "mean": 0.08202443280977312,
+          "sd": 0.005449387433157415
+        },
+        "class_A": {
+          "mean": 0.9607558139534884,
+          "sd": 0.0
+        },
+        "class_B": {
+          "mean": 0.8956979263385949,
+          "sd": 0.0023366866094926483
+        },
+        "class_C": {
+          "mean": 0.9747967479674797,
+          "sd": 0.00020325203252030688
+        },
+        "class_unlisted": {
+          "mean": 0.8453357642054087,
+          "sd": 0.0005262992426523824
+        }
+      }
+    },
+    "mcnemar_seed1": {
+      "frequency_vs_word_seed1": {
+        "a_wrong_b_right": 6,
+        "a_right_b_wrong": 36,
+        "discordant": 42,
+        "p_exact": 2.8288777684792876e-06
+      },
+      "frequency_vs_left_seed1": {
+        "a_wrong_b_right": 14,
+        "a_right_b_wrong": 55,
+        "discordant": 69,
+        "p_exact": 6.921916920059638e-07
+      },
+      "frequency_vs_sentence_seed1": {
+        "a_wrong_b_right": 29,
+        "a_right_b_wrong": 59,
+        "discordant": 88,
+        "p_exact": 0.0018240286456271994
+      },
+      "word_seed1_vs_left_seed1": {
+        "a_wrong_b_right": 8,
+        "a_right_b_wrong": 19,
+        "discordant": 27,
+        "p_exact": 0.052238985896110535
+      },
+      "word_seed1_vs_sentence_seed1": {
+        "a_wrong_b_right": 25,
+        "a_right_b_wrong": 25,
+        "discordant": 50,
+        "p_exact": 1.0
+      },
+      "left_seed1_vs_sentence_seed1": {
+        "a_wrong_b_right": 23,
+        "a_right_b_wrong": 12,
+        "discordant": 35,
+        "p_exact": 0.08953107893466952
+      }
+    },
+    "per_word": [
+      {
+        "word": "þa",
+        "n": 471,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"1\": 467, \"0\": 4}",
+        "frequency_accuracy": 0.991507,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.991507,
+        "word_seed2_accuracy": 0.991507,
+        "word_seed3_accuracy": 0.991507,
+        "left_seed1_accuracy": 0.991507,
+        "left_seed2_accuracy": 0.991507,
+        "left_seed3_accuracy": 0.991507,
+        "sentence_seed1_accuracy": 0.991507,
+        "sentence_seed2_accuracy": 0.991507,
+        "sentence_seed3_accuracy": 0.991507,
+        "bright_reader_pattern_counts": "{\"1\": 1173, \"0\": 5}",
+        "matthew_ws_pattern_counts": "{\"1\": 807, \"0\": 2}",
+        "sweet_primer_pattern_counts": "{\"1\": 323, \"0\": 8}",
+        "physiologus_pattern_counts": "{\"1\": 7}",
+        "zupitza_grammar_pattern_counts": "{\"1\": 380, \"0\": 2}"
+      },
+      {
+        "word": "þe",
+        "n": 466,
+        "category_preliminary": "B",
+        "test_pattern_counts": "{\"0\": 393, \"1\": 73}",
+        "frequency_accuracy": 0.843348,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.843348,
+        "word_seed2_accuracy": 0.843348,
+        "word_seed3_accuracy": 0.843348,
+        "left_seed1_accuracy": 0.849785,
+        "left_seed2_accuracy": 0.849785,
+        "left_seed3_accuracy": 0.847639,
+        "sentence_seed1_accuracy": 0.860515,
+        "sentence_seed2_accuracy": 0.860515,
+        "sentence_seed3_accuracy": 0.854077,
+        "bright_reader_pattern_counts": "{\"0\": 574, \"1\": 128}",
+        "matthew_ws_pattern_counts": "{\"0\": 364, \"1\": 126}",
+        "sweet_primer_pattern_counts": "{\"0\": 179, \"1\": 19}",
+        "physiologus_pattern_counts": "{\"0\": 14}",
+        "zupitza_grammar_pattern_counts": "{\"0\": 309, \"1\": 50}"
+      },
+      {
+        "word": "þæt",
+        "n": 430,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"0\": 429, \"1\": 1}",
+        "frequency_accuracy": 0.997674,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.997674,
+        "word_seed2_accuracy": 0.997674,
+        "word_seed3_accuracy": 0.997674,
+        "left_seed1_accuracy": 0.997674,
+        "left_seed2_accuracy": 0.997674,
+        "left_seed3_accuracy": 0.997674,
+        "sentence_seed1_accuracy": 0.997674,
+        "sentence_seed2_accuracy": 0.997674,
+        "sentence_seed3_accuracy": 0.997674,
+        "bright_reader_pattern_counts": "{\"0\": 1001, \"1\": 1}",
+        "matthew_ws_pattern_counts": "{\"0\": 426}",
+        "sweet_primer_pattern_counts": "{\"0\": 160, \"1\": 5}",
+        "physiologus_pattern_counts": "{\"0\": 17}",
+        "zupitza_grammar_pattern_counts": "{\"0\": 343}"
+      },
+      {
+        "word": "he",
+        "n": 405,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"1\": 389, \"0\": 16}",
+        "frequency_accuracy": 0.960494,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.960494,
+        "word_seed2_accuracy": 0.960494,
+        "word_seed3_accuracy": 0.960494,
+        "left_seed1_accuracy": 0.960494,
+        "left_seed2_accuracy": 0.960494,
+        "left_seed3_accuracy": 0.960494,
+        "sentence_seed1_accuracy": 0.960494,
+        "sentence_seed2_accuracy": 0.960494,
+        "sentence_seed3_accuracy": 0.960494,
+        "bright_reader_pattern_counts": "{\"1\": 815, \"0\": 8}",
+        "matthew_ws_pattern_counts": "{\"1\": 428, \"0\": 7}",
+        "sweet_primer_pattern_counts": "{\"1\": 171, \"0\": 1}",
+        "physiologus_pattern_counts": "{\"1\": 10, \"0\": 1}",
+        "zupitza_grammar_pattern_counts": "{\"1\": 280, \"0\": 3}"
+      },
+      {
+        "word": "to",
+        "n": 366,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"1\": 354, \"0\": 12}",
+        "frequency_accuracy": 0.967213,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.967213,
+        "word_seed2_accuracy": 0.967213,
+        "word_seed3_accuracy": 0.967213,
+        "left_seed1_accuracy": 0.967213,
+        "left_seed2_accuracy": 0.967213,
+        "left_seed3_accuracy": 0.967213,
+        "sentence_seed1_accuracy": 0.967213,
+        "sentence_seed2_accuracy": 0.967213,
+        "sentence_seed3_accuracy": 0.967213,
+        "bright_reader_pattern_counts": "{\"1\": 619, \"0\": 24}",
+        "matthew_ws_pattern_counts": "{\"1\": 313, \"0\": 14}",
+        "sweet_primer_pattern_counts": "{\"1\": 171, \"0\": 10}",
+        "physiologus_pattern_counts": "{\"1\": 10}",
+        "zupitza_grammar_pattern_counts": "{\"1\": 237, \"0\": 1}"
+      },
+      {
+        "word": "se",
+        "n": 347,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"1\": 341, \"0\": 6}",
+        "frequency_accuracy": 0.982709,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.982709,
+        "word_seed2_accuracy": 0.982709,
+        "word_seed3_accuracy": 0.982709,
+        "left_seed1_accuracy": 0.974063,
+        "left_seed2_accuracy": 0.974063,
+        "left_seed3_accuracy": 0.974063,
+        "sentence_seed1_accuracy": 0.974063,
+        "sentence_seed2_accuracy": 0.971182,
+        "sentence_seed3_accuracy": 0.9683,
+        "bright_reader_pattern_counts": "{\"1\": 465, \"0\": 6}",
+        "matthew_ws_pattern_counts": "{\"1\": 330, \"0\": 3}",
+        "sweet_primer_pattern_counts": "{\"0\": 94, \"1\": 26}",
+        "physiologus_pattern_counts": "{\"1\": 2, \"0\": 12}",
+        "zupitza_grammar_pattern_counts": "{\"0\": 199, \"1\": 62}"
+      },
+      {
+        "word": "ne",
+        "n": 330,
+        "category_preliminary": "B",
+        "test_pattern_counts": "{\"0\": 306, \"1\": 24}",
+        "frequency_accuracy": 0.927273,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.927273,
+        "word_seed2_accuracy": 0.927273,
+        "word_seed3_accuracy": 0.927273,
+        "left_seed1_accuracy": 0.927273,
+        "left_seed2_accuracy": 0.930303,
+        "left_seed3_accuracy": 0.927273,
+        "sentence_seed1_accuracy": 0.933333,
+        "sentence_seed2_accuracy": 0.930303,
+        "sentence_seed3_accuracy": 0.927273,
+        "bright_reader_pattern_counts": "{\"0\": 312, \"1\": 136}",
+        "matthew_ws_pattern_counts": "{\"0\": 260, \"1\": 48}",
+        "sweet_primer_pattern_counts": "{\"0\": 86}",
+        "physiologus_pattern_counts": "{\"0\": 2, \"1\": 2}",
+        "zupitza_grammar_pattern_counts": "{\"0\": 100, \"1\": 29}"
+      },
+      {
+        "word": "þam",
+        "n": 262,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"1\": 260, \"0\": 2}",
+        "frequency_accuracy": 0.992366,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.992366,
+        "word_seed2_accuracy": 0.992366,
+        "word_seed3_accuracy": 0.992366,
+        "left_seed1_accuracy": 0.992366,
+        "left_seed2_accuracy": 0.992366,
+        "left_seed3_accuracy": 0.992366,
+        "sentence_seed1_accuracy": 0.992366,
+        "sentence_seed2_accuracy": 0.992366,
+        "sentence_seed3_accuracy": 0.992366,
+        "bright_reader_pattern_counts": "{\"1\": 318, \"0\": 4}",
+        "matthew_ws_pattern_counts": "{\"1\": 288, \"0\": 2}",
+        "sweet_primer_pattern_counts": "{}",
+        "physiologus_pattern_counts": "{\"1\": 15}",
+        "zupitza_grammar_pattern_counts": "{\"1\": 380}"
+      },
+      {
+        "word": "me",
+        "n": 256,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"1\": 251, \"0\": 5}",
+        "frequency_accuracy": 0.980469,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.980469,
+        "word_seed2_accuracy": 0.980469,
+        "word_seed3_accuracy": 0.980469,
+        "left_seed1_accuracy": 0.980469,
+        "left_seed2_accuracy": 0.980469,
+        "left_seed3_accuracy": 0.980469,
+        "sentence_seed1_accuracy": 0.980469,
+        "sentence_seed2_accuracy": 0.980469,
+        "sentence_seed3_accuracy": 0.980469,
+        "bright_reader_pattern_counts": "{\"1\": 107, \"0\": 4}",
+        "matthew_ws_pattern_counts": "{\"1\": 113, \"0\": 3}",
+        "sweet_primer_pattern_counts": "{\"1\": 17}",
+        "physiologus_pattern_counts": "{\"1\": 2}",
+        "zupitza_grammar_pattern_counts": "{\"1\": 75, \"0\": 1}"
+      },
+      {
+        "word": "cwæþ",
+        "n": 243,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"0\": 242, \"1\": 1}",
+        "frequency_accuracy": 0.995885,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.995885,
+        "word_seed2_accuracy": 0.995885,
+        "word_seed3_accuracy": 0.995885,
+        "left_seed1_accuracy": 0.995885,
+        "left_seed2_accuracy": 0.995885,
+        "left_seed3_accuracy": 0.995885,
+        "sentence_seed1_accuracy": 0.995885,
+        "sentence_seed2_accuracy": 0.995885,
+        "sentence_seed3_accuracy": 0.995885,
+        "bright_reader_pattern_counts": "{\"0\": 176, \"1\": 8}",
+        "matthew_ws_pattern_counts": "{\"0\": 194}",
+        "sweet_primer_pattern_counts": "{\"0\": 48}",
+        "physiologus_pattern_counts": "{}",
+        "zupitza_grammar_pattern_counts": "{\"0\": 15}"
+      },
+      {
+        "word": "ge",
+        "n": 230,
+        "category_preliminary": "B",
+        "test_pattern_counts": "{\"1\": 222, \"0\": 8}",
+        "frequency_accuracy": 0.965217,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.965217,
+        "word_seed2_accuracy": 0.965217,
+        "word_seed3_accuracy": 0.965217,
+        "left_seed1_accuracy": 0.965217,
+        "left_seed2_accuracy": 0.965217,
+        "left_seed3_accuracy": 0.965217,
+        "sentence_seed1_accuracy": 0.965217,
+        "sentence_seed2_accuracy": 0.965217,
+        "sentence_seed3_accuracy": 0.965217,
+        "bright_reader_pattern_counts": "{\"1\": 70, \"0\": 84}",
+        "matthew_ws_pattern_counts": "{\"1\": 252, \"0\": 2}",
+        "sweet_primer_pattern_counts": "{\"1\": 24, \"0\": 8}",
+        "physiologus_pattern_counts": "{\"0\": 1, \"1\": 3}",
+        "zupitza_grammar_pattern_counts": "{\"1\": 128}"
+      },
+      {
+        "word": "hælend",
+        "n": 198,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"10\": 194, \"00\": 4}",
+        "frequency_accuracy": 0.979798,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.979798,
+        "word_seed2_accuracy": 0.979798,
+        "word_seed3_accuracy": 0.979798,
+        "left_seed1_accuracy": 0.979798,
+        "left_seed2_accuracy": 0.979798,
+        "left_seed3_accuracy": 0.979798,
+        "sentence_seed1_accuracy": 0.979798,
+        "sentence_seed2_accuracy": 0.979798,
+        "sentence_seed3_accuracy": 0.979798,
+        "bright_reader_pattern_counts": "{\"10\": 43}",
+        "matthew_ws_pattern_counts": "{\"10\": 114, \"00\": 2}",
+        "sweet_primer_pattern_counts": "{\"10\": 9}",
+        "physiologus_pattern_counts": "{}",
+        "zupitza_grammar_pattern_counts": "{\"10\": 2}"
+      },
+      {
+        "word": "þu",
+        "n": 189,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"1\": 187, \"0\": 2}",
+        "frequency_accuracy": 0.989418,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.989418,
+        "word_seed2_accuracy": 0.989418,
+        "word_seed3_accuracy": 0.989418,
+        "left_seed1_accuracy": 0.989418,
+        "left_seed2_accuracy": 0.989418,
+        "left_seed3_accuracy": 0.989418,
+        "sentence_seed1_accuracy": 0.989418,
+        "sentence_seed2_accuracy": 0.989418,
+        "sentence_seed3_accuracy": 0.989418,
+        "bright_reader_pattern_counts": "{\"1\": 201}",
+        "matthew_ws_pattern_counts": "{\"1\": 151, \"0\": 2}",
+        "sweet_primer_pattern_counts": "{\"1\": 53}",
+        "physiologus_pattern_counts": "{}",
+        "zupitza_grammar_pattern_counts": "{\"1\": 229}"
+      },
+      {
+        "word": "for",
+        "n": 179,
+        "category_preliminary": "A",
+        "test_pattern_counts": "{\"0\": 161, \"1\": 18}",
+        "frequency_accuracy": 0.899441,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.899441,
+        "word_seed2_accuracy": 0.899441,
+        "word_seed3_accuracy": 0.899441,
+        "left_seed1_accuracy": 0.899441,
+        "left_seed2_accuracy": 0.899441,
+        "left_seed3_accuracy": 0.899441,
+        "sentence_seed1_accuracy": 0.899441,
+        "sentence_seed2_accuracy": 0.899441,
+        "sentence_seed3_accuracy": 0.899441,
+        "bright_reader_pattern_counts": "{\"0\": 293, \"1\": 7}",
+        "matthew_ws_pattern_counts": "{\"0\": 111, \"1\": 5}",
+        "sweet_primer_pattern_counts": "{\"0\": 57, \"1\": 4}",
+        "physiologus_pattern_counts": "{}",
+        "zupitza_grammar_pattern_counts": "{\"0\": 53}"
+      },
+      {
+        "word": "hig",
+        "n": 165,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"0\": 165}",
+        "frequency_accuracy": 1.0,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 1.0,
+        "word_seed2_accuracy": 1.0,
+        "word_seed3_accuracy": 1.0,
+        "left_seed1_accuracy": 1.0,
+        "left_seed2_accuracy": 1.0,
+        "left_seed3_accuracy": 1.0,
+        "sentence_seed1_accuracy": 1.0,
+        "sentence_seed2_accuracy": 1.0,
+        "sentence_seed3_accuracy": 1.0,
+        "bright_reader_pattern_counts": "{\"0\": 47}",
+        "matthew_ws_pattern_counts": "{\"0\": 289}",
+        "sweet_primer_pattern_counts": "{}",
+        "physiologus_pattern_counts": "{}",
+        "zupitza_grammar_pattern_counts": "{\"1\": 18}"
+      },
+      {
+        "word": "his",
+        "n": 163,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"0\": 163}",
+        "frequency_accuracy": 1.0,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 1.0,
+        "word_seed2_accuracy": 1.0,
+        "word_seed3_accuracy": 1.0,
+        "left_seed1_accuracy": 1.0,
+        "left_seed2_accuracy": 1.0,
+        "left_seed3_accuracy": 1.0,
+        "sentence_seed1_accuracy": 1.0,
+        "sentence_seed2_accuracy": 1.0,
+        "sentence_seed3_accuracy": 1.0,
+        "bright_reader_pattern_counts": "{\"0\": 440, \"1\": 1}",
+        "matthew_ws_pattern_counts": "{\"0\": 63}",
+        "sweet_primer_pattern_counts": "{\"0\": 147, \"1\": 1}",
+        "physiologus_pattern_counts": "{\"0\": 6}",
+        "zupitza_grammar_pattern_counts": "{\"0\": 59}"
+      },
+      {
+        "word": "eow",
+        "n": 145,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"10\": 145}",
+        "frequency_accuracy": 1.0,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 1.0,
+        "word_seed2_accuracy": 1.0,
+        "word_seed3_accuracy": 1.0,
+        "left_seed1_accuracy": 1.0,
+        "left_seed2_accuracy": 1.0,
+        "left_seed3_accuracy": 1.0,
+        "sentence_seed1_accuracy": 1.0,
+        "sentence_seed2_accuracy": 1.0,
+        "sentence_seed3_accuracy": 1.0,
+        "bright_reader_pattern_counts": "{\"10\": 35, \"01\": 1}",
+        "matthew_ws_pattern_counts": "{\"10\": 172, \"00\": 1}",
+        "sweet_primer_pattern_counts": "{\"10\": 20}",
+        "physiologus_pattern_counts": "{\"10\": 1}",
+        "zupitza_grammar_pattern_counts": "{\"10\": 12}"
+      },
+      {
+        "word": "wæs",
+        "n": 128,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"0\": 127, \"1\": 1}",
+        "frequency_accuracy": 0.992188,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.992188,
+        "word_seed2_accuracy": 0.992188,
+        "word_seed3_accuracy": 0.992188,
+        "left_seed1_accuracy": 0.992188,
+        "left_seed2_accuracy": 0.992188,
+        "left_seed3_accuracy": 0.992188,
+        "sentence_seed1_accuracy": 0.992188,
+        "sentence_seed2_accuracy": 0.992188,
+        "sentence_seed3_accuracy": 0.992188,
+        "bright_reader_pattern_counts": "{\"0\": 266, \"1\": 2}",
+        "matthew_ws_pattern_counts": "{\"0\": 113}",
+        "sweet_primer_pattern_counts": "{\"0\": 60}",
+        "physiologus_pattern_counts": "{\"0\": 1}",
+        "zupitza_grammar_pattern_counts": "{\"0\": 24}"
+      },
+      {
+        "word": "is",
+        "n": 122,
+        "category_preliminary": "A",
+        "test_pattern_counts": "{\"0\": 122}",
+        "frequency_accuracy": 1.0,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 1.0,
+        "word_seed2_accuracy": 1.0,
+        "word_seed3_accuracy": 1.0,
+        "left_seed1_accuracy": 1.0,
+        "left_seed2_accuracy": 1.0,
+        "left_seed3_accuracy": 1.0,
+        "sentence_seed1_accuracy": 1.0,
+        "sentence_seed2_accuracy": 1.0,
+        "sentence_seed3_accuracy": 1.0,
+        "bright_reader_pattern_counts": "{\"0\": 204}",
+        "matthew_ws_pattern_counts": "{\"0\": 75}",
+        "sweet_primer_pattern_counts": "{\"0\": 58}",
+        "physiologus_pattern_counts": "{\"0\": 10}",
+        "zupitza_grammar_pattern_counts": "{\"0\": 456, \"1\": 1}"
+      },
+      {
+        "word": "hi",
+        "n": 106,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"0\": 10, \"1\": 96}",
+        "frequency_accuracy": 0.90566,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.90566,
+        "word_seed2_accuracy": 0.90566,
+        "word_seed3_accuracy": 0.90566,
+        "left_seed1_accuracy": 0.90566,
+        "left_seed2_accuracy": 0.90566,
+        "left_seed3_accuracy": 0.90566,
+        "sentence_seed1_accuracy": 0.90566,
+        "sentence_seed2_accuracy": 0.90566,
+        "sentence_seed3_accuracy": 0.90566,
+        "bright_reader_pattern_counts": "{\"1\": 243}",
+        "matthew_ws_pattern_counts": "{\"1\": 99}",
+        "sweet_primer_pattern_counts": "{}",
+        "physiologus_pattern_counts": "{\"1\": 2}",
+        "zupitza_grammar_pattern_counts": "{\"1\": 218, \"0\": 1}"
+      }
+    ]
+  },
+  "editor_agreement": {
+    "aligned": 16833,
+    "a_total": 17682,
+    "b_total": 17568,
+    "alignment_rate_a": 0.9519850695622667,
+    "all": {
+      "n": 16833,
+      "agreement": 0.9773064813164617,
+      "cohen_kappa": 0.9733051903496697
+    },
+    "lexicon_ambiguous": {
+      "n": 4420,
+      "agreement": 0.9604072398190046,
+      "cohen_kappa": 0.9419058690318701
+    }
+  },
+  "statistical_test": "Exact paired McNemar, seed 1, all tokens; observations within sentences are not independent.",
+  "model_seeds": [
+    1,
+    2,
+    3
+  ],
+  "soliloquies": {
+    "frequency": {
+      "n": 15431,
+      "accuracy": 0.8871751668718812,
+      "lexicon_ambiguous": {
+        "n": 5968,
+        "accuracy": 0.881367292225201
+      },
+      "attested_ambiguous": {
+        "n": 4658,
+        "accuracy": 0.8718334048948047
+      },
+      "minority_reading": {
+        "n": 638,
+        "accuracy": 0.004702194357366771
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.9743589743589743
+      },
+      "class_B": {
+        "n": 1023,
+        "accuracy": 0.6021505376344086
+      },
+      "class_C": {
+        "n": 3367,
+        "accuracy": 0.961092961092961
+      },
+      "class_unlisted": {
+        "n": 915,
+        "accuracy": 0.8327868852459016
+      }
+    },
+    "oracle": {
+      "n": 15431,
+      "accuracy": 0.9410926057935325,
+      "lexicon_ambiguous": {
+        "n": 5968,
+        "accuracy": 0.999162198391421
+      },
+      "attested_ambiguous": {
+        "n": 4658,
+        "accuracy": 1.0
+      },
+      "minority_reading": {
+        "n": 638,
+        "accuracy": 1.0
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 1.0
+      },
+      "class_B": {
+        "n": 1023,
+        "accuracy": 1.0
+      },
+      "class_C": {
+        "n": 3367,
+        "accuracy": 0.9994059994059994
+      },
+      "class_unlisted": {
+        "n": 915,
+        "accuracy": 0.9967213114754099
+      }
+    },
+    "word_seed1": {
+      "n": 15431,
+      "accuracy": 0.8890545006804484,
+      "lexicon_ambiguous": {
+        "n": 5968,
+        "accuracy": 0.8862265415549598
+      },
+      "attested_ambiguous": {
+        "n": 4658,
+        "accuracy": 0.8724774581365393
+      },
+      "minority_reading": {
+        "n": 638,
+        "accuracy": 0.009404388714733543
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.9743589743589743
+      },
+      "class_B": {
+        "n": 1023,
+        "accuracy": 0.6021505376344086
+      },
+      "class_C": {
+        "n": 3367,
+        "accuracy": 0.961092961092961
+      },
+      "class_unlisted": {
+        "n": 915,
+        "accuracy": 0.8644808743169399
+      }
+    },
+    "word_seed2": {
+      "n": 15431,
+      "accuracy": 0.8889896960663599,
+      "lexicon_ambiguous": {
+        "n": 5968,
+        "accuracy": 0.886058981233244
+      },
+      "attested_ambiguous": {
+        "n": 4658,
+        "accuracy": 0.8724774581365393
+      },
+      "minority_reading": {
+        "n": 638,
+        "accuracy": 0.009404388714733543
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.9743589743589743
+      },
+      "class_B": {
+        "n": 1023,
+        "accuracy": 0.6021505376344086
+      },
+      "class_C": {
+        "n": 3367,
+        "accuracy": 0.961092961092961
+      },
+      "class_unlisted": {
+        "n": 915,
+        "accuracy": 0.8633879781420765
+      }
+    },
+    "word_seed3": {
+      "n": 15431,
+      "accuracy": 0.8889896960663599,
+      "lexicon_ambiguous": {
+        "n": 5968,
+        "accuracy": 0.886058981233244
+      },
+      "attested_ambiguous": {
+        "n": 4658,
+        "accuracy": 0.8724774581365393
+      },
+      "minority_reading": {
+        "n": 638,
+        "accuracy": 0.009404388714733543
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.9743589743589743
+      },
+      "class_B": {
+        "n": 1023,
+        "accuracy": 0.6021505376344086
+      },
+      "class_C": {
+        "n": 3367,
+        "accuracy": 0.961092961092961
+      },
+      "class_unlisted": {
+        "n": 915,
+        "accuracy": 0.8633879781420765
+      }
+    },
+    "left_seed1": {
+      "n": 15431,
+      "accuracy": 0.8895729375931566,
+      "lexicon_ambiguous": {
+        "n": 5968,
+        "accuracy": 0.8875670241286864
+      },
+      "attested_ambiguous": {
+        "n": 4658,
+        "accuracy": 0.8750536711034779
+      },
+      "minority_reading": {
+        "n": 638,
+        "accuracy": 0.034482758620689655
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.9728506787330317
+      },
+      "class_B": {
+        "n": 1023,
+        "accuracy": 0.6129032258064516
+      },
+      "class_C": {
+        "n": 3367,
+        "accuracy": 0.961983961983962
+      },
+      "class_unlisted": {
+        "n": 915,
+        "accuracy": 0.8590163934426229
+      }
+    },
+    "left_seed2": {
+      "n": 15431,
+      "accuracy": 0.8895081329790681,
+      "lexicon_ambiguous": {
+        "n": 5968,
+        "accuracy": 0.8873994638069705
+      },
+      "attested_ambiguous": {
+        "n": 4658,
+        "accuracy": 0.8748389866895664
+      },
+      "minority_reading": {
+        "n": 638,
+        "accuracy": 0.032915360501567396
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.9728506787330317
+      },
+      "class_B": {
+        "n": 1023,
+        "accuracy": 0.6129032258064516
+      },
+      "class_C": {
+        "n": 3367,
+        "accuracy": 0.961983961983962
+      },
+      "class_unlisted": {
+        "n": 915,
+        "accuracy": 0.8579234972677595
+      }
+    },
+    "left_seed3": {
+      "n": 15431,
+      "accuracy": 0.8894433283649796,
+      "lexicon_ambiguous": {
+        "n": 5968,
+        "accuracy": 0.8872319034852547
+      },
+      "attested_ambiguous": {
+        "n": 4658,
+        "accuracy": 0.8746243022756548
+      },
+      "minority_reading": {
+        "n": 638,
+        "accuracy": 0.03134796238244514
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.9743589743589743
+      },
+      "class_B": {
+        "n": 1023,
+        "accuracy": 0.6109481915933529
+      },
+      "class_C": {
+        "n": 3367,
+        "accuracy": 0.961983961983962
+      },
+      "class_unlisted": {
+        "n": 915,
+        "accuracy": 0.8579234972677595
+      }
+    },
+    "sentence_seed1": {
+      "n": 15431,
+      "accuracy": 0.8901561791199534,
+      "lexicon_ambiguous": {
+        "n": 5968,
+        "accuracy": 0.8890750670241286
+      },
+      "attested_ambiguous": {
+        "n": 4658,
+        "accuracy": 0.8780592528982396
+      },
+      "minority_reading": {
+        "n": 638,
+        "accuracy": 0.06426332288401254
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.971342383107089
+      },
+      "class_B": {
+        "n": 1023,
+        "accuracy": 0.6236559139784946
+      },
+      "class_C": {
+        "n": 3367,
+        "accuracy": 0.9622809622809623
+      },
+      "class_unlisted": {
+        "n": 915,
+        "accuracy": 0.8568306010928962
+      }
+    },
+    "sentence_seed2": {
+      "n": 15431,
+      "accuracy": 0.8902857883481304,
+      "lexicon_ambiguous": {
+        "n": 5968,
+        "accuracy": 0.8894101876675603
+      },
+      "attested_ambiguous": {
+        "n": 4658,
+        "accuracy": 0.8787033061399743
+      },
+      "minority_reading": {
+        "n": 638,
+        "accuracy": 0.06739811912225706
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.971342383107089
+      },
+      "class_B": {
+        "n": 1023,
+        "accuracy": 0.6265884652981427
+      },
+      "class_C": {
+        "n": 3367,
+        "accuracy": 0.9622809622809623
+      },
+      "class_unlisted": {
+        "n": 915,
+        "accuracy": 0.8557377049180328
+      }
+    },
+    "sentence_seed3": {
+      "n": 15431,
+      "accuracy": 0.8898969606635992,
+      "lexicon_ambiguous": {
+        "n": 5968,
+        "accuracy": 0.8884048257372654
+      },
+      "attested_ambiguous": {
+        "n": 4658,
+        "accuracy": 0.8772005152425933
+      },
+      "minority_reading": {
+        "n": 638,
+        "accuracy": 0.05329153605015674
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.971342383107089
+      },
+      "class_B": {
+        "n": 1023,
+        "accuracy": 0.6187683284457478
+      },
+      "class_C": {
+        "n": 3367,
+        "accuracy": 0.9628749628749629
+      },
+      "class_unlisted": {
+        "n": 915,
+        "accuracy": 0.8557377049180328
+      }
+    },
+    "seed_summary": {
+      "word": {
+        "accuracy": {
+          "mean": 0.8890112976043895,
+          "sd": 3.741496138874357e-05
+        },
+        "lexicon_ambiguous": {
+          "mean": 0.8861148346738159,
+          "sd": 9.674099684813572e-05
+        },
+        "attested_ambiguous": {
+          "mean": 0.8724774581365393,
+          "sd": 0.0
+        },
+        "minority_reading": {
+          "mean": 0.009404388714733543,
+          "sd": 0.0
+        },
+        "class_A": {
+          "mean": 0.9743589743589743,
+          "sd": 0.0
+        },
+        "class_B": {
+          "mean": 0.6021505376344086,
+          "sd": 0.0
+        },
+        "class_C": {
+          "mean": 0.961092961092961,
+          "sd": 0.0
+        },
+        "class_unlisted": {
+          "mean": 0.8637522768670309,
+          "sd": 0.0006309839007537029
+        }
+      },
+      "left": {
+        "accuracy": {
+          "mean": 0.8895081329790681,
+          "sd": 6.480461408847615e-05
+        },
+        "lexicon_ambiguous": {
+          "mean": 0.8873994638069705,
+          "sd": 0.00016756032171583168
+        },
+        "attested_ambiguous": {
+          "mean": 0.8748389866895664,
+          "sd": 0.0002146844139115367
+        },
+        "minority_reading": {
+          "mean": 0.032915360501567396,
+          "sd": 0.0015673981191222583
+        },
+        "class_A": {
+          "mean": 0.9733534439416792,
+          "sd": 0.000870814885655541
+        },
+        "class_B": {
+          "mean": 0.6122515477354187,
+          "sd": 0.0011287395292074785
+        },
+        "class_C": {
+          "mean": 0.961983961983962,
+          "sd": 0.0
+        },
+        "class_unlisted": {
+          "mean": 0.858287795992714,
+          "sd": 0.0006309839007537029
+        }
+      },
+      "sentence": {
+        "accuracy": {
+          "mean": 0.8901129760438944,
+          "sd": 0.00019798136629539868
+        },
+        "lexicon_ambiguous": {
+          "mean": 0.8889633601429848,
+          "sd": 0.0005119052384892404
+        },
+        "attested_ambiguous": {
+          "mean": 0.8779876914269358,
+          "sd": 0.0007539468837021084
+        },
+        "minority_reading": {
+          "mean": 0.06165099268547545,
+          "sd": 0.007407234523906911
+        },
+        "class_A": {
+          "mean": 0.971342383107089,
+          "sd": 0.0
+        },
+        "class_B": {
+          "mean": 0.6230042359074617,
+          "sd": 0.003950588352226175
+        },
+        "class_C": {
+          "mean": 0.9624789624789625,
+          "sd": 0.00034294640284504975
+        },
+        "class_unlisted": {
+          "mean": 0.8561020036429873,
+          "sd": 0.0006309839007537029
+        }
+      }
+    },
+    "mcnemar_seed1": {
+      "frequency_vs_word_seed1": {
+        "a_wrong_b_right": 43,
+        "a_right_b_wrong": 14,
+        "discordant": 57,
+        "p_exact": 0.0001538890224443423
+      },
+      "frequency_vs_left_seed1": {
+        "a_wrong_b_right": 59,
+        "a_right_b_wrong": 22,
+        "discordant": 81,
+        "p_exact": 4.769842118193509e-05
+      },
+      "frequency_vs_sentence_seed1": {
+        "a_wrong_b_right": 77,
+        "a_right_b_wrong": 31,
+        "discordant": 108,
+        "p_exact": 1.1153098221083044e-05
+      },
+      "word_seed1_vs_left_seed1": {
+        "a_wrong_b_right": 16,
+        "a_right_b_wrong": 8,
+        "discordant": 24,
+        "p_exact": 0.15158963203430176
+      },
+      "word_seed1_vs_sentence_seed1": {
+        "a_wrong_b_right": 35,
+        "a_right_b_wrong": 18,
+        "discordant": 53,
+        "p_exact": 0.027008317653722358
+      },
+      "left_seed1_vs_sentence_seed1": {
+        "a_wrong_b_right": 27,
+        "a_right_b_wrong": 18,
+        "discordant": 45,
+        "p_exact": 0.23269319190831084
+      }
+    },
+    "per_word": [
+      {
+        "word": "þæt",
+        "n": 679,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"0\": 675, \"1\": 4}",
+        "frequency_accuracy": 0.994109,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.994109,
+        "word_seed2_accuracy": 0.994109,
+        "word_seed3_accuracy": 0.994109,
+        "left_seed1_accuracy": 0.994109,
+        "left_seed2_accuracy": 0.994109,
+        "left_seed3_accuracy": 0.994109,
+        "sentence_seed1_accuracy": 0.994109,
+        "sentence_seed2_accuracy": 0.994109,
+        "sentence_seed3_accuracy": 0.994109,
+        "bright_reader_pattern_counts": "{\"0\": 1001, \"1\": 1}",
+        "matthew_ws_pattern_counts": "{\"0\": 426}",
+        "sweet_primer_pattern_counts": "{\"0\": 160, \"1\": 5}",
+        "physiologus_pattern_counts": "{\"0\": 17}",
+        "zupitza_grammar_pattern_counts": "{\"0\": 343}"
+      },
+      {
+        "word": "þe",
+        "n": 567,
+        "category_preliminary": "B",
+        "test_pattern_counts": "{\"0\": 327, \"1\": 240}",
+        "frequency_accuracy": 0.57672,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.57672,
+        "word_seed2_accuracy": 0.57672,
+        "word_seed3_accuracy": 0.57672,
+        "left_seed1_accuracy": 0.582011,
+        "left_seed2_accuracy": 0.582011,
+        "left_seed3_accuracy": 0.578483,
+        "sentence_seed1_accuracy": 0.597884,
+        "sentence_seed2_accuracy": 0.599647,
+        "sentence_seed3_accuracy": 0.590829,
+        "bright_reader_pattern_counts": "{\"0\": 574, \"1\": 128}",
+        "matthew_ws_pattern_counts": "{\"0\": 364, \"1\": 126}",
+        "sweet_primer_pattern_counts": "{\"0\": 179, \"1\": 19}",
+        "physiologus_pattern_counts": "{\"0\": 14}",
+        "zupitza_grammar_pattern_counts": "{\"0\": 309, \"1\": 50}"
+      },
+      {
+        "word": "þu",
+        "n": 491,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"1\": 490, \"0\": 1}",
+        "frequency_accuracy": 0.997963,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.997963,
+        "word_seed2_accuracy": 0.997963,
+        "word_seed3_accuracy": 0.997963,
+        "left_seed1_accuracy": 0.997963,
+        "left_seed2_accuracy": 0.997963,
+        "left_seed3_accuracy": 0.997963,
+        "sentence_seed1_accuracy": 0.997963,
+        "sentence_seed2_accuracy": 0.997963,
+        "sentence_seed3_accuracy": 0.997963,
+        "bright_reader_pattern_counts": "{\"1\": 201}",
+        "matthew_ws_pattern_counts": "{\"1\": 151, \"0\": 2}",
+        "sweet_primer_pattern_counts": "{\"1\": 53}",
+        "physiologus_pattern_counts": "{}",
+        "zupitza_grammar_pattern_counts": "{\"1\": 229}"
+      },
+      {
+        "word": "ne",
+        "n": 348,
+        "category_preliminary": "B",
+        "test_pattern_counts": "{\"1\": 80, \"0\": 268}",
+        "frequency_accuracy": 0.770115,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.770115,
+        "word_seed2_accuracy": 0.770115,
+        "word_seed3_accuracy": 0.770115,
+        "left_seed1_accuracy": 0.770115,
+        "left_seed2_accuracy": 0.770115,
+        "left_seed3_accuracy": 0.770115,
+        "sentence_seed1_accuracy": 0.767241,
+        "sentence_seed2_accuracy": 0.770115,
+        "sentence_seed3_accuracy": 0.770115,
+        "bright_reader_pattern_counts": "{\"0\": 312, \"1\": 136}",
+        "matthew_ws_pattern_counts": "{\"0\": 260, \"1\": 48}",
+        "sweet_primer_pattern_counts": "{\"0\": 86}",
+        "physiologus_pattern_counts": "{\"0\": 2, \"1\": 2}",
+        "zupitza_grammar_pattern_counts": "{\"0\": 100, \"1\": 29}"
+      },
+      {
+        "word": "me",
+        "n": 257,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"1\": 249, \"0\": 8}",
+        "frequency_accuracy": 0.968872,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.968872,
+        "word_seed2_accuracy": 0.968872,
+        "word_seed3_accuracy": 0.968872,
+        "left_seed1_accuracy": 0.968872,
+        "left_seed2_accuracy": 0.968872,
+        "left_seed3_accuracy": 0.968872,
+        "sentence_seed1_accuracy": 0.968872,
+        "sentence_seed2_accuracy": 0.968872,
+        "sentence_seed3_accuracy": 0.968872,
+        "bright_reader_pattern_counts": "{\"1\": 107, \"0\": 4}",
+        "matthew_ws_pattern_counts": "{\"1\": 113, \"0\": 3}",
+        "sweet_primer_pattern_counts": "{\"1\": 17}",
+        "physiologus_pattern_counts": "{\"1\": 2}",
+        "zupitza_grammar_pattern_counts": "{\"1\": 75, \"0\": 1}"
+      },
+      {
+        "word": "to",
+        "n": 191,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"1\": 159, \"0\": 32}",
+        "frequency_accuracy": 0.832461,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.832461,
+        "word_seed2_accuracy": 0.832461,
+        "word_seed3_accuracy": 0.832461,
+        "left_seed1_accuracy": 0.832461,
+        "left_seed2_accuracy": 0.832461,
+        "left_seed3_accuracy": 0.832461,
+        "sentence_seed1_accuracy": 0.832461,
+        "sentence_seed2_accuracy": 0.832461,
+        "sentence_seed3_accuracy": 0.832461,
+        "bright_reader_pattern_counts": "{\"1\": 619, \"0\": 24}",
+        "matthew_ws_pattern_counts": "{\"1\": 313, \"0\": 14}",
+        "sweet_primer_pattern_counts": "{\"1\": 171, \"0\": 10}",
+        "physiologus_pattern_counts": "{\"1\": 10}",
+        "zupitza_grammar_pattern_counts": "{\"1\": 237, \"0\": 1}"
+      },
+      {
+        "word": "þa",
+        "n": 188,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"1\": 185, \"0\": 3}",
+        "frequency_accuracy": 0.984043,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.984043,
+        "word_seed2_accuracy": 0.984043,
+        "word_seed3_accuracy": 0.984043,
+        "left_seed1_accuracy": 0.984043,
+        "left_seed2_accuracy": 0.984043,
+        "left_seed3_accuracy": 0.984043,
+        "sentence_seed1_accuracy": 0.984043,
+        "sentence_seed2_accuracy": 0.984043,
+        "sentence_seed3_accuracy": 0.984043,
+        "bright_reader_pattern_counts": "{\"1\": 1173, \"0\": 5}",
+        "matthew_ws_pattern_counts": "{\"1\": 807, \"0\": 2}",
+        "sweet_primer_pattern_counts": "{\"1\": 323, \"0\": 8}",
+        "physiologus_pattern_counts": "{\"1\": 7}",
+        "zupitza_grammar_pattern_counts": "{\"1\": 380, \"0\": 2}"
+      },
+      {
+        "word": "he",
+        "n": 188,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"1\": 178, \"0\": 10}",
+        "frequency_accuracy": 0.946809,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.946809,
+        "word_seed2_accuracy": 0.946809,
+        "word_seed3_accuracy": 0.946809,
+        "left_seed1_accuracy": 0.946809,
+        "left_seed2_accuracy": 0.946809,
+        "left_seed3_accuracy": 0.946809,
+        "sentence_seed1_accuracy": 0.946809,
+        "sentence_seed2_accuracy": 0.946809,
+        "sentence_seed3_accuracy": 0.946809,
+        "bright_reader_pattern_counts": "{\"1\": 815, \"0\": 8}",
+        "matthew_ws_pattern_counts": "{\"1\": 428, \"0\": 7}",
+        "sweet_primer_pattern_counts": "{\"1\": 171, \"0\": 1}",
+        "physiologus_pattern_counts": "{\"1\": 10, \"0\": 1}",
+        "zupitza_grammar_pattern_counts": "{\"1\": 280, \"0\": 3}"
+      },
+      {
+        "word": "swa",
+        "n": 179,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"1\": 179}",
+        "frequency_accuracy": 1.0,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 1.0,
+        "word_seed2_accuracy": 1.0,
+        "word_seed3_accuracy": 1.0,
+        "left_seed1_accuracy": 1.0,
+        "left_seed2_accuracy": 1.0,
+        "left_seed3_accuracy": 1.0,
+        "sentence_seed1_accuracy": 1.0,
+        "sentence_seed2_accuracy": 1.0,
+        "sentence_seed3_accuracy": 1.0,
+        "bright_reader_pattern_counts": "{\"1\": 421, \"0\": 2}",
+        "matthew_ws_pattern_counts": "{\"1\": 182, \"0\": 2}",
+        "sweet_primer_pattern_counts": "{\"1\": 116}",
+        "physiologus_pattern_counts": "{\"1\": 15}",
+        "zupitza_grammar_pattern_counts": "{\"1\": 163}"
+      },
+      {
+        "word": "þam",
+        "n": 163,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"1\": 163}",
+        "frequency_accuracy": 1.0,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 1.0,
+        "word_seed2_accuracy": 1.0,
+        "word_seed3_accuracy": 1.0,
+        "left_seed1_accuracy": 1.0,
+        "left_seed2_accuracy": 1.0,
+        "left_seed3_accuracy": 1.0,
+        "sentence_seed1_accuracy": 1.0,
+        "sentence_seed2_accuracy": 1.0,
+        "sentence_seed3_accuracy": 1.0,
+        "bright_reader_pattern_counts": "{\"1\": 318, \"0\": 4}",
+        "matthew_ws_pattern_counts": "{\"1\": 288, \"0\": 2}",
+        "sweet_primer_pattern_counts": "{}",
+        "physiologus_pattern_counts": "{\"1\": 15}",
+        "zupitza_grammar_pattern_counts": "{\"1\": 380}"
+      },
+      {
+        "word": "hyt",
+        "n": 135,
+        "category_preliminary": "A",
+        "test_pattern_counts": "{\"0\": 135}",
+        "frequency_accuracy": 1.0,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 1.0,
+        "word_seed2_accuracy": 1.0,
+        "word_seed3_accuracy": 1.0,
+        "left_seed1_accuracy": 1.0,
+        "left_seed2_accuracy": 1.0,
+        "left_seed3_accuracy": 1.0,
+        "sentence_seed1_accuracy": 1.0,
+        "sentence_seed2_accuracy": 1.0,
+        "sentence_seed3_accuracy": 1.0,
+        "bright_reader_pattern_counts": "{\"0\": 13}",
+        "matthew_ws_pattern_counts": "{\"0\": 83}",
+        "sweet_primer_pattern_counts": "{}",
+        "physiologus_pattern_counts": "{}",
+        "zupitza_grammar_pattern_counts": "{\"0\": 4}"
+      },
+      {
+        "word": "nu",
+        "n": 133,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"1\": 133}",
+        "frequency_accuracy": 1.0,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 1.0,
+        "word_seed2_accuracy": 1.0,
+        "word_seed3_accuracy": 1.0,
+        "left_seed1_accuracy": 1.0,
+        "left_seed2_accuracy": 1.0,
+        "left_seed3_accuracy": 1.0,
+        "sentence_seed1_accuracy": 1.0,
+        "sentence_seed2_accuracy": 1.0,
+        "sentence_seed3_accuracy": 1.0,
+        "bright_reader_pattern_counts": "{\"0\": 2, \"1\": 106}",
+        "matthew_ws_pattern_counts": "{\"1\": 34}",
+        "sweet_primer_pattern_counts": "{\"1\": 19}",
+        "physiologus_pattern_counts": "{\"1\": 1}",
+        "zupitza_grammar_pattern_counts": "{\"1\": 64}"
+      },
+      {
+        "word": "ac",
+        "n": 125,
+        "category_preliminary": "A",
+        "test_pattern_counts": "{\"0\": 125}",
+        "frequency_accuracy": 1.0,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 1.0,
+        "word_seed2_accuracy": 1.0,
+        "word_seed3_accuracy": 1.0,
+        "left_seed1_accuracy": 1.0,
+        "left_seed2_accuracy": 1.0,
+        "left_seed3_accuracy": 1.0,
+        "sentence_seed1_accuracy": 1.0,
+        "sentence_seed2_accuracy": 1.0,
+        "sentence_seed3_accuracy": 1.0,
+        "bright_reader_pattern_counts": "{\"0\": 181}",
+        "matthew_ws_pattern_counts": "{\"0\": 46}",
+        "sweet_primer_pattern_counts": "{\"0\": 30}",
+        "physiologus_pattern_counts": "{}",
+        "zupitza_grammar_pattern_counts": "{\"0\": 88, \"1\": 3}"
+      },
+      {
+        "word": "is",
+        "n": 102,
+        "category_preliminary": "A",
+        "test_pattern_counts": "{\"0\": 102}",
+        "frequency_accuracy": 1.0,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 1.0,
+        "word_seed2_accuracy": 1.0,
+        "word_seed3_accuracy": 1.0,
+        "left_seed1_accuracy": 1.0,
+        "left_seed2_accuracy": 1.0,
+        "left_seed3_accuracy": 1.0,
+        "sentence_seed1_accuracy": 1.0,
+        "sentence_seed2_accuracy": 1.0,
+        "sentence_seed3_accuracy": 1.0,
+        "bright_reader_pattern_counts": "{\"0\": 204}",
+        "matthew_ws_pattern_counts": "{\"0\": 75}",
+        "sweet_primer_pattern_counts": "{\"0\": 58}",
+        "physiologus_pattern_counts": "{\"0\": 10}",
+        "zupitza_grammar_pattern_counts": "{\"0\": 456, \"1\": 1}"
+      },
+      {
+        "word": "be",
+        "n": 101,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"0\": 101}",
+        "frequency_accuracy": 1.0,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 1.0,
+        "word_seed2_accuracy": 1.0,
+        "word_seed3_accuracy": 1.0,
+        "left_seed1_accuracy": 1.0,
+        "left_seed2_accuracy": 1.0,
+        "left_seed3_accuracy": 1.0,
+        "sentence_seed1_accuracy": 1.0,
+        "sentence_seed2_accuracy": 1.0,
+        "sentence_seed3_accuracy": 1.0,
+        "bright_reader_pattern_counts": "{\"0\": 109, \"1\": 3}",
+        "matthew_ws_pattern_counts": "{\"0\": 32}",
+        "sweet_primer_pattern_counts": "{\"0\": 29}",
+        "physiologus_pattern_counts": "{}",
+        "zupitza_grammar_pattern_counts": "{\"0\": 48}"
+      },
+      {
+        "word": "hi",
+        "n": 92,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"1\": 87, \"0\": 5}",
+        "frequency_accuracy": 0.945652,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.945652,
+        "word_seed2_accuracy": 0.945652,
+        "word_seed3_accuracy": 0.945652,
+        "left_seed1_accuracy": 0.945652,
+        "left_seed2_accuracy": 0.945652,
+        "left_seed3_accuracy": 0.945652,
+        "sentence_seed1_accuracy": 0.945652,
+        "sentence_seed2_accuracy": 0.945652,
+        "sentence_seed3_accuracy": 0.945652,
+        "bright_reader_pattern_counts": "{\"1\": 243}",
+        "matthew_ws_pattern_counts": "{\"1\": 99}",
+        "sweet_primer_pattern_counts": "{}",
+        "physiologus_pattern_counts": "{\"1\": 2}",
+        "zupitza_grammar_pattern_counts": "{\"1\": 218, \"0\": 1}"
+      },
+      {
+        "word": "þæs",
+        "n": 91,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"0\": 90, \"1\": 1}",
+        "frequency_accuracy": 0.989011,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.989011,
+        "word_seed2_accuracy": 0.989011,
+        "word_seed3_accuracy": 0.989011,
+        "left_seed1_accuracy": 0.989011,
+        "left_seed2_accuracy": 0.989011,
+        "left_seed3_accuracy": 0.989011,
+        "sentence_seed1_accuracy": 0.989011,
+        "sentence_seed2_accuracy": 0.989011,
+        "sentence_seed3_accuracy": 0.989011,
+        "bright_reader_pattern_counts": "{\"0\": 250, \"1\": 2}",
+        "matthew_ws_pattern_counts": "{\"0\": 54}",
+        "sweet_primer_pattern_counts": "{\"0\": 33}",
+        "physiologus_pattern_counts": "{\"0\": 7}",
+        "zupitza_grammar_pattern_counts": "{\"0\": 31}"
+      },
+      {
+        "word": "we",
+        "n": 78,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"1\": 73, \"0\": 5}",
+        "frequency_accuracy": 0.935897,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.935897,
+        "word_seed2_accuracy": 0.935897,
+        "word_seed3_accuracy": 0.935897,
+        "left_seed1_accuracy": 0.935897,
+        "left_seed2_accuracy": 0.935897,
+        "left_seed3_accuracy": 0.935897,
+        "sentence_seed1_accuracy": 0.935897,
+        "sentence_seed2_accuracy": 0.935897,
+        "sentence_seed3_accuracy": 0.935897,
+        "bright_reader_pattern_counts": "{\"1\": 168, \"0\": 1}",
+        "matthew_ws_pattern_counts": "{\"1\": 49, \"0\": 1}",
+        "sweet_primer_pattern_counts": "{\"1\": 24}",
+        "physiologus_pattern_counts": "{\"1\": 5}",
+        "zupitza_grammar_pattern_counts": "{\"1\": 146}"
+      },
+      {
+        "word": "swiþe",
+        "n": 74,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"10\": 74}",
+        "frequency_accuracy": 1.0,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 1.0,
+        "word_seed2_accuracy": 1.0,
+        "word_seed3_accuracy": 1.0,
+        "left_seed1_accuracy": 1.0,
+        "left_seed2_accuracy": 1.0,
+        "left_seed3_accuracy": 1.0,
+        "sentence_seed1_accuracy": 1.0,
+        "sentence_seed2_accuracy": 1.0,
+        "sentence_seed3_accuracy": 1.0,
+        "bright_reader_pattern_counts": "{\"10\": 75, \"00\": 3}",
+        "matthew_ws_pattern_counts": "{\"10\": 5}",
+        "sweet_primer_pattern_counts": "{\"10\": 18, \"00\": 1}",
+        "physiologus_pattern_counts": "{}",
+        "zupitza_grammar_pattern_counts": "{\"10\": 7}"
+      },
+      {
+        "word": "se",
+        "n": 72,
+        "category_preliminary": "C",
+        "test_pattern_counts": "{\"1\": 24, \"0\": 48}",
+        "frequency_accuracy": 0.333333,
+        "oracle_accuracy": 1.0,
+        "word_seed1_accuracy": 0.333333,
+        "word_seed2_accuracy": 0.333333,
+        "word_seed3_accuracy": 0.333333,
+        "left_seed1_accuracy": 0.375,
+        "left_seed2_accuracy": 0.375,
+        "left_seed3_accuracy": 0.375,
+        "sentence_seed1_accuracy": 0.388889,
+        "sentence_seed2_accuracy": 0.388889,
+        "sentence_seed3_accuracy": 0.416667,
+        "bright_reader_pattern_counts": "{\"1\": 465, \"0\": 6}",
+        "matthew_ws_pattern_counts": "{\"1\": 330, \"0\": 3}",
+        "sweet_primer_pattern_counts": "{\"0\": 94, \"1\": 26}",
+        "physiologus_pattern_counts": "{\"1\": 2, \"0\": 12}",
+        "zupitza_grammar_pattern_counts": "{\"0\": 199, \"1\": 62}"
+      }
+    ]
+  }
+}

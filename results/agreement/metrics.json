@@ -4,7 +4,7 @@
     "wyatt": "Wyatt 1894",
     "tauber": "Tauber gold (Klaeber 1922 via Perseus)"
   },
-  "lexicon": "training forms + data/lex_wikipron.csv, as results/wikipron",
+  "lexicon": "training forms without zupitza_grammar (PLAN D3) + data/lex_wikipron.csv, as results/wikipron",
   "classes": "data/ambiguity_classes.csv",
   "pairs": {
     "hs-wyatt": {
@@ -17,22 +17,22 @@
         "n": 16833,
         "agreement": 0.9773064813164617,
         "cohen_kappa": 0.9733051903496697,
-        "prior_vs_hs": 0.8958593239470088,
-        "prior_vs_wyatt": 0.9004336719539001
+        "prior_vs_hs": 0.8953246598942554,
+        "prior_vs_wyatt": 0.8988296797956395
       },
       "lexicon_ambiguous": {
-        "n": 4420,
-        "agreement": 0.9604072398190046,
-        "cohen_kappa": 0.9419058690318701,
-        "prior_vs_hs": 0.8855203619909502,
-        "prior_vs_wyatt": 0.896606334841629
+        "n": 4387,
+        "agreement": 0.960793252792341,
+        "cohen_kappa": 0.9423367492759271,
+        "prior_vs_hs": 0.8862548438568498,
+        "prior_vs_wyatt": 0.8914976065648507
       },
       "attested_ambiguous": {
-        "n": 3385,
-        "agreement": 0.957754800590842,
-        "cohen_kappa": 0.9279265422637487,
-        "prior_vs_hs": 0.9066469719350074,
-        "prior_vs_wyatt": 0.9163958641063515
+        "n": 3260,
+        "agreement": 0.9576687116564417,
+        "cohen_kappa": 0.9272083593565444,
+        "prior_vs_hs": 0.9070552147239264,
+        "prior_vs_wyatt": 0.910122699386503
       },
       "class_A": {
         "n": 388,
@@ -45,15 +45,15 @@
         "n": 419,
         "agreement": 0.7852028639618138,
         "cohen_kappa": 0.46923206846075893,
-        "prior_vs_hs": 0.6825775656324582,
-        "prior_vs_wyatt": 0.8591885441527446
+        "prior_vs_hs": 0.7136038186157518,
+        "prior_vs_wyatt": 0.8281622911694511
       },
       "class_C": {
         "n": 2654,
         "agreement": 0.9837980406932931,
         "cohen_kappa": 0.9717942329955226,
-        "prior_vs_hs": 0.9593067068575735,
-        "prior_vs_wyatt": 0.9476262245666918
+        "prior_vs_hs": 0.9581763376036172,
+        "prior_vs_wyatt": 0.9464958553127355
       }
     },
     "hs-tauber": {
@@ -66,22 +66,22 @@
         "n": 16573,
         "agreement": 0.9881735352682073,
         "cohen_kappa": 0.98610442159869,
-        "prior_vs_hs": 0.8963977553852652,
-        "prior_vs_tauber": 0.8970614855487842
+        "prior_vs_hs": 0.8958547034332951,
+        "prior_vs_tauber": 0.8965787727025886
       },
       "lexicon_ambiguous": {
-        "n": 4366,
-        "agreement": 0.9876316994961063,
-        "cohen_kappa": 0.9818234664195473,
-        "prior_vs_hs": 0.8854786990380211,
-        "prior_vs_tauber": 0.8886852954649564
+        "n": 4332,
+        "agreement": 0.9882271468144044,
+        "cohen_kappa": 0.982654784022887,
+        "prior_vs_hs": 0.8861957525392429,
+        "prior_vs_tauber": 0.8896583564173592
       },
       "attested_ambiguous": {
-        "n": 3349,
-        "agreement": 0.9937294714840251,
-        "cohen_kappa": 0.9892813053431159,
-        "prior_vs_hs": 0.9065392654523738,
-        "prior_vs_tauber": 0.9074350552403703
+        "n": 3228,
+        "agreement": 0.9938042131350682,
+        "cohen_kappa": 0.9893033703992977,
+        "prior_vs_hs": 0.9070631970260223,
+        "prior_vs_tauber": 0.9076827757125155
       },
       "class_A": {
         "n": 379,
@@ -94,15 +94,15 @@
         "n": 412,
         "agreement": 0.9878640776699029,
         "cohen_kappa": 0.9737539496483539,
-        "prior_vs_hs": 0.6820388349514563,
-        "prior_vs_tauber": 0.6844660194174758
+        "prior_vs_hs": 0.7111650485436893,
+        "prior_vs_tauber": 0.7135922330097088
       },
       "class_C": {
         "n": 2626,
         "agreement": 0.9942878903274943,
         "cohen_kappa": 0.9900442461100779,
-        "prior_vs_hs": 0.9588728103579589,
-        "prior_vs_tauber": 0.9592536176694593
+        "prior_vs_hs": 0.9581111957349581,
+        "prior_vs_tauber": 0.9584920030464585
       }
     },
     "wyatt-tauber": {
@@ -115,22 +115,22 @@
         "n": 16912,
         "agreement": 0.9766438032166509,
         "cohen_kappa": 0.9724534330263307,
-        "prior_vs_wyatt": 0.9011944181646169,
-        "prior_vs_tauber": 0.8975283822138127
+        "prior_vs_wyatt": 0.8997161778618732,
+        "prior_vs_tauber": 0.8970553453169348
       },
       "lexicon_ambiguous": {
-        "n": 4366,
-        "agreement": 0.9610627576729271,
-        "cohen_kappa": 0.9429383848799866,
-        "prior_vs_wyatt": 0.8960146587265231,
-        "prior_vs_tauber": 0.8877691250572607
+        "n": 4333,
+        "agreement": 0.9607662127855989,
+        "cohen_kappa": 0.942369932753838,
+        "prior_vs_wyatt": 0.8912993307177475,
+        "prior_vs_tauber": 0.8887606738979922
       },
       "attested_ambiguous": {
-        "n": 3344,
-        "agreement": 0.9572368421052632,
-        "cohen_kappa": 0.9271890989507868,
-        "prior_vs_wyatt": 0.9156698564593302,
-        "prior_vs_tauber": 0.9063995215311005
+        "n": 3223,
+        "agreement": 0.9565622091219361,
+        "cohen_kappa": 0.9254130408657919,
+        "prior_vs_wyatt": 0.910021718895439,
+        "prior_vs_tauber": 0.9069190195470059
       },
       "class_A": {
         "n": 379,
@@ -143,15 +143,15 @@
         "n": 415,
         "agreement": 0.7807228915662651,
         "cohen_kappa": 0.4597049944918953,
-        "prior_vs_wyatt": 0.8578313253012049,
-        "prior_vs_tauber": 0.6819277108433734
+        "prior_vs_wyatt": 0.8289156626506025,
+        "prior_vs_tauber": 0.7108433734939759
       },
       "class_C": {
         "n": 2618,
         "agreement": 0.983957219251337,
         "cohen_kappa": 0.9720739432488156,
-        "prior_vs_wyatt": 0.9472880061115355,
-        "prior_vs_tauber": 0.959511077158136
+        "prior_vs_wyatt": 0.946524064171123,
+        "prior_vs_tauber": 0.9587471352177235
       }
     }
   },
@@ -160,91 +160,91 @@
     "note": "Applied after the fact: the rule was not written down before the agreement numbers were measured. These fields say which side of the bar each pair lands on. They do not decide the outcome.",
     "hs-wyatt": {
       "lexicon_ambiguous_floor_vs_hs": {
-        "n": 4420,
-        "ceiling": 0.9604072398190046,
-        "floor": 0.8855203619909502,
-        "gap_points": 7.49,
+        "n": 4387,
+        "ceiling": 0.960793252792341,
+        "floor": 0.8862548438568498,
+        "gap_points": 7.45,
         "clears_bar": false
       },
       "lexicon_ambiguous_floor_vs_wyatt": {
-        "n": 4420,
-        "ceiling": 0.9604072398190046,
-        "floor": 0.896606334841629,
-        "gap_points": 6.38,
+        "n": 4387,
+        "ceiling": 0.960793252792341,
+        "floor": 0.8914976065648507,
+        "gap_points": 6.93,
         "clears_bar": false
       },
       "attested_ambiguous_floor_vs_hs": {
-        "n": 3385,
-        "ceiling": 0.957754800590842,
-        "floor": 0.9066469719350074,
-        "gap_points": 5.11,
+        "n": 3260,
+        "ceiling": 0.9576687116564417,
+        "floor": 0.9070552147239264,
+        "gap_points": 5.06,
         "clears_bar": false
       },
       "attested_ambiguous_floor_vs_wyatt": {
-        "n": 3385,
-        "ceiling": 0.957754800590842,
-        "floor": 0.9163958641063515,
-        "gap_points": 4.14,
+        "n": 3260,
+        "ceiling": 0.9576687116564417,
+        "floor": 0.910122699386503,
+        "gap_points": 4.75,
         "clears_bar": false
       }
     },
     "hs-tauber": {
       "lexicon_ambiguous_floor_vs_hs": {
-        "n": 4366,
-        "ceiling": 0.9876316994961063,
-        "floor": 0.8854786990380211,
-        "gap_points": 10.22,
+        "n": 4332,
+        "ceiling": 0.9882271468144044,
+        "floor": 0.8861957525392429,
+        "gap_points": 10.2,
         "clears_bar": true
       },
       "lexicon_ambiguous_floor_vs_tauber": {
-        "n": 4366,
-        "ceiling": 0.9876316994961063,
-        "floor": 0.8886852954649564,
-        "gap_points": 9.89,
+        "n": 4332,
+        "ceiling": 0.9882271468144044,
+        "floor": 0.8896583564173592,
+        "gap_points": 9.86,
         "clears_bar": false
       },
       "attested_ambiguous_floor_vs_hs": {
-        "n": 3349,
-        "ceiling": 0.9937294714840251,
-        "floor": 0.9065392654523738,
-        "gap_points": 8.72,
+        "n": 3228,
+        "ceiling": 0.9938042131350682,
+        "floor": 0.9070631970260223,
+        "gap_points": 8.67,
         "clears_bar": false
       },
       "attested_ambiguous_floor_vs_tauber": {
-        "n": 3349,
-        "ceiling": 0.9937294714840251,
-        "floor": 0.9074350552403703,
-        "gap_points": 8.63,
+        "n": 3228,
+        "ceiling": 0.9938042131350682,
+        "floor": 0.9076827757125155,
+        "gap_points": 8.61,
         "clears_bar": false
       }
     },
     "wyatt-tauber": {
       "lexicon_ambiguous_floor_vs_wyatt": {
-        "n": 4366,
-        "ceiling": 0.9610627576729271,
-        "floor": 0.8960146587265231,
-        "gap_points": 6.5,
+        "n": 4333,
+        "ceiling": 0.9607662127855989,
+        "floor": 0.8912993307177475,
+        "gap_points": 6.95,
         "clears_bar": false
       },
       "lexicon_ambiguous_floor_vs_tauber": {
-        "n": 4366,
-        "ceiling": 0.9610627576729271,
-        "floor": 0.8877691250572607,
-        "gap_points": 7.33,
+        "n": 4333,
+        "ceiling": 0.9607662127855989,
+        "floor": 0.8887606738979922,
+        "gap_points": 7.2,
         "clears_bar": false
       },
       "attested_ambiguous_floor_vs_wyatt": {
-        "n": 3344,
-        "ceiling": 0.9572368421052632,
-        "floor": 0.9156698564593302,
-        "gap_points": 4.16,
+        "n": 3223,
+        "ceiling": 0.9565622091219361,
+        "floor": 0.910021718895439,
+        "gap_points": 4.65,
         "clears_bar": false
       },
       "attested_ambiguous_floor_vs_tauber": {
-        "n": 3344,
-        "ceiling": 0.9572368421052632,
-        "floor": 0.9063995215311005,
-        "gap_points": 5.08,
+        "n": 3223,
+        "ceiling": 0.9565622091219361,
+        "floor": 0.9069190195470059,
+        "gap_points": 4.96,
         "clears_bar": false
       }
     }
