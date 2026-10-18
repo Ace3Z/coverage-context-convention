@@ -1,0 +1,71 @@
+{
+  "model": "charsiu/g2p_multilingual_byT5_small_100",
+  "prefix": "<ang>: ",
+  "soliloquies": {
+    "tokens_with_vowels": 15478,
+    "all": {
+      "correct": 11373,
+      "wrong_length": 3849,
+      "not_alignable": 256
+    },
+    "all_share": {
+      "correct": 0.7348,
+      "wrong_length": 0.2487,
+      "not_alignable": 0.0165
+    },
+    "lexicon_ambiguous_n": 5946,
+    "lexicon_ambiguous": {
+      "correct": 4181,
+      "wrong_length": 1765,
+      "not_alignable": 0
+    },
+    "wrong_length_slots": {
+      "too_long": 2350,
+      "too_short": 1615
+    },
+    "wrong_length_on_ambiguous": 1765,
+    "of_those_word_model_right": 1529,
+    "of_those_bilateral_model_right": 1522,
+    "by_charsiu_dictionary": {
+      "seen/correct": 7006,
+      "seen/wrong_length": 1556,
+      "unseen/correct": 4367,
+      "unseen/not_alignable": 256,
+      "unseen/wrong_length": 2293
+    }
+  },
+  "tauber_beowulf": {
+    "tokens_with_vowels": 17361,
+    "all": {
+      "correct": 13824,
+      "wrong_length": 3524,
+      "not_alignable": 13
+    },
+    "all_share": {
+      "correct": 0.7963,
+      "wrong_length": 0.203,
+      "not_alignable": 0.0007
+    },
+    "lexicon_ambiguous_n": 4434,
+    "lexicon_ambiguous": {
+      "correct": 3357,
+      "wrong_length": 1076,
+      "not_alignable": 1
+    },
+    "wrong_length_slots": {
+      "too_long": 1890,
+      "too_short": 1776
+    },
+    "wrong_length_on_ambiguous": 1076,
+    "of_those_word_model_right": 830,
+    "of_those_bilateral_model_right": 824,
+    "by_charsiu_dictionary": {
+      "seen/correct": 7704,
+      "seen/not_alignable": 4,
+      "seen/wrong_length": 1126,
+      "unseen/correct": 6120,
+      "unseen/not_alignable": 9,
+      "unseen/wrong_length": 2398
+    }
+  }
+}

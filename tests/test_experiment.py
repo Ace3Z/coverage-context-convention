@@ -1,7 +1,7 @@
 import sys,unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'src'))
-from experiment import *
+from oevl.experiment import *
 class Tests(unittest.TestCase):
  def test_macron(self):self.assertEqual(bare('ǣ'), 'æ');self.assertEqual(pattern('gōd'),'1')
  def test_oracle_oov(self):

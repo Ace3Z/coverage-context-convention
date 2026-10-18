@@ -1,8 +1,8 @@
 import unittest,sys,tempfile
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'src'))
-from experiment import clean_tauber,load_tauber,bare,pattern
-from wikipron_to_marked import mark
+from oevl.experiment import clean_tauber,load_tauber,bare,pattern
+from oevl.wikipron_to_marked import mark
 ROOT=Path(__file__).resolve().parents[1]
 class TestV4(unittest.TestCase):
  def test_wikipron(self):

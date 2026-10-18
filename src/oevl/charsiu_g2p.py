@@ -1,10 +1,10 @@
 """Error analysis of CharsiuG2P (Zhu et al. 2022) on our two test sets.
 
 Step 1 (needs torch + transformers; a few minutes on a Colab GPU, done once):
-  python src/charsiu_g2p.py predict      -> results_charsiu/ipa.tsv (one IPA string per test word type)
-  python src/charsiu_g2p.py predict --tiny   (smoke test with a tiny random model, no download)
+  python -m oevl.charsiu_g2p predict      -> results/charsiu/ipa.tsv (one IPA string per test word type)
+  python -m oevl.charsiu_g2p predict --tiny   (smoke test with a tiny random model, no download)
 Step 2 (no neural libraries needed; run_all.sh runs this):
-  python src/charsiu_g2p.py analyse      -> results_charsiu/metrics.json
+  python -m oevl.charsiu_g2p analyse      -> results/charsiu/metrics.json
 
 The IPA output is turned into a vowel-length pattern with the same aligner we use for WikiPron
 (wikipron_to_marked.mark). Each token is then: correct length, wrong length, or not alignable
@@ -16,12 +16,11 @@ import json
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
-from experiment import build_data, lexicon, load_tauber, pattern  # noqa: E402
-from wikipron_to_marked import mark  # noqa: E402
+from oevl.experiment import build_data, lexicon, load_tauber, pattern
+from oevl.wikipron_to_marked import mark
 
-OUT = ROOT / "results_charsiu"
+ROOT = Path(__file__).resolve().parents[2]
+OUT = ROOT / "results" / "charsiu"
 MODEL, TOKENIZER, PREFIX = "charsiu/g2p_multilingual_byT5_small_100", "google/byt5-small", "<ang>: "
 
 
@@ -72,7 +71,7 @@ def analyse():
     summary = {"model": MODEL, "prefix": PREFIX}
     for test, rows in tests().items():
         preds = {}
-        p = ROOT / "results_wikipron" / f"{test}_predictions.jsonl"
+        p = ROOT / "results" / "wikipron" / f"{test}_predictions.jsonl"
         with open(p, encoding="utf8") as f:
             for line in f:
                 d = json.loads(line)

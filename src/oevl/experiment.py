@@ -139,14 +139,14 @@ def per_word(train,test,pred,lex,counts,top=20):
  return out
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--data',default='data');p.add_argument('--out',default='results');p.add_argument('--tauber',default='data/brunetti-length.txt');p.add_argument('--lexicon',help='Optional externally sourced lexicon TSV/CSV');p.add_argument('--tests',default='soliloquies,tauber_beowulf',help='Comma list: soliloquies, tauber_beowulf (run one at a time to keep each run short)');a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--data',default='data');p.add_argument('--out',default='results/experiment');p.add_argument('--tauber',default='data/brunetti-length.txt');p.add_argument('--lexicon',help='Optional externally sourced lexicon TSV/CSV');p.add_argument('--tests',default='soliloquies,tauber_beowulf',help='Comma list: soliloquies, tauber_beowulf (run one at a time to keep each run short)');a=p.parse_args()
  wanted=set(a.tests.split(','))
  train,prose,hs,wy=build_data(a.data);lex,counts=lexicon(train,a.lexicon);out=Path(a.out);out.mkdir(parents=True,exist_ok=True)
  summary={'dataset':{'train':len(train),'test_prose':len(prose),'agreement_hs':len(hs),'agreement_wyatt':len(wy),'lexicon_origin':'training attested forms'+(' + external file' if a.lexicon else ' (proxy; NOT Clark Hall/Wiktionary/Bosworth-Toller)')}}
  tauber_path=Path(a.tauber)
  tests=[('soliloquies',prose)] if 'soliloquies' in wanted else []
  if 'tauber_beowulf' in wanted:
-  if not tauber_path.exists():raise SystemExit('Tauber gold missing: put brunetti-length.txt in data/ or run python src/fetch_tauber.py')
+  if not tauber_path.exists():raise SystemExit('Tauber gold missing: put brunetti-length.txt in data/ or run python -m oevl.fetch_tauber')
   tests.append(('tauber_beowulf',load_tauber(tauber_path)))
  for name,test in tests:
   pred={'frequency':predict(train,test,lex,counts,'frequency'),'oracle':oracle(test,lex)}

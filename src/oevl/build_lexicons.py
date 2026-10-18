@@ -7,8 +7,8 @@ Each output is a one-column CSV (marked_form) that experiment.py reads with --le
   data/lex_proposal.csv    union of the three
   data/lex_all.csv         union of the three + data/lex_wikipron.csv
 
-Usage: python src/build_lexicons.py [--raw DIR]   (downloads the sources into DIR if missing; default data/raw)
-       python src/build_lexicons.py --unions-only  (rebuild lex_proposal/lex_all from the three shipped CSVs)
+Usage: python -m oevl.build_lexicons [--raw DIR]   (downloads the sources into DIR if missing; default data/raw)
+       python -m oevl.build_lexicons --unions-only  (rebuild lex_proposal/lex_all from the three shipped CSVs)
 """
 import argparse
 import csv
@@ -19,7 +19,7 @@ import unicodedata
 import urllib.request
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 SOURCES = {
     "clarkhall": ("https://raw.githubusercontent.com/Serg078/Conversion-of-The-Clark-Hall-Dictionary-of-Old-English-to-TEI/"
                   "b53fc7db19eea8fa94ac74f00a7e39d14bdd1a98/clark_hall_tei_rdfa.xml", "clark_hall_tei_rdfa.xml", "Unlicense"),

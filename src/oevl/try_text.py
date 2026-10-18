@@ -1,8 +1,8 @@
 """Add Old English long-vowel marks (macrons) to your own sentences.
 
 Usage (inside oe_project, with the venv active):
-  python src/try_text.py my_sentences.txt
-  python src/try_text.py my_sentences.txt --gold my_sentences_marked.txt --tsv words.tsv
+  python -m oevl.try_text my_sentences.txt
+  python -m oevl.try_text my_sentences.txt --gold my_sentences_marked.txt --tsv words.tsv
 
 my_sentences.txt: one sentence per line. Any macrons in it are removed first.
 --gold: the same lines with correct macrons; then accuracy is printed.
@@ -17,9 +17,9 @@ import sys
 import unicodedata
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
-from experiment import LONG, SHORT, bare, build_data, key, lexicon, norm, pattern, predict  # noqa: E402
+from oevl.experiment import LONG, SHORT, bare, build_data, key, lexicon, norm, pattern, predict
+
+ROOT = Path(__file__).resolve().parents[2]
 
 TOKEN = re.compile(r"[^\W\d_]+(?:[-'’][^\W\d_]+)*")  # same word pattern used to build the corpus
 ARMS = {"frequency": "frequency", "word": "word", "left": "left", "bilateral": "sentence"}

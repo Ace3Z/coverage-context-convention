@@ -1,13 +1,13 @@
 """Fail the run if any headline value differs from the frozen reference results.
 
 Checks counts exactly, proportions to 0.00005 and McNemar p-values to 0.0005.
-Usage: python src/check_expected.py
+Usage: python -m oevl.check_expected
 """
 import json
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 PROP_TOL, P_TOL = 0.00005, 0.0005
 POPS = ("accuracy", "lexicon_ambiguous", "attested_ambiguous", "minority_reading")
 
@@ -146,7 +146,7 @@ def main() -> int:
 
     metrics = {}
     for folder in ("results_wikipron", "results_training_only", "results_proposal", "results_all"):
-        path = ROOT / folder / "metrics.json"
+        path = ROOT / "results" / folder.removeprefix("results_") / "metrics.json"  # keys keep the old folder names
         if not path.exists():
             errors.append(f"missing {path}")
             continue

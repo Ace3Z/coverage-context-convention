@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from build_lexicons import clean  # noqa: E402
+from oevl.build_lexicons import clean  # noqa: E402
 
 
 class TestLexicons(unittest.TestCase):

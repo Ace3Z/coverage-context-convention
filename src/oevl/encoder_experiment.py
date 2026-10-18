@@ -6,9 +6,9 @@ the length patterns, the fine-tuned model scores each one (sum of log-probabilit
 e.g. "01"), and the best-scoring pattern wins. Words with one candidate take it; unknown words stay short.
 
 Run on a GPU (free Colab T4: about 1-1.5 hours for all three; results are saved after each arm):
-  python src/encoder_experiment.py                    -> results_encoder/metrics.json + predictions
+  python -m oevl.encoder_experiment                    -> results/encoder/metrics.json + predictions
 Quick CPU smoke test with a tiny random model (no download, a few minutes):
-  python src/encoder_experiment.py --tiny --out /tmp/enc_test
+  python -m oevl.encoder_experiment --tiny --out /tmp/enc_test
 """
 import argparse
 import json
@@ -19,9 +19,9 @@ import sys
 import time
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
-from experiment import build_data, flags, lexicon, load_tauber, mcnemar, zeros  # noqa: E402
+from oevl.experiment import build_data, flags, lexicon, load_tauber, mcnemar, zeros
+
+ROOT = Path(__file__).resolve().parents[2]
 
 ARMS = ("word", "left", "sentence")
 MARK_L, MARK_R = "[[", "]]"
@@ -56,7 +56,7 @@ def candidates(r, lex):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="google/byt5-small")
-    ap.add_argument("--out", default=str(ROOT / "results_encoder"))
+    ap.add_argument("--out", default=str(ROOT / "results" / "encoder"))
     ap.add_argument("--epochs", type=int, default=1)
     ap.add_argument("--batch", type=int, default=32, help="examples per optimizer step (same for every arm)")
     ap.add_argument("--micro", type=int, default=8, help="examples per forward pass; lower it if the GPU runs out of memory")
@@ -96,7 +96,7 @@ def main():
 
     freq = {}
     for test in tests:
-        with open(ROOT / "results_wikipron" / f"{test}_predictions.jsonl", encoding="utf8") as f:
+        with open(ROOT / "results" / "wikipron" / f"{test}_predictions.jsonl", encoding="utf8") as f:
             for line in f:
                 d = json.loads(line)
                 freq[d["id"]] = d
