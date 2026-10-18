@@ -46,6 +46,21 @@ class TestMakeInput(unittest.TestCase):
                     self.assertIn(f"[[{long_sent[i].lower()}]]", x)
 
 
+class TestLocalInputs(unittest.TestCase):
+    def test_local_arms_never_reach_a_cap(self):
+        """encoder_summary.REPLICATES rests on this: local2 and local5 see the same input at every cap of the grid."""
+        from oevl.encoder_experiment import candidates
+        from oevl.experiment import EXCLUDE_D3, TESTS, build_data, heldout, lexicon
+        with contextlib.redirect_stdout(io.StringIO()):
+            train, _, _, _ = build_data(ROOT / "data", EXCLUDE_D3)
+            lex, _ = lexicon(train, str(ROOT / "data/lex_wikipron.csv"))
+            rows = [r for r in train if r["gold_pattern"] and len(lex.get(r["key"], set())) >= 2]
+            rows += [r for t in TESTS for r in heldout(ROOT / "data", t) if len(candidates(r, lex)[0]) >= 2]
+        for arm, most in (("local2", 57), ("local5", 103)):
+            self.assertEqual(max(len(make_input(r, arm, 10 ** 6).encode()) for r in rows), most)
+            self.assertTrue(all(make_input(r, arm, 128) == make_input(r, arm, 2560) for r in rows), arm)
+
+
 class TestLimit(unittest.TestCase):
     def test_fixed_subset(self):
         ex = [{"id": str(j)} for j in range(1000)]
@@ -128,21 +143,55 @@ class TestSummary(unittest.TestCase):
             self.assertIn("\\newcommand{\\NEncCapOneTwoEightSolLexBilVsWord}{+33.33}",
                           (d / "gen/numbers_encoder.tex").read_text())
             self.assertIn("Bilateral & 2 & 1 & 100.00", (d / "gen/tab_encoder.tex").read_text())
+            self.assertNotIn("local_replicates", json.loads((d / "enc/summary.json").read_text()))
+            self.check_from_tsv(d)
 
-            # --from-tsv: the same three files from the tables and the run records alone (derived fields blanked)
+    def test_local_replicates_are_pooled(self):
+        with tempfile.TemporaryDirectory() as d:
+            d = Path(d)
+            fake_run(d / "runs/cap128/local2_s1", "local2", 1, ["0", "0", "0", "1"])
+            fake_run(d / "runs/cap256/local2_s1", "local2", 1, GOLD)
+            fake_run(d / "runs/cap256/left_s1", "left", 1, GOLD)
+            run(encoder_summary.main, "--runs", str(d / "runs"), "--out", str(d / "enc"), "--report", str(d / "gen"))
             s = json.loads((d / "enc/summary.json").read_text())
-            s["cap128"]["paired"], s["cap128"]["frequency"] = {}, {}
-            for v in (v for A in s["cap128"]["arms"].values() for S in A["sets"].values() for v in S.values()):
-                if isinstance(v, dict):
+            self.assertEqual(s["cap128"]["arms"]["local2"]["identical_inputs_at"], ["cap128", "cap256"])
+            self.assertNotIn("identical_inputs_at", s["cap256"]["arms"]["left"])
+            pooled = s["local_replicates"]["arms"]["local2"]
+            self.assertEqual(pooled["runs"], ["cap128/local2_s1", "cap256/local2_s1"])
+            self.assertAlmostEqual(pooled["sets"]["soliloquies"]["lexicon_ambiguous"]["mean"], 5 / 6)
+            self.assertEqual(s["replicate_spread"]["local2"]["s1"]["soliloquies"]["class_B"],
+                             {"min": 0.5, "max": 1.0, "by_config": {"cap128": 0.5, "cap256": 1.0}})
+            # prior 2/3 right on the lexicon-ambiguous tokens, local2 5/6 averaged over its two runs
+            self.assertAlmostEqual(s["local_replicates"]["paired"]["soliloquies"]["lexicon_ambiguous"]
+                                   ["local2-frequency"]["diff"], 1 / 6)
+            tab, num = (d / "gen/tab_encoder.tex").read_text(), (d / "gen/numbers_encoder.tex").read_text()
+            self.assertIn("Any cap (replicates)", tab)
+            self.assertIn(" & Local 2 & 2 & 0 & ", tab)
+            self.assertEqual(tab.count("Local 2"), 1)
+            self.assertIn("\\newcommand{\\NEncRepSolLexLocalTwoVsFreq}{+16.67}", num)
+            self.assertIn("\\newcommand{\\NEncRepSolClsBLocalTwoSpread}{50.00}", num)
+            self.assertNotIn("NEncCapOneTwoEightSolLexLocalTwo", num)
+            self.check_from_tsv(d)
+
+    def check_from_tsv(self, d):
+        """--from-tsv gives the same three files from the tables and the run records alone (derived fields blanked)."""
+        s = json.loads((d / "enc/summary.json").read_text())
+        for k in encoder_summary.BLOCKS:
+            s.pop(k, None)
+        for C in s.values():
+            C["paired"], C["frequency"] = {}, {}
+            for A in C["arms"].values():
+                A.pop("identical_inputs_at", None)
+                for v in (v for S in A["sets"].values() for v in S.values() if isinstance(v, dict)):
                     v.update(n=None, mean=None, sd=None)
-            (d / "tsv").mkdir()
-            for f in (d / "enc").glob("*.tsv.gz"):
-                shutil.copy(f, d / "tsv")
-            (d / "tsv/summary.json").write_text(json.dumps(s))
-            run(encoder_summary.main, "--from-tsv", "--out", str(d / "tsv"), "--report", str(d / "gen2"))
-            for a, b in (("enc/summary.json", "tsv/summary.json"), ("gen/tab_encoder.tex", "gen2/tab_encoder.tex"),
-                         ("gen/numbers_encoder.tex", "gen2/numbers_encoder.tex")):
-                self.assertEqual((d / a).read_text(), (d / b).read_text(), b)
+        (d / "tsv").mkdir()
+        for f in (d / "enc").glob("*.tsv.gz"):
+            shutil.copy(f, d / "tsv")
+        (d / "tsv/summary.json").write_text(json.dumps(s))
+        run(encoder_summary.main, "--from-tsv", "--out", str(d / "tsv"), "--report", str(d / "gen2"))
+        for a, b in (("enc/summary.json", "tsv/summary.json"), ("gen/tab_encoder.tex", "gen2/tab_encoder.tex"),
+                     ("gen/numbers_encoder.tex", "gen2/numbers_encoder.tex")):
+            self.assertEqual((d / a).read_text(), (d / b).read_text(), b)
 
     def test_refuses_predictions_that_disagree_with_metrics(self):
         with tempfile.TemporaryDirectory() as d:
