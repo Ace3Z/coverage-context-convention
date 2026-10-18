@@ -21,7 +21,7 @@ from oevl.wikipron_to_marked import mark
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "results" / "charsiu"
-MODEL, TOKENIZER, PREFIX = "charsiu/g2p_multilingual_byT5_small_100", "google/byt5-small", "<ang>: "
+MODEL, TOKENIZER, PREFIX = "charsiu/g2p_multilingual_byT5_small_100", "google/byt5-small", "<ang>:"  # as data_utils.py
 
 
 def tests():
