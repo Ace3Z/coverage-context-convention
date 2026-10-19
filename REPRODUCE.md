@@ -15,8 +15,8 @@ pip install -r requirements.txt
 
 `requirements.txt` holds every dependency. The CPU pipeline uses scikit-learn 1.8.0, scipy 1.16.3, numpy 2.3.5 and
 matplotlib 3.10.8. ByT5 and CharsiuG2P use torch 2.2 or later and transformers 4.57.6. Training needs a GPU, and the
-committed ByT5 runs used torch 2.11.0 with CUDA 12.8. Two optional tools are not in the file: `pdflatex` compiles
-`REPORT.pdf`, and the `hf` command from `huggingface_hub` uploads the dataset.
+committed ByT5 runs used torch 2.11.0 with CUDA 12.8. `pdflatex` is optional and compiles `REPORT.pdf`. The `hf`
+command for uploading the dataset comes with `huggingface_hub`, which transformers already installs.
 
 `run_all.sh` puts `src` on `PYTHONPATH`, so nothing has to be installed. To run modules by hand, either run
 `pip install -e .` once or prefix commands with `PYTHONPATH=src`. Use an editable install, because the code finds
@@ -40,8 +40,8 @@ Accuracy is reported on all tokens and on three harder populations: lexicon-ambi
 patterns), attested-ambiguous tokens, and minority readings. The lexicon-ambiguous tokens are also split by ambiguity
 class (`class_A`, `class_B`, `class_C` in `metrics.json`) for the 60 skeletons in `data/ambiguity_classes.csv`, with
 `class_unlisted` for the rest. Two LLM annotators and an automated adjudicator assigned the classes, and the team has
-not reviewed them yet. The 60 skeletons were picked by frequency over the corpus with Zupitza, and they are kept under
-decision D3. The `d3` block of `data/ambiguity_classes.json` records that `hi` is no longer lexicon-ambiguous without
+not reviewed them yet. The 60 skeletons were picked by their frequency in the training works (Zupitza included) and both test
+sets, and they are kept under decision D3. The `d3` block of `data/ambiguity_classes.json` records that `hi` is no longer lexicon-ambiguous without
 Zupitza, and that 6,759 of the 36,203 lexicon-ambiguous tokens counted there fall outside the list.
 
 Results are the mean and sample standard deviation over seeds. A difference between two systems gets a 95%
@@ -60,7 +60,7 @@ check tolerates.
 bash run_all.sh
 ```
 
-It takes a few minutes and has six steps:
+It takes one to two minutes and has six steps:
 
 1. Inputs. It uses `data/brunetti-length.txt` (Tauber's *Beowulf* gold) and `data/ang_latn_broad.tsv` (WikiPron Old
    English) if they are present and downloads them otherwise, then prints their SHA-256. `oevl.audit_splits` prints
@@ -83,11 +83,12 @@ It takes a few minutes and has six steps:
 
 ## 2. Run a single experiment
 
-Results for the same `--out` folder are merged:
+Results for the same `--out` folder are merged. Keep `--exclude-train zupitza_grammar` (decision D3), because
+`experiment.py` refuses to merge into a folder made with a different training set:
 
 ```bash
-PYTHONPATH=src python -m oevl.experiment --data data --out results/wikipron --lexicon data/lex_wikipron.csv --tests soliloquies
-PYTHONPATH=src python -m oevl.experiment --data data --out results/wikipron --lexicon data/lex_wikipron.csv --tests tauber_beowulf
+PYTHONPATH=src python -m oevl.experiment --data data --out results/wikipron --lexicon data/lex_wikipron.csv --exclude-train zupitza_grammar --tests soliloquies
+PYTHONPATH=src python -m oevl.experiment --data data --out results/wikipron --lexicon data/lex_wikipron.csv --exclude-train zupitza_grammar --tests tauber_beowulf
 ```
 
 ## 3. Rebuild the corpus and the dictionaries
@@ -101,7 +102,7 @@ PYTHONPATH=src python -m oevl.build_lexicons
 `oevl.build_corpus` fetches an edition into `data/raw/corpus/` and rebuilds its file and manifest entry: the URL,
 retrieval date and SHA-256 of each input, and the work's `role` (train, dev, test or agreement). The first extraction
 scripts were lost, so the rules were worked out from the files. After `clean_corpus`, `matthew_ws`, `bright_reader`,
-`physiologus` and `hs_beowulf` rebuild byte for byte. The other four rebuilds contain 65,988 of their 65,992 committed
+`physiologus` and `hs_beowulf` rebuild byte for byte. The other four rebuilds contain 65,988 of their 65,991 committed
 tokens in order, but some sentences differ, mostly where the original language filter dropped short lines (the
 module docstring has the details). Those four committed files were kept as they are. `john_ws.jsonl` (Gospel of
 John, the dev set) is built the same way as Matthew. The builder still writes an old sentence-level `split` field,
@@ -120,7 +121,8 @@ bash scripts/encoder_grid.sh [select|grid|all] [RUNS_DIR]
 `oevl.encoder_experiment` fine-tunes ByT5-small with the word only, the left context or the whole sentence. Like
 `run_all.sh` it trains without Zupitza by default (D3), and `--exclude-train ""` trains on all five works.
 `--arms local2,local5` adds the arms with two or five words on each side, `--train-limit N` trains on a fixed subset,
-and `--tests` scores fewer than the three held-out sets.
+and `--tests` scores fewer than the three held-out sets. Without `--out` it writes to `results/encoder/`, next to
+the committed files, so pass `--out` for new runs.
 
 `scripts/encoder_grid.sh` has the exact commands behind `results/encoder/`: 24 dev selection runs, whose rule
 `oevl.select_config` applies (`selection.json`), then 39 runs of the chosen setting. `oevl.encoder_summary --runs`
@@ -196,8 +198,8 @@ Harrison & Sharp and Wyatt *Beowulf*). It also holds the dictionaries in `lexico
 token counts read from the written files. Sentences that the leakage audit leaves out of evaluation are kept and
 marked with `leakage_excluded`. `train` holds all five training works, Zupitza included.
 
-The upload needs a Hugging Face account with write access to the `Ace3Z` namespace. `hf` is the command line of
-`huggingface_hub` 1.0 and later. With a 0.x version the same upload is
+The upload needs a Hugging Face account with write access to the `Ace3Z` namespace. Older versions of
+`huggingface_hub` only have `huggingface-cli`. With those, the same upload is
 `huggingface-cli upload Ace3Z/old-english-vowel-length release/hf . --repo-type=dataset`.
 
 ## Output data
@@ -213,11 +215,11 @@ results/
 ├── proposal/
 ├── all/
 ├── wikipron_with_zupitza/      the Zupitza ablation
-├── agreement/                  metrics.json, disagreements.tsv, disagreements_checked.tsv, agreement.log
+├── agreement/                  metrics.json, disagreements.tsv, agreement.log, and disagreements_checked.tsv
+│                               (100 disagreements labelled by an LLM, not yet reviewed)
 ├── encoder/                    selection.json, summary.json, <set>_predictions.tsv.gz
 ├── charsiu/                    benchmark.json, benchmark.tsv, ipa.tsv, metrics.json
-├── error_typing/               labels.tsv, summary.json
-└── run_all.log                 an old run_all.sh log from before the dictionary fixes (run_all.sh does not rewrite it)
+└── error_typing/               labels.tsv, summary.json
 report/
 ├── main.tex
 └── generated/                  tables, numbers and figure written by oevl.build_report

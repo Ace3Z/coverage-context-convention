@@ -11,8 +11,8 @@ Each statement was checked on 2026-10-18 against the licence file or the source 
 ## Corpus: `by_source/*.jsonl` and `manifest.json`
 
 The corpus bundle is released under CC BY-SA 4.0, because five of the nine works are Wikisource
-transcriptions. The printed editions themselves are out of copyright. `manifest.json` records the URL, retrieval
-date and SHA-256 of each input.
+transcriptions. The printed editions themselves are out of copyright. `manifest.json` records the source URL of each work,
+and for the five works that `oevl.build_corpus` rebuilds also the retrieval date and SHA-256 of each input.
 
 | File | Work, editor, year | Source | Licence of the source | Checked |
 |---|---|---|---|---|

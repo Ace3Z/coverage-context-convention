@@ -64,6 +64,8 @@ form `godne` and the pattern `10`.
 
 $table
 
+Flagged sentences and tokens are those with `leakage_excluded: true`.
+
 The split is by work, never by sentence, and no *Beowulf* text is in `train`. `agreement` holds two more *Beowulf*
 editions and is only used to measure how often editors agree. The project's final systems leave `zupitza_grammar` out
 of training and skip sentences with `leakage_excluded: true` when scoring.
@@ -72,8 +74,11 @@ of training and skip sentences with `leakage_excluded: true` when scoring.
 
 - `lexicons/` has candidate spellings from WikiPron, Clark Hall, Wiktionary and Bosworth-Toller, plus two unions. Each
   CSV has a `marked_form` column, and the unions add a `sources` column.
+- `lexicons/lexicons_provenance.json` gives the URL, licence and checksum of each dictionary source.
 - `ambiguity_classes.csv` lists the 60 most frequent ambiguous spellings, each labelled lexical (A), grammatical (B)
-  or editorial (C). Two LLM annotators made the labels, and no person has reviewed them yet.
+  or editorial (C). Two LLM annotators labelled them and an automated step settled their two disagreements. No
+  person has reviewed the labels yet. `ambiguity_classes.json` records the class definitions, the annotator
+  agreement and the counting rule.
 
 ## Source data
 
@@ -112,9 +117,11 @@ not read as a missing value.
 ## Limitations
 
 - The marks record how editors macronised the text, not how it was pronounced, and editors disagree, most of all on
-  unstressed function words such as *se/sē* and *þe/þē*.
+  unstressed function words such as *ne/nē* and *þe/þē*.
 - The corpus is small and mostly West Saxon prose. The verse in `train` is the *Physiologus* and four sections of
   Bright's *Reader*, about 6,300 tokens in all.
+- The Harrison & Sharp file is the Project Gutenberg revision of their fourth edition, whose producer changed some
+  marks to modern values (for example *ne* to *nē* as a conjunction), so it is not purely the editors' marking.
 - The texts are transcriptions and may contain errors. Wikisource does not yet mark the John transcription as fully
   proofread.
 

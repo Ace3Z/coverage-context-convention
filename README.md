@@ -34,9 +34,9 @@ them back automatically, and measure four limits on the same tokens: dictionary 
 editorial convention and editor disagreement.**
 
 [Overview](#-overview) •
-[Headline Results](#-headline-results) •
+[Headline results](#-headline-results) •
 [Pipeline](#-pipeline) •
-[Quickstart](#-quickstart) •
+[Quickstart](#%EF%B8%8F-quickstart) •
 [Dataset](#-dataset) •
 [Documentation](#-documentation)
 
@@ -51,11 +51,11 @@ editorial convention and editor disagreement.**
     <td align="center"><i>Ic þe lære þeah þæt þu hyt ongynne</i></td>
   </tr>
   <tr>
-    <td align="center"><b>Frequency prior</b>, <b>word model</b></td>
+    <td align="center"><b>Frequency prior</b>, <b>logistic word model</b></td>
     <td align="center"><i>Ic þe lǣre þēah þæt þū hyt ongynne</i></td>
   </tr>
   <tr>
-    <td align="center"><b>Context model</b> (two words each side)</td>
+    <td align="center"><b>Logistic model</b> with two words each side</td>
     <td align="center"><i>Ic <b>þē</b> lǣre þēah þæt þū hyt ongynne</i></td>
   </tr>
 </table>
@@ -74,10 +74,10 @@ Old English manuscripts do not show vowel length, so *god* 'God' and *gōd* 'goo
 relative particle *þe* and the pronoun *þē* 'thee'. Modern editions add macrons by hand. A system for this task sees
 the bare word, takes the length patterns a dictionary lists for it, and picks one.
 
-We built a length-marked corpus from nine editions and held out one prose text (Alfred's *Soliloquies*) and one verse
-text (Tauber's token-level *Beowulf*). On exactly the same tokens we compare a frequency prior, logistic classifiers,
+We built a length-marked corpus from nine editions and hold out one of them, Alfred's *Soliloquies*, as the prose
+test. The verse test is a tenth source, Tauber's token-level *Beowulf*. On exactly the same tokens we compare a frequency prior, logistic classifiers,
 a fine-tuned ByT5 model and CharsiuG2P, and three editions of *Beowulf* show how far editors agree.
-`bash run_all.sh` reproduces every number, table and figure in the report.
+`bash run_all.sh` reproduces every number and table in the report.
 
 | Limit | Question | Where to look |
 |---|---|---|
@@ -88,21 +88,23 @@ a fine-tuned ByT5 model and CharsiuG2P, and three editions of *Beowulf* show how
 
 ---
 
-## 📊 Headline Results
+## 📊 Headline results
 
-`bash run_all.sh` rebuilds all of these numbers from the committed results. Intervals are 95% sentence-level
-bootstrap intervals over seed-averaged predictions.
+The ByT5 rows are means over three seeds, and the intervals are 95% sentence-level bootstrap intervals over
+seed-averaged predictions. Lexicon-ambiguous tokens have two or more candidate patterns, and class B holds
+grammatical homographs, words spelled alike that differ in function.
 
 | Finding | Tokens | Result |
 |---|---|---|
 | Coverage matters most on verse | *Beowulf*, all tokens, frequency prior | 82.40% with training forms, 92.38% with all four dictionaries |
-| Context fixes grammatical homographs | *Soliloquies*, class B (*þe/þē*, *ne/nē*) | 62.66% from the word alone, 76.39% with two words each side (+13.73, 11.29 to 16.03) |
-| Context helps prose overall | *Soliloquies*, ambiguous words | 88.91% from the word alone, 91.30% with two words each side (+2.39, 1.91 to 2.87) |
-| On verse the word alone is enough | *Beowulf*, ambiguous words | 90.04% from the word alone, 89.43% with the full sentence (−0.61, −1.06 to −0.15) |
+| Context helps most on grammatical homographs | *Soliloquies*, class B (*þe/þē*, *ne/nē*), ByT5 | 62.66% from the word alone, 76.39% with two words each side (+13.73, 11.29 to 16.03) |
+| Context helps prose overall | *Soliloquies*, lexicon-ambiguous tokens, ByT5 | 88.91% from the word alone, 91.30% with two words each side (+2.39, 1.91 to 2.87) |
+| On verse the word alone is enough | *Beowulf*, lexicon-ambiguous tokens, ByT5 | 90.04% from the word alone, 89.43% with the full sentence (−0.61, −1.06 to −0.15) |
 | Editors differ most on grammatical words | Wyatt against Klaeber (Tauber), ambiguous / class B | 96.08% / 78.07% agreement |
-| CharsiuG2P's errors are mostly about length | its own 500-word Old English test set | word error rate 0.208 as published, 0.188 with 50 decoding steps, and then 75.5% of word errors are length only |
+| CharsiuG2P's errors are mostly about length | its own 500-word Old English test set | word error rate 0.208 as published and 0.188 with 50 decoding steps, after which 75.5% of word errors differ only in vowel length |
 
-Two LLM annotators labelled the ambiguity classes and the error types, and nobody on the team has reviewed them yet.
+LLM annotators labelled the ambiguity classes, the error types and a sample of editor disagreements, and nobody on
+the team has reviewed them yet.
 The report has the full tables, the caveats and the run-to-run variance (TODO: link the PDF).
 
 ---
@@ -119,7 +121,7 @@ their own commands in [REPRODUCE.md](REPRODUCE.md).
 | 2 | Leakage audit | `audit_splits.py` | `data/leakage_excluded.json` |
 | 3 | Dictionaries | `wikipron_to_marked.py`, `build_lexicons.py` | `data/lex_*.csv` |
 | 4 | Frequency prior and logistic models | `experiment.py` | `results/<setting>/` |
-| 5 | Editor agreement and the gate | `agreement.py` | `results/agreement/` |
+| 5 | Editor agreement | `agreement.py` | `results/agreement/` |
 | 6 | ByT5 grid and selection (GPU) | `encoder_experiment.py`, `select_config.py`, `encoder_summary.py`, `stats.py`, `scripts/encoder_grid.sh` | `results/encoder/` |
 | 7 | CharsiuG2P error analysis | `charsiu_g2p.py` | `results/charsiu/` |
 | 8 | Error typing | `error_typing.py` | `results/error_typing/` |
@@ -141,8 +143,8 @@ cd cl-uzh-26-essentials-code
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
-# Step 2. Reproduce every number, table and REPORT.pdf (a few minutes).
-#         Ends with the frozen check of 660 headline values.
+# Step 2. Reproduce every number and table, and REPORT.pdf if pdflatex is installed
+#         (one to two minutes). Includes the frozen check of 660 values.
 bash run_all.sh
 
 # Step 3. Restore macrons in your own sentences, one per line.
@@ -158,7 +160,8 @@ explains them.
 ## 💾 Dataset
 
 The Hugging Face dataset [`Ace3Z/old-english-vowel-length`](https://huggingface.co/datasets/Ace3Z/old-english-vowel-length)
-holds the corpus, the dictionaries and the ambiguity class file.
+holds the corpus, the dictionaries and the ambiguity class files. Loading it needs the `datasets` package
+(`pip install datasets`), which `requirements.txt` does not include.
 
 | Split | Content | Role |
 |---|---|---|
@@ -185,12 +188,12 @@ the leakage audit, decision D3 and the licences.
 | [REPRODUCE.md](REPRODUCE.md) | installation, the systems and their evaluation, and every command |
 | [DATA.md](DATA.md) | corpus, splits, dev set, leakage audit, decision D3, data layout and licences |
 | [notebooks/README.md](notebooks/README.md) | Kaggle and Colab launchers for the ByT5 pilot |
-| Report (PDF) | TODO: link the PDF once it is uploaded. The LaTeX source is [report/main.tex](report/main.tex), and `bash run_all.sh` compiles it to `REPORT.pdf`. |
+| Report (PDF) | TODO: link the PDF once it is uploaded. The LaTeX source is [report/main.tex](report/main.tex), and `bash run_all.sh` compiles it to `REPORT.pdf` when `pdflatex` is installed. |
 | [LICENSE](LICENSE), [data/LICENSE.md](data/LICENSE.md) | code licence (MIT) and the licence of every data file |
 
 ---
 
-## 🗂️ Repository Layout
+## 🗂️ Repository layout
 
 ```
 cl-uzh-26-essentials-code/
@@ -214,7 +217,7 @@ cl-uzh-26-essentials-code/
 
 ## 🖥️ Compute
 
-- `bash run_all.sh` takes about a minute and a half on an Apple M-series laptop, including 75 unit tests, 660 frozen
+- `bash run_all.sh` takes one to two minutes on an Apple M-series laptop, including 75 unit tests, 660 frozen
   checks and the report.
 - `requirements.txt` installs and passes those checks on macOS with Python 3.11 and 3.14, and on Linux with Python 3.14
   and a CUDA GPU.
@@ -232,7 +235,7 @@ The code is released under the MIT licence in [LICENSE](LICENSE). The data is CC
 
 ---
 
-## 🙏 Acknowledgments
+## 🙏 Acknowledgements
 
 - [James Tauber](https://github.com/old-english-learner-texts/old-english-texts) for the token-level *Beowulf* with
   length marks, built on Brunetti's analysis and the Perseus text of Klaeber's edition

@@ -29,17 +29,16 @@ the results used.
 ## Decision D3: Zupitza
 
 Zupitza's *Grammar* is a Latin grammar written in Old English. The plan kept it out of dev and test and left open
-whether to train on it. We decided on the John dev set, on lexicon-ambiguous tokens with training forms plus
-WikiPron. Without Zupitza the ByT5 sentence arm scored 96.00% (mean dev accuracy), against 95.06% for the best setting
-trained with it. The prior scored 95.60% without it and 94.87% with it, and the bilateral logistic model 95.23% and
-94.44% (means over seeds 1 to 3).
+whether to train on it. We decided on the John dev set, on the 7,639 lexicon-ambiguous tokens (training forms plus
+WikiPron) that both settings share. Dropping Zupitza raised the ByT5 sentence arm from 95.28% (its best setting with
+Zupitza, seeds 1 and 2) to 96.00%, the prior from 95.12% to 95.60%, and the bilateral logistic model from 94.72% to
+95.23% (seeds 1 to 3).
 
 So every system in `results/<setting>/` trains without Zupitza, and so do `oevl.agreement` (whose floor is the prior),
 `oevl.try_text`, the encoder's default, the coverage numbers of `oevl.build_report` and the CharsiuG2P populations.
 `results/wikipron_with_zupitza` keeps the earlier run with Zupitza for comparison. The leakage audit still checks all
 five training works, as the ablation needs. Zupitza shares no 6-gram with the dev or test sets, so the exclusions are
-the same either way. The report's per-word table still shows how Zupitza marks each word, counted from its corpus
-file.
+the same either way.
 
 ## Input data
 
