@@ -6,7 +6,8 @@ Tauber validated: 17361 tokens, 7438 long marks
     "agreement_hs": 17682,
     "agreement_wyatt": 17568,
     "lexicon_origin": "training attested forms + external file",
-    "lexicon_file": "lex_wikipron.csv"
+    "lexicon_file": "lex_wikipron.csv",
+    "lexicon_sha256": "812c8f377eb81950a006b6c06f7ea0695e06b72b567a80b8b69e77e087cea145"
   },
   "john_ws": {
     "frequency": {
@@ -507,7 +508,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "þa",
         "n": 471,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 467, \"0\": 4}",
         "frequency_accuracy": 0.991507,
         "oracle_accuracy": 1.0,
@@ -529,7 +530,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "þe",
         "n": 466,
-        "category_preliminary": "B",
+        "class": "B",
         "test_pattern_counts": "{\"0\": 393, \"1\": 73}",
         "frequency_accuracy": 0.843348,
         "oracle_accuracy": 1.0,
@@ -551,7 +552,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "þæt",
         "n": 430,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 429, \"1\": 1}",
         "frequency_accuracy": 0.997674,
         "oracle_accuracy": 1.0,
@@ -573,7 +574,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "he",
         "n": 405,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 389, \"0\": 16}",
         "frequency_accuracy": 0.960494,
         "oracle_accuracy": 1.0,
@@ -595,7 +596,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "to",
         "n": 366,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 354, \"0\": 12}",
         "frequency_accuracy": 0.967213,
         "oracle_accuracy": 1.0,
@@ -617,7 +618,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "se",
         "n": 347,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 341, \"0\": 6}",
         "frequency_accuracy": 0.982709,
         "oracle_accuracy": 1.0,
@@ -639,7 +640,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "ne",
         "n": 330,
-        "category_preliminary": "B",
+        "class": "B",
         "test_pattern_counts": "{\"0\": 306, \"1\": 24}",
         "frequency_accuracy": 0.927273,
         "oracle_accuracy": 1.0,
@@ -661,7 +662,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "þam",
         "n": 262,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 260, \"0\": 2}",
         "frequency_accuracy": 0.992366,
         "oracle_accuracy": 1.0,
@@ -683,7 +684,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "me",
         "n": 256,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 251, \"0\": 5}",
         "frequency_accuracy": 0.980469,
         "oracle_accuracy": 1.0,
@@ -705,7 +706,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "cwæþ",
         "n": 243,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 242, \"1\": 1}",
         "frequency_accuracy": 0.995885,
         "oracle_accuracy": 1.0,
@@ -727,7 +728,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "ge",
         "n": 230,
-        "category_preliminary": "B",
+        "class": "B",
         "test_pattern_counts": "{\"1\": 222, \"0\": 8}",
         "frequency_accuracy": 0.965217,
         "oracle_accuracy": 1.0,
@@ -749,7 +750,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "hælend",
         "n": 198,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"10\": 194, \"00\": 4}",
         "frequency_accuracy": 0.979798,
         "oracle_accuracy": 1.0,
@@ -771,7 +772,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "þu",
         "n": 189,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 187, \"0\": 2}",
         "frequency_accuracy": 0.989418,
         "oracle_accuracy": 1.0,
@@ -793,7 +794,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "for",
         "n": 179,
-        "category_preliminary": "A",
+        "class": "A",
         "test_pattern_counts": "{\"0\": 161, \"1\": 18}",
         "frequency_accuracy": 0.899441,
         "oracle_accuracy": 1.0,
@@ -815,7 +816,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "hig",
         "n": 165,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 165}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -837,7 +838,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "his",
         "n": 163,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 163}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -859,7 +860,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "eow",
         "n": 145,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"10\": 145}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -881,7 +882,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "wæs",
         "n": 128,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 127, \"1\": 1}",
         "frequency_accuracy": 0.992188,
         "oracle_accuracy": 1.0,
@@ -903,7 +904,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "is",
         "n": 122,
-        "category_preliminary": "A",
+        "class": "A",
         "test_pattern_counts": "{\"0\": 122}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -925,7 +926,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "hi",
         "n": 106,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 10, \"1\": 96}",
         "frequency_accuracy": 0.90566,
         "oracle_accuracy": 1.0,
@@ -1467,7 +1468,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "þæt",
         "n": 679,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 675, \"1\": 4}",
         "frequency_accuracy": 0.994109,
         "oracle_accuracy": 1.0,
@@ -1489,7 +1490,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "þe",
         "n": 567,
-        "category_preliminary": "B",
+        "class": "B",
         "test_pattern_counts": "{\"0\": 327, \"1\": 240}",
         "frequency_accuracy": 0.57672,
         "oracle_accuracy": 1.0,
@@ -1511,7 +1512,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "þu",
         "n": 491,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 490, \"0\": 1}",
         "frequency_accuracy": 0.997963,
         "oracle_accuracy": 1.0,
@@ -1533,7 +1534,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "ne",
         "n": 348,
-        "category_preliminary": "B",
+        "class": "B",
         "test_pattern_counts": "{\"1\": 80, \"0\": 268}",
         "frequency_accuracy": 0.770115,
         "oracle_accuracy": 1.0,
@@ -1555,7 +1556,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "me",
         "n": 257,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 249, \"0\": 8}",
         "frequency_accuracy": 0.968872,
         "oracle_accuracy": 1.0,
@@ -1577,7 +1578,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "to",
         "n": 191,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 159, \"0\": 32}",
         "frequency_accuracy": 0.832461,
         "oracle_accuracy": 1.0,
@@ -1599,7 +1600,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "þa",
         "n": 188,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 185, \"0\": 3}",
         "frequency_accuracy": 0.984043,
         "oracle_accuracy": 1.0,
@@ -1621,7 +1622,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "he",
         "n": 188,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 178, \"0\": 10}",
         "frequency_accuracy": 0.946809,
         "oracle_accuracy": 1.0,
@@ -1643,7 +1644,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "swa",
         "n": 179,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 179}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -1665,7 +1666,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "þam",
         "n": 163,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 163}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -1687,7 +1688,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "hyt",
         "n": 135,
-        "category_preliminary": "A",
+        "class": "A",
         "test_pattern_counts": "{\"0\": 135}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -1709,7 +1710,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "nu",
         "n": 133,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 133}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -1731,7 +1732,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "ac",
         "n": 125,
-        "category_preliminary": "A",
+        "class": "A",
         "test_pattern_counts": "{\"0\": 125}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -1753,7 +1754,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "is",
         "n": 102,
-        "category_preliminary": "A",
+        "class": "A",
         "test_pattern_counts": "{\"0\": 102}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -1775,7 +1776,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "be",
         "n": 101,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 101}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -1797,7 +1798,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "hi",
         "n": 92,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 87, \"0\": 5}",
         "frequency_accuracy": 0.945652,
         "oracle_accuracy": 1.0,
@@ -1819,7 +1820,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "þæs",
         "n": 91,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 90, \"1\": 1}",
         "frequency_accuracy": 0.989011,
         "oracle_accuracy": 1.0,
@@ -1841,7 +1842,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "we",
         "n": 78,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 73, \"0\": 5}",
         "frequency_accuracy": 0.935897,
         "oracle_accuracy": 1.0,
@@ -1863,7 +1864,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "swiþe",
         "n": 74,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"10\": 74}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -1885,7 +1886,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "se",
         "n": 72,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 24, \"0\": 48}",
         "frequency_accuracy": 0.333333,
         "oracle_accuracy": 1.0,
@@ -2405,7 +2406,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "þæt",
         "n": 374,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 373, \"1\": 1}",
         "frequency_accuracy": 0.997326,
         "oracle_accuracy": 1.0,
@@ -2427,7 +2428,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "þa",
         "n": 323,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 322, \"0\": 1}",
         "frequency_accuracy": 0.996904,
         "oracle_accuracy": 1.0,
@@ -2449,7 +2450,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "he",
         "n": 285,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 285}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -2471,7 +2472,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "wæs",
         "n": 249,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 249}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -2493,7 +2494,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "þe",
         "n": 202,
-        "category_preliminary": "B",
+        "class": "B",
         "test_pattern_counts": "{\"1\": 80, \"0\": 122}",
         "frequency_accuracy": 0.60396,
         "oracle_accuracy": 1.0,
@@ -2515,7 +2516,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "ne",
         "n": 180,
-        "category_preliminary": "B",
+        "class": "B",
         "test_pattern_counts": "{\"0\": 139, \"1\": 41}",
         "frequency_accuracy": 0.772222,
         "oracle_accuracy": 1.0,
@@ -2537,7 +2538,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "to",
         "n": 178,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 178}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -2559,7 +2560,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "se",
         "n": 175,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 73, \"0\": 102}",
         "frequency_accuracy": 0.417143,
         "oracle_accuracy": 1.0,
@@ -2581,7 +2582,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "swa",
         "n": 125,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 125}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -2603,7 +2604,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "þær",
         "n": 122,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 121, \"0\": 1}",
         "frequency_accuracy": 0.991803,
         "oracle_accuracy": 1.0,
@@ -2625,7 +2626,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "his",
         "n": 81,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 81}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -2647,7 +2648,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "æfter",
         "n": 72,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"00\": 72}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -2669,7 +2670,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "ofer",
         "n": 71,
-        "category_preliminary": "A",
+        "class": "A",
         "test_pattern_counts": "{\"00\": 71}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -2691,7 +2692,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "þæs",
         "n": 69,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 68, \"1\": 1}",
         "frequency_accuracy": 0.985507,
         "oracle_accuracy": 1.0,
@@ -2713,7 +2714,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "þu",
         "n": 63,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 63}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -2735,7 +2736,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "æt",
         "n": 61,
-        "category_preliminary": "A",
+        "class": "A",
         "test_pattern_counts": "{\"0\": 61}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -2757,7 +2758,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "ac",
         "n": 60,
-        "category_preliminary": "A",
+        "class": "A",
         "test_pattern_counts": "{\"0\": 60}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -2779,7 +2780,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "hie",
         "n": 59,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"10\": 59}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -2801,7 +2802,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "þam",
         "n": 52,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 52}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -2823,7 +2824,7 @@ Tauber validated: 17361 tokens, 7438 long marks
       {
         "word": "me",
         "n": 47,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 47}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,

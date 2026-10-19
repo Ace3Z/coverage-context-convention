@@ -508,7 +508,7 @@
       {
         "word": "þa",
         "n": 471,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 467, \"0\": 4}",
         "frequency_accuracy": 0.991507,
         "oracle_accuracy": 1.0,
@@ -530,7 +530,7 @@
       {
         "word": "þe",
         "n": 466,
-        "category_preliminary": "B",
+        "class": "B",
         "test_pattern_counts": "{\"0\": 393, \"1\": 73}",
         "frequency_accuracy": 0.843348,
         "oracle_accuracy": 1.0,
@@ -552,7 +552,7 @@
       {
         "word": "þæt",
         "n": 430,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 429, \"1\": 1}",
         "frequency_accuracy": 0.997674,
         "oracle_accuracy": 1.0,
@@ -574,7 +574,7 @@
       {
         "word": "he",
         "n": 405,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 389, \"0\": 16}",
         "frequency_accuracy": 0.960494,
         "oracle_accuracy": 1.0,
@@ -596,7 +596,7 @@
       {
         "word": "to",
         "n": 366,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 354, \"0\": 12}",
         "frequency_accuracy": 0.967213,
         "oracle_accuracy": 1.0,
@@ -618,7 +618,7 @@
       {
         "word": "se",
         "n": 347,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 341, \"0\": 6}",
         "frequency_accuracy": 0.982709,
         "oracle_accuracy": 1.0,
@@ -640,7 +640,7 @@
       {
         "word": "ne",
         "n": 330,
-        "category_preliminary": "B",
+        "class": "B",
         "test_pattern_counts": "{\"0\": 306, \"1\": 24}",
         "frequency_accuracy": 0.927273,
         "oracle_accuracy": 1.0,
@@ -662,7 +662,7 @@
       {
         "word": "þam",
         "n": 262,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 260, \"0\": 2}",
         "frequency_accuracy": 0.992366,
         "oracle_accuracy": 1.0,
@@ -684,7 +684,7 @@
       {
         "word": "me",
         "n": 256,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 251, \"0\": 5}",
         "frequency_accuracy": 0.980469,
         "oracle_accuracy": 1.0,
@@ -706,7 +706,7 @@
       {
         "word": "cwæþ",
         "n": 243,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 242, \"1\": 1}",
         "frequency_accuracy": 0.995885,
         "oracle_accuracy": 1.0,
@@ -728,7 +728,7 @@
       {
         "word": "ge",
         "n": 230,
-        "category_preliminary": "B",
+        "class": "B",
         "test_pattern_counts": "{\"1\": 222, \"0\": 8}",
         "frequency_accuracy": 0.965217,
         "oracle_accuracy": 1.0,
@@ -750,7 +750,7 @@
       {
         "word": "hælend",
         "n": 198,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"10\": 194, \"00\": 4}",
         "frequency_accuracy": 0.979798,
         "oracle_accuracy": 1.0,
@@ -772,7 +772,7 @@
       {
         "word": "þu",
         "n": 189,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 187, \"0\": 2}",
         "frequency_accuracy": 0.989418,
         "oracle_accuracy": 1.0,
@@ -794,7 +794,7 @@
       {
         "word": "for",
         "n": 179,
-        "category_preliminary": "A",
+        "class": "A",
         "test_pattern_counts": "{\"0\": 161, \"1\": 18}",
         "frequency_accuracy": 0.899441,
         "oracle_accuracy": 1.0,
@@ -816,7 +816,7 @@
       {
         "word": "his",
         "n": 163,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 163}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -838,7 +838,7 @@
       {
         "word": "eow",
         "n": 145,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"10\": 145}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -860,7 +860,7 @@
       {
         "word": "wæs",
         "n": 128,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 127, \"1\": 1}",
         "frequency_accuracy": 0.992188,
         "oracle_accuracy": 1.0,
@@ -882,7 +882,7 @@
       {
         "word": "hine",
         "n": 97,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"00\": 97}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -904,7 +904,7 @@
       {
         "word": "swa",
         "n": 77,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 76, \"0\": 1}",
         "frequency_accuracy": 0.987013,
         "oracle_accuracy": 1.0,
@@ -926,7 +926,7 @@
       {
         "word": "hit",
         "n": 76,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 76}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -1468,7 +1468,7 @@
       {
         "word": "þæt",
         "n": 679,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 675, \"1\": 4}",
         "frequency_accuracy": 0.994109,
         "oracle_accuracy": 1.0,
@@ -1490,7 +1490,7 @@
       {
         "word": "þe",
         "n": 567,
-        "category_preliminary": "B",
+        "class": "B",
         "test_pattern_counts": "{\"0\": 327, \"1\": 240}",
         "frequency_accuracy": 0.57672,
         "oracle_accuracy": 1.0,
@@ -1512,7 +1512,7 @@
       {
         "word": "þu",
         "n": 491,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 490, \"0\": 1}",
         "frequency_accuracy": 0.997963,
         "oracle_accuracy": 1.0,
@@ -1534,7 +1534,7 @@
       {
         "word": "ne",
         "n": 348,
-        "category_preliminary": "B",
+        "class": "B",
         "test_pattern_counts": "{\"1\": 80, \"0\": 268}",
         "frequency_accuracy": 0.770115,
         "oracle_accuracy": 1.0,
@@ -1556,7 +1556,7 @@
       {
         "word": "me",
         "n": 257,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 249, \"0\": 8}",
         "frequency_accuracy": 0.968872,
         "oracle_accuracy": 1.0,
@@ -1578,7 +1578,7 @@
       {
         "word": "to",
         "n": 191,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 159, \"0\": 32}",
         "frequency_accuracy": 0.832461,
         "oracle_accuracy": 1.0,
@@ -1600,7 +1600,7 @@
       {
         "word": "þa",
         "n": 188,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 185, \"0\": 3}",
         "frequency_accuracy": 0.984043,
         "oracle_accuracy": 1.0,
@@ -1622,7 +1622,7 @@
       {
         "word": "he",
         "n": 188,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 178, \"0\": 10}",
         "frequency_accuracy": 0.946809,
         "oracle_accuracy": 1.0,
@@ -1644,7 +1644,7 @@
       {
         "word": "swa",
         "n": 179,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 179}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -1666,7 +1666,7 @@
       {
         "word": "þam",
         "n": 163,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 163}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -1688,7 +1688,7 @@
       {
         "word": "nu",
         "n": 133,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 133}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -1710,7 +1710,7 @@
       {
         "word": "be",
         "n": 101,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 101}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -1732,7 +1732,7 @@
       {
         "word": "þæs",
         "n": 91,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"0\": 90, \"1\": 1}",
         "frequency_accuracy": 0.989011,
         "oracle_accuracy": 1.0,
@@ -1754,7 +1754,7 @@
       {
         "word": "we",
         "n": 78,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 73, \"0\": 5}",
         "frequency_accuracy": 0.935897,
         "oracle_accuracy": 1.0,
@@ -1776,7 +1776,7 @@
       {
         "word": "swiþe",
         "n": 74,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"10\": 74}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -1798,7 +1798,7 @@
       {
         "word": "se",
         "n": 72,
-        "category_preliminary": "C",
+        "class": "C",
         "test_pattern_counts": "{\"1\": 24, \"0\": 48}",
         "frequency_accuracy": 0.333333,
         "oracle_accuracy": 1.0,
@@ -1820,7 +1820,7 @@
       {
         "word": "ge",
         "n": 64,
-        "category_preliminary": "B",
+        "class": "B",
         "test_pattern_counts": "{\"0\": 61, \"1\": 3}",
         "frequency_accuracy": 0.046875,
         "oracle_accuracy": 1.0,
@@ -1842,7 +1842,7 @@
       {
         "word": "god",
         "n": 61,
-        "category_preliminary": "A",
+        "class": "A",
         "test_pattern_counts": "{\"0\": 52, \"1\": 9}",
         "frequency_accuracy": 0.852459,
         "oracle_accuracy": 1.0,
@@ -1864,7 +1864,7 @@
       {
         "word": "witan",
         "n": 56,
-        "category_preliminary": "unlisted",
+        "class": "unlisted",
         "test_pattern_counts": "{\"00\": 56}",
         "frequency_accuracy": 1.0,
         "oracle_accuracy": 1.0,
@@ -1886,7 +1886,7 @@
       {
         "word": "hy",
         "n": 55,
-        "category_preliminary": "unlisted",
+        "class": "unlisted",
         "test_pattern_counts": "{\"1\": 53, \"0\": 2}",
         "frequency_accuracy": 0.963636,
         "oracle_accuracy": 1.0,

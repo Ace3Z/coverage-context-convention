@@ -1,5 +1,5 @@
 """Reproducible Old English length restoration on work-separated source files."""
-import argparse,collections,csv,difflib,json,re,unicodedata,statistics
+import argparse,collections,csv,difflib,hashlib,json,re,unicodedata,statistics
 from pathlib import Path
 
 LONG='āēīōūȳǣ'; SHORT='aeiouyæ'; TRANS=str.maketrans(dict(zip(LONG,SHORT)))
@@ -146,7 +146,7 @@ def per_word(train,test,pred,lex,counts,top=20,cls=None):
  out=[]
  for word,n in most:
   indices=[i for i,r in subset if r['key']==word];gold=[test[i]['gold_pattern'] for i in indices]
-  row={'word':word,'n':n,'category_preliminary':(cls or {}).get(word,'unlisted'),'test_pattern_counts':json.dumps(dict(collections.Counter(gold)),ensure_ascii=False)}
+  row={'word':word,'n':n,'class':(cls or {}).get(word,'unlisted'),'test_pattern_counts':json.dumps(dict(collections.Counter(gold)),ensure_ascii=False)}
   for name,values in pred.items():row[name+'_accuracy']=round(sum(values[i]==test[i]['gold_pattern'] for i in indices)/n,6)
   for source in ['bright_reader','matthew_ws','sweet_primer','physiologus','zupitza_grammar']:
    ct=collections.Counter(r['gold_pattern'] for r in train if r['source']==source and r['key']==word)
@@ -163,9 +163,9 @@ def main():
  train,prose,hs,wy=build_data(a.data,exclude);lex,counts=lexicon(train,a.lexicon);cls=load_classes(cpath) if cpath.exists() else None;out=Path(a.out);out.mkdir(parents=True,exist_ok=True)
  summary={'dataset':{'train':len(train),'test_prose':len(prose),'agreement_hs':len(hs),'agreement_wyatt':len(wy),'lexicon_origin':'training attested forms'+(' + external file' if a.lexicon else ' (proxy; NOT Clark Hall/Wiktionary/Bosworth-Toller)')}}
  if exclude:summary['dataset']['exclude_train']=exclude  # only when set: the default metrics.json stays as before
- if a.lexicon:summary['dataset']['lexicon_file']=Path(a.lexicon).name
+ if a.lexicon:summary['dataset'].update(lexicon_file=Path(a.lexicon).name,lexicon_sha256=hashlib.sha256(Path(a.lexicon).read_bytes()).hexdigest())
  mpath=out/'metrics.json'  # refuse a mismatched --out folder before any file in it is overwritten
- if mpath.exists() and any(json.loads(mpath.read_text(encoding='utf8')).get('dataset',{}).get(k)!=summary['dataset'].get(k) for k in ('lexicon_origin','lexicon_file','exclude_train')):raise SystemExit(f'{mpath} was made with a different lexicon or training set; use another --out folder')
+ if mpath.exists() and any(json.loads(mpath.read_text(encoding='utf8')).get('dataset',{}).get(k)!=summary['dataset'].get(k) for k in ('lexicon_origin','lexicon_file','lexicon_sha256','exclude_train')):raise SystemExit(f'{mpath} was made with a different lexicon or training set; use another --out folder')
  tauber_path=Path(a.tauber)
  if 'tauber_beowulf' in wanted and not tauber_path.exists():raise SystemExit('Tauber gold missing: put brunetti-length.txt in data/ or run python -m oevl.fetch_tauber')
  tests=[(name,heldout(a.data,name,tauber_path)) for name in TESTS if name in wanted]
