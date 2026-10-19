@@ -78,5 +78,6 @@
       "ambiguous_tokens": 32428,
       "ambiguous_tokens_outside_list": 4927
     }
-  }
+  },
+  "expert_review": "2026-10-19: two blind LLM experts relabelled all 60 skeletons and agreed with the final label on 58. An adjudicator upheld the final label for the other two (þis and gyt, both B). No label changed. The labels are still pending review by the team."
 }

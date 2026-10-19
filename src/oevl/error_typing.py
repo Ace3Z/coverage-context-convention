@@ -20,7 +20,8 @@ TYPES = (("ceiling", "Ceiling"), ("segment", "Segment"), ("truncation", "Truncat
          ("gold_in_doubt", "Gold in doubt"), ("homograph", "Homograph (A)"), ("grammatical", "Grammatical (B)"),
          ("editorial", "Editorial (C)"), ("other", "Other"))
 PROVENANCE = ("label_a and label_b come from two independent automated annotators, final and note from an automated "
-              "adjudicator that resolved every disagreement. All labels are pending review by the team.")
+              "adjudicator that resolved every disagreement. A blind LLM expert review with an adjudicator (2026-10-19) "
+              "then changed five final labels, noted in the note column. All labels are pending review by the team.")
 SAMPLING = ("An error is a lexicon-ambiguous token (two or more length patterns for its skeleton in the system's own "
             "lexicon) of the soliloquies and tauber_beowulf test sets, pooled, whose predicted length pattern differs "
             "from gold. john_ws is not used. For each system, 200 errors were drawn with random.Random(1).sample. "
@@ -37,9 +38,9 @@ def main():
     with open(DIR / "labels.tsv", encoding="utf8") as f:
         rows = list(csv.DictReader(f, delimiter="\t"))
     names = {t for t, _ in TYPES}
-    for r in rows:  # the adjudicator only resolves disagreements, and the guideline's hard rules hold
+    for r in rows:  # the guideline's hard rules hold
         assert {r["label_a"], r["label_b"], r["final"]} <= names, r["item"]
-        assert r["final"] == r["label_a"] == r["label_b"] or (r["label_a"] != r["label_b"] and r["note"]), r["item"]
+        assert r["final"] == r["label_a"] == r["label_b"] or r["note"], r["item"]  # a final that departs from the annotators needs a note
         assert (r["final"] == "ceiling") == (r["gold_in_candidates"] == "no"), r["item"]
         assert r["final"] != "gold_in_doubt" or r["set"] == "tauber_beowulf", r["item"]
         assert r["final"] not in ("segment", "truncation") or r["system"] == "charsiug2p", r["item"]

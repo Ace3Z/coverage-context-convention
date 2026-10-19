@@ -254,8 +254,8 @@
     "seed": 1,
     "labels": {
       "normalisation fault": 10,
-      "genuine editorial difference": 58,
-      "other": 32
+      "genuine editorial difference": 54,
+      "other": 36
     },
     "labelled_by": [
       "automated assistant, not a team member"
