@@ -13,7 +13,8 @@ tags:
 size_categories:
 - 1K<n<10K
 configs:
-- config_name: default
+- config_name: corpus
+  default: true
   data_files:
   - split: train
     path: train.jsonl

@@ -8,11 +8,14 @@ Every sentence is written. The dev and test sentences that the 6-gram audit leav
 (data/leakage_excluded.json) are kept with leakage_excluded true. There is no split field: the file is the split.
 Tauber's file has no running text, so a test_verse sentence's text is its tokens joined by spaces.
 README.md is the card release/hf_card.md with the split table counted from the written files.
+Copied unchanged next to them: the dictionaries (lexicons/lex_*.csv, lexicons/lexicons_provenance.json), the
+ambiguity classes (ambiguity_classes.csv and .json), data/LICENSE.md as LICENSE.md and the logo docs/uzh_logo.png.
 Usage: python -m oevl.export_hf [--data data] [--tauber data/brunetti-length.txt] [--out release/hf]
 """
 import argparse
 import itertools
 import json
+import shutil
 from pathlib import Path
 from string import Template
 
@@ -24,6 +27,7 @@ SPLITS = {"train": TRAIN, "dev": ["john_ws"], "test_prose": ["soliloquies"], "te
 META = ("source", "work", "editor", "year", "genre", "section")
 TAUBER = {"source": "tauber_beowulf", "work": "Beowulf", "editor": "Tauber (Klaeber 1922 via Perseus)", "year": 1922,
           "genre": "verse", "section": ""}
+LEXICONS = ("wikipron", "clarkhall", "wiktionary", "bt", "proposal", "all")
 
 
 def tauber(path):
@@ -45,7 +49,7 @@ def record(r, excluded):
 
 
 def export(data, tauber_path, out):
-    """Write <out>/<split>.jsonl and <out>/README.md; return the counts read back from the files."""
+    """Write <out>/<split>.jsonl, the copied files and <out>/README.md; return the counts read back from the files."""
     data, out = Path(data), Path(out)
     audit = json.loads((data / "leakage_excluded.json").read_text(encoding="utf8"))["excluded"]
     excluded = {s for ids in audit.values() for s in ids}
@@ -69,6 +73,14 @@ def export(data, tauber_path, out):
         table="\n".join(table), sentences=f"{sum(c['sentences'] for c in counts.values()):,}",
         tokens=f"{sum(c['tokens'] for c in counts.values()):,}")
     (out / "README.md").write_text(card, encoding="utf8")
+    copies = {**{f"lexicons/lex_{n}.csv": data / f"lex_{n}.csv" for n in LEXICONS},
+              "lexicons/lexicons_provenance.json": data / "lexicons_provenance.json",
+              "ambiguity_classes.csv": data / "ambiguity_classes.csv",
+              "ambiguity_classes.json": data / "ambiguity_classes.json",
+              "LICENSE.md": data / "LICENSE.md", "uzh_logo.png": ROOT / "docs" / "uzh_logo.png"}
+    (out / "lexicons").mkdir(exist_ok=True)
+    for name, src in copies.items():
+        shutil.copyfile(src, out / name)
     return counts
 
 

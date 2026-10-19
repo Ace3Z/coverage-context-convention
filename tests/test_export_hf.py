@@ -7,7 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from oevl.experiment import bare, build_data, heldout, load, norm, pattern  # noqa: E402
-from oevl.export_hf import SPLITS, export  # noqa: E402
+from oevl.export_hf import LEXICONS, SPLITS, export  # noqa: E402
 
 DATA = ROOT / "data"
 TAUBER = DATA / "brunetti-length.txt"
@@ -24,6 +24,13 @@ class TestExportHF(unittest.TestCase):
             counts = export(DATA, TAUBER, d)
             files = {s: load(Path(d) / f"{s}.jsonl") for s in SPLITS}
             card = (Path(d) / "README.md").read_text(encoding="utf8")
+            copies = {f"lexicons/lex_{n}.csv": DATA / f"lex_{n}.csv" for n in LEXICONS}
+            copies.update({"lexicons/lexicons_provenance.json": DATA / "lexicons_provenance.json",
+                           "ambiguity_classes.csv": DATA / "ambiguity_classes.csv",
+                           "ambiguity_classes.json": DATA / "ambiguity_classes.json",
+                           "LICENSE.md": DATA / "LICENSE.md", "uzh_logo.png": ROOT / "docs" / "uzh_logo.png"})
+            for name, src in copies.items():  # copied unchanged
+                self.assertEqual((Path(d) / name).read_bytes(), src.read_bytes(), name)
         fields = set(files["train"][0])
         self.assertNotIn("split", fields)
         for split, rows in files.items():
@@ -45,6 +52,7 @@ class TestExportHF(unittest.TestCase):
                                      "test_prose": len(heldout(DATA, "soliloquies")),
                                      "test_verse": len(heldout(DATA, "tauber_beowulf")), "agreement": len(hs) + len(wy)})
         self.assertIn("license: cc-by-sa-4.0", card)
+        self.assertIn("- config_name: corpus\n  default: true", card)
         self.assertNotIn("$", card)
         self.assertIn(f"| {counts['test_verse']['tokens']:,} |", card)
 
