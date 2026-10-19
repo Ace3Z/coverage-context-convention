@@ -38,7 +38,7 @@ def env():
 
 
 def required_transformers():
-    m = re.search(r"^transformers==(\S+)", (ROOT / "requirements-neural.txt").read_text(), re.M)
+    m = re.search(r"^transformers==(\S+)", (ROOT / "requirements.txt").read_text(), re.M)
     return m.group(1) if m else None
 
 
@@ -55,7 +55,7 @@ def preflight(a):
     want = required_transformers()
     if want and transformers.__version__ != want:
         sys.exit(f"STOP: transformers {transformers.__version__} is installed but {want} is pinned: "
-                 f"pip install -r {ROOT / 'requirements-neural.txt'}")
+                 f"pip install -r {ROOT / 'requirements.txt'}")
     if not a.skip_model_check:  # fail before any training if the checkpoint cannot be downloaded
         from transformers import AutoTokenizer, T5ForConditionalGeneration
         AutoTokenizer.from_pretrained(a.model)

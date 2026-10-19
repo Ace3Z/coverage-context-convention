@@ -203,7 +203,7 @@ class TestSummary(unittest.TestCase):
                     "--report", str(Path(d) / "gen"))
 
 
-@unittest.skipUnless(importlib.util.find_spec("transformers"), "needs torch and transformers (requirements-neural.txt)")
+@unittest.skipUnless(importlib.util.find_spec("transformers"), "needs torch and transformers (requirements.txt)")
 class TestTinySmoke(unittest.TestCase):
     def test_two_seeds_then_summary(self):
         """The CPU smoke test: tiny random encoder, all arms on two seeds (D3 default) and one run on all five works, then encoder_summary."""

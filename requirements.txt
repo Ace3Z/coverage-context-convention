@@ -1,4 +1,9 @@
+# CPU pipeline (bash run_all.sh)
 scikit-learn==1.8.0
 scipy==1.16.3
 numpy==2.3.5
 matplotlib==3.10.8
+# ByT5 and CharsiuG2P (training needs a GPU; the unit tests and --tiny smoke runs work on a CPU).
+# The committed ByT5 runs used torch 2.11.0 (CUDA 12.8). A lower bound keeps the torch that Kaggle and Colab ship.
+torch>=2.2
+transformers==4.57.6

@@ -22,8 +22,11 @@ commands with `PYTHONPATH=src`.
 ### Dependencies
 
 Key dependencies include:
-- scikit-learn 1.8.0, scipy 1.16.3, numpy 2.3.5, matplotlib 3.10.8 (`requirements.txt`)
-- For the neural experiments, torch 2.2 or later and transformers 4.57.6 (`requirements-neural.txt`) and a GPU
+- scikit-learn 1.8.0, scipy 1.16.3, numpy 2.3.5, matplotlib 3.10.8 for the CPU pipeline
+- torch 2.2 or later and transformers 4.57.6 for ByT5 and CharsiuG2P (training needs a GPU). The committed ByT5
+  runs used torch 2.11.0 with CUDA 12.8
+
+All of them are in the one `requirements.txt`.
 - `pdflatex` to compile `REPORT.pdf` (optional)
 - `huggingface_hub` for the dataset upload (its `hf` command line)
 
@@ -113,7 +116,7 @@ manifest `role` says. `oevl.build_lexicons` rebuilds the three proposal dictiona
 
 ## 4. ByT5 encoder (GPU)
 
-The neural experiments need `pip install -r requirements-neural.txt` (pins `transformers==4.57.6`) and a GPU.
+Training needs a GPU. `requirements.txt` already holds torch and the pinned `transformers==4.57.6`.
 
 ```bash
 PYTHONPATH=src python -m oevl.encoder_experiment

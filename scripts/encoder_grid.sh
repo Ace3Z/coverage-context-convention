@@ -4,7 +4,7 @@
 # CUDA_VISIBLE_DEVICES and a share of the loops. A selection run took 12 to 70 minutes and a grid run 13 to 152
 # minutes on the GPUs of the committed runs. GPU training is not bit-for-bit repeatable, so new runs differ slightly
 # from the committed ones.
-# Usage (repository root, after pip install -r requirements-neural.txt):
+# Usage (repository root, after pip install -r requirements.txt):
 #   bash scripts/encoder_grid.sh [select|grid|all] [RUNS_DIR]   (default: all, encoder_runs)
 # At the end it rewrites results/encoder/ (selection.json, summary.json, the prediction tables) and the encoder table
 # and numbers in report/generated/ from the new runs.

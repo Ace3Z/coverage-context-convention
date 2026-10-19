@@ -1,7 +1,7 @@
 # GPU notebooks
 
 The encoder pilot needs a GPU, so it runs on Kaggle or Colab. Both notebooks only put the project on the machine,
-install `requirements-neural.txt` and call `python -m oevl.pilot`; the logic, checks and resume behaviour are in
+install `requirements.txt` and call `python -m oevl.pilot`; the logic, checks and resume behaviour are in
 `src/oevl/pilot.py`. Make the project zip in the repository with `git archive -o oe_project.zip HEAD`.
 
 | Notebook | Platform | How the project gets there |

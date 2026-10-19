@@ -151,7 +151,8 @@ bash run_all.sh
 PYTHONPATH=src python -m oevl.try_text my_sentences.txt
 ```
 
-The ByT5 runs need a GPU and `pip install -r requirements-neural.txt`. Their exact commands are in
+`requirements.txt` also installs torch and transformers, so the unit tests and the `--tiny` smoke runs work on a CPU.
+The ByT5 training runs need a GPU. Their exact commands are in
 `scripts/encoder_grid.sh`, and [REPRODUCE.md](REPRODUCE.md) explains each one.
 
 ---
@@ -211,8 +212,7 @@ cl-uzh-26-essentials-code/
 ├── notebooks/               Kaggle and Colab launchers for the ByT5 pilot
 ├── release/hf_card.md       template of the Hugging Face dataset card
 ├── media/figures/logos/     logos
-├── requirements.txt         pinned CPU dependencies
-└── requirements-neural.txt  torch and transformers for the GPU runs
+└── requirements.txt         every dependency, pinned (torch has a lower bound)
 ```
 
 ---
