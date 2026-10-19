@@ -20,7 +20,7 @@ The same data is on Hugging Face as
 The split is by work, and no *Beowulf* text is used for training. A dev or test sentence that shares a word 6-gram
 (bare, lower-cased, ð folded to þ) with a training work is left out of scoring. That removes 34 John sentences
 (661 tokens, shared with Matthew and Sweet), one *Soliloquies* sentence (49 tokens) and nothing from *Beowulf*.
-`python -m oevl.audit_splits` repeats the check.
+`PYTHONPATH=src python -m oevl.audit_splits` repeats the check.
 
 A few short English, Latin and markup fragments survived the extraction, for example English notes in
 `bright_reader:00937` to `00943` and a stray `nop` token in `matthew_ws:00907`. They are part of the training data
@@ -79,7 +79,7 @@ data/
 The code is MIT (`LICENSE`). The data is CC BY-SA 4.0 unless `data/LICENSE.md` says otherwise. That file gives the
 licence of every file in `data/` and the licence text or source page that each statement was checked against.
 
-- Corpus: `data/by_source/`, cleaned by `python -m oevl.clean_corpus` with explicit character mappings that are
+- Corpus: `data/by_source/`, cleaned by `PYTHONPATH=src python -m oevl.clean_corpus` with explicit character mappings that are
   counted in `data/manifest.json`. It comes from Project Gutenberg editions (public domain in the USA) and Wikisource
   transcriptions (CC BY-SA 4.0), and is released as CC BY-SA 4.0.
 - Tauber gold: https://github.com/old-english-learner-texts/old-english-texts (CC BY-SA 4.0, attribution to James

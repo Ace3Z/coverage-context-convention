@@ -39,7 +39,7 @@ the code finds `data/` and `results/` relative to the repository.
 
 Accuracy is reported on all tokens and on three harder populations: lexicon-ambiguous tokens (two or more candidate
 patterns), attested-ambiguous tokens (at least two patterns, each seen at least twice in training), and minority
-readings. The lexicon-ambiguous tokens are also split by ambiguity
+readings (the gold pattern is seen in training but is not the most frequent one there). The lexicon-ambiguous tokens are also split by ambiguity
 class (`class_A`, `class_B`, `class_C` in `metrics.json`) for the 60 skeletons (spellings without macrons) in `data/ambiguity_classes.csv`, with
 `class_unlisted` for the rest. Two LLM annotators and an automated adjudicator assigned the classes, and the team has
 not reviewed them yet. The 60 skeletons were picked by their frequency in the training works (Zupitza included) and both test
@@ -47,8 +47,8 @@ sets, and they are kept under decision D3. With training forms plus WikiPron, th
 Zupitza, and that 6,759 of the 36,203 lexicon-ambiguous tokens counted there fall outside the list.
 
 Results are the mean and sample standard deviation over seeds. A difference between two systems gets a 95%
-sentence-level bootstrap interval over seed-averaged predictions (`oevl.stats`). Exact McNemar tests per seed are
-stored as well.
+sentence-level bootstrap interval over seed-averaged predictions (`oevl.stats`). Exact McNemar tests are
+stored as well (per seed for ByT5, seed 1 for the logistic models).
 
 `run_all.sh` runs four candidate settings: training forms only, training forms plus WikiPron (the main setting), the
 three proposal dictionaries, and all four sources together. `check_expected` freezes 660 values from these settings,
@@ -78,7 +78,7 @@ It takes about two minutes and has six steps:
    output and `oevl.agreement` writes `results/agreement/`.
 5. `oevl.check_expected` fails if any of the 660 frozen values changes.
 6. `oevl.error_typing`, `oevl.encoder_summary --from-tsv` and `oevl.select_config` rebuild the error table, the
-   encoder table and numbers, and the encoder selection record from committed files without a GPU (section 5). Then
+   ByT5 table and numbers, and `results/encoder/selection.json` from committed files without a GPU (section 5). Then
    `oevl.build_report` writes `report/generated/` (numbers, tables, figure), checks the worked examples against the
    predictions, and compiles `REPORT.pdf` if `pdflatex` is installed. Without LaTeX, upload `report/` to Overleaf and
    compile `main.tex`.
@@ -86,7 +86,7 @@ It takes about two minutes and has six steps:
 ## 2. Run a single experiment
 
 Results for the same `--out` folder are merged. Keep `--exclude-train zupitza_grammar` (decision D3), because
-`experiment.py` refuses to merge into a folder made with a different training set:
+`experiment.py` refuses, before writing anything, to add to a folder made with a different training set:
 
 ```bash
 PYTHONPATH=src python -m oevl.experiment --data data --out results/wikipron --lexicon data/lex_wikipron.csv --exclude-train zupitza_grammar --tests soliloquies
@@ -104,8 +104,8 @@ PYTHONPATH=src python -m oevl.build_lexicons
 `oevl.build_corpus` fetches an edition into `data/raw/corpus/` and rebuilds its file and manifest entry: the URL,
 retrieval date and SHA-256 of each input, and the work's `role` (train, dev, test or agreement). The first extraction
 scripts were lost, so the rules were worked out from the files. After `clean_corpus`, `matthew_ws`, `bright_reader`,
-`physiologus` and `hs_beowulf` rebuild byte for byte. The other four rebuilds contain 65,988 of their 65,991 committed
-tokens in order, but some sentences differ, mostly where the original language filter dropped short lines (the
+`physiologus` and `hs_beowulf` rebuild byte for byte. The other four rebuilds contain all but four of their 65,991
+committed tokens in order, but some sentences differ, mostly where the original language filter dropped short lines (the
 module docstring has the details). Those four committed files were kept as they are. `john_ws.jsonl` (Gospel of
 John, the dev set) is built the same way as Matthew. The builder still writes an old sentence-level `split` field,
 which `clean_corpus` removes, because the split is by work as the manifest `role` says. `oevl.build_lexicons`

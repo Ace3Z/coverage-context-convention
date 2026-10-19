@@ -100,7 +100,7 @@ grammatical homographs, words spelled alike that differ in function.
 | Context helps most on grammatical homographs | *Soliloquies*, class B (*þe/þē*, *ne/nē*), ByT5 | 62.66% from the word alone, 76.39% with two words each side (+13.73, 11.29 to 16.03) |
 | Context helps prose overall | *Soliloquies*, lexicon-ambiguous tokens, ByT5 | 88.91% from the word alone, 91.30% with two words each side (+2.39, 1.91 to 2.87) |
 | On verse the word alone is enough | *Beowulf*, lexicon-ambiguous tokens, ByT5 | 90.04% from the word alone, 89.43% with the full sentence (−0.61, −1.06 to −0.15) |
-| Editors differ most on grammatical words | Wyatt against Klaeber (Tauber), ambiguous / class B | 96.08% / 78.07% agreement |
+| Editors differ most on grammatical words | Wyatt against Klaeber (Tauber), lexicon-ambiguous / class B | 96.08% / 78.07% agreement |
 | CharsiuG2P's errors are mostly about length | its own 500-word Old English test set | word error rate 0.208 as published and 0.188 with 50 decoding steps, where 75.5% of the word errors differ only in vowel length |
 
 LLM annotators labelled the ambiguity classes, the error types and a sample of editor disagreements, and nobody on

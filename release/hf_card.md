@@ -48,7 +48,7 @@ Each line is one JSON object for one sentence.
 | `source` | string | short name of the edition (see the table of sources) |
 | `work`, `editor` | string | the work and the editor of the edition |
 | `year` | integer | year of the edition (for Harrison & Sharp, the year of the first edition) |
-| `genre` | string | `prose`, `verse` or `mixed` |
+| `genre` | string | `prose`, `verse` or `mixed`, given per work (Bright's *Reader* and Sweet's *Primer* are `mixed`) |
 | `section` | string | chapter or Wikisource page the sentence comes from, empty in `test_verse` |
 | `text` | string | the sentence with the edition's length marks |
 | `text_bare` | string | the same sentence with the length marks removed |
