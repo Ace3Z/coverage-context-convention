@@ -1,4 +1,4 @@
-"""Apply the encoder selection rule (PLAN S9 search and D3) to the 24 dev runs and write results/encoder/selection.json.
+"""Apply the encoder selection rule (the selection search and decision D3) to the 24 dev runs and write results/encoder/selection.json.
 
 The runs are the ByT5 sentence arm, seeds 1 and 2, with and without Zupitza, lr 1e-4 and 3e-4, 1, 3 and 5 epochs
 (scripts/encoder_grid.sh). By default their dev numbers come from the "runs" list of the committed selection.json, so
@@ -111,7 +111,7 @@ def main():
         raise SystemExit(f"expected the 24 selection runs, found {len(rows)}")
     scored, tied, choice = select(rows)
     rec = {
-        "what": "Model selection for the ByT5 encoder (PLAN S9 search and D3): sentence arm only, seeds 1 and 2, scored "
+        "what": "Model selection for the ByT5 encoder (the selection search and decision D3): sentence arm only, seeds 1 and 2, scored "
                 "on the john_ws dev set. The test sets played no part in the choice.",
         "code_commit": "64ef2c2",
         "command": "python -m oevl.encoder_experiment --arms sentence --seed SEED --max-bytes 2560 --batch 32 --micro 8 "

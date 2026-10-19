@@ -1,4 +1,4 @@
-"""Build data/by_source/<source>.jsonl from the editions (plan stages S1 and S3).
+"""Build data/by_source/<source>.jsonl from the editions.
 
 Each source is fetched from its original site (Wikisource MediaWiki API, Project Gutenberg HTML) into
 data/raw/corpus/<source>/ (gitignored) and goes through the same steps:

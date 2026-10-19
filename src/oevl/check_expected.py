@@ -12,7 +12,7 @@ PROP_TOL, P_TOL = 0.00005, 0.0005
 POPS = ("accuracy", "lexicon_ambiguous", "attested_ambiguous", "minority_reading")
 
 # (folder, test) -> population -> n, frequency, word, left, bilateral (means over seeds 1-3), oracle
-# The four settings train without Zupitza (PLAN D3); results_wikipron_with_zupitza is the D3 ablation with all five works
+# The four settings train without Zupitza (decision D3); results_wikipron_with_zupitza is the D3 ablation with all five works
 EXPECTED = {
     ("results_wikipron", "john_ws"): {
         "accuracy": (16649, .9613, .9601, .9591, .9596, .9868),

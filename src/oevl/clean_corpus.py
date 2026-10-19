@@ -17,13 +17,13 @@ from pathlib import Path
 from oevl.experiment import bare, norm, pattern
 
 ROOT = Path(__file__).resolve().parents[2]
-# Canonical inventory (PLAN S2): Latin letters, þ ð æ, and length shown only by ā ē ī ō ū ȳ ǣ.
+# Canonical inventory: Latin letters, þ ð æ, and length shown only by ā ē ī ō ū ȳ ǣ.
 LETTERS = set("abcdefghijklmnopqrstuvwxyzþðæāēīōūȳǣ")
 INVENTORY = LETTERS | {c.upper() for c in LETTERS}
 CHARS = {
     "Đ": "Ð", "đ": "ð",                      # D with stroke typed for eth (Matthew, Soliloquies, John)
     "о": "o", "с": "c",                      # Cyrillic o and es inside Latin words (Soliloquies weоrlde, сlēne)
-    "ċ": "c", "ġ": "g", "ę": "e", "ǫ": "o",  # teaching notations, dropped because only length is scored (PLAN S2)
+    "ċ": "c", "ġ": "g", "ę": "e", "ǫ": "o",  # teaching notations, dropped because only length is scored
     "ḥ": "h",                                # stray dot below (John geseaḥ)
 }
 # Whole-word repairs: (spelling in the text, tokens the source builder made of it) -> (marked, bare).

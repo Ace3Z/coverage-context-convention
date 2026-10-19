@@ -19,14 +19,14 @@ def tokens(rows):
    yield {'id':r['id']+':'+str(i),'sentence_id':r['id'],'source':r['source'],'index':i,'gold':w,'bare':b,'sentence':bs,'gold_pattern':pattern(w),'key':key(b)}
 TRAIN=['bright_reader','matthew_ws','sweet_primer','physiologus','zupitza_grammar']
 TESTS=['john_ws','soliloquies','tauber_beowulf']  # john_ws is the dev set, scored like the tests
-EXCLUDE_D3=('zupitza_grammar',)  # PLAN D3, decided on dev: the final systems train without Zupitza's Grammar
+EXCLUDE_D3=('zupitza_grammar',)  # decision D3, decided on dev: the final systems train without Zupitza's Grammar
 def heldout(root,name,tauber=None):
  # A dev or test set without the sentences that share a 6-gram with train (python -m oevl.audit_splits)
  ex=set(json.loads((Path(root)/'leakage_excluded.json').read_text(encoding='utf8'))['excluded'][name])
  rows=load_tauber(tauber or Path(root)/'brunetti-length.txt') if name=='tauber_beowulf' else list(tokens(load(Path(root)/'by_source'/(name+'.jsonl'))))
  return [r for r in rows if r['sentence_id'] not in ex]
 def build_data(root,exclude=()):
- # exclude: training works left out (PLAN D3); the lexicon's training forms and the prior counts follow from train
+ # exclude: training works left out (decision D3); the lexicon's training forms and the prior counts follow from train
  src=Path(root)/'by_source'
  train=list(tokens([r for name in TRAIN if name not in exclude for r in load(src/(name+'.jsonl'))]))
  prose=heldout(root,'soliloquies')
@@ -65,7 +65,7 @@ def i32(X):
  X.indices=X.indices.astype('int32');X.indptr=X.indptr.astype('int32');return X
 def predict(train,test,lex,counts,arm,seed=42):
  if arm=='frequency':
-  # PLAN S8: most frequent in train; for a skeleton unseen in train, the pattern most lexicon sources attest; then fewest long
+  # Prior: most frequent in train; for a skeleton unseen in train, the pattern most lexicon sources attest; then fewest long
   return [max(lex.get(r['key'],{zeros(r['gold'])}),key=lambda p:(counts[r['key']][p],0 if counts[r['key']] else len(lex[r['key']][p]),-p.count('1'),p)) if lex.get(r['key']) else '0'*len(r['gold_pattern']) for r in test]
  from sklearn.feature_extraction import DictVectorizer
  from sklearn.linear_model import SGDClassifier
@@ -89,7 +89,7 @@ def evaluate(test,preds,lex,counts,cls=None):
  for label in ['lexicon_ambiguous','attested_ambiguous','minority_reading']:
   ix=[i for i,r in enumerate(test) if flags(r,lex,counts)[label]]
   out[label]={'n':len(ix),'accuracy':sum(preds[i]==test[i]['gold_pattern'] for i in ix)/len(ix) if ix else None}
- # S6 classes split the lexicon-ambiguous tokens; 'unlisted' are ambiguous skeletons outside the class file
+ # the ambiguity classes split the lexicon-ambiguous tokens; 'unlisted' are ambiguous skeletons outside the class file
  for c in (['A','B','C','unlisted'] if cls else []):
   ix=[i for i,r in enumerate(test) if len(lex.get(r['key'],()))>=2 and cls.get(r['key'],'unlisted')==c]
   out['class_'+c]={'n':len(ix),'accuracy':sum(preds[i]==test[i]['gold_pattern'] for i in ix)/len(ix) if ix else None}

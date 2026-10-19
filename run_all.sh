@@ -35,7 +35,7 @@ else
 fi
 
 echo "== 4/6 experiments (one set per run: the John dev set and the two test sets)"
-# PLAN D3, decided on dev: the four settings train without Zupitza, and results/wikipron_with_zupitza keeps all five works
+# decision D3, decided on dev: the four settings train without Zupitza, and results/wikipron_with_zupitza keeps all five works
 D3="--exclude-train zupitza_grammar"
 rm -rf results/training_only results/wikipron results/proposal results/all results/wikipron_with_zupitza
 for t in john_ws soliloquies tauber_beowulf; do
@@ -52,7 +52,7 @@ if [[ -s results/charsiu/ipa.tsv ]]; then
   python -m oevl.charsiu_g2p analyse > results/charsiu/analyse.log   # uses the shipped CharsiuG2P outputs (made on Colab)
 fi
 mkdir -p results/agreement
-python -m oevl.agreement > results/agreement/agreement.log   # three Beowulf editions, kappa and the S7 gate
+python -m oevl.agreement > results/agreement/agreement.log   # three Beowulf editions, kappa and the gate
 
 echo "== 5/6 check all headline values"
 python -m oevl.check_expected

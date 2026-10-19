@@ -56,7 +56,7 @@
     "Many skeletons are near-unanimous in training (þa 17 short vs 2,690 long, þæt 1,947 short vs 6 long). They count as lexicon-ambiguous but most of that is dictionary noise."
   ],
   "d3": {
-    "rule": "PLAN D3: the final systems train without zupitza_grammar. The 60 skeletons and their labels are kept. Counted as in counting_rule with zupitza_grammar left out of training, so out of the lexicon's training forms and out of the counted tokens. Two lexicons: the counting rule's (training forms + data/lex_wikipron.csv, as results/wikipron) and training forms only (as results/training_only).",
+    "rule": "Decision D3 (DATA.md): the final systems train without zupitza_grammar. The 60 skeletons and their labels are kept. Counted as in counting_rule with zupitza_grammar left out of training, so out of the lexicon's training forms and out of the counted tokens. Two lexicons: the counting rule's (training forms + data/lex_wikipron.csv, as results/wikipron) and training forms only (as results/training_only).",
     "tokens_counted": 101939,
     "training_and_wikipron": {
       "listed_not_ambiguous": [

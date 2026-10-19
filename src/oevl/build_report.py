@@ -96,7 +96,7 @@ num["SdMaxMin"] = f"{100 * max(W[t]['seed_summary'][a]['minority_reading']['sd']
 num["EditorGap"] = f"{100 * (W['editor_agreement']['lexicon_ambiguous']['agreement'] - W['tauber_beowulf']['seed_summary']['word']['lexicon_ambiguous']['mean']):.1f}"
 num["AgrGap"] = f"{100 * (1 - W['editor_agreement']['lexicon_ambiguous']['agreement']):.1f}"
 
-# S6 ambiguity classes: annotator agreement and final counts
+# ambiguity classes: annotator agreement and final counts
 CLS = json.loads((ROOT / "data" / "ambiguity_classes.json").read_text(encoding="utf8"))
 num["ClassKappa"] = f"{CLS['cohen_kappa']:.3f}"
 num["ClassAgree"] = pct(CLS["agreement"])
@@ -111,7 +111,7 @@ def rjson(path):
     return json.loads((ROOT / path).read_text(encoding="utf8"))
 
 
-# editor agreement of the three Beowulf pairs, the D2 gate and the checked HS-Wyatt sample (results/agreement)
+# editor agreement of the three Beowulf pairs, the gate and the checked HS-Wyatt sample (results/agreement)
 AG = rjson("results/agreement/metrics.json")
 for pair, short in (("hs-wyatt", "HW"), ("hs-tauber", "HT"), ("wyatt-tauber", "WT")):
     num[f"Pair{short}Aligned"] = f"{AG['pairs'][pair]['aligned']:,}"
@@ -244,7 +244,7 @@ def counts(js):
     return f"{c.get('0', 0)}/{c.get('1', 0)}"
 
 
-# Zupitza is not trained on (PLAN D3), so the per-word CSVs hold no counts for it: its column counts the corpus file
+# Zupitza is not trained on (decision D3), so the per-word CSVs hold no counts for it: its column counts the corpus file
 from oevl import experiment as E  # noqa: E402
 ZUP = collections.Counter((r["key"], r["gold_pattern"]) for r in E.tokens(E.load(ROOT / "data/by_source/zupitza_grammar.jsonl")))
 

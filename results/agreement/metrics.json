@@ -4,7 +4,7 @@
     "wyatt": "Wyatt 1894",
     "tauber": "Tauber gold (Klaeber 1922 via Perseus)"
   },
-  "lexicon": "training forms without zupitza_grammar (PLAN D3) + data/lex_wikipron.csv, as results/wikipron",
+  "lexicon": "training forms without zupitza_grammar (decision D3) + data/lex_wikipron.csv, as results/wikipron",
   "classes": "data/ambiguity_classes.csv",
   "pairs": {
     "hs-wyatt": {
@@ -156,7 +156,7 @@
     }
   },
   "gate": {
-    "rule": "ceiling = editor agreement on ambiguous aligned tokens; floor = most-frequent-reading prior scored on the same tokens against one editor of the pair; continue to modelling if ceiling minus floor is at least 10 points on at least 500 tokens (PLAN.md D2)",
+    "rule": "ceiling = editor agreement on ambiguous aligned tokens; floor = most-frequent-reading prior scored on the same tokens against one editor of the pair; continue to modelling if ceiling minus floor is at least 10 points on at least 500 tokens",
     "note": "Applied after the fact: the rule was not written down before the agreement numbers were measured. These fields say which side of the bar each pair lands on. They do not decide the outcome.",
     "hs-wyatt": {
       "lexicon_ambiguous_floor_vs_hs": {

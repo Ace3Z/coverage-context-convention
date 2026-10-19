@@ -105,7 +105,7 @@ def main():
     ap.add_argument("--tests", default=",".join(TESTS), help="comma list of john_ws (dev), soliloquies, tauber_beowulf")
     ap.add_argument("--exclude-train", default=",".join(EXCLUDE_D3), help="comma list of training works to leave out: "
                     "they leave the training set, the lexicon's training forms and the prior. Default zupitza_grammar "
-                    "(PLAN D3, as run_all.sh). Pass an empty string to train on all five works")
+                    "(decision D3, as run_all.sh). Pass an empty string to train on all five works")
     ap.add_argument("--tiny", action="store_true", help="tiny random model + small data subset (CPU smoke test)")
     a = ap.parse_args()
     a.arms = ",".join(dict.fromkeys(a.arms.split(",")))

@@ -32,12 +32,12 @@ SOURCES = {
 WORD = re.compile(r"[abcdefghiklmnopqrstuwxyzþðæāēīōūȳǣ]+")  # Old English letters only (no j, v)
 ACUTE_TO_MACRON = str.maketrans("áéíóúýǽ", "āēīōūȳǣ")
 BT_DIGRAPHS = (("eá", "ēa"), ("eó", "ēo"), ("ié", "īe"), ("ió", "īo"))  # long diphthongs, accent on the 2nd letter
-TEACHING_MARKS = str.maketrans("ċġęǫ", "cgeo")  # palatal dots and hooks (PLAN S2), only length is scored
+TEACHING_MARKS = str.maketrans("ċġęǫ", "cgeo")  # palatal dots and hooks, only length is scored
 SKIP_TAGS = {"table-tags", "inflection-template", "class"}
 
 
 def clean(form, acute=False):
-    """Lower-case, NFC, PLAN S2 rules, join hyphens; return None unless it is one Old English word."""
+    """Lower-case, NFC, the corpus character rules, join hyphens; return None unless it is one Old English word."""
     s = unicodedata.normalize("NFC", form).lower().strip()
     if s.startswith("-") or s.endswith("-"):  # affixes and partial variants are not words
         return None

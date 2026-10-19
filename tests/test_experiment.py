@@ -21,7 +21,7 @@ class Tests(unittest.TestCase):
   p=subprocess.run([sys.executable,'-m','oevl.experiment','--exclude-train','zupitza'],env={**os.environ,'PYTHONPATH':str(root/'src')},capture_output=True,text=True)
   self.assertEqual(p.returncode,2,p.stderr)
  def test_excluded_work_never_reaches_training(self):
-  # PLAN D3, as run_all.sh runs it: only Zupitza marks 'god' long, so left out it adds no token, training form or prior count
+  # decision D3, as run_all.sh runs it: only Zupitza marks 'god' long, so left out it adds no token, training form or prior count
   import os,subprocess,sys,tempfile
   root=Path(__file__).resolve().parents[1]
   with tempfile.TemporaryDirectory() as d:

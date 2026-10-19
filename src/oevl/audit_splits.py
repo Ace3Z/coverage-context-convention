@@ -1,4 +1,4 @@
-"""Leakage audit (PLAN S4): word 6-grams shared by the training works and each held-out set.
+"""Leakage audit: word 6-grams shared by the training works and each held-out set.
 
 Tokens are compared bare, lower-cased, with ð folded to þ (experiment.key), and 6-grams stay inside a sentence.
 It prints the overlap matrix (distinct shared 6-grams per training work), writes data/leakage_excluded.json with
