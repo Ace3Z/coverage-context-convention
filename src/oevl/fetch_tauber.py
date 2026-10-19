@@ -1,11 +1,12 @@
 """Download Tauber's CC BY-SA 4.0 Beowulf gold and check it before it replaces data/brunetti-length.txt."""
-import tempfile
+import sys,tempfile
 from pathlib import Path
 from urllib.request import urlopen
 from oevl.experiment import load_tauber
 URL='https://raw.githubusercontent.com/old-english-learner-texts/old-english-texts/master/beowulf/raw-data/brunetti-length.txt'
 path=Path(__file__).resolve().parents[2]/'data/brunetti-length.txt'
 def main():
+ if len(sys.argv)>1:sys.exit('usage: python -m oevl.fetch_tauber   (downloads data/brunetti-length.txt)')
  with urlopen(URL,timeout=90) as response:data=response.read()
  with tempfile.TemporaryDirectory() as d:  # parse a temporary copy, so a changed or truncated download never lands in data/
   tmp=Path(d)/path.name;tmp.write_bytes(data);rows=load_tauber(tmp)

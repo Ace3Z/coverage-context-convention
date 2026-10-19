@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # The GPU runs behind results/encoder/: the 24 selection runs (selection.json), then the 39 grid runs (summary.json).
 # They run one after another on the visible GPU. To spread them over several GPUs, give each process its own
-# CUDA_VISIBLE_DEVICES and a share of the loops. A selection run took 12 to 70 minutes and a grid run 13 to 152
-# minutes on the GPUs of the committed runs. GPU training is not bit-for-bit repeatable, so new runs differ slightly
+# CUDA_VISIBLE_DEVICES and a share of the loops. A selection run took 12 to 70 minutes (results/encoder/selection.json
+# records each run's time). GPU training is not bit-for-bit repeatable, so new runs differ slightly
 # from the committed ones.
 # Usage (repository root, after pip install -r requirements.txt):
 #   bash scripts/encoder_grid.sh [select|grid|all] [RUNS_DIR]   (default: all, encoder_runs)
@@ -12,6 +12,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 export PYTHONPATH="$PWD/src${PYTHONPATH:+:$PYTHONPATH}"
 what=${1:-all} W=${2:-encoder_runs}
+[[ $what =~ ^(select|grid|all)$ ]] || { echo 'usage: bash scripts/encoder_grid.sh [select|grid|all] [RUNS_DIR]'; exit 1; }
 
 if [[ $what != grid ]]; then
   # Selection (PLAN S9 and D3): sentence arm, whole sentence, seeds 1-2, with and without Zupitza, two learning rates,
