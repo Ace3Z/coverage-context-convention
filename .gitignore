@@ -17,3 +17,5 @@ results/charsiu/ipa_tiny.tsv
 *.egg-info/
 build/
 release/hf/
+.ipynb_checkpoints/
+.env
