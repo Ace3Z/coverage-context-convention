@@ -15,7 +15,7 @@ The same data is on Hugging Face as
 | Dev | Gospel of John (`john_ws`) | 16,649 of 17,310 scored |
 | Prose test | Alfred's *Soliloquies* | 15,431 of 15,480 scored |
 | Verse test | Tauber's *Beowulf* | 17,361 (some of the 17,244 rows in Tauber's file hold two or three words) |
-| Editor agreement only | Harrison & Sharp and Wyatt *Beowulf* | 35,250 (17,682 and 17,568) |
+| Editor agreement only | Harrison & Sharp and Wyatt *Beowulf*, each with the *Finnsburh Fragment* | 35,250 (17,682 and 17,568) |
 
 The split is by work, and no *Beowulf* text is used for training. A dev or test sentence that shares a word 6-gram
 (bare, lower-cased, ð folded to þ) with a training work is left out of scoring. That removes 34 John sentences
@@ -23,7 +23,8 @@ The split is by work, and no *Beowulf* text is used for training. A dev or test 
 `PYTHONPATH=src python -m oevl.audit_splits` repeats the check.
 
 A few short English, Latin and markup fragments survived the extraction, for example English notes in
-`bright_reader:00937` to `00943` and a stray `nop` token in `matthew_ws:00907`. They are part of the training data
+`bright_reader:00937` to `00943` a stray `nop` token in `matthew_ws:00907`, and in `sweet_primer:00236` a þā
+that the extraction split into `þ` and a short `a`, which gives one wrong training label. They are part of the training data
 the results used.
 
 ## Decision D3: Zupitza

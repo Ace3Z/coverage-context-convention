@@ -101,7 +101,7 @@ of training and skip sentences with `leakage_excluded: true` when scoring.
 Each edition's Old English text was extracted, normalised to Unicode NFC with length marked only by macrons
 (Zupitza's circumflexes were converted), and split into sentences and tokens. Notes, translations and Latin and
 English lines were removed, but a few short English, Latin and markup fragments remain, for example in
-`bright_reader:00937` to `00943`.
+`bright_reader:00937` to `00943`. In `sweet_primer:00236` the extraction split a þā into `þ` and a short `a`.
 
 ## Uses
 

@@ -104,7 +104,7 @@ PYTHONPATH=src python -m oevl.build_lexicons
 `oevl.build_corpus` fetches an edition into `data/raw/corpus/` and rebuilds its file and manifest entry: the URL,
 retrieval date and SHA-256 of each input, and the work's `role` (train, dev, test or agreement). The first extraction
 scripts were lost, so the rules were worked out from the files. After `clean_corpus`, `matthew_ws`, `bright_reader`,
-`physiologus` and `hs_beowulf` rebuild byte for byte. The other four rebuilds contain all but four of their 65,991
+`physiologus`, `hs_beowulf` and `john_ws` rebuild byte for byte. The other four rebuilds contain all but four of their 65,991
 committed tokens in order, but some sentences differ, mostly where the original language filter dropped short lines (the
 module docstring has the details). Those four committed files were kept as they are. `john_ws.jsonl` (Gospel of
 John, the dev set) is built the same way as Matthew. The builder still writes an old sentence-level `split` field,
@@ -172,7 +172,7 @@ The second runs the whole pilot loop. The third writes `results/charsiu/ipa_tiny
 
 ## 8. Try it on your own sentences
 
-After `bash run_all.sh` has run once:
+From the repository root:
 
 ```bash
 PYTHONPATH=src python -m oevl.try_text my_tests/sentences.txt

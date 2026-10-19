@@ -16,6 +16,7 @@
 \usepackage{booktabs}
 \usepackage[font=normalsize,labelfont=bf]{caption}
 \usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\hypersetup{pdftitle={What Limits Vowel-Length Restoration in Old English?},pdfauthor={Mahbod Tajdini, Hanna Miranovich, Arjun Singh Bhadoria}}
 \usepackage{xurl}
 \setlength{\tabcolsep}{4.5pt}
 \setlength{\emergencystretch}{2em}
@@ -256,7 +257,8 @@ the candidate with most long marks (at least 90\% of ambiguous prose tokens), % 
 but one \NCollapseEpochs-epoch selection run did. It chose that candidate for \NCollapseDevMostLong\% of ambiguous
 development tokens and scored \NCollapseDevLex\% on them.
 
-The logistic models, whose seed standard deviations stay at or below \NSdMaxMain{} points, split the same way with
+The logistic models, whose seed standard deviations on all and lexicon-ambiguous tokens stay at or below \NSdMaxMain{}
+points, split the same way with
 smaller gains. On prose the bilateral model beats the word model by $\NBootSolLexBilVsWord$ points
 \iv{\NBootSolLexBilVsWordLo}{\NBootSolLexBilVsWordHi} on ambiguous tokens and by $\NBootSolClsBBilVsWord$
 \iv{\NBootSolClsBBilVsWordLo}{\NBootSolClsBBilVsWordHi} on class B, and on verse it differs from it by
@@ -343,7 +345,7 @@ agrees with one editor and is scored against another.
 \section{Deviations, limitations and conclusion}
 \paragraph{Deviations.} Coverage became one of four limits, so the abstract also reports all-token
 accuracy. Instead of an encoder, a fine-tuned encoder-decoder (ByT5) scores the candidates, one
-checkpoint per arm on identical data. The trained systems keep the candidate set of our first pipeline, so the proposal's three dictionaries enter only the coverage comparison, and a planned BiLSTM baseline was not run. LLM-based annotators, not two of us, labelled the ambiguity classes, the error types and the
+checkpoint per arm on identical data. The trained systems keep the candidate set of our first pipeline, so the proposal's three dictionaries enter only the coverage comparison. LLM-based annotators, not two of us, labelled the ambiguity classes, the error types and the
 disagreement sample, and a second, blind LLM review checked all 560 labels.
 
 \paragraph{Limitations.} We predict editorial convention, not pronunciation: the dictionaries and the gold descend

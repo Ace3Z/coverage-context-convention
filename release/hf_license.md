@@ -38,5 +38,5 @@ Wikisource contributors of each page. The Project Gutenberg header and licence a
 | `ambiguity_classes.csv`, `ambiguity_classes.json` | CC BY-SA 4.0. They list spellings and candidate patterns taken from the dictionaries above |
 | `README.md`, `LICENSE.md` | CC BY-SA 4.0 |
 
-The provenance files are copied unchanged from the code repository, so their mentions of `data/LICENSE.md` refer to
-that repository.
+The provenance files and `ambiguity_classes.json` are copied unchanged from the code repository, so the paths they
+mention (`data/...`, `results/...`) refer to that repository.

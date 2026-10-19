@@ -4,7 +4,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'src'))
 from oevl.experiment import clean_tauber,load_tauber,bare,pattern
 from oevl.wikipron_to_marked import mark
 ROOT=Path(__file__).resolve().parents[1]
-class TestV4(unittest.TestCase):
+class TestTauberWikiPron(unittest.TestCase):
  def test_wikipron(self):
   for w,ipa,expected in [('god','ɡ oː d','gōd'),('eage','æ͜ɑː ɡ e','ēage'),('þeostrian','θ e͜oː s t r i ɑ n','þēostrian'),('ceald','t͡ʃ æ͜ɑ l d','ceald')]:self.assertEqual(mark(w,ipa),expected)
  def test_circumflex(self):self.assertEqual(clean_tauber('gân'),'gān');self.assertEqual(clean_tauber('dôn'),'dōn')

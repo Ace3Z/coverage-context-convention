@@ -11,7 +11,8 @@ install `requirements.txt` and call `python -m oevl.pilot`. The logic, the check
 
 Set `MAX_BYTES` (128 or 256) in the first code cell. Everything else is fixed: five arms (sentence, word, left, local2,
 local5), the same 10,000 training examples for every arm, one epoch, batch 32, microbatch 8, learning rate 3e-4,
-seed 1, and all five training works (the pilots ran before decision D3 left Zupitza out). Run 128 first. Compare a 256 run only with the 128 run of the same arms.
+seed 1, and all five training works (the pilots ran before decision D3 left Zupitza out).
+Run 128 first. Compare a 256 run only with the 128 run of the same arms.
 
 After each finished arm the results folder is packed into `encoder_pilot_<bytes>_results.zip`, which you should
 download. To resume in a new session on Kaggle, add that zip, a renamed copy such as `... (1).zip`, or its extracted

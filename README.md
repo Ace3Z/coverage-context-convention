@@ -61,7 +61,7 @@ editorial convention and editor disagreement.**
 </table>
 
 *A held-out sentence from Alfred's* Soliloquies *(`soliloquies:00530`), restored with `oevl.try_text`. Only models
-that see the neighbouring words pick the pronoun* þē *'thee' over the relative particle* þe*, as the edition does.*
+that see the neighbouring words pick the pronoun* þē *'thee' over the relative particle* þe, *as the edition does.*
 
 </div>
 
@@ -104,7 +104,8 @@ grammatical homographs, words spelled alike that differ in function.
 | CharsiuG2P's errors are mostly about length | its own 500-word Old English test set | word error rate 0.208 as published and 0.188 with 50 decoding steps, where 75.5% of the word errors differ only in vowel length |
 
 LLM annotators labelled the ambiguity classes, the error types and a sample of editor disagreements. A second, blind
-LLM review confirmed 551 of these 560 labels and corrected the other nine (`results/label_review/`). Nobody on the team has reviewed them yet.
+LLM review agreed with 538 of these 560 labels. An adjudicator kept 13 of the 22 it disputed and corrected the
+other nine (`results/label_review/`). Nobody on the team has reviewed the labels yet.
 The report has the full tables, the caveats and the run-to-run variance (TODO: link the PDF).
 
 ---
@@ -122,9 +123,9 @@ their own commands in [REPRODUCE.md](REPRODUCE.md).
 | 3 | Dictionaries | `wikipron_to_marked.py`, `build_lexicons.py` | `data/lex_*.csv` |
 | 4 | Frequency prior and logistic models | `experiment.py` | `results/<setting>/` |
 | 5 | Editor agreement | `agreement.py` | `results/agreement/` |
-| 6 | ByT5 grid and selection (GPU) | `encoder_experiment.py`, `select_config.py`, `encoder_summary.py`, `stats.py`, `scripts/encoder_grid.sh` | `results/encoder/` |
+| 6 | ByT5 grid and selection (GPU) | `encoder_experiment.py`, `select_config.py`, `encoder_summary.py`, `stats.py`, `scripts/encoder_grid.sh` | `results/encoder/`, `report/generated/tab_encoder.tex` and `numbers_encoder.tex` |
 | 7 | CharsiuG2P error analysis | `charsiu_g2p.py` | `results/charsiu/` |
-| 8 | Error typing | `error_typing.py` | `results/error_typing/` |
+| 8 | Error typing | `error_typing.py` | `results/error_typing/`, `report/generated/tab_errors.tex` |
 | 9 | Frozen check and report | `check_expected.py`, `build_report.py` | `report/generated/`, `REPORT.pdf` |
 
 `try_text.py` adds macrons to your own sentences, `export_hf.py` writes the Hugging Face copy of the data, and
@@ -169,7 +170,7 @@ holds the corpus, the dictionaries and the ambiguity class files. Loading it nee
 | `dev` | Gospel of John (West Saxon) | model selection only |
 | `test_prose` | Alfred's *Soliloquies* | prose test |
 | `test_verse` | Tauber's token-level *Beowulf* | verse test |
-| `agreement` | Harrison & Sharp and Wyatt *Beowulf* | editor agreement only |
+| `agreement` | Harrison & Sharp and Wyatt *Beowulf* | evaluation only: editor agreement and the prior's score against each edition |
 
 ```python
 from datasets import load_dataset
@@ -198,6 +199,8 @@ the leakage audit, decision D3 and the licences.
 ```
 cl-uzh-26-essentials-code/
 ├── README.md                overview and quickstart
+├── LICENSE                  MIT licence of the code
+├── pyproject.toml           package metadata (pip install -e .)
 ├── REPRODUCE.md             installation, systems, evaluation, every command
 ├── DATA.md                  corpus, splits, leakage audit, D3, licences
 ├── run_all.sh               the whole CPU pipeline, from inputs to REPORT.pdf
@@ -210,7 +213,7 @@ cl-uzh-26-essentials-code/
 ├── notebooks/               Kaggle and Colab launchers for the ByT5 pilot
 ├── release/                 dataset card and licence file for the Hugging Face copy
 ├── media/figures/logos/     logos
-└── requirements.txt         every dependency, pinned (torch has a lower bound)
+└── requirements.txt         every direct dependency, pinned (torch has a lower bound)
 ```
 
 ---

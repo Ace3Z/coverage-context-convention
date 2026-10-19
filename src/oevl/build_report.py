@@ -1,4 +1,4 @@
-"""Generate every number and table used in report/main.tex, and an accuracy figure, from the results files.
+"""Generate every number and table used in report/main.tex, and an accuracy figure, from data/ and results/.
 
 Writes report/generated/{numbers.tex, tab_data.tex, tab_main.tex, tab_ablation.tex, tab_perword.tex,
 tab_classes.tex, tab_bootstrap.tex, fig_accuracy.pdf}. It also checks that the worked examples quoted in the report match the
