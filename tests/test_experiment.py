@@ -37,6 +37,9 @@ class Tests(unittest.TestCase):
     self.assertEqual(p.returncode,0,p.stderr)
     god=json.loads((d/out/'soliloquies_predictions.jsonl').read_text(encoding='utf8').splitlines()[0])
     self.assertEqual((json.loads((d/out/'metrics.json').read_text(encoding='utf8'))['dataset']['train'],god['lexicon_ambiguous'],god['frequency_prediction']),want)
+   before=(d/'d3'/'soliloquies_predictions.jsonl').read_bytes()  # a run without the D3 flag into the D3 folder is refused before it writes
+   p=subprocess.run([sys.executable,'-m','oevl.experiment','--data',str(d),'--out',str(d/'d3'),'--tests','soliloquies'],env={**os.environ,'PYTHONPATH':str(root/'src')},capture_output=True,text=True)
+   self.assertEqual((p.returncode,(d/'d3'/'soliloquies_predictions.jsonl').read_bytes()),(1,before),p.stderr)
 if __name__=='__main__':unittest.main()
 
 class RegressionTests(unittest.TestCase):
@@ -78,7 +81,8 @@ class ClassTests(unittest.TestCase):
  def test_class_file(self):
   from sklearn.metrics import cohen_kappa_score
   d=Path(__file__).resolve().parents[1]/'data'
-  rows=list(csv.DictReader(open(d/'ambiguity_classes.csv',encoding='utf8')));meta=json.loads((d/'ambiguity_classes.json').read_text(encoding='utf8'))
+  with open(d/'ambiguity_classes.csv',encoding='utf8') as f:rows=list(csv.DictReader(f))
+  meta=json.loads((d/'ambiguity_classes.json').read_text(encoding='utf8'))
   a=[r['label_a'] for r in rows];b=[r['label_b'] for r in rows];final=[r['final'] for r in rows]
   self.assertEqual(len(rows),meta['n_skeletons']);self.assertEqual(load_classes(d/'ambiguity_classes.csv'),dict(zip([r['skeleton'] for r in rows],final)))
   self.assertAlmostEqual(cohen_kappa_score(a,b),meta['cohen_kappa'],places=6);self.assertAlmostEqual(sum(x==y for x,y in zip(a,b))/len(a),meta['agreement'],places=6)
