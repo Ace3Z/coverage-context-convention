@@ -33,4 +33,4 @@ gate: Applied after the fact: the rule was not written down before the agreement
   wyatt-tauber lexicon_ambiguous_floor_vs_tauber  n  4333  ceiling 96.08  floor 88.88  gap  7.20  below the bar
   wyatt-tauber attested_ambiguous_floor_vs_wyatt  n  3223  ceiling 95.66  floor 91.00  gap  4.65  below the bar
   wyatt-tauber attested_ambiguous_floor_vs_tauber n  3223  ceiling 95.66  floor 90.69  gap  4.96  below the bar
-hand check: {'n': 100, 'seed': 1, 'labels': {'normalisation fault': 10, 'genuine editorial difference': 54, 'other': 36}, 'labelled_by': ['automated assistant, not a team member', 'automated assistant, not a team member; final changed by a blind LLM expert review on 2026-10-19 (see note and results/label_review/)']}
+hand check: {'n': 100, 'seed': 1, 'labels': {'normalisation fault': 10, 'genuine editorial difference': 54, 'other': 36}, 'labelled_by': ['automated assistant, not a team member', 'automated assistant, not a team member; label changed by a blind LLM expert review on 2026-10-19 (see note and results/label_review/)']}

@@ -104,7 +104,7 @@ grammatical homographs, words spelled alike that differ in function.
 | CharsiuG2P's errors are mostly about length | its own 500-word Old English test set | word error rate 0.208 as published and 0.188 with 50 decoding steps, where 75.5% of the word errors differ only in vowel length |
 
 LLM annotators labelled the ambiguity classes, the error types and a sample of editor disagreements. A second, blind
-LLM review agreed with 538 of these 560 labels. An adjudicator kept 13 of the 22 it disputed and corrected the
+LLM review agreed with 538 of these 560 labels. An adjudicator kept 13 of the 22 the review disputed and corrected the
 other nine (`results/label_review/`). Nobody on the team has reviewed the labels yet.
 The report has the full tables, the caveats and the run-to-run variance (TODO: link the PDF).
 
@@ -149,7 +149,7 @@ pip install -r requirements.txt
 bash run_all.sh
 
 # Step 3. Restore macrons in your own sentences, one per line.
-PYTHONPATH=src python -m oevl.try_text my_sentences.txt
+PYTHONPATH=src python -m oevl.try_text my_tests/sentences.txt
 ```
 
 `requirements.txt` includes torch and transformers, so the unit tests and the `--tiny` smoke runs work without a GPU.

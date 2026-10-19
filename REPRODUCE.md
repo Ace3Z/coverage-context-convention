@@ -13,7 +13,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-`requirements.txt` holds every dependency. The CPU pipeline uses scikit-learn 1.8.0, scipy 1.16.3, numpy 2.3.5 and
+`requirements.txt` holds every direct dependency. The CPU pipeline uses scikit-learn 1.8.0, scipy 1.16.3, numpy 2.3.5 and
 matplotlib 3.10.8. ByT5 and CharsiuG2P use torch 2.2 or later and transformers 4.57.6. Training needs a GPU, and the
 committed ByT5 runs used torch 2.11.0 with CUDA 12.8. `pdflatex` is optional and compiles `REPORT.pdf`. The `hf`
 command for uploading the dataset comes with `huggingface_hub`, which transformers already installs.
@@ -227,7 +227,7 @@ results/
 └── label_review/               expert_review.json: the blind LLM review of all 560 LLM labels
 report/
 ├── main.tex
-└── generated/                  tables, numbers and figure written by oevl.build_report
+└── generated/                  tables, numbers and figure (build_report, encoder_summary, error_typing)
 release/
 ├── hf_card.md                  template of the Hugging Face dataset card
 └── hf_license.md               licence file of the Hugging Face copy

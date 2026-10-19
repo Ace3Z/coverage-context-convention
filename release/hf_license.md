@@ -14,7 +14,7 @@ a fuller version of this table for its own `data/` folder in `data/LICENSE.md`.
 | `dev.jsonl` | Gospel of John (Wikisource transcription, CC BY-SA 4.0) | CC BY-SA 4.0 |
 | `test_prose.jsonl` | Alfred's *Soliloquies*, Hargrove (Wikisource transcription, CC BY-SA 4.0) | CC BY-SA 4.0 |
 | `test_verse.jsonl` | James Tauber's `beowulf/raw-data/brunetti-length.txt`, https://github.com/old-english-learner-texts/old-english-texts (CC BY-SA 4.0, attribution to James Tauber), turned into sentence records | CC BY-SA 4.0 |
-| `agreement.jsonl` | Wyatt's *Beowulf* (Wikisource transcription, CC BY-SA 4.0) and Harrison & Sharp's *Beowulf* (Project Gutenberg, public domain in the USA) | CC BY-SA 4.0 |
+| `agreement.jsonl` | Wyatt's *Beowulf* and *Finnsburh Fragment* (Wikisource transcription, CC BY-SA 4.0) and Harrison & Sharp's *Beowulf* and *Finnsburh Fragment* (Project Gutenberg, public domain in the USA) | CC BY-SA 4.0 |
 
 The source page of every work is in the Source data table of `README.md`. Attribution for the Wikisource works: the
 Wikisource contributors of each page. The Project Gutenberg header and licence are not part of the extracted text.
