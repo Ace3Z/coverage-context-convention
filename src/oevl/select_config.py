@@ -113,7 +113,7 @@ def main():
     rec = {
         "what": "Model selection for the ByT5 encoder (the selection search and decision D3): sentence arm only, seeds 1 and 2, scored "
                 "on the john_ws dev set. The test sets played no part in the choice.",
-        "code_commit": "64ef2c2",
+        "code_commit": "668da19",
         "command": "python -m oevl.encoder_experiment --arms sentence --seed SEED --max-bytes 2560 --batch 32 --micro 8 "
                    "--lr LR --epochs EPOCHS [--exclude-train zupitza_grammar] --out "
                    "select/<z|noz>_lr<LR>_ep<EPOCHS>/sentence_s<SEED>",
@@ -132,7 +132,7 @@ def main():
                     "1-3, trained with and without Zupitza. Percent.",
             "command": "python -m oevl.experiment --lexicon data/lex_wikipron.csv --tests john_ws "
                        "[--exclude-train zupitza_grammar]",
-            "code_commit": "64ef2c2",
+            "code_commit": "668da19",
             "with_zupitza": {"train_tokens": json.loads((ROOT / "results/wikipron_with_zupitza/metrics.json").read_text(
                 encoding="utf8"))["dataset"]["train"], **logistic("wikipron_with_zupitza", shared)},
             "without_zupitza": {"train_tokens": json.loads((ROOT / "results/wikipron/metrics.json").read_text(
