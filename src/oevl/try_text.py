@@ -99,7 +99,7 @@ def main():
     total = len(test)
     vowel = [r for r in test if r["gold_pattern"] or r["pred"]]
     print("\nsummary")
-    print(f"  model: {a.model}, dictionary: {'training only' if ext is None else 'training + WikiPron'}")
+    print(f"  model: {a.model}, dictionary: {'training only' if ext is None else 'training + ' + Path(ext).name}")
     print(f"  lines: {len(lines)}   words: {total}   words with a, e, i, o, u, y or æ: {len(vowel)}")
     if total:
         unknown = sum(not r["known"] for r in test)

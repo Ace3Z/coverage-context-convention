@@ -39,4 +39,6 @@ def convert(src,out):
   w=csv.writer(f);w.writerow(['marked_form']);w.writerows((x,) for x in sorted(forms))
  print(dict(stats),'distinct marked forms:',len(forms))
  return stats,len(forms)
-if __name__=='__main__':convert(sys.argv[1],sys.argv[2])
+if __name__=='__main__':
+ if len(sys.argv)!=3:sys.exit('usage: python -m oevl.wikipron_to_marked IN.tsv OUT.csv')
+ convert(sys.argv[1],sys.argv[2])

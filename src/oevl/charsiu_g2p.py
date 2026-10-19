@@ -140,7 +140,7 @@ def analyse():
     with open(OUT / "ipa.tsv", encoding="utf8") as f:
         ipa = {r["word"]: r["ipa"] for r in csv.DictReader(f, delimiter="\t")}
     charsiu_train = set()
-    dict_path = ROOT / "data/charsiu_ang_dict_words.txt"   # words in CharsiuG2P's own Old English dictionary
+    dict_path = ROOT / "data/charsiu_ang_dict_words.txt"   # every word of CharsiuG2P's ang dictionary (its train, dev and test words)
     if dict_path.exists():
         charsiu_train = set(dict_path.read_text(encoding="utf8").split())
     train, _, _, _ = build_data(ROOT / "data", EXCLUDE_D3)  # populations as in results/wikipron
@@ -206,5 +206,7 @@ if __name__ == "__main__":
         predict(tiny="--tiny" in sys.argv)
     elif cmd == "benchmark":
         benchmark()
-    else:
+    elif cmd == "analyse":
         analyse()
+    else:
+        sys.exit("usage: python -m oevl.charsiu_g2p [predict [--tiny] | benchmark | analyse]")
