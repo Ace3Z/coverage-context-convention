@@ -30,18 +30,17 @@ configs:
 
 # Old English Vowel Length
 
-Old English sentences from nineteenth- and early twentieth-century editions, each with the editor's long-vowel marks
-(macrons) and without them: $sentences sentences and $tokens tokens. The task is to restore the macrons in bare
-text. The dataset also includes the candidate dictionaries and an ambiguity class file used in the project
-*Coverage, Context, Convention: Restoring Vowel Length in Old English* (University of Zurich, 2026). Code:
-https://github.com/Ace3Z/cl-uzh-26-essentials-code
+This dataset holds $sentences Old English sentences ($tokens tokens) from nineteenth- and early twentieth-century
+editions, each with the editor's long-vowel marks (macrons) and without them. The task is to put the macrons back into
+bare text. It also includes the candidate dictionaries and an ambiguity class file from the project *Coverage,
+Context, Convention: Restoring Vowel Length in Old English* (University of Zurich, 2026). The code is at
+https://github.com/Ace3Z/cl-uzh-26-essentials-code.
 
-- **Language:** Old English (`ang`)
-- **License:** CC BY-SA 4.0
+Language: Old English (`ang`). License: CC BY-SA 4.0.
 
-## Dataset Structure
+## Dataset structure
 
-One JSON object per line, one sentence per object.
+Each line is one JSON object for one sentence.
 
 | Field | Type | Content |
 |---|---|---|
@@ -58,24 +57,25 @@ One JSON object per line, one sentence per object.
 | `length_patterns` | list of strings | one per token, one digit per vowel letter (a e i o u y æ): `1` if the edition marks it long, `0` if not |
 | `leakage_excluded` | boolean | `true` for a dev or test sentence that shares a word 6-gram with a training work |
 
-Length is written only with the macron vowels ā ē ī ō ū ȳ ǣ and their capitals. For example `gōdne` has the bare form `godne` and the pattern `10`.
+Length is written only with the macron vowels ā ē ī ō ū ȳ ǣ and their capitals. For example, `gōdne` has the bare
+form `godne` and the pattern `10`.
 
 ### Splits
 
 $table
 
-The split is by work, never by sentence, and no *Beowulf* text is in `train`. `agreement` holds two further
-*Beowulf* editions, used only to measure editor agreement. The project's final systems leave `zupitza_grammar` out of
-training, and they skip sentences with `leakage_excluded: true` when scoring.
+The split is by work, never by sentence, and no *Beowulf* text is in `train`. `agreement` holds two more *Beowulf*
+editions and is only used to measure how often editors agree. The project's final systems leave `zupitza_grammar` out
+of training and skip sentences with `leakage_excluded: true` when scoring.
 
 ### Other files
 
-- `lexicons/`: candidate spellings from WikiPron, Clark Hall, Wiktionary and Bosworth–Toller, and two unions (CSV
-  with a `marked_form` column; the unions add a `sources` column).
-- `ambiguity_classes.csv`: the 60 most frequent ambiguous spellings, labelled lexical (A), grammatical (B) or
-  editorial (C). The labels come from two LLM annotators and are not yet reviewed by people.
+- `lexicons/` has candidate spellings from WikiPron, Clark Hall, Wiktionary and Bosworth-Toller, plus two unions. Each
+  CSV has a `marked_form` column, and the unions add a `sources` column.
+- `ambiguity_classes.csv` lists the 60 most frequent ambiguous spellings, each labelled lexical (A), grammatical (B)
+  or editorial (C). Two LLM annotators made the labels, and no person has reviewed them yet.
 
-## Source Data
+## Source data
 
 | `source` | Split | Work | Editor, year | URL | Licence of the source |
 |---|---|---|---|---|---|
@@ -90,15 +90,15 @@ training, and they skip sentences with `leakage_excluded: true` when scoring.
 | `hs_beowulf` | agreement | *Beowulf*, *Finnsburh Fragment* | Harrison & Sharp, 4th revised edition (first 1883) | https://www.gutenberg.org/ebooks/9701 | Project Gutenberg, public domain in the USA |
 | `wyatt_beowulf` | agreement | *Beowulf*, *Finnsburh Fragment* | Wyatt, 1894 | https://en.wikisource.org/wiki/Beowulf_(Wyatt) | Wikisource, CC BY-SA 4.0 |
 
-The Old English text was extracted from each edition, normalised to Unicode NFC with length marked only by macrons
-(Zupitza's circumflexes converted), and split into sentences and tokens. Notes, translations and Latin and English
-lines were removed, though a few short English, Latin and markup fragments remain (for example
-`bright_reader:00937` to `00943`).
+Each edition's Old English text was extracted, normalised to Unicode NFC with length marked only by macrons
+(Zupitza's circumflexes were converted), and split into sentences and tokens. Notes, translations and Latin and
+English lines were removed, but a few short English, Latin and markup fragments remain, for example in
+`bright_reader:00937` to `00943`.
 
 ## Uses
 
-Training and evaluating vowel-length restoration for Old English: train on `train`, tune on `dev`, report
-`test_prose` and `test_verse` separately.
+The dataset is for training and evaluating vowel-length restoration in Old English. Train on `train`, tune on `dev`,
+and report `test_prose` and `test_verse` separately.
 
 ```python
 from datasets import load_dataset
@@ -111,15 +111,15 @@ not read as a missing value.
 
 ## Limitations
 
-- The marks are the editors' macronisation, not recorded pronunciation, and editors disagree, most on unstressed
-  function words such as *se/sē* and *þe/þē*.
+- The marks record how editors macronised the text, not how it was pronounced, and editors disagree, most of all on
+  unstressed function words such as *se/sē* and *þe/þē*.
 - The corpus is small and mostly West Saxon prose. The verse in `train` is the *Physiologus* and four sections of
-  Bright's *Reader* (about 6,300 tokens in all).
+  Bright's *Reader*, about 6,300 tokens in all.
 - The texts are transcriptions and may contain errors. Wikisource does not yet mark the John transcription as fully
   proofread.
 
 ## License
 
-CC BY-SA 4.0. Attribute the Wikisource contributors (Bright's *Reader*, Matthew, John, the *Soliloquies*, Wyatt's
-*Beowulf*), James Tauber (`test_verse`), and for the dictionaries WikiPron, Wiktionary via kaikki.org, Tichý et al.
-(Bosworth–Toller) and Serg078 (Clark Hall). `LICENSE.md` gives the licence of every file.
+CC BY-SA 4.0. Please credit the Wikisource contributors (Bright's *Reader*, Matthew, John, the *Soliloquies* and
+Wyatt's *Beowulf*), James Tauber (`test_verse`), and, for the dictionaries, WikiPron, Wiktionary via kaikki.org,
+Tichý et al. (Bosworth-Toller) and Serg078 (Clark Hall). `LICENSE.md` gives the licence of every file.

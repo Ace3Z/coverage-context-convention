@@ -10,7 +10,7 @@ Each statement was checked on 2026-10-18 against the licence file or the source 
 
 ## Corpus: `by_source/*.jsonl` and `manifest.json`
 
-The corpus bundle is released under **CC BY-SA 4.0**, because five of the nine works are Wikisource
+The corpus bundle is released under CC BY-SA 4.0, because five of the nine works are Wikisource
 transcriptions. The printed editions themselves are out of copyright. `manifest.json` records the URL, retrieval
 date and SHA-256 of each input.
 
@@ -33,24 +33,24 @@ the Wikisource contributors of each page, at the URLs above.
 
 | File | Source | Licence | Checked |
 |---|---|---|---|
-| `brunetti-length.txt` | James Tauber, *old-english-texts*, `beowulf/raw-data/brunetti-length.txt`, https://github.com/old-english-learner-texts/old-english-texts | **CC BY-SA 4.0**, attribution to James Tauber. Tauber built it from Brunetti's analysis and the Perseus text of *Beowulf*, both of which his README calls CC-licensed | repository `LICENSE` (CC BY-SA 4.0), `README.md` ("All other text and data is made available under a Creative Commons Attribution-ShareAlike 4.0 International License with attribution to James Tauber"), `beowulf/README.md` |
-| `ang_latn_broad.tsv` | WikiPron, `data/scrape/tsv/ang_latn_broad.tsv`, https://github.com/CUNY-CL/wikipron | **CC BY-SA 4.0** (Wiktionary content). The WikiPron code is Apache-2.0, but its README says the Wiktionary data in `data/` "has its own licensing terms" and links Wiktionary:Copyrights, which dual-licenses entry text under CC BY-SA 4.0 and the GFDL. We use it under CC BY-SA 4.0 | WikiPron `README.md` (License section) and `LICENSE.txt`, https://en.wiktionary.org/wiki/Wiktionary:Copyrights |
-| `charsiu_ang_test.tsv` | CharsiuG2P `data/test/ang.tsv` at commit `0c929390759fb94f8ecdfc05cc0bc5f2ff2dc0f4`, https://github.com/lingjzhu/CharsiuG2P | **CC BY-SA 4.0** (Wiktionary content). The CharsiuG2P repository is MIT, but its `sources/info/wikipron/ang_latn_broad_info.txt` and `ang_latn_narrow_info.txt` name WikiPron's Old English files as the source of its Old English data | CharsiuG2P `LICENSE` (MIT), `README.md`, `sources/info/wikipron/` |
-| `charsiu_ang_dict_words.txt` | the word list of the same CharsiuG2P Old English dictionary | **CC BY-SA 4.0**, as above | as above |
+| `brunetti-length.txt` | James Tauber, *old-english-texts*, `beowulf/raw-data/brunetti-length.txt`, https://github.com/old-english-learner-texts/old-english-texts | CC BY-SA 4.0, attribution to James Tauber. Tauber built it from Brunetti's analysis and the Perseus text of *Beowulf*, both of which his README calls CC-licensed | repository `LICENSE` (CC BY-SA 4.0), `README.md` ("All other text and data is made available under a Creative Commons Attribution-ShareAlike 4.0 International License with attribution to James Tauber"), `beowulf/README.md` |
+| `ang_latn_broad.tsv` | WikiPron, `data/scrape/tsv/ang_latn_broad.tsv`, https://github.com/CUNY-CL/wikipron | CC BY-SA 4.0 (Wiktionary content). The WikiPron code is Apache-2.0, but its README says the Wiktionary data in `data/` "has its own licensing terms" and links Wiktionary:Copyrights, which dual-licenses entry text under CC BY-SA 4.0 and the GFDL. We use it under CC BY-SA 4.0 | WikiPron `README.md` (License section) and `LICENSE.txt`, https://en.wiktionary.org/wiki/Wiktionary:Copyrights |
+| `charsiu_ang_test.tsv` | CharsiuG2P `data/test/ang.tsv` at commit `0c929390759fb94f8ecdfc05cc0bc5f2ff2dc0f4`, https://github.com/lingjzhu/CharsiuG2P | CC BY-SA 4.0 (Wiktionary content). The CharsiuG2P repository is MIT, but its `sources/info/wikipron/ang_latn_broad_info.txt` and `ang_latn_narrow_info.txt` name WikiPron's Old English files as the source of its Old English data | CharsiuG2P `LICENSE` (MIT), `README.md`, `sources/info/wikipron/` |
+| `charsiu_ang_dict_words.txt` | the word list of the same CharsiuG2P Old English dictionary | CC BY-SA 4.0, as above | as above |
 
 ## Dictionaries derived for this project
 
 | File | Built from | Licence | Checked |
 |---|---|---|---|
-| `lex_wikipron.csv` | `ang_latn_broad.tsv` (`oevl.wikipron_to_marked`) | **CC BY-SA 4.0** | as for `ang_latn_broad.tsv` |
-| `lex_clarkhall.csv` | Clark Hall, *A Concise Anglo-Saxon Dictionary*, TEI conversion by Serg078, https://github.com/Serg078/Conversion-of-The-Clark-Hall-Dictionary-of-Old-English-to-TEI (commit `b53fc7d`). The conversion's source is Project Gutenberg ebook 31543 | **Unlicense** (public-domain dedication), as its source. Project Gutenberg lists ebook 31543 as "Public domain in the USA." | repository `LICENSE` (The Unlicense), the repository's `clark hall dict/` folder, https://www.gutenberg.org/ebooks/31543 |
-| `lex_wiktionary.csv` | Old English entries of the English Wiktionary as extracted by kaikki.org (wiktextract), https://kaikki.org/dictionary/Old%20English/ | **CC BY-SA 4.0** (Wiktionary content, which Wiktionary also offers under the GFDL). kaikki.org states no licence of its own for the data and asks users to cite Ylonen (2022), *Wiktextract: Wiktionary as Machine-Readable Structured Data*, LREC 2022. Wiktextract's code is MIT | kaikki.org Old English page and home page, wiktextract `README.md`, Wiktionary:Copyrights and the Wiktionary page footer (CC BY-SA 4.0) |
-| `lex_bt.csv` | Tichý, Ondřej et al. 2021, *Bosworth-Toller's Anglo-Saxon Dictionary online*, LINDAT/CLARIAH-CZ, http://hdl.handle.net/11234/1-3532 | **CC BY 4.0**, attribution to Tichý et al. | LINDAT item page: "licensed under: Creative Commons - Attribution 4.0 International (CC BY 4.0)" |
-| `lex_proposal.csv` | union of `lex_clarkhall.csv`, `lex_wiktionary.csv`, `lex_bt.csv` | **CC BY-SA 4.0** (the strictest of its sources), with the attributions above | |
-| `lex_all.csv` | union of `lex_proposal.csv` and `lex_wikipron.csv` | **CC BY-SA 4.0**, with the attributions above | |
+| `lex_wikipron.csv` | `ang_latn_broad.tsv` (`oevl.wikipron_to_marked`) | CC BY-SA 4.0 | as for `ang_latn_broad.tsv` |
+| `lex_clarkhall.csv` | Clark Hall, *A Concise Anglo-Saxon Dictionary*, TEI conversion by Serg078, https://github.com/Serg078/Conversion-of-The-Clark-Hall-Dictionary-of-Old-English-to-TEI (commit `b53fc7d`). The conversion's source is Project Gutenberg ebook 31543 | Unlicense (public-domain dedication), as its source. Project Gutenberg lists ebook 31543 as "Public domain in the USA." | repository `LICENSE` (The Unlicense), the repository's `clark hall dict/` folder, https://www.gutenberg.org/ebooks/31543 |
+| `lex_wiktionary.csv` | Old English entries of the English Wiktionary as extracted by kaikki.org (wiktextract), https://kaikki.org/dictionary/Old%20English/ | CC BY-SA 4.0 (Wiktionary content, which Wiktionary also offers under the GFDL). kaikki.org states no licence of its own for the data and asks users to cite Ylonen (2022), *Wiktextract: Wiktionary as Machine-Readable Structured Data*, LREC 2022. Wiktextract's code is MIT | kaikki.org Old English page and home page, wiktextract `README.md`, Wiktionary:Copyrights and the Wiktionary page footer (CC BY-SA 4.0) |
+| `lex_bt.csv` | Tichý, Ondřej et al. 2021, *Bosworth-Toller's Anglo-Saxon Dictionary online*, LINDAT/CLARIAH-CZ, http://hdl.handle.net/11234/1-3532 | CC BY 4.0, attribution to Tichý et al. | LINDAT item page: "licensed under: Creative Commons - Attribution 4.0 International (CC BY 4.0)" |
+| `lex_proposal.csv` | union of `lex_clarkhall.csv`, `lex_wiktionary.csv`, `lex_bt.csv` | CC BY-SA 4.0 (the strictest of its sources), with the attributions above | |
+| `lex_all.csv` | union of `lex_proposal.csv` and `lex_wikipron.csv` | CC BY-SA 4.0, with the attributions above | |
 
 ## Files made for this project
 
 `ambiguity_classes.csv`, `ambiguity_classes.json`, `leakage_excluded.json`, `lexicons_provenance.json` and
-`wikipron_provenance.json` are released under **CC BY-SA 4.0**. The class files list spellings and candidate
+`wikipron_provenance.json` are released under CC BY-SA 4.0. The class files list spellings and candidate
 patterns taken from the dictionaries above.

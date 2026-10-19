@@ -70,49 +70,48 @@ does.*
 
 ## 📖 Overview
 
-This is our project for *Essentials in Text and Speech Processing* at the University of Zurich (HS 2026). Old English
-spelling hides vowel length: *god* 'God' and *gōd* 'good', *man* 'man' and *mān* 'crime', the relative particle *þe*
-and the pronoun *þē* 'thee'. Editors add the marks by hand. Given a bare token, a system chooses among the length
-patterns a dictionary proposes for it.
+Old English manuscripts do not show vowel length, so *god* 'God' and *gōd* 'good' look the same, and so do the
+relative particle *þe* and the pronoun *þē* 'thee'. Modern editions add macrons by hand. A system for this task sees
+the bare word, takes the length patterns a dictionary lists for it, and picks one.
 
-We build a length-marked corpus of nine editions, hold out prose (Alfred's *Soliloquies*) and verse (Tauber's
-token-level *Beowulf*) by work, and compare a frequency prior, logistic classifiers, a fine-tuned ByT5 candidate scorer
-and CharsiuG2P on exactly the same tokens. Three editions of *Beowulf* give the editor-agreement reference. One
-command, `bash run_all.sh`, reproduces every number, table and the figure in the report.
+We built a length-marked corpus from nine editions and held out one prose text (Alfred's *Soliloquies*) and one verse
+text (Tauber's token-level *Beowulf*). On exactly the same tokens we compare a frequency prior, logistic classifiers,
+a fine-tuned ByT5 model and CharsiuG2P, and three editions of *Beowulf* show how far editors agree.
+`bash run_all.sh` reproduces every number, table and figure in the report.
 
-| Limit | Question | Where it is measured |
+| Limit | Question | Where to look |
 |---|---|---|
-| **Coverage** | Is the right spelling among the candidates at all? | dictionary ablation, `results/<setting>/` |
-| **Context** | Do neighbouring words pick the right candidate? | ByT5 arms and logistic models, `results/encoder/`, `results/wikipron/` |
-| **Convention** | How much of the remaining error is editorial habit? | ambiguity classes A/B/C, error typing, `results/error_typing/` |
-| **Disagreement** | How often do two editors mark the same word alike? | three-way *Beowulf* agreement and the gate, `results/agreement/` |
+| Coverage | Is the right spelling among the candidates? | dictionary ablation, `results/<setting>/` |
+| Context | Do the neighbouring words pick the right candidate? | `results/encoder/`, `results/wikipron/` |
+| Convention | How much of the remaining error is editorial habit? | ambiguity classes, `results/error_typing/` |
+| Disagreement | How often do two editors mark a word the same way? | `results/agreement/` |
 
 ---
 
 ## 📊 Headline Results
 
-All numbers come from the committed results and are the ones `bash run_all.sh` rebuilds into the report. Intervals are
-sentence-level bootstrap 95% intervals over seed-averaged predictions.
+`bash run_all.sh` rebuilds all of these numbers from the committed results. Intervals are 95% sentence-level
+bootstrap intervals over seed-averaged predictions.
 
-| Finding | Population | Result |
+| Finding | Tokens | Result |
 |---|---|---|
-| Coverage moves the most on verse | *Beowulf*, all tokens, frequency prior | **82.40%** with training forms, **92.38%** with all four dictionaries |
-| Context resolves grammatical homographs | *Soliloquies*, class B (*þe/þē*, *ne/nē*) | **62.66%** word only, **76.39%** with two words each side (+13.73, 11.29 to 16.03) |
-| Context helps prose overall | *Soliloquies*, lexicon-ambiguous | **88.91%** word only, **91.30%** with two words each side (+2.39, 1.91 to 2.87) |
-| On verse the word alone is enough | *Beowulf*, lexicon-ambiguous | **90.04%** word only, **89.43%** full sentence (−0.61, −1.06 to −0.15) |
-| Editors differ most on grammar words | Wyatt against Klaeber (Tauber), ambiguous / class B | **96.08%** / **78.07%** agreement |
-| CharsiuG2P's errors are mostly length | its own 500-word Old English test | WER **0.208** reproduced, **0.188** with 50 decoding steps, where **75.5%** of word errors are length only |
+| Coverage matters most on verse | *Beowulf*, all tokens, frequency prior | 82.40% with training forms, 92.38% with all four dictionaries |
+| Context fixes grammatical homographs | *Soliloquies*, class B (*þe/þē*, *ne/nē*) | 62.66% from the word alone, 76.39% with two words each side (+13.73, 11.29 to 16.03) |
+| Context helps prose overall | *Soliloquies*, ambiguous words | 88.91% from the word alone, 91.30% with two words each side (+2.39, 1.91 to 2.87) |
+| On verse the word alone is enough | *Beowulf*, ambiguous words | 90.04% from the word alone, 89.43% with the full sentence (−0.61, −1.06 to −0.15) |
+| Editors differ most on grammatical words | Wyatt against Klaeber (Tauber), ambiguous / class B | 96.08% / 78.07% agreement |
+| CharsiuG2P's errors are mostly about length | its own 500-word Old English test set | word error rate 0.208 as published, 0.188 with 50 decoding steps, and then 75.5% of word errors are length only |
 
-The ambiguity classes and the error types were labelled by two independent LLM annotators and are still pending
-review by the team. Full tables, caveats and the run-to-run variance are in the report (**TODO:** link the PDF).
+Two LLM annotators labelled the ambiguity classes and the error types, and nobody on the team has reviewed them yet.
+The report has the full tables, the caveats and the run-to-run variance (TODO: link the PDF).
 
 ---
 
 ## 🧩 Pipeline
 
-The code is the package `oevl` in `src/oevl/`. `bash run_all.sh` runs the CPU stages from the committed inputs
-(corpus files, dictionaries, CharsiuG2P and ByT5 predictions) and rebuilds every table from them. Rebuilding the corpus
-or the dictionaries from their sources and the GPU runs have their own commands in [REPRODUCE.md](REPRODUCE.md).
+The code is the Python package `oevl` in `src/oevl/`. `bash run_all.sh` runs every CPU stage from the committed
+inputs and rebuilds all tables. Rebuilding the corpus or the dictionaries from their sources, and the GPU runs, have
+their own commands in [REPRODUCE.md](REPRODUCE.md).
 
 | # | Stage | Module | Writes |
 |---|---|---|---|
@@ -126,8 +125,8 @@ or the dictionaries from their sources and the GPU runs have their own commands 
 | 8 | Error typing | `error_typing.py` | `results/error_typing/` |
 | 9 | Frozen check and report | `check_expected.py`, `build_report.py` | `report/generated/`, `REPORT.pdf` |
 
-Two further modules: `try_text.py` adds macrons to your own sentences, and `export_hf.py` writes the Hugging Face
-copy of the data. `pilot.py` is the GPU pilot runner behind the Kaggle and Colab notebooks in `notebooks/`.
+`try_text.py` adds macrons to your own sentences, `export_hf.py` writes the Hugging Face copy of the data, and
+`pilot.py` runs the GPU pilot from the Kaggle and Colab notebooks in `notebooks/`.
 
 ---
 
@@ -150,17 +149,16 @@ bash run_all.sh
 PYTHONPATH=src python -m oevl.try_text my_sentences.txt
 ```
 
-`requirements.txt` also installs torch and transformers, so the unit tests and the `--tiny` smoke runs work on a CPU.
-The ByT5 training runs need a GPU. Their exact commands are in
-`scripts/encoder_grid.sh`, and [REPRODUCE.md](REPRODUCE.md) explains each one.
+`requirements.txt` includes torch and transformers, so the unit tests and the `--tiny` smoke runs work without a GPU.
+Training ByT5 needs one. The exact commands are in `scripts/encoder_grid.sh`, and [REPRODUCE.md](REPRODUCE.md)
+explains them.
 
 ---
 
 ## 💾 Dataset
 
-The corpus, the dictionaries and the ambiguity class file are on the Hugging Face Hub as
-[`Ace3Z/old-english-vowel-length`](https://huggingface.co/datasets/Ace3Z/old-english-vowel-length), private until it
-is released together with this repository.
+The Hugging Face dataset [`Ace3Z/old-english-vowel-length`](https://huggingface.co/datasets/Ace3Z/old-english-vowel-length)
+holds the corpus, the dictionaries and the ambiguity class file.
 
 | Split | Content | Role |
 |---|---|---|
@@ -172,25 +170,23 @@ is released together with this repository.
 
 ```python
 from datasets import load_dataset
-corpus = load_dataset("Ace3Z/old-english-vowel-length")  # needs a Hugging Face token while the repo is private
+corpus = load_dataset("Ace3Z/old-english-vowel-length")
 ```
 
-The split is by work, never by sentence, and no *Beowulf* text is in `train`. [DATA.md](DATA.md) gives the sources,
-the leakage audit, decision D3 and every licence.
+The split is by work, never by sentence, and no *Beowulf* text is in `train`. [DATA.md](DATA.md) covers the sources,
+the leakage audit, decision D3 and the licences.
 
 ---
 
 ## 📚 Documentation
 
-The README is the map. The details live in focused files:
-
 | File | What it covers |
 |---|---|
-| [REPRODUCE.md](REPRODUCE.md) | Installation, the systems and the evaluation protocol, and every command: the full run, single experiments, corpus and dictionary rebuilds, the ByT5 GPU grid, encoder tables without a GPU, CharsiuG2P, smoke tests, `try_text`, the dataset export and upload, and the layout of `results/`. |
-| [DATA.md](DATA.md) | The corpus and its splits, the dev set, the leakage audit, decision D3, the layout of `data/`, and the licence of every source. |
-| [notebooks/README.md](notebooks/README.md) | The Kaggle and Colab launchers for the ByT5 pilot. |
-| Report (PDF) | **TODO:** link the PDF once it is uploaded. Its LaTeX source is [report/main.tex](report/main.tex), and `bash run_all.sh` compiles it to `REPORT.pdf`. |
-| [LICENSE](LICENSE), [data/LICENSE.md](data/LICENSE.md) | Code licence (MIT) and the licence of every data file. |
+| [REPRODUCE.md](REPRODUCE.md) | installation, the systems and their evaluation, and every command |
+| [DATA.md](DATA.md) | corpus, splits, dev set, leakage audit, decision D3, data layout and licences |
+| [notebooks/README.md](notebooks/README.md) | Kaggle and Colab launchers for the ByT5 pilot |
+| Report (PDF) | TODO: link the PDF once it is uploaded. The LaTeX source is [report/main.tex](report/main.tex), and `bash run_all.sh` compiles it to `REPORT.pdf`. |
+| [LICENSE](LICENSE), [data/LICENSE.md](data/LICENSE.md) | code licence (MIT) and the licence of every data file |
 
 ---
 
@@ -198,7 +194,7 @@ The README is the map. The details live in focused files:
 
 ```
 cl-uzh-26-essentials-code/
-├── README.md                this file (the map)
+├── README.md                overview and quickstart
 ├── REPRODUCE.md             installation, systems, evaluation, every command
 ├── DATA.md                  corpus, splits, leakage audit, D3, licences
 ├── run_all.sh               the whole CPU pipeline, from inputs to REPORT.pdf
@@ -209,7 +205,7 @@ cl-uzh-26-essentials-code/
 ├── results/                 one folder per experiment: metrics, predictions, logs
 ├── report/                  main.tex and generated/ tables, numbers and figure
 ├── notebooks/               Kaggle and Colab launchers for the ByT5 pilot
-├── release/hf_card.md       template of the Hugging Face dataset card
+├── release/                 dataset card and licence file for the Hugging Face copy
 ├── media/figures/logos/     logos
 └── requirements.txt         every dependency, pinned (torch has a lower bound)
 ```
@@ -218,12 +214,14 @@ cl-uzh-26-essentials-code/
 
 ## 🖥️ Compute
 
-- **CPU pipeline:** `bash run_all.sh` takes about a minute and a half on a laptop (Apple M-series), including the 75
-  unit tests, the 660 frozen checks and the report.
-- **GPU runs:** ByT5-small, one run per arm and seed. On an NVIDIA RTX PRO 6000 shared with other jobs, a dev
-  selection run took 12 to 70 minutes and a grid run 13 to 152 minutes (`scripts/encoder_grid.sh`).
-- **CharsiuG2P:** its own 500-word benchmark runs in about 15 minutes on a laptop CPU, and prediction on our test sets
-  was made on a GPU.
+- `bash run_all.sh` takes about a minute and a half on an Apple M-series laptop, including 75 unit tests, 660 frozen
+  checks and the report.
+- `requirements.txt` installs and passes those checks on macOS with Python 3.11 and 3.14, and on Linux with Python 3.14
+  and a CUDA GPU.
+- On an NVIDIA RTX PRO 6000 shared with other jobs, a ByT5-small dev selection run took 12 to 70 minutes and a grid
+  run 13 to 152 minutes.
+- CharsiuG2P's own 500-word benchmark takes about 15 minutes on a laptop CPU. Its predictions on our test sets were
+  made on a GPU.
 
 ---
 
@@ -236,14 +234,14 @@ The code is released under the MIT licence in [LICENSE](LICENSE). The data is CC
 
 ## 🙏 Acknowledgments
 
-- [James Tauber](https://github.com/old-english-learner-texts/old-english-texts): the token-level *Beowulf* with
-  length marks, building on Brunetti's analysis and the Perseus text of Klaeber's edition
+- [James Tauber](https://github.com/old-english-learner-texts/old-english-texts) for the token-level *Beowulf* with
+  length marks, built on Brunetti's analysis and the Perseus text of Klaeber's edition
 - [WikiPron](https://github.com/CUNY-CL/wikipron) and the Wiktionary contributors, also through
   [kaikki.org](https://kaikki.org/dictionary/Old%20English/)
 - [CharsiuG2P](https://github.com/lingjzhu/CharsiuG2P) and [ByT5](https://huggingface.co/google/byt5-small)
-- Bosworth–Toller on [LINDAT](http://hdl.handle.net/11234/1-3532) (Tichý et al.) and the
+- Bosworth-Toller on [LINDAT](http://hdl.handle.net/11234/1-3532) (Tichý et al.) and the
   [Clark Hall TEI conversion](https://github.com/Serg078/Conversion-of-The-Clark-Hall-Dictionary-of-Old-English-to-TEI)
-- The transcribers of Project Gutenberg and Wikisource, whose proofread editions make up the corpus
+- The Project Gutenberg and Wikisource volunteers who transcribed the editions in the corpus
 - The *Essentials in Text and Speech Processing* course staff at the University of Zurich
 
 ---
