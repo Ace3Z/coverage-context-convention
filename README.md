@@ -139,8 +139,8 @@ All three steps run on a laptop CPU.
 
 ```bash
 # Step 1. Clone and install. Details in REPRODUCE.md.
-git clone https://github.com/Ace3Z/cl-uzh-26-essentials-code.git
-cd cl-uzh-26-essentials-code
+git clone https://github.com/Ace3Z/coverage-context-convention.git
+cd coverage-context-convention
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
@@ -197,7 +197,7 @@ the leakage audit, decision D3 and the licences.
 ## 🗂️ Repository layout
 
 ```
-cl-uzh-26-essentials-code/
+coverage-context-convention/
 ├── README.md                overview and quickstart
 ├── LICENSE                  MIT licence of the code
 ├── pyproject.toml           package metadata (pip install -e .)

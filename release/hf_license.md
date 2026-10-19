@@ -3,7 +3,7 @@
 The dataset is released under the Creative Commons Attribution-ShareAlike 4.0 International licence (CC BY-SA 4.0,
 https://creativecommons.org/licenses/by-sa/4.0/), because it contains CC BY-SA material. A file that combines several
 sources takes the strictest licence among them. The statements below were checked on 2026-10-18 against the licence
-file or source page of each source. The code repository, https://github.com/Ace3Z/cl-uzh-26-essentials-code, keeps
+file or source page of each source. The code repository, https://github.com/Ace3Z/coverage-context-convention, keeps
 a fuller version of this table for its own `data/` folder in `data/LICENSE.md`.
 
 ## Corpus splits

@@ -34,7 +34,7 @@ This dataset holds $sentences Old English sentences ($tokens tokens) from ninete
 editions, each with the editor's long-vowel marks (macrons) and without them. The task is to put the macrons back into
 bare text. It also includes the candidate dictionaries and two ambiguity class files from the project *Coverage,
 Context, Convention: Restoring Vowel Length in Old English* (University of Zurich, 2026). The code is at
-https://github.com/Ace3Z/cl-uzh-26-essentials-code.
+https://github.com/Ace3Z/coverage-context-convention.
 
 Language: Old English (`ang`). Licence: CC BY-SA 4.0.
 
