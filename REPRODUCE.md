@@ -41,8 +41,8 @@ Accuracy is reported on all tokens and on three harder populations: lexicon-ambi
 patterns), attested-ambiguous tokens (at least two patterns, each seen at least twice in training), and minority
 readings (the gold pattern is seen in training but is not the most frequent one there). The lexicon-ambiguous tokens are also split by ambiguity
 class (`class_A`, `class_B`, `class_C` in `metrics.json`) for the 60 skeletons (spellings without macrons) in `data/ambiguity_classes.csv`, with
-`class_unlisted` for the rest. Two LLM annotators and an automated adjudicator assigned the classes, and the team has
-not reviewed them yet. The 60 skeletons were picked by their frequency in the training works (Zupitza included) and both test
+`class_unlisted` for the rest. Two LLM annotators and an automated adjudicator assigned the classes, a second, blind LLM
+review confirmed all 60, and the team has not reviewed them yet. The 60 skeletons were picked by their frequency in the training works (Zupitza included) and both test
 sets, and they are kept under decision D3. With training forms plus WikiPron, the `d3` block of `data/ambiguity_classes.json` records that `hi` is no longer lexicon-ambiguous without
 Zupitza, and that 6,759 of the 36,203 lexicon-ambiguous tokens counted there fall outside the list.
 

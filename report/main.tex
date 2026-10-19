@@ -187,8 +187,8 @@ edition moves its class B accuracy by \NPairWTClsBPriorGap{} points, about twice
 class B (Section~\ref{sec:context}), and against Wyatt the prior agrees more often than the two editors do. Our
 training editions mark these words more like Wyatt than like Klaeber.
 
-An LLM-based assistant labelled a random sample of \NCheckN{} Harrison \& Sharp and Wyatt disagreements (not yet
-checked by us): \NCheckEditorial{} editorial, \NCheckNorm{} macrons on the other letter of a digraph that our
+An LLM-based assistant labelled a random sample of \NCheckN{} Harrison \& Sharp and Wyatt disagreements, and a
+second, blind LLM review corrected four of them (not yet checked by us): \NCheckEditorial{} editorial, \NCheckNorm{} macrons on the other letter of a digraph that our
 normalisation could align, \NCheckAlign{} alignment faults and \NCheckOther{} others, mostly probable slips.
 
 The proposal promised to report disagreement instead of a model if agreement was low. We fixed what counts as low
@@ -320,7 +320,8 @@ a mismatch of task as much as of model.
 \section{Error analysis}
 Two independent LLM-based annotators typed \NErrItems{} random lexicon-ambiguous errors from each of the ByT5 sentence
 arm (full cap, seed~1) and CharsiuG2P, pooled over both test sets ($\kappa=\NErrKappa$). An automated adjudicator
-resolved their disagreements, and we have not yet reviewed the labels (Table~\ref{tab:errors}). The CharsiuG2P sample
+resolved their disagreements, a second, blind LLM review corrected five labels, and we have not yet reviewed them
+(Table~\ref{tab:errors}). The CharsiuG2P sample
 was drawn before Zupitza left training. ByT5 errors spread evenly over homographs (\NErrEncHomograph), grammatical
 pairs (\NErrEncGrammatical) and editorial habit (\NErrEncEditorial). For \NErrEncGoldInDoubt{} more, another edition
 supports the prediction, and for \NErrEncCeiling{} the gold is not a candidate. CharsiuG2P, which sees no context, has

@@ -77,8 +77,8 @@ of training and skip sentences with `leakage_excluded: true` when scoring.
 - `lexicons/lexicons_provenance.json` (Clark Hall, Wiktionary, Bosworth-Toller) and `lexicons/wikipron_provenance.json`
   give the URL, licence and checksum of each dictionary source.
 - `ambiguity_classes.csv` lists the 60 most frequent ambiguous spellings, each labelled lexical (A), grammatical (B)
-  or editorial (C). Two LLM annotators labelled them and an automated step settled their two disagreements. No
-  person has reviewed the labels yet. `ambiguity_classes.json` records the class definitions, the annotator
+  or editorial (C). Two LLM annotators labelled them and an automated step settled their two disagreements. A
+  second, blind LLM review confirmed all 60. No person has reviewed the labels yet. `ambiguity_classes.json` records the class definitions, the annotator
   agreement and the counting rule.
 
 ## Source data

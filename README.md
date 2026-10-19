@@ -103,8 +103,8 @@ grammatical homographs, words spelled alike that differ in function.
 | Editors differ most on grammatical words | Wyatt against Klaeber (Tauber), lexicon-ambiguous / class B | 96.08% / 78.07% agreement |
 | CharsiuG2P's errors are mostly about length | its own 500-word Old English test set | word error rate 0.208 as published and 0.188 with 50 decoding steps, where 75.5% of the word errors differ only in vowel length |
 
-LLM annotators labelled the ambiguity classes, the error types and a sample of editor disagreements, and nobody on
-the team has reviewed them yet.
+LLM annotators labelled the ambiguity classes, the error types and a sample of editor disagreements. A second, blind
+LLM review confirmed 551 of these 560 labels and corrected the other nine. Nobody on the team has reviewed them yet.
 The report has the full tables, the caveats and the run-to-run variance (TODO: link the PDF).
 
 ---
