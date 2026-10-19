@@ -1,4 +1,4 @@
-"""Write the corpus as a Hugging Face dataset folder. Local only: nothing is uploaded (README, "Publishing the dataset").
+"""Write the corpus as a Hugging Face dataset folder. Local only: nothing is uploaded (README, Usage 9).
 
 One JSONL file per split, one sentence per line, all with the same fields:
   train       the five training works (experiment.TRAIN)   dev         Gospel of John
