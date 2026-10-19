@@ -1,5 +1,5 @@
 """Reproducible Old English length restoration on work-separated source files."""
-import argparse,collections,csv,difflib,json,re,unicodedata,statistics,urllib.request,hashlib
+import argparse,collections,csv,difflib,json,re,unicodedata,statistics
 from pathlib import Path
 
 LONG='āēīōūȳǣ'; SHORT='aeiouyæ'; TRANS=str.maketrans(dict(zip(LONG,SHORT)))
@@ -53,7 +53,6 @@ def flags(r,lex,counts):
  return {'lexicon_ambiguous':len(pats)>=2,'attested_ambiguous':att,'minority_reading':minority}
 
 def features(r,arm):
- from collections import Counter
  ts=r['sentence'];i=r['index'];w=key(r['bare']);d={'word='+w:1,'prefix='+w[:2]:1,'suffix='+w[-2:]:1}
  if arm in ('left','sentence'):
   for n in (1,2):d[f'L{n}='+ (key(ts[i-n]) if i>=n else '<BOS>')]=1
@@ -164,8 +163,9 @@ def main():
  train,prose,hs,wy=build_data(a.data,exclude);lex,counts=lexicon(train,a.lexicon);cls=load_classes(cpath) if cpath.exists() else None;out=Path(a.out);out.mkdir(parents=True,exist_ok=True)
  summary={'dataset':{'train':len(train),'test_prose':len(prose),'agreement_hs':len(hs),'agreement_wyatt':len(wy),'lexicon_origin':'training attested forms'+(' + external file' if a.lexicon else ' (proxy; NOT Clark Hall/Wiktionary/Bosworth-Toller)')}}
  if exclude:summary['dataset']['exclude_train']=exclude  # only when set: the default metrics.json stays as before
+ if a.lexicon:summary['dataset']['lexicon_file']=Path(a.lexicon).name
  mpath=out/'metrics.json'  # refuse a mismatched --out folder before any file in it is overwritten
- if mpath.exists() and any(json.loads(mpath.read_text(encoding='utf8')).get('dataset',{}).get(k)!=summary['dataset'].get(k) for k in ('lexicon_origin','exclude_train')):raise SystemExit(f'{mpath} was made with a different lexicon or training set; use another --out folder')
+ if mpath.exists() and any(json.loads(mpath.read_text(encoding='utf8')).get('dataset',{}).get(k)!=summary['dataset'].get(k) for k in ('lexicon_origin','lexicon_file','exclude_train')):raise SystemExit(f'{mpath} was made with a different lexicon or training set; use another --out folder')
  tauber_path=Path(a.tauber)
  if 'tauber_beowulf' in wanted and not tauber_path.exists():raise SystemExit('Tauber gold missing: put brunetti-length.txt in data/ or run python -m oevl.fetch_tauber')
  tests=[(name,heldout(a.data,name,tauber_path)) for name in TESTS if name in wanted]

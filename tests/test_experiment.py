@@ -40,7 +40,6 @@ class Tests(unittest.TestCase):
    before=(d/'d3'/'soliloquies_predictions.jsonl').read_bytes()  # a run without the D3 flag into the D3 folder is refused before it writes
    p=subprocess.run([sys.executable,'-m','oevl.experiment','--data',str(d),'--out',str(d/'d3'),'--tests','soliloquies'],env={**os.environ,'PYTHONPATH':str(root/'src')},capture_output=True,text=True)
    self.assertEqual((p.returncode,(d/'d3'/'soliloquies_predictions.jsonl').read_bytes()),(1,before),p.stderr)
-if __name__=='__main__':unittest.main()
 
 class RegressionTests(unittest.TestCase):
  def test_full_training_no_cap(self):
@@ -100,3 +99,4 @@ class ClassTests(unittest.TestCase):
   lex={'ge':{'0':set(),'1':set()},'x':{'0':set(),'1':set()}};cts=collections.defaultdict(collections.Counter)
   rows=per_word([],[{'key':'ge','gold_pattern':'1'},{'key':'x','gold_pattern':'0'}],{'frequency':['1','0']},lex,cts,cls={'ge':'B'})
   self.assertEqual({r['word']:r['category_preliminary'] for r in rows},{'ge':'B','x':'unlisted'})
+if __name__=='__main__':unittest.main()

@@ -7,7 +7,8 @@
     "lexicon_origin": "training attested forms + external file",
     "exclude_train": [
       "zupitza_grammar"
-    ]
+    ],
+    "lexicon_file": "lex_proposal.csv"
   },
   "john_ws": {
     "frequency": {

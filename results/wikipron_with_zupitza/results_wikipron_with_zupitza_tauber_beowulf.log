@@ -5,7 +5,8 @@ Tauber validated: 17361 tokens, 7438 long marks
     "test_prose": 15431,
     "agreement_hs": 17682,
     "agreement_wyatt": 17568,
-    "lexicon_origin": "training attested forms + external file"
+    "lexicon_origin": "training attested forms + external file",
+    "lexicon_file": "lex_wikipron.csv"
   },
   "john_ws": {
     "frequency": {
