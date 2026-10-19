@@ -53,4 +53,4 @@ the Wikisource contributors of each page, at the URLs above.
 
 `ambiguity_classes.csv`, `ambiguity_classes.json`, `leakage_excluded.json`, `lexicons_provenance.json` and
 `wikipron_provenance.json` are released under CC BY-SA 4.0. The class files list spellings and candidate
-patterns taken from the dictionaries above.
+patterns taken from the training works and `lex_wikipron.csv`.
