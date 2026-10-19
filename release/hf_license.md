@@ -4,7 +4,7 @@ The dataset is released under the Creative Commons Attribution-ShareAlike 4.0 In
 https://creativecommons.org/licenses/by-sa/4.0/), because it contains CC BY-SA material. A file that combines several
 sources takes the strictest licence among them. The statements below were checked on 2026-10-18 against the licence
 file or source page of each source. The code repository, https://github.com/Ace3Z/cl-uzh-26-essentials-code, keeps
-the same table for its own `data/` folder in `data/LICENSE.md`.
+a fuller version of this table for its own `data/` folder in `data/LICENSE.md`.
 
 ## Corpus splits
 
@@ -16,7 +16,7 @@ the same table for its own `data/` folder in `data/LICENSE.md`.
 | `test_verse.jsonl` | James Tauber's `beowulf/raw-data/brunetti-length.txt`, https://github.com/old-english-learner-texts/old-english-texts (CC BY-SA 4.0, attribution to James Tauber), turned into sentence records | CC BY-SA 4.0 |
 | `agreement.jsonl` | Wyatt's *Beowulf* (Wikisource transcription, CC BY-SA 4.0) and Harrison & Sharp's *Beowulf* (Project Gutenberg, public domain in the USA) | CC BY-SA 4.0 |
 
-The source page of every work is in the Source Data table of `README.md`. Attribution for the Wikisource works: the
+The source page of every work is in the Source data table of `README.md`. Attribution for the Wikisource works: the
 Wikisource contributors of each page. The Project Gutenberg header and licence are not part of the extracted text.
 
 ## Dictionaries
@@ -29,7 +29,7 @@ Wikisource contributors of each page. The Project Gutenberg header and licence a
 | `lexicons/lex_bt.csv` | Tichý et al. 2021, *Bosworth-Toller's Anglo-Saxon Dictionary online*, LINDAT/CLARIAH-CZ, http://hdl.handle.net/11234/1-3532 | CC BY 4.0, attribution to Tichý et al. |
 | `lexicons/lex_proposal.csv` | union of Clark Hall, Wiktionary and Bosworth-Toller | CC BY-SA 4.0, with the attributions above |
 | `lexicons/lex_all.csv` | union of the three and WikiPron | CC BY-SA 4.0, with the attributions above |
-| `lexicons/lexicons_provenance.json` | URLs, licences and checksums of the dictionary sources | CC BY-SA 4.0 |
+| `lexicons/lexicons_provenance.json`, `lexicons/wikipron_provenance.json` | URLs, licences and checksums of the dictionary sources | CC BY-SA 4.0 |
 
 ## Other files
 

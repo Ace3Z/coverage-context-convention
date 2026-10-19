@@ -1,4 +1,4 @@
-"""Write the corpus as a Hugging Face dataset folder. Local only: nothing is uploaded (README, Usage 9).
+"""Write the corpus as a Hugging Face dataset folder. Local only: nothing is uploaded (REPRODUCE.md, section 9).
 
 One JSONL file per split, one sentence per line, all with the same fields:
   train       the five training works (experiment.TRAIN)   dev         Gospel of John
@@ -8,7 +8,7 @@ Every sentence is written. The dev and test sentences that the 6-gram audit leav
 (data/leakage_excluded.json) are kept with leakage_excluded true. There is no split field: the file is the split.
 Tauber's file has no running text, so a test_verse sentence's text is its tokens joined by spaces.
 README.md is the card release/hf_card.md with the split table counted from the written files.
-Copied unchanged next to them: the dictionaries (lexicons/lex_*.csv, lexicons/lexicons_provenance.json), the
+Copied unchanged next to them: the dictionaries (lexicons/lex_*.csv, lexicons/lexicons_provenance.json, lexicons/wikipron_provenance.json), the
 ambiguity classes (ambiguity_classes.csv and .json) and release/hf_license.md as LICENSE.md.
 Usage: python -m oevl.export_hf [--data data] [--tauber data/brunetti-length.txt] [--out release/hf]
 """
@@ -75,6 +75,7 @@ def export(data, tauber_path, out):
     (out / "README.md").write_text(card, encoding="utf8")
     copies = {**{f"lexicons/lex_{n}.csv": data / f"lex_{n}.csv" for n in LEXICONS},
               "lexicons/lexicons_provenance.json": data / "lexicons_provenance.json",
+              "lexicons/wikipron_provenance.json": data / "wikipron_provenance.json",
               "ambiguity_classes.csv": data / "ambiguity_classes.csv",
               "ambiguity_classes.json": data / "ambiguity_classes.json",
               "LICENSE.md": ROOT / "release" / "hf_license.md"}

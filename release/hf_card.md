@@ -32,11 +32,11 @@ configs:
 
 This dataset holds $sentences Old English sentences ($tokens tokens) from nineteenth- and early twentieth-century
 editions, each with the editor's long-vowel marks (macrons) and without them. The task is to put the macrons back into
-bare text. It also includes the candidate dictionaries and an ambiguity class file from the project *Coverage,
+bare text. It also includes the candidate dictionaries and two ambiguity class files from the project *Coverage,
 Context, Convention: Restoring Vowel Length in Old English* (University of Zurich, 2026). The code is at
 https://github.com/Ace3Z/cl-uzh-26-essentials-code.
 
-Language: Old English (`ang`). License: CC BY-SA 4.0.
+Language: Old English (`ang`). Licence: CC BY-SA 4.0.
 
 ## Dataset structure
 
@@ -47,7 +47,7 @@ Each line is one JSON object for one sentence.
 | `id` | string | `<source>:<number>`, or `tauber:<number>` in `test_verse` |
 | `source` | string | short name of the edition (see the table of sources) |
 | `work`, `editor` | string | the work and the editor of the edition |
-| `year` | integer | year of the edition |
+| `year` | integer | year of the edition (for Harrison & Sharp, the year of the first edition) |
 | `genre` | string | `prose`, `verse` or `mixed` |
 | `section` | string | chapter or Wikisource page the sentence comes from, empty in `test_verse` |
 | `text` | string | the sentence with the edition's length marks |
@@ -74,7 +74,8 @@ of training and skip sentences with `leakage_excluded: true` when scoring.
 
 - `lexicons/` has candidate spellings from WikiPron, Clark Hall, Wiktionary and Bosworth-Toller, plus two unions. Each
   CSV has a `marked_form` column, and the unions add a `sources` column.
-- `lexicons/lexicons_provenance.json` gives the URL, licence and checksum of each dictionary source.
+- `lexicons/lexicons_provenance.json` (Clark Hall, Wiktionary, Bosworth-Toller) and `lexicons/wikipron_provenance.json`
+  give the URL, licence and checksum of each dictionary source.
 - `ambiguity_classes.csv` lists the 60 most frequent ambiguous spellings, each labelled lexical (A), grammatical (B)
   or editorial (C). Two LLM annotators labelled them and an automated step settled their two disagreements. No
   person has reviewed the labels yet. `ambiguity_classes.json` records the class definitions, the annotator
@@ -125,7 +126,7 @@ not read as a missing value.
 - The texts are transcriptions and may contain errors. Wikisource does not yet mark the John transcription as fully
   proofread.
 
-## License
+## Licence
 
 CC BY-SA 4.0. Please credit the Wikisource contributors (Bright's *Reader*, Matthew, John, the *Soliloquies* and
 Wyatt's *Beowulf*), James Tauber (`test_verse`), and, for the dictionaries, WikiPron, Wiktionary via kaikki.org,

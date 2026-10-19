@@ -26,6 +26,7 @@ class TestExportHF(unittest.TestCase):
             card = (Path(d) / "README.md").read_text(encoding="utf8")
             copies = {f"lexicons/lex_{n}.csv": DATA / f"lex_{n}.csv" for n in LEXICONS}
             copies.update({"lexicons/lexicons_provenance.json": DATA / "lexicons_provenance.json",
+                           "lexicons/wikipron_provenance.json": DATA / "wikipron_provenance.json",
                            "ambiguity_classes.csv": DATA / "ambiguity_classes.csv",
                            "ambiguity_classes.json": DATA / "ambiguity_classes.json",
                            "LICENSE.md": ROOT / "release" / "hf_license.md"})
