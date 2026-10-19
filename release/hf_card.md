@@ -53,12 +53,12 @@ One JSON object per line, one sentence per object.
 | `section` | string | chapter or Wikisource page the sentence comes from, empty in `test_verse` |
 | `text` | string | the sentence with the edition's length marks |
 | `text_bare` | string | the same sentence with the length marks removed |
-| `tokens` | list of strings | the words of the sentence, with length marks, without punctuation |
+| `tokens` | list of strings | the words of the sentence, with length marks, without punctuation (in `test_verse`, 38 tokens keep a compound hyphen and 7 an apostrophe, as in Tauber's file) |
 | `tokens_bare` | list of strings | the same words without length marks |
 | `length_patterns` | list of strings | one per token, one digit per vowel letter (a e i o u y æ): `1` if the edition marks it long, `0` if not |
 | `leakage_excluded` | boolean | `true` for a dev or test sentence that shares a word 6-gram with a training work |
 
-Length is written only with ā ē ī ō ū ȳ ǣ. For example `gōdne` has the bare form `godne` and the pattern `10`.
+Length is written only with the macron vowels ā ē ī ō ū ȳ ǣ and their capitals. For example `gōdne` has the bare form `godne` and the pattern `10`.
 
 ### Splits
 
@@ -70,8 +70,8 @@ training, and they skip sentences with `leakage_excluded: true` when scoring.
 
 ### Other files
 
-- `lexicons/`: candidate spellings from WikiPron, Clark Hall, Wiktionary and Bosworth–Toller, and two unions (CSV,
-  column `marked_form`).
+- `lexicons/`: candidate spellings from WikiPron, Clark Hall, Wiktionary and Bosworth–Toller, and two unions (CSV
+  with a `marked_form` column; the unions add a `sources` column).
 - `ambiguity_classes.csv`: the 60 most frequent ambiguous spellings, labelled lexical (A), grammatical (B) or
   editorial (C). The labels come from two LLM annotators and are not yet reviewed by people.
 
@@ -80,19 +80,20 @@ training, and they skip sentences with `leakage_excluded: true` when scoring.
 | `source` | Split | Work | Editor, year | URL | Licence of the source |
 |---|---|---|---|---|---|
 | `bright_reader` | train | *Anglo-Saxon Reader* (selections) | Bright, 1913 | https://en.wikisource.org/wiki/Bright%27s_Anglo-Saxon_Reader | Wikisource, CC BY-SA 4.0 |
-| `matthew_ws` | train | Gospel of Matthew (West Saxon) | Bright, 1904 | https://en.wikisource.org/wiki/Evangelium_Secundum_Mattheum | Wikisource, CC BY-SA 4.0 |
+| `matthew_ws` | train | Gospel of Matthew (West Saxon) | Bright, 1904 | https://en.wikisource.org/wiki/Evangelium_Secundum_Mattheum:_the_Gospel_of_Saint_Matthew_in_West-Saxon | Wikisource, CC BY-SA 4.0 |
 | `sweet_primer` | train | *Anglo-Saxon Primer* (texts) | Sweet, 1905 | https://www.gutenberg.org/ebooks/34316 | Project Gutenberg, public domain in the USA |
 | `physiologus` | train | *Old English Physiologus* | Cook & Pitman, 1921 | https://www.gutenberg.org/ebooks/14529 | Project Gutenberg, public domain in the USA |
 | `zupitza_grammar` | train | Ælfric's *Grammar* | Zupitza, 1880 | https://www.gutenberg.org/ebooks/45861 | Project Gutenberg, public domain in the USA |
 | `john_ws` | dev | Gospel of John (West Saxon) | Bright & Harris, 1904 | https://en.wikisource.org/wiki/Index:Gospel_of_Saint_John_in_West-Saxon.djvu | Wikisource, CC BY-SA 4.0 |
 | `soliloquies` | test_prose | Alfred's *Soliloquies* | Hargrove, 1902 | https://en.wikisource.org/wiki/King_Alfred%27s_Old_English_Version_of_St._Augustine%27s_Soliloquies | Wikisource, CC BY-SA 4.0 |
 | `tauber_beowulf` | test_verse | *Beowulf* | Tauber, with the length marks of the Perseus text of Klaeber's 1922 edition | https://github.com/old-english-learner-texts/old-english-texts (`beowulf/raw-data/brunetti-length.txt`) | CC BY-SA 4.0, attribution to James Tauber |
-| `hs_beowulf` | agreement | *Beowulf*, *Finnsburh Fragment* | Harrison & Sharp, 1883 | https://www.gutenberg.org/ebooks/9701 | Project Gutenberg, public domain in the USA |
+| `hs_beowulf` | agreement | *Beowulf*, *Finnsburh Fragment* | Harrison & Sharp, 4th revised edition (first 1883) | https://www.gutenberg.org/ebooks/9701 | Project Gutenberg, public domain in the USA |
 | `wyatt_beowulf` | agreement | *Beowulf*, *Finnsburh Fragment* | Wyatt, 1894 | https://en.wikisource.org/wiki/Beowulf_(Wyatt) | Wikisource, CC BY-SA 4.0 |
 
 The Old English text was extracted from each edition, normalised to Unicode NFC with length marked only by macrons
-(Zupitza's circumflexes converted), and split into sentences and tokens. Notes, translations and leftover Latin and
-English lines were removed.
+(Zupitza's circumflexes converted), and split into sentences and tokens. Notes, translations and Latin and English
+lines were removed, though a few short English, Latin and markup fragments remain (for example
+`bright_reader:00937` to `00943`).
 
 ## Uses
 
@@ -112,8 +113,10 @@ not read as a missing value.
 
 - The marks are the editors' macronisation, not recorded pronunciation, and editors disagree, most on unstressed
   function words such as *se/sē* and *þe/þē*.
-- The corpus is small and mostly West Saxon prose. The only verse in `train` is the short *Physiologus*.
-- The texts are transcriptions and may contain errors. Wikisource lists the John scan as not proofread.
+- The corpus is small and mostly West Saxon prose. The verse in `train` is the *Physiologus* and four sections of
+  Bright's *Reader* (about 6,300 tokens in all).
+- The texts are transcriptions and may contain errors. Wikisource does not yet mark the John transcription as fully
+  proofread.
 
 ## License
 
