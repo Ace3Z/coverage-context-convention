@@ -10,7 +10,7 @@ Course project, *Essentials in Text and Speech Processing*, UZH, HS 2026.
 Mahbod Tajdini, Hanna Miranovich, Arjun Singh Bhadoria.
 
 - **Report:** source `report/main.tex`, compiled to `REPORT.pdf` by `bash run_all.sh`
-- **Dataset:** https://huggingface.co/datasets/oe-vowel-length/old-english-vowel-length (corpus splits, dictionaries
+- **Dataset:** https://huggingface.co/datasets/Ace3Z/old-english-vowel-length (corpus splits, dictionaries
   and ambiguity classes, private until the release)
 - **Licence:** code MIT (`LICENSE`), data CC BY-SA 4.0 unless `data/LICENSE.md` says otherwise
 
@@ -272,7 +272,7 @@ changed instead of reporting accuracy.
 
 ```bash
 PYTHONPATH=src python -m oevl.export_hf --out release/hf
-hf upload oe-vowel-length/old-english-vowel-length release/hf . --repo-type=dataset --private
+hf upload Ace3Z/old-english-vowel-length release/hf . --repo-type=dataset --private
 ```
 
 The export writes `release/hf/` (gitignored, regenerated on each run): one JSONL file per split (`train`, `dev`,
@@ -282,11 +282,11 @@ and the dataset card `README.md`, made from `release/hf_card.md` with the token 
 Sentences that the leakage audit leaves out of evaluation are kept, with `leakage_excluded` set to true. `train`
 holds all five training works, Zupitza included.
 
-The upload needs a Hugging Face account with write access to the `oe-vowel-length` namespace. `--private` keeps a
+The upload needs a Hugging Face account with write access to the `Ace3Z` namespace. `--private` keeps a
 newly created repository private, and the repository stays private until it is released together with this one.
 `hf` is the command line of `huggingface_hub`. Version 1.0 removed the older `huggingface-cli`. With a 0.x version
 the same upload is
-`huggingface-cli upload oe-vowel-length/old-english-vowel-length release/hf . --repo-type=dataset --private`.
+`huggingface-cli upload Ace3Z/old-english-vowel-length release/hf . --repo-type=dataset --private`.
 
 ## Data Format
 
@@ -357,7 +357,7 @@ licence of every file in `data/` and the licence text or source page each statem
 - Corpus: `data/by_source/`, cleaned by `python -m oevl.clean_corpus` (explicit character mappings, counted in
   `data/manifest.json`). Built from Project Gutenberg editions (public domain in the USA) and Wikisource
   transcriptions (CC BY-SA 4.0), released as CC BY-SA 4.0. The Hugging Face copy is
-  `oe-vowel-length/old-english-vowel-length`, private until the release.
+  `Ace3Z/old-english-vowel-length`, private until the release.
 - Tauber gold: https://github.com/old-english-learner-texts/old-english-texts (CC BY-SA 4.0, attribution to James
   Tauber).
 - WikiPron: https://github.com/CUNY-CL/wikipron. The code is Apache-2.0, but the scraped data is Wiktionary content

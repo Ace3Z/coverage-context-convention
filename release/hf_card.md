@@ -182,7 +182,7 @@ access to it.
 ```python
 from datasets import load_dataset
 
-corpus = load_dataset("oe-vowel-length/old-english-vowel-length")  # config "corpus": the five splits
+corpus = load_dataset("Ace3Z/old-english-vowel-length")  # config "corpus": the five splits
 ```
 
 ### 2. Select the data the way the project scores it
@@ -195,7 +195,7 @@ dev = corpus["dev"].filter(lambda r: not r["leakage_excluded"])
 ### 3. Load a dictionary or the class file
 
 ```python
-base = "hf://datasets/oe-vowel-length/old-english-vowel-length"
+base = "hf://datasets/Ace3Z/old-english-vowel-length"
 lex = load_dataset("csv", data_files=f"{base}/lexicons/lex_wikipron.csv", keep_default_na=False)["train"]
 classes = load_dataset("csv", data_files=f"{base}/ambiguity_classes.csv", keep_default_na=False)["train"]
 ```
@@ -291,7 +291,7 @@ Check the status of the editions where you are.
   author       = {Tajdini, Mahbod and Miranovich, Hanna and Bhadoria, Arjun Singh},
   title        = {Coverage, Context, Convention: Restoring Vowel Length in {Old English}},
   year         = {2026},
-  howpublished = {\url{https://huggingface.co/datasets/oe-vowel-length/old-english-vowel-length}},
+  howpublished = {\url{https://huggingface.co/datasets/Ace3Z/old-english-vowel-length}},
   note         = {Course project, Essentials in Text and Speech Processing, University of Zurich}
 }
 ```
