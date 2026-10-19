@@ -74,9 +74,9 @@ relative particle *þe* and the pronoun *þē* 'thee'. Modern editions add macro
 the bare word, takes the length patterns a dictionary lists for it, and picks one.
 
 We built a length-marked corpus from nine editions and hold out one of them, Alfred's *Soliloquies*, as the prose
-test. The verse test is a tenth source, Tauber's token-level *Beowulf*. On exactly the same tokens we compare a frequency prior, logistic classifiers,
-a fine-tuned ByT5 model and CharsiuG2P, and three editions of *Beowulf* show how far editors agree.
-`bash run_all.sh` reproduces every number and table in the report.
+test. The verse test is a tenth source, Tauber's token-level *Beowulf*. On exactly the same tokens we compare a
+frequency prior, logistic classifiers, a fine-tuned ByT5 model and CharsiuG2P, and three editions of *Beowulf* show
+how far editors agree. `bash run_all.sh` reproduces every number and table in the report.
 
 | Limit | Question | Where to look |
 |---|---|---|
@@ -90,9 +90,9 @@ a fine-tuned ByT5 model and CharsiuG2P, and three editions of *Beowulf* show how
 ## 📊 Headline results
 
 The ByT5 rows are means over three seeds (nine runs for the two-words-each-side arm, whose input is the same at
-every byte cap), and the intervals are 95% sentence-level bootstrap intervals over
-seed-averaged predictions. Lexicon-ambiguous tokens have two or more candidate patterns, and class B holds
-grammatical homographs, words spelled alike that differ in function.
+every byte cap), and the intervals are 95% sentence-level bootstrap intervals on each token's correctness averaged
+over seeds. Lexicon-ambiguous tokens have two or more candidate patterns, and class B holds grammatical homographs,
+words spelled alike that differ in function.
 
 | Finding | Tokens | Result |
 |---|---|---|
@@ -104,8 +104,8 @@ grammatical homographs, words spelled alike that differ in function.
 | CharsiuG2P's errors are mostly about length | its own 500-word Old English test set | word error rate 0.208 as published and 0.188 with 50 decoding steps, where 75.5% of the word errors differ only in vowel length |
 
 LLM annotators labelled the ambiguity classes, the error types and a sample of editor disagreements. A second, blind
-LLM review agreed with 538 of these 560 labels. An adjudicator kept 13 of the 22 the review disputed and corrected the
-other nine (`results/label_review/`). Nobody on the team has reviewed the labels yet.
+LLM review agreed with 538 of these 560 labels. An LLM adjudicator kept 13 of the 22 the review disputed and
+corrected the other nine (`results/label_review/`). Nobody on the team has reviewed the labels yet.
 The report has the full tables, the caveats and the run-to-run variance (TODO: link the PDF).
 
 ---
@@ -113,8 +113,8 @@ The report has the full tables, the caveats and the run-to-run variance (TODO: l
 ## 🧩 Pipeline
 
 The code is the Python package `oevl` in `src/oevl/`. `bash run_all.sh` runs every CPU stage from the committed
-inputs and rebuilds all tables. Rebuilding the corpus or the dictionaries from their sources, and the GPU runs, have
-their own commands in [REPRODUCE.md](REPRODUCE.md).
+inputs and rebuilds all tables. Rebuilding the corpus or the dictionaries from their sources, the CharsiuG2P
+benchmark and the GPU runs have their own commands in [REPRODUCE.md](REPRODUCE.md).
 
 | # | Stage | Module | Writes |
 |---|---|---|---|
@@ -148,7 +148,7 @@ pip install -r requirements.txt
 #         (about two minutes). Includes the frozen check of 660 values.
 bash run_all.sh
 
-# Step 3. Restore macrons in your own sentences, one per line.
+# Step 3. Restore macrons in your own sentences: write them one per line to my_tests/sentences.txt.
 PYTHONPATH=src python -m oevl.try_text my_tests/sentences.txt
 ```
 
@@ -177,7 +177,7 @@ from datasets import load_dataset
 corpus = load_dataset("Ace3Z/old-english-vowel-length")
 ```
 
-The split is by work, never by sentence, and no *Beowulf* text is in `train`. [DATA.md](DATA.md) covers the sources,
+The split is by work, and no *Beowulf* text is in `train`. [DATA.md](DATA.md) covers the sources,
 the leakage audit, decision D3 and the licences.
 
 ---
@@ -204,7 +204,7 @@ cl-uzh-26-essentials-code/
 ├── REPRODUCE.md             installation, systems, evaluation, every command
 ├── DATA.md                  corpus, splits, leakage audit, D3, licences
 ├── run_all.sh               the whole CPU pipeline, from inputs to REPORT.pdf
-├── src/oevl/                the package: one module per pipeline stage
+├── src/oevl/                the package: one or more modules per pipeline stage
 ├── scripts/encoder_grid.sh  exact GPU commands behind results/encoder/
 ├── tests/                   unit tests, run by run_all.sh
 ├── data/                    corpus (by_source/), Tauber and WikiPron inputs, dictionaries, class files
@@ -221,8 +221,7 @@ cl-uzh-26-essentials-code/
 ## 🖥️ Compute
 
 - `bash run_all.sh` takes about two minutes on an Apple M-series laptop, including 75 unit tests (one is skipped unless
-  the Wikisource download is cached), 660 frozen
-  checks and the report.
+  the Wikisource download is cached), 660 frozen checks and the report.
 - `requirements.txt` installs and passes those checks on macOS with Python 3.11 and 3.14, and on Linux with Python 3.14
   and a CUDA GPU.
 - A ByT5-small dev selection run took 12 to 70 minutes on a shared lab GPU (`results/encoder/selection.json` records

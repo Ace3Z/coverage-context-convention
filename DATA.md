@@ -37,9 +37,9 @@ Zupitza, seeds 1 and 2) to 96.00%, the prior from 95.12% to 95.60%, and the bila
 
 So every system in `results/<setting>/` trains without Zupitza. So do `oevl.try_text`, the ByT5 default, the coverage
 numbers in the report, the CharsiuG2P populations, and the prior that `oevl.agreement` compares the editors with.
-`results/wikipron_with_zupitza` keeps the earlier run with Zupitza for comparison. The leakage audit still checks all
-five training works, as the ablation needs. Zupitza shares no 6-gram with the dev or test sets, so the exclusions are
-the same either way.
+`results/wikipron_with_zupitza` repeats the WikiPron setting with Zupitza in training, for comparison. The leakage
+audit still checks all five training works, as the ablation needs. Zupitza shares no 6-gram with the dev or test sets,
+so the exclusions are the same either way.
 
 ## Input data
 

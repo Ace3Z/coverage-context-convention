@@ -66,10 +66,10 @@ $table
 
 Flagged sentences and tokens are those with `leakage_excluded: true`.
 
-The split is by work, never by sentence, and no *Beowulf* text is in `train`. `agreement` holds two more *Beowulf*
-editions and is used only to measure editor agreement and to score the frequency prior against each edition.
-Nothing is trained or tuned on it. The project's final systems leave `zupitza_grammar` out
-of training and skip sentences with `leakage_excluded: true` when scoring.
+The split is by work, and no *Beowulf* text is in `train`. `agreement` holds two more *Beowulf* editions and is used
+only to measure editor agreement and to score the frequency prior against each edition. Nothing is trained or tuned
+on it. The project's final systems leave `zupitza_grammar` out of training and skip sentences with
+`leakage_excluded: true` when scoring.
 
 ### Other files
 
@@ -79,7 +79,7 @@ of training and skip sentences with `leakage_excluded: true` when scoring.
   give the URL, licence and checksum of each dictionary source.
 - `ambiguity_classes.csv` lists the 60 most frequent ambiguous spellings, each labelled lexical (A), grammatical (B)
   or editorial (C). Two LLM annotators labelled them and an automated step settled their two disagreements. A
-  second, blind LLM review agreed with 58 of them and an adjudicator kept the other two, so no label changed. No
+  second, blind LLM review agreed with 58 of them and an LLM adjudicator kept the other two, so no label changed. No
   person has reviewed the labels yet. `ambiguity_classes.json` records the class definitions, the annotator
   agreement and the counting rule.
 

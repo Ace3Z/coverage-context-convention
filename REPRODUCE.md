@@ -18,9 +18,9 @@ matplotlib 3.10.8. ByT5 and CharsiuG2P use torch 2.2 or later and transformers 4
 committed ByT5 runs used torch 2.11.0 with CUDA 12.8. `pdflatex` is optional and compiles `REPORT.pdf`. The `hf`
 command for uploading the dataset comes with `huggingface_hub`, which transformers already installs.
 
-`run_all.sh` puts `src` on `PYTHONPATH`, so nothing has to be installed. To run modules by hand, prefix commands
-with `PYTHONPATH=src`, or install the package once with `pip install -e .`. The install must be editable, because
-the code finds `data/` and `results/` relative to the repository.
+`run_all.sh` puts `src` on `PYTHONPATH`, so the `oevl` package itself does not have to be installed. To run modules by
+hand, prefix commands with `PYTHONPATH=src`, or install the package once with `pip install -e .`. The install must be
+editable, because the code finds `data/` and `results/` relative to the repository.
 
 ## Systems
 
@@ -39,22 +39,26 @@ the code finds `data/` and `results/` relative to the repository.
 
 Accuracy is reported on all tokens and on three harder populations: lexicon-ambiguous tokens (two or more candidate
 patterns), attested-ambiguous tokens (at least two patterns, each seen at least twice in training), and minority
-readings (the gold pattern is seen in training but is not the most frequent one there). The lexicon-ambiguous tokens are also split by ambiguity
-class (`class_A`, `class_B`, `class_C` in `metrics.json`) for the 60 skeletons (spellings without macrons) in `data/ambiguity_classes.csv`, with
-`class_unlisted` for the rest. Two LLM annotators and an automated adjudicator assigned the classes, a second, blind LLM review agreed with 58 of them and an adjudicator kept the other two (`results/label_review/`),
-and the team has not reviewed them yet. The 60 skeletons were picked by their frequency in the training works (Zupitza included) and both test
-sets, and they are kept under decision D3. With training forms plus WikiPron, the `d3` block of `data/ambiguity_classes.json` records that `hi` is no longer lexicon-ambiguous without
-Zupitza, and that 6,759 of the 36,203 lexicon-ambiguous tokens counted there fall outside the list.
+readings (the gold pattern is seen in training but is not the most frequent one there). The lexicon-ambiguous tokens
+are also split by ambiguity class (`class_A`, `class_B`, `class_C` in `metrics.json`) for the 60 skeletons (spellings
+without macrons) in `data/ambiguity_classes.csv`, with `class_unlisted` for the rest. Two LLM annotators and an
+automated adjudicator assigned the classes. A second, blind LLM review agreed with 58 of them, and an LLM
+adjudicator kept the other two (`results/label_review/`). The team has not reviewed the classes yet. The 60 skeletons
+were picked by their frequency in the training works (Zupitza included) and both test sets, and they are kept under
+decision D3. With training forms plus WikiPron, the `d3` block of `data/ambiguity_classes.json` records that `hi`
+is no longer lexicon-ambiguous without Zupitza, and that 6,759 of the 36,203 lexicon-ambiguous tokens counted there
+fall outside the list.
 
 Results are the mean and sample standard deviation over seeds. A difference between two systems gets a 95%
-sentence-level bootstrap interval over seed-averaged predictions (`oevl.stats`). Exact McNemar tests are
-stored as well (per seed for ByT5, seed 1 for the logistic models).
+sentence-level bootstrap interval on each token's correctness averaged over seeds (`oevl.stats`). Exact McNemar tests
+are stored as well (per seed for ByT5, seed 1 for the logistic models).
 
 `run_all.sh` runs four candidate settings: training forms only, training forms plus WikiPron (the main setting), the
 three proposal dictionaries, and all four sources together. `check_expected` freezes 660 values from these settings,
 the Zupitza ablation and the editor agreement. It passes on macOS with Python 3.11 and 3.14 and on Linux with
 Python 3.14. On Linux a few McNemar p-values differ from the committed ones in the 15th significant digit, which the
-check tolerates.
+check tolerates. Where none of the Times-like fonts the figure asks for is installed, it falls back to DejaVu Serif,
+so its PDF differs too.
 
 ## 1. Reproduce everything
 
@@ -104,11 +108,11 @@ PYTHONPATH=src python -m oevl.build_lexicons
 `oevl.build_corpus` fetches an edition into `data/raw/corpus/` and rebuilds its file and manifest entry: the URL,
 retrieval date and SHA-256 of each input, and the work's `role` (train, dev, test or agreement). The first extraction
 scripts were lost, so the rules were worked out from the files. After `clean_corpus`, `matthew_ws`, `bright_reader`,
-`physiologus`, `hs_beowulf` and `john_ws` rebuild byte for byte. The other four rebuilds contain all but four of their 65,991
-committed tokens in order, but some sentences differ, mostly where the original language filter dropped short lines (the
-module docstring has the details). Those four committed files were kept as they are. `john_ws.jsonl` (Gospel of
-John, the dev set) is built the same way as Matthew. The builder still writes an old sentence-level `split` field,
-which `clean_corpus` removes, because the split is by work as the manifest `role` says. `oevl.build_lexicons`
+`physiologus`, `hs_beowulf` and `john_ws` rebuild byte for byte. The other four rebuilds contain all but four of their
+65,991 committed tokens in order, but some sentences differ, mostly where the original language filter dropped short
+lines (the module docstring has the details). Those four committed files were kept as they are. `john_ws.jsonl`
+(Gospel of John, the dev set) is built the same way as Matthew. The builder still writes an old sentence-level `split`
+field, which `clean_corpus` removes, because the split is by work as the manifest `role` says. `oevl.build_lexicons`
 rebuilds the three proposal dictionaries from the original sources.
 
 ## 4. ByT5 (GPU)
@@ -123,9 +127,9 @@ bash scripts/encoder_grid.sh [select|grid|all] [RUNS_DIR]
 `oevl.encoder_experiment` fine-tunes ByT5-small with the word only, the left context or the whole sentence. Like
 `run_all.sh` it trains without Zupitza by default (D3), and `--exclude-train ""` trains on all five works.
 `--arms` picks the arms (default `word,left,sentence`), so `--arms word,left,sentence,local2,local5` also runs the
-arms with two or five words on each side. `--train-limit N` trains on a fixed subset,
-and `--tests` scores fewer than the three held-out sets. Without `--out` it writes to `results/encoder/`, next to
-the committed files, so pass `--out` for new runs.
+arms with two or five words on each side. `--train-limit N` trains on a fixed subset, and `--tests` scores fewer than
+the three held-out sets. Without `--out` it writes to `results/encoder/`, next to the committed files, so pass `--out`
+for new runs.
 
 `scripts/encoder_grid.sh` has the exact commands behind `results/encoder/`: 24 dev selection runs, whose rule
 `oevl.select_config` applies (`selection.json`), then 39 runs of the chosen setting. `oevl.encoder_summary --runs`
@@ -134,8 +138,8 @@ pools those into `summary.json`, the per-token prediction tables (`*_predictions
 training is not bit-for-bit repeatable, so a new run can differ slightly.
 
 The ByT5 pilot trains all five arms on 10,000 training examples, using the notebooks in `notebooks/` on Kaggle or
-Colab (see `notebooks/README.md`). Its logic is in `oevl.pilot`. The pilots ran before D3, so `oevl.pilot` still trains on all
-five works.
+Colab (see `notebooks/README.md`). Its logic is in `oevl.pilot`. The pilots ran before D3, so `oevl.pilot` still
+trains on all five works.
 
 ## 5. ByT5 tables from the committed predictions (no GPU)
 
@@ -184,8 +188,9 @@ with correct macrons) it prints the accuracy. `--tsv` writes one row per word: t
 known, changed and correct. `--model` picks `frequency`, `word`, `left` or `bilateral` (the default), and
 `--lexicon none` uses training texts only.
 
-It trains the report's logistic model (bilateral by default, seed 1) in under a minute and changes no existing file. Unknown words stay
-unchanged. Text that is not Old English has no correct answer, so count the words it wrongly changed instead.
+It trains the report's logistic model (bilateral by default, seed 1) in under a minute and changes no existing file.
+Unknown words stay unchanged. Text that is not Old English has no correct answer, so count the words it wrongly changed
+instead.
 
 ## 9. Export and upload the Hugging Face dataset
 
@@ -223,7 +228,8 @@ results/
 │                               not yet reviewed by the team)
 ├── encoder/                    selection.json, summary.json, <set>_predictions.tsv.gz
 ├── charsiu/                    benchmark.json, benchmark.tsv, ipa.tsv, metrics.json
-├── error_typing/               labels.tsv, summary.json
+├── error_typing/               labels.tsv, summary.json (400 error types labelled by LLMs, not yet reviewed by
+│                               the team)
 └── label_review/               expert_review.json: the blind LLM review of all 560 LLM labels
 report/
 ├── main.tex
