@@ -53,8 +53,10 @@ text. CharsiuG2P's published Old English word error rate of \NCharsiuWer{} partl
 (\NCharsiuWerFixed{} without it), and \NCharsiuLenShare\% of its remaining word errors concern vowel length only.
 \end{abstract}
 
-\noindent Code, corpus, splits and a Hugging Face export script:\\
-\url{https://github.com/Ace3Z/cl-uzh-26-essentials-code}
+\noindent{\footnotesize Code, corpus and splits:\\
+\url{https://github.com/Ace3Z/cl-uzh-26-essentials-code}\\
+Dataset on Hugging Face, private until it is released with the code:\\
+\url{https://huggingface.co/datasets/oe-vowel-length/old-english-vowel-length}\par}
 \newpage
 
 \section{Introduction}
@@ -341,7 +343,7 @@ agrees with one editor and is scored against another.
 \paragraph{Deviations.} The coverage results widened the proposal's question to four limits, so the abstract also
 reports all-token accuracy. Instead of an encoder, a fine-tuned encoder-decoder (ByT5) scores the candidates, one
 checkpoint per arm on identical data. The trained systems keep the candidate set of our first pipeline (training forms plus WikiPron), so the proposal's three dictionaries enter only the coverage comparison, and a planned BiLSTM baseline was not run. LLM-based annotators, not two of us, labelled the ambiguity classes, the error types and the
-disagreement sample. The dataset has a Hugging Face export script but is not uploaded.
+disagreement sample. The dataset is on Hugging Face, private until it is released with the code.
 
 \paragraph{Limitations.} We predict editorial convention, not pronunciation: the dictionaries and the gold descend
 from the same nineteenth-century philology. Tauber's gold is Klaeber's editorial opinion, taken over from the Perseus
