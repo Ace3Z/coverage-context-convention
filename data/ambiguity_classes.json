@@ -41,7 +41,7 @@
   "adjudication_rule": "Both annotators drew the A/B line the same way: B when both readings are closed-class words, A when at least one reading is a content word. The adjudicator applied that rule to the attested tokens of each disputed skeleton.",
   "counting_rule": "The lexicon is experiment.lexicon(train, \"data/lex_wikipron.csv\"): every training gold pattern plus every WikiPron marked form, keyed by key(). Training is all 5 training sources, Zupitza included, as build_data() returns them. A skeleton is lexicon-ambiguous when the lexicon holds 2 or more patterns for it, the same test as flags(). Counted tokens are train plus soliloquies plus tauber_beowulf (load_tauber). hs_beowulf and wyatt_beowulf are agreement sets and are left out. Skeletons are ranked by their ambiguous token count, highest first, ties broken by skeleton in alphabetical order, and the first 60 are kept.",
   "tokens_counted": 125879,
-  "ambiguous_tokens_counted": 43842,
+  "ambiguous_tokens_counted": 44078,
   "rank_60": {
     "skeleton": "eom",
     "tokens": 111
@@ -53,7 +53,7 @@
   "caveats": [
     "Under D3 (Zupitza train-only and left out of ambiguity statistics) the list changes: 53 of the 60 stay, eom, gyt, hi, na, naman, oþrum and þes drop, and eode, hy, hyra, secge, sona, þon and þy come in. The 60 are kept with their labels, and d3 records what changes under the D3 lexicon.",
     "The guideline examples (god, man, is, þe, se) are items in the list, so they came pre-labelled. without_guideline_examples gives kappa on the other 55.",
-    "Many skeletons are near-unanimous in training (þa 17 short vs 2,505 long, þæt 1,946 short vs 6 long). They count as lexicon-ambiguous but most of that is dictionary noise."
+    "Many skeletons are near-unanimous in training (þa 17 short vs 2,690 long, þæt 1,947 short vs 6 long). They count as lexicon-ambiguous but most of that is dictionary noise."
   ],
   "d3": {
     "rule": "PLAN D3: the final systems train without zupitza_grammar. The 60 skeletons and their labels are kept. Counted as in counting_rule with zupitza_grammar left out of training, so out of the lexicon's training forms and out of the counted tokens. Two lexicons: the counting rule's (training forms + data/lex_wikipron.csv, as results/wikipron) and training forms only (as results/training_only).",
