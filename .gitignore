@@ -9,7 +9,6 @@ report/main.out
 report/main.pdf
 my_tests/
 data/raw/
-.Rhistory
 REPORT.pdf
 results/charsiu/analyse.log
 results/charsiu/ipa_tiny.tsv
@@ -19,3 +18,5 @@ build/
 release/hf/
 .ipynb_checkpoints/
 .env
+my_runs/
+encoder_runs/

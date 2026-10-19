@@ -69,7 +69,7 @@ data/
 ├── ambiguity_classes.json      label provenance, agreement, counting rule, D3 notes
 ├── leakage_excluded.json       dev and test sentences left out of scoring
 ├── charsiu_ang_test.tsv        CharsiuG2P's Old English test words
-├── charsiu_ang_dict_words.txt  words of CharsiuG2P's Old English training dictionary
+├── charsiu_ang_dict_words.txt  words of CharsiuG2P's Old English pronunciation dictionary
 ├── LICENSE.md                  licence of every file here
 └── raw/                        downloads for rebuilding (gitignored)
 ```
@@ -94,6 +94,7 @@ licence of every file in `data/` and the licence text or source page that each s
 - The dictionary unions `data/lex_proposal.csv` and `data/lex_all.csv` take the strictest licence of their sources,
   CC BY-SA 4.0.
 - CharsiuG2P (MIT): https://github.com/lingjzhu/CharsiuG2P. `data/charsiu_ang_dict_words.txt` lists the words of its
-  Old English training dictionary and is used only to split the error analysis into seen and unseen words.
+  Old English pronunciation dictionary (`dicts/ang.tsv`, which includes its dev and test words) and is used only to
+  split the error analysis into words in and not in that dictionary.
   `data/charsiu_ang_test.tsv` is its `data/test/ang.tsv` at commit `0c929390759fb94f8ecdfc05cc0bc5f2ff2dc0f4`.
   CharsiuG2P took its Old English data from WikiPron, so both files are CC BY-SA 4.0.

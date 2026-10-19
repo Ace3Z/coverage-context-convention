@@ -10,8 +10,8 @@ install `requirements.txt` and call `python -m oevl.pilot`. The logic, the check
 | `pilot_colab.ipynb` | Colab, T4 GPU | a zip of the repository, uploaded when the first cell asks |
 
 Set `MAX_BYTES` (128 or 256) in the first code cell. Everything else is fixed: five arms (sentence, word, left, local2,
-local5), the same 10,000 training examples for every arm, one epoch, batch 32, microbatch 8, learning rate 3e-4 and
-seed 1. Run 128 first. Compare a 256 run only with the 128 run of the same arms.
+local5), the same 10,000 training examples for every arm, one epoch, batch 32, microbatch 8, learning rate 3e-4,
+seed 1, and all five training works (the pilots ran before decision D3 left Zupitza out). Run 128 first. Compare a 256 run only with the 128 run of the same arms.
 
 After each finished arm the results folder is packed into `encoder_pilot_<bytes>_results.zip`, which you should
 download. To resume in a new session on Kaggle, add that zip, a renamed copy such as `... (1).zip`, or its extracted
@@ -20,6 +20,6 @@ that was interrupted starts again from the beginning. No new arm starts after 9 
 counted from the first cell, so an arm cannot run into Kaggle's 12-hour limit.
 
 The pilots are exploratory. With only 10,000 examples and one epoch, an arm's score also reflects how fast it learns,
-so the pilot's ranking of arms is not the full-data ranking. A full CPU dry run of the same loop:
+so the pilot's ranking of arms need not match the full-data ranking. A full CPU dry run of the same loop:
 
     PYTHONPATH=src python -m oevl.pilot --tiny --allow-cpu --skip-model-check --max-bytes 128 --out /tmp/pilot

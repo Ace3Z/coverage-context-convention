@@ -1,8 +1,8 @@
 """Pool encoder runs over seeds: accuracy per population, collapse flags and paired statistics.
 
 Reads RUNS/<config>/<arm>_s<seed>/{metrics.json, <set>_predictions.jsonl} (one arm and one seed per folder, as written
-by oevl.encoder_experiment), where <config> names the byte cap and anything else that differs (cap128, cap256, capfull,
-cap256_nozup). Writes to --out:
+by oevl.encoder_experiment), where <config> names the byte cap and anything else that differs (cap128, cap256,
+capfull). Writes to --out:
   summary.json: per config, arm, held-out set and population the per-seed accuracies, mean, sample SD and n; each
     run's collapse flag, training loss and diagnostics; the frequency prior; and on the two test sets, for
     lexicon-ambiguous and class B tokens, a sentence bootstrap of seed-mean correctness and McNemar per seed.

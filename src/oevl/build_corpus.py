@@ -18,8 +18,8 @@ data/raw/corpus/<source>/ (gitignored) and goes through the same steps:
 The two Beowulf editions skip the filters of steps 2 and 6, as the committed files show.
 
 The original extraction scripts are not in the repository. These rules were inferred from the committed files
-and their cleaning counts in data/manifest.json. With them matthew_ws, bright_reader, physiologus and hs_beowulf
-rebuild byte for byte. The other four differ where the original language filter dropped lines these rules keep
+and their cleaning counts in data/manifest.json. With them matthew_ws, bright_reader, physiologus, hs_beowulf and
+john_ws rebuild byte for byte. The other four differ where the original language filter dropped lines these rules keep
 (and the reverse), and in the 12 Sweet sentences the original removed as overlapping Matthew.
 
 Usage: python -m oevl.build_corpus --source john_ws --out data/by_source [--raw data/raw/corpus]
@@ -358,7 +358,7 @@ def build(name, raw):
     rows = []
     for i, (sec, text) in enumerate(pairs):
         split = src["split"]
-        if split == "blocks":  # the stale sentence-level split of the original files (AUDIT issue 12)
+        if split == "blocks":  # the stale sentence-level split of the original files, which clean_corpus removes
             split = ("train", "dev", "test")[(i % 500 >= 400) + (i % 500 >= 450)]
         toks = tokens(text)
         work = "Finnsburh Fragment" if src.get("fragment") and src["fragment"] in sec else src["work"]

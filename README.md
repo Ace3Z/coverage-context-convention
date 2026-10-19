@@ -104,7 +104,7 @@ grammatical homographs, words spelled alike that differ in function.
 | CharsiuG2P's errors are mostly about length | its own 500-word Old English test set | word error rate 0.208 as published and 0.188 with 50 decoding steps, where 75.5% of the word errors differ only in vowel length |
 
 LLM annotators labelled the ambiguity classes, the error types and a sample of editor disagreements. A second, blind
-LLM review confirmed 551 of these 560 labels and corrected the other nine. Nobody on the team has reviewed them yet.
+LLM review confirmed 551 of these 560 labels and corrected the other nine (`results/label_review/`). Nobody on the team has reviewed them yet.
 The report has the full tables, the caveats and the run-to-run variance (TODO: link the PDF).
 
 ---
@@ -117,7 +117,7 @@ their own commands in [REPRODUCE.md](REPRODUCE.md).
 
 | # | Stage | Module | Writes |
 |---|---|---|---|
-| 1 | Corpus build and clean-up | `build_corpus.py`, `clean_corpus.py`, `fetch_tauber.py` | `data/by_source/`, `data/manifest.json` |
+| 1 | Corpus build and clean-up | `build_corpus.py`, `clean_corpus.py`, `fetch_tauber.py` | `data/by_source/`, `data/manifest.json`, `data/brunetti-length.txt` |
 | 2 | Leakage audit | `audit_splits.py` | `data/leakage_excluded.json` |
 | 3 | Dictionaries | `wikipron_to_marked.py`, `build_lexicons.py` | `data/lex_*.csv` |
 | 4 | Frequency prior and logistic models | `experiment.py` | `results/<setting>/` |
@@ -217,13 +217,14 @@ cl-uzh-26-essentials-code/
 
 ## 🖥️ Compute
 
-- `bash run_all.sh` takes about two minutes on an Apple M-series laptop, including 75 unit tests, 660 frozen
+- `bash run_all.sh` takes about two minutes on an Apple M-series laptop, including 75 unit tests (one is skipped unless
+  the Wikisource download is cached), 660 frozen
   checks and the report.
 - `requirements.txt` installs and passes those checks on macOS with Python 3.11 and 3.14, and on Linux with Python 3.14
   and a CUDA GPU.
-- On an NVIDIA RTX PRO 6000 shared with other jobs, a ByT5-small dev selection run took 12 to 70 minutes and a grid
-  run 13 to 152 minutes.
-- CharsiuG2P's own 500-word benchmark takes about 15 minutes on a laptop CPU. Its predictions on our test sets were
+- A ByT5-small dev selection run took 12 to 70 minutes on a shared lab GPU (`results/encoder/selection.json` records
+  each run's time).
+- CharsiuG2P's own 500-word benchmark takes a few minutes on a recent laptop CPU. Its predictions on our test sets were
   made on a GPU.
 
 ---

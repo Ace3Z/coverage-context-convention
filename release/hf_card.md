@@ -48,9 +48,9 @@ Each line is one JSON object for one sentence.
 | `source` | string | short name of the edition (see the table of sources) |
 | `work`, `editor` | string | the work and the editor of the edition |
 | `year` | integer | year of the edition (for Harrison & Sharp, the year of the first edition) |
-| `genre` | string | `prose`, `verse` or `mixed`, given per work (Bright's *Reader* and Sweet's *Primer* are `mixed`) |
+| `genre` | string | `prose`, `verse` or `mixed`, given per work (Bright's *Reader* is `mixed`, and so is Sweet's *Primer*, although its extracted texts are prose) |
 | `section` | string | chapter or Wikisource page the sentence comes from, empty in `test_verse` |
-| `text` | string | the sentence with the edition's length marks |
+| `text` | string | the sentence with the edition's length marks (in `test_verse`, the tokens joined by spaces without punctuation, because Tauber's file has no running text) |
 | `text_bare` | string | the same sentence with the length marks removed |
 | `tokens` | list of strings | the words of the sentence, with length marks, without punctuation (in `test_verse`, 38 tokens keep a compound hyphen and 7 an apostrophe, as in Tauber's file) |
 | `tokens_bare` | list of strings | the same words without length marks |
@@ -67,7 +67,8 @@ $table
 Flagged sentences and tokens are those with `leakage_excluded: true`.
 
 The split is by work, never by sentence, and no *Beowulf* text is in `train`. `agreement` holds two more *Beowulf*
-editions and is only used to measure how often editors agree. The project's final systems leave `zupitza_grammar` out
+editions and is used only to measure editor agreement and to score the frequency prior against each edition.
+Nothing is trained or tuned on it. The project's final systems leave `zupitza_grammar` out
 of training and skip sentences with `leakage_excluded: true` when scoring.
 
 ### Other files
@@ -78,7 +79,8 @@ of training and skip sentences with `leakage_excluded: true` when scoring.
   give the URL, licence and checksum of each dictionary source.
 - `ambiguity_classes.csv` lists the 60 most frequent ambiguous spellings, each labelled lexical (A), grammatical (B)
   or editorial (C). Two LLM annotators labelled them and an automated step settled their two disagreements. A
-  second, blind LLM review confirmed all 60. No person has reviewed the labels yet. `ambiguity_classes.json` records the class definitions, the annotator
+  second, blind LLM review agreed with 58 of them and an adjudicator kept the other two, so no label changed. No
+  person has reviewed the labels yet. `ambiguity_classes.json` records the class definitions, the annotator
   agreement and the counting rule.
 
 ## Source data
@@ -86,7 +88,7 @@ of training and skip sentences with `leakage_excluded: true` when scoring.
 | `source` | Split | Work | Editor, year | URL | Licence of the source |
 |---|---|---|---|---|---|
 | `bright_reader` | train | *Anglo-Saxon Reader* (selections) | Bright, 1913 | https://en.wikisource.org/wiki/Bright%27s_Anglo-Saxon_Reader | Wikisource, CC BY-SA 4.0 |
-| `matthew_ws` | train | Gospel of Matthew (West Saxon) | Bright, 1904 | https://en.wikisource.org/wiki/Evangelium_Secundum_Mattheum:_the_Gospel_of_Saint_Matthew_in_West-Saxon | Wikisource, CC BY-SA 4.0 |
+| `matthew_ws` | train | Gospel of Matthew (West Saxon) | Bright, 1904 (corrected impression of 1910) | https://en.wikisource.org/wiki/Evangelium_Secundum_Mattheum:_the_Gospel_of_Saint_Matthew_in_West-Saxon | Wikisource, CC BY-SA 4.0 |
 | `sweet_primer` | train | *Anglo-Saxon Primer* (texts) | Sweet, 1905 | https://www.gutenberg.org/ebooks/34316 | Project Gutenberg, public domain in the USA |
 | `physiologus` | train | *Old English Physiologus* | Cook & Pitman, 1921 | https://www.gutenberg.org/ebooks/14529 | Project Gutenberg, public domain in the USA |
 | `zupitza_grammar` | train | Ælfric's *Grammar* | Zupitza, 1880 | https://www.gutenberg.org/ebooks/45861 | Project Gutenberg, public domain in the USA |
@@ -123,8 +125,8 @@ not read as a missing value.
   Bright's *Reader*, about 6,300 tokens in all.
 - The Harrison & Sharp file is the Project Gutenberg revision of their fourth edition, whose producer changed some
   marks to modern values (for example *ne* to *nē* as a conjunction), so it is not purely the editors' marking.
-- The texts are transcriptions and may contain errors. Wikisource does not yet mark the John transcription as fully
-  proofread.
+- The texts are transcriptions and may contain errors. Wikisource lists the John transcription, and part of
+  Matthew, as proofread but not yet validated.
 
 ## Licence
 

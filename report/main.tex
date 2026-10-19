@@ -270,7 +270,7 @@ unknown words and \NBeoNoCandTrue\% lack the gold candidate. With all four sourc
 more than \NEncBestCtxGainBeo{} points on all verse tokens, and the word arm alone gains \NEncWordGainBeo. On prose the
 two limits are closer: beyond WikiPron the dictionaries add \NSolGainDictWiki{} points and the best context arm
 \NEncBestCtxGainSol. More candidates also mean more ambiguity. Adding the proposal dictionaries to WikiPron raises the
-lexicon-ambiguous verse tokens from \NWBeoLexN{} to \NABeoLexN{}, and on these the bilateral model falls below the
+ambiguous verse tokens from \NWBeoLexN{} to \NABeoLexN{}, and on these the bilateral model falls below the
 prior (\NABeoLexBil\% against \NABeoLexFreq\%).
 
 \begin{table}[t]
@@ -314,8 +314,8 @@ gets length right on \NCharsiuSolAll\% of prose and \NCharsiuBeoAll\% of verse t
 \NWBeoLexFreq\%). Our word-only logistic model (seed~1) gets \NCharsiuSolLexWordFix{} of CharsiuG2P's \NCharsiuSolLexWrong{} length
 errors on ambiguous prose tokens right (\NCharsiuSolLexWordFixShare\%) and the bilateral model \NCharsiuSolLexBilFix,
 so the edition's habit for the word, not context, repairs most of them. CharsiuG2P was built for
-word lists from Wiktionary transcriptions, not to follow an edition's conventions in running text, so this gap measures
-a mismatch of task as much as of model.
+word lists from Wiktionary transcriptions, not to follow an edition's conventions in running text, so the gap reflects the
+task as much as the model.
 
 \section{Error analysis}
 Two independent LLM-based annotators typed \NErrItems{} random lexicon-ambiguous errors from each of the ByT5 sentence
@@ -341,10 +341,10 @@ and every full-cap ByT5 run chooses \emph{þe}. The automated annotators marked 
 agrees with one editor and is scored against another.
 
 \section{Deviations, limitations and conclusion}
-\paragraph{Deviations.} The coverage results widened the proposal's question to four limits, so the abstract also
-reports all-token accuracy. Instead of an encoder, a fine-tuned encoder-decoder (ByT5) scores the candidates, one
-checkpoint per arm on identical data. The trained systems keep the candidate set of our first pipeline (training forms plus WikiPron), so the proposal's three dictionaries enter only the coverage comparison, and a planned BiLSTM baseline was not run. LLM-based annotators, not two of us, labelled the ambiguity classes, the error types and the
-disagreement sample.
+\paragraph{Deviations.} Coverage became one of four limits, so the abstract also reports all-token
+accuracy. Instead of an encoder, a fine-tuned encoder-decoder (ByT5) scores the candidates, one
+checkpoint per arm on identical data. The trained systems keep the candidate set of our first pipeline, so the proposal's three dictionaries enter only the coverage comparison, and a planned BiLSTM baseline was not run. LLM-based annotators, not two of us, labelled the ambiguity classes, the error types and the
+disagreement sample, and a second, blind LLM review checked all 560 labels.
 
 \paragraph{Limitations.} We predict editorial convention, not pronunciation: the dictionaries and the gold descend
 from the same nineteenth-century philology. Tauber's gold is Klaeber's editorial opinion, taken over from the Perseus
@@ -357,8 +357,8 @@ the two are closer (\NSolGainDictWiki{} against \NEncBestCtxGainSol). Context he
 \emph{þe/þē} (\NEncCapfullSolClsBWord\% to \NEncRepSolClsBLocalTwo\% on prose), and two words on each side suffice,
 but it leaves lexical and editorial ambiguity untouched. The LLM-based annotators label \NErrEncEditorial{} of
 \NErrItems{} sampled ByT5 errors as editorial habit, and on grammatical words two independent editors agree on only
-\NPairWTClsB\% of tokens, so a single gold edition cannot tell a wrong model from a different convention. The next
-step is to train and test within one editorial tradition and to check the automated labels ourselves.
+\NPairWTClsB\% of tokens, so a single gold edition cannot tell a wrong model from a different convention. Next we
+will train and test within one editorial tradition and check the automated labels ourselves.
 
 \begin{thebibliography}{99}
 \raggedright

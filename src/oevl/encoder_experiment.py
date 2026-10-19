@@ -5,8 +5,8 @@ Like the logistic models, it is candidate-constrained: the dictionary (training 
 the length patterns, the fine-tuned model scores each one (sum of log-probabilities of the pattern string,
 e.g. "01"), and the best-scoring pattern wins. Words with one candidate take it; unknown words stay short.
 
-Run on a GPU (free Colab T4: about 1-1.5 hours for all three; results are saved after each arm):
-  python -m oevl.encoder_experiment                    -> results/encoder/metrics.json + predictions
+Run on a GPU, and write new runs outside results/encoder/ (scripts/encoder_grid.sh has the report's exact commands):
+  python -m oevl.encoder_experiment --out my_runs/encoder   -> my_runs/encoder/metrics.json + predictions
 Quick CPU smoke test with a tiny random model (no download, under a minute):
   python -m oevl.encoder_experiment --tiny --out /tmp/enc_test
 """

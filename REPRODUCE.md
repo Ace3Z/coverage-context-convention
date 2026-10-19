@@ -41,8 +41,8 @@ Accuracy is reported on all tokens and on three harder populations: lexicon-ambi
 patterns), attested-ambiguous tokens (at least two patterns, each seen at least twice in training), and minority
 readings (the gold pattern is seen in training but is not the most frequent one there). The lexicon-ambiguous tokens are also split by ambiguity
 class (`class_A`, `class_B`, `class_C` in `metrics.json`) for the 60 skeletons (spellings without macrons) in `data/ambiguity_classes.csv`, with
-`class_unlisted` for the rest. Two LLM annotators and an automated adjudicator assigned the classes, a second, blind LLM
-review confirmed all 60, and the team has not reviewed them yet. The 60 skeletons were picked by their frequency in the training works (Zupitza included) and both test
+`class_unlisted` for the rest. Two LLM annotators and an automated adjudicator assigned the classes, a second, blind LLM review agreed with 58 of them and an adjudicator kept the other two (`results/label_review/`),
+and the team has not reviewed them yet. The 60 skeletons were picked by their frequency in the training works (Zupitza included) and both test
 sets, and they are kept under decision D3. With training forms plus WikiPron, the `d3` block of `data/ambiguity_classes.json` records that `hi` is no longer lexicon-ambiguous without
 Zupitza, and that 6,759 of the 36,203 lexicon-ambiguous tokens counted there fall outside the list.
 
@@ -122,7 +122,8 @@ bash scripts/encoder_grid.sh [select|grid|all] [RUNS_DIR]
 
 `oevl.encoder_experiment` fine-tunes ByT5-small with the word only, the left context or the whole sentence. Like
 `run_all.sh` it trains without Zupitza by default (D3), and `--exclude-train ""` trains on all five works.
-`--arms local2,local5` adds the arms with two or five words on each side, `--train-limit N` trains on a fixed subset,
+`--arms` picks the arms (default `word,left,sentence`), so `--arms word,left,sentence,local2,local5` also runs the
+arms with two or five words on each side. `--train-limit N` trains on a fixed subset,
 and `--tests` scores fewer than the three held-out sets. Without `--out` it writes to `results/encoder/`, next to
 the committed files, so pass `--out` for new runs.
 
@@ -156,7 +157,7 @@ PYTHONPATH=src python -m oevl.charsiu_g2p analyse
 
 `benchmark` runs the published checkpoint on CharsiuG2P's own 500 Old English test words
 (`data/charsiu_ang_test.tsv`) and writes `results/charsiu/benchmark.json` and a per-word `benchmark.tsv`. It takes
-about 15 minutes on a laptop CPU. `predict` writes `results/charsiu/ipa.tsv` for our held-out sets, and the committed
+a few minutes on a recent laptop CPU. `predict` writes `results/charsiu/ipa.tsv` for our held-out sets, and the committed
 copy was made on a GPU. `run_all.sh` runs the `analyse` step on it.
 
 ## 7. CPU smoke tests without downloads
@@ -218,10 +219,12 @@ results/
 ├── all/
 ├── wikipron_with_zupitza/      the Zupitza ablation
 ├── agreement/                  metrics.json, disagreements.tsv, agreement.log, and disagreements_checked.tsv
-│                               (100 disagreements labelled by an LLM, not yet reviewed)
+│                               (100 disagreements labelled by an LLM and checked by a blind LLM review,
+│                               not yet reviewed by the team)
 ├── encoder/                    selection.json, summary.json, <set>_predictions.tsv.gz
 ├── charsiu/                    benchmark.json, benchmark.tsv, ipa.tsv, metrics.json
-└── error_typing/               labels.tsv, summary.json
+├── error_typing/               labels.tsv, summary.json
+└── label_review/               expert_review.json: the blind LLM review of all 560 LLM labels
 report/
 ├── main.tex
 └── generated/                  tables, numbers and figure written by oevl.build_report
