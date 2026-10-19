@@ -60,9 +60,8 @@ editorial convention and editor disagreement.**
   </tr>
 </table>
 
-*A held-out sentence from Alfred's* Soliloquies *(`soliloquies:00530`), restored with `oevl.try_text`. Only the
-model that reads the neighbouring words picks the pronoun* þē *'thee' over the relative particle* þe*, as the edition
-does.*
+*A held-out sentence from Alfred's* Soliloquies *(`soliloquies:00530`), restored with `oevl.try_text`. Only models
+that see the neighbouring words pick the pronoun* þē *'thee' over the relative particle* þe*, as the edition does.*
 
 </div>
 
@@ -90,7 +89,8 @@ a fine-tuned ByT5 model and CharsiuG2P, and three editions of *Beowulf* show how
 
 ## 📊 Headline results
 
-The ByT5 rows are means over three seeds, and the intervals are 95% sentence-level bootstrap intervals over
+The ByT5 rows are means over three seeds (nine runs for the two-words-each-side arm, whose input is the same at
+every byte cap), and the intervals are 95% sentence-level bootstrap intervals over
 seed-averaged predictions. Lexicon-ambiguous tokens have two or more candidate patterns, and class B holds
 grammatical homographs, words spelled alike that differ in function.
 
@@ -101,7 +101,7 @@ grammatical homographs, words spelled alike that differ in function.
 | Context helps prose overall | *Soliloquies*, lexicon-ambiguous tokens, ByT5 | 88.91% from the word alone, 91.30% with two words each side (+2.39, 1.91 to 2.87) |
 | On verse the word alone is enough | *Beowulf*, lexicon-ambiguous tokens, ByT5 | 90.04% from the word alone, 89.43% with the full sentence (−0.61, −1.06 to −0.15) |
 | Editors differ most on grammatical words | Wyatt against Klaeber (Tauber), ambiguous / class B | 96.08% / 78.07% agreement |
-| CharsiuG2P's errors are mostly about length | its own 500-word Old English test set | word error rate 0.208 as published and 0.188 with 50 decoding steps, after which 75.5% of word errors differ only in vowel length |
+| CharsiuG2P's errors are mostly about length | its own 500-word Old English test set | word error rate 0.208 as published and 0.188 with 50 decoding steps, where 75.5% of the word errors differ only in vowel length |
 
 LLM annotators labelled the ambiguity classes, the error types and a sample of editor disagreements, and nobody on
 the team has reviewed them yet.
@@ -144,7 +144,7 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
 # Step 2. Reproduce every number and table, and REPORT.pdf if pdflatex is installed
-#         (one to two minutes). Includes the frozen check of 660 values.
+#         (about two minutes). Includes the frozen check of 660 values.
 bash run_all.sh
 
 # Step 3. Restore macrons in your own sentences, one per line.
@@ -204,7 +204,7 @@ cl-uzh-26-essentials-code/
 ├── src/oevl/                the package: one module per pipeline stage
 ├── scripts/encoder_grid.sh  exact GPU commands behind results/encoder/
 ├── tests/                   unit tests, run by run_all.sh
-├── data/                    corpus (by_source/), Tauber and WikiPron inputs, dictionaries, class file
+├── data/                    corpus (by_source/), Tauber and WikiPron inputs, dictionaries, class files
 ├── results/                 one folder per experiment: metrics, predictions, logs
 ├── report/                  main.tex and generated/ tables, numbers and figure
 ├── notebooks/               Kaggle and Colab launchers for the ByT5 pilot
@@ -217,7 +217,7 @@ cl-uzh-26-essentials-code/
 
 ## 🖥️ Compute
 
-- `bash run_all.sh` takes one to two minutes on an Apple M-series laptop, including 75 unit tests, 660 frozen
+- `bash run_all.sh` takes about two minutes on an Apple M-series laptop, including 75 unit tests, 660 frozen
   checks and the report.
 - `requirements.txt` installs and passes those checks on macOS with Python 3.11 and 3.14, and on Linux with Python 3.14
   and a CUDA GPU.

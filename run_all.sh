@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Reproduce every number, table and figure in the report from a clean state.
+# Reproduce every number and table in the report from a clean state.
 # Usage (inside the activated virtual environment):  bash run_all.sh
 set -euo pipefail
 cd "$(dirname "$0")"

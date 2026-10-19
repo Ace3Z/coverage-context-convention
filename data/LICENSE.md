@@ -12,7 +12,7 @@ Each statement was checked on 2026-10-18 against the licence file or the source 
 
 The corpus bundle is released under CC BY-SA 4.0, because five of the nine works are Wikisource
 transcriptions. The printed editions themselves are out of copyright. `manifest.json` records the source URL of each work,
-and for the five works that `oevl.build_corpus` rebuilds also the retrieval date and SHA-256 of each input.
+and, for the five works whose committed file `oevl.build_corpus` produced, the retrieval date and SHA-256 of each input.
 
 | File | Work, editor, year | Source | Licence of the source | Checked |
 |---|---|---|---|---|
@@ -21,7 +21,7 @@ and for the five works that `oevl.build_corpus` rebuilds also the retrieval date
 | `john_ws.jsonl` | Gospel of John (West Saxon), Bright & Harris, 1904 | https://en.wikisource.org/wiki/Index:Gospel_of_Saint_John_in_West-Saxon.djvu | Wikisource transcription, CC BY-SA 4.0. The scan is tagged PD-scan on Wikimedia Commons | page footer, Commons file page |
 | `soliloquies.jsonl` | Alfred's *Soliloquies*, Hargrove, 1902 | https://en.wikisource.org/wiki/King_Alfred%27s_Old_English_Version_of_St._Augustine%27s_Soliloquies | Wikisource transcription, CC BY-SA 4.0. The edition is public domain in the United States | page footer and the page's public-domain notice |
 | `wyatt_beowulf.jsonl` | *Beowulf*, Wyatt, 1894 | https://en.wikisource.org/wiki/Beowulf_(Wyatt) | Wikisource transcription, CC BY-SA 4.0. The edition is public domain in the United States | page footer and the page's public-domain notice |
-| `hs_beowulf.jsonl` | *Beowulf*, Harrison & Sharp, 1883 | https://www.gutenberg.org/ebooks/9701 | Project Gutenberg: "Public domain in the USA." | ebook page |
+| `hs_beowulf.jsonl` | *Beowulf*, Harrison & Sharp, 4th revised edition (first 1883) | https://www.gutenberg.org/ebooks/9701 | Project Gutenberg: "Public domain in the USA." | ebook page |
 | `zupitza_grammar.jsonl` | Ælfric's *Grammar*, Zupitza, 1880 | https://www.gutenberg.org/ebooks/45861 | Project Gutenberg: "Public domain in the USA." | ebook page |
 | `sweet_primer.jsonl` | *Anglo-Saxon Primer* (texts), Sweet, 1905 | https://www.gutenberg.org/ebooks/34316 | Project Gutenberg: "Public domain in the USA." | ebook page |
 | `physiologus.jsonl` | *Old English Physiologus*, Cook & Pitman, 1921 | https://www.gutenberg.org/ebooks/14529 | Project Gutenberg: "Public domain in the USA." | ebook page |

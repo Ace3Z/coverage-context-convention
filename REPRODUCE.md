@@ -18,9 +18,9 @@ matplotlib 3.10.8. ByT5 and CharsiuG2P use torch 2.2 or later and transformers 4
 committed ByT5 runs used torch 2.11.0 with CUDA 12.8. `pdflatex` is optional and compiles `REPORT.pdf`. The `hf`
 command for uploading the dataset comes with `huggingface_hub`, which transformers already installs.
 
-`run_all.sh` puts `src` on `PYTHONPATH`, so nothing has to be installed. To run modules by hand, either run
-`pip install -e .` once or prefix commands with `PYTHONPATH=src`. Use an editable install, because the code finds
-`data/` and `results/` relative to the repository.
+`run_all.sh` puts `src` on `PYTHONPATH`, so nothing has to be installed. To run modules by hand, prefix commands
+with `PYTHONPATH=src`, or install the package once with `pip install -e .`. The install must be editable, because
+the code finds `data/` and `results/` relative to the repository.
 
 ## Systems
 
@@ -28,7 +28,8 @@ command for uploading the dataset comes with `huggingface_hub`, which transforme
   most dictionaries list, then the one with the fewest long vowels.
 - Logistic models: logistic classifiers that choose among the dictionary's candidates. They see the word, the word
   plus two words on the left, or the word plus two words on each side, and run with seeds 1, 2 and 3.
-- Oracle: picks the gold pattern whenever it is a candidate, with the same all-short fallback for unknown words.
+- Oracle: picks the gold pattern whenever it is a candidate. Like every system, it writes a word with no candidates
+  as all short.
 - ByT5: ByT5-small fine-tuned on the same examples. One arm sees the word only, one the left context, one the whole
   sentence, and two arms see two or five words on each side. The dictionary proposes the candidate patterns and the
   model scores each one.
@@ -37,11 +38,12 @@ command for uploading the dataset comes with `huggingface_hub`, which transforme
 ## Evaluation
 
 Accuracy is reported on all tokens and on three harder populations: lexicon-ambiguous tokens (two or more candidate
-patterns), attested-ambiguous tokens, and minority readings. The lexicon-ambiguous tokens are also split by ambiguity
-class (`class_A`, `class_B`, `class_C` in `metrics.json`) for the 60 skeletons in `data/ambiguity_classes.csv`, with
+patterns), attested-ambiguous tokens (at least two patterns, each seen at least twice in training), and minority
+readings. The lexicon-ambiguous tokens are also split by ambiguity
+class (`class_A`, `class_B`, `class_C` in `metrics.json`) for the 60 skeletons (spellings without macrons) in `data/ambiguity_classes.csv`, with
 `class_unlisted` for the rest. Two LLM annotators and an automated adjudicator assigned the classes, and the team has
 not reviewed them yet. The 60 skeletons were picked by their frequency in the training works (Zupitza included) and both test
-sets, and they are kept under decision D3. The `d3` block of `data/ambiguity_classes.json` records that `hi` is no longer lexicon-ambiguous without
+sets, and they are kept under decision D3. With training forms plus WikiPron, the `d3` block of `data/ambiguity_classes.json` records that `hi` is no longer lexicon-ambiguous without
 Zupitza, and that 6,759 of the 36,203 lexicon-ambiguous tokens counted there fall outside the list.
 
 Results are the mean and sample standard deviation over seeds. A difference between two systems gets a 95%
@@ -60,7 +62,7 @@ check tolerates.
 bash run_all.sh
 ```
 
-It takes one to two minutes and has six steps:
+It takes about two minutes and has six steps:
 
 1. Inputs. It uses `data/brunetti-length.txt` (Tauber's *Beowulf* gold) and `data/ang_latn_broad.tsv` (WikiPron Old
    English) if they are present and downloads them otherwise, then prints their SHA-256. `oevl.audit_splits` prints
@@ -114,7 +116,7 @@ rebuilds the three proposal dictionaries from the original sources.
 Training needs a GPU. `requirements.txt` already includes torch and the pinned `transformers==4.57.6`.
 
 ```bash
-PYTHONPATH=src python -m oevl.encoder_experiment
+PYTHONPATH=src python -m oevl.encoder_experiment --out my_runs/encoder
 bash scripts/encoder_grid.sh [select|grid|all] [RUNS_DIR]
 ```
 
@@ -130,18 +132,18 @@ pools those into `summary.json`, the per-token prediction tables (`*_predictions
 `report/generated/tab_encoder.tex` and `numbers_encoder.tex`. The run folders themselves are not committed. GPU
 training is not bit-for-bit repeatable, so a new run can differ slightly.
 
-The encoder pilot runs the five context arms on 10,000 training examples from `notebooks/` on Kaggle or Colab (see
-`notebooks/README.md`). Its logic is in `oevl.pilot`. The pilots ran before D3, so `oevl.pilot` still trains on all
+The ByT5 pilot trains all five arms on 10,000 training examples, using the notebooks in `notebooks/` on Kaggle or
+Colab (see `notebooks/README.md`). Its logic is in `oevl.pilot`. The pilots ran before D3, so `oevl.pilot` still trains on all
 five works.
 
-## 5. Encoder tables from the committed predictions (no GPU)
+## 5. ByT5 tables from the committed predictions (no GPU)
 
 ```bash
 PYTHONPATH=src python -m oevl.encoder_summary --from-tsv
 PYTHONPATH=src python -m oevl.select_config
 ```
 
-`run_all.sh` runs both. They rebuild the encoder table and numbers and `results/encoder/selection.json` from the
+`run_all.sh` runs both. They rebuild the ByT5 table and numbers and `results/encoder/selection.json` from the
 committed prediction tables and run records.
 
 ## 6. CharsiuG2P error analysis
@@ -181,7 +183,7 @@ with correct macrons) it prints the accuracy. `--tsv` writes one row per word: t
 known, changed and correct. `--model` picks `frequency`, `word`, `left` or `bilateral` (the default), and
 `--lexicon none` uses training texts only.
 
-It trains the same system as the report (seed 1) in under a minute and changes no existing file. Unknown words stay
+It trains the report's logistic model (bilateral by default, seed 1) in under a minute and changes no existing file. Unknown words stay
 unchanged. Text that is not Old English has no correct answer, so count the words it wrongly changed instead.
 
 ## 9. Export and upload the Hugging Face dataset

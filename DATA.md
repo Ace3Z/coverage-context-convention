@@ -14,8 +14,8 @@ The same data is on Hugging Face as
 | Train, ablation only | Zupitza's edition of Ælfric's *Grammar* (left out under D3, see below) | 23,940 |
 | Dev | Gospel of John (`john_ws`) | 16,649 of 17,310 scored |
 | Prose test | Alfred's *Soliloquies* | 15,431 of 15,480 scored |
-| Verse test | Tauber's *Beowulf* | 17,361, from 17,244 rows |
-| Editor agreement only | Harrison & Sharp and Wyatt *Beowulf* | |
+| Verse test | Tauber's *Beowulf* | 17,361 (some of the 17,244 rows in Tauber's file hold two or three words) |
+| Editor agreement only | Harrison & Sharp and Wyatt *Beowulf* | 35,250 (17,682 and 17,568) |
 
 The split is by work, and no *Beowulf* text is used for training. A dev or test sentence that shares a word 6-gram
 (bare, lower-cased, ð folded to þ) with a training work is left out of scoring. That removes 34 John sentences
@@ -34,8 +34,8 @@ WikiPron) that both settings share. Dropping Zupitza raised the ByT5 sentence ar
 Zupitza, seeds 1 and 2) to 96.00%, the prior from 95.12% to 95.60%, and the bilateral logistic model from 94.72% to
 95.23% (seeds 1 to 3).
 
-So every system in `results/<setting>/` trains without Zupitza, and so do `oevl.agreement` (whose floor is the prior),
-`oevl.try_text`, the encoder's default, the coverage numbers of `oevl.build_report` and the CharsiuG2P populations.
+So every system in `results/<setting>/` trains without Zupitza. So do `oevl.try_text`, the ByT5 default, the coverage
+numbers in the report, the CharsiuG2P populations, and the prior that `oevl.agreement` compares the editors with.
 `results/wikipron_with_zupitza` keeps the earlier run with Zupitza for comparison. The leakage audit still checks all
 five training works, as the ablation needs. Zupitza shares no 6-gram with the dev or test sets, so the exclusions are
 the same either way.

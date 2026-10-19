@@ -1,17 +1,17 @@
 # GPU notebooks
 
-The encoder pilot needs a GPU, so it runs on Kaggle or Colab. Both notebooks only put the project on the machine,
+The ByT5 pilot needs a GPU, so it runs on Kaggle or Colab. Both notebooks only put the project on the machine,
 install `requirements.txt` and call `python -m oevl.pilot`. The logic, the checks and the resume behaviour live in
 `src/oevl/pilot.py`. To make the project zip, run `git archive -o oe_project.zip HEAD` in the repository.
 
 | Notebook | Platform | How the project gets there |
 |---|---|---|
-| `pilot_kaggle.ipynb` | Kaggle, GPU T4 | the repository folder or a zip of it, added as an input dataset |
+| `pilot_kaggle.ipynb` | Kaggle, T4 GPU | the repository folder or a zip of it, added as an input dataset |
 | `pilot_colab.ipynb` | Colab, T4 GPU | a zip of the repository, uploaded when the first cell asks |
 
 Set `MAX_BYTES` (128 or 256) in the first code cell. Everything else is fixed: five arms (sentence, word, left, local2,
 local5), the same 10,000 training examples for every arm, one epoch, batch 32, microbatch 8, learning rate 3e-4 and
-seed 1. Run 128 first. A 256 run only answers a question when you compare it with the 128 run of the same arms.
+seed 1. Run 128 first. Compare a 256 run only with the 128 run of the same arms.
 
 After each finished arm the results folder is packed into `encoder_pilot_<bytes>_results.zip`, which you should
 download. To resume in a new session on Kaggle, add that zip, a renamed copy such as `... (1).zip`, or its extracted
