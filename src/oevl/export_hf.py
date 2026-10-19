@@ -9,8 +9,7 @@ Every sentence is written. The dev and test sentences that the 6-gram audit leav
 Tauber's file has no running text, so a test_verse sentence's text is its tokens joined by spaces.
 README.md is the card release/hf_card.md with the split table counted from the written files.
 Copied unchanged next to them: the dictionaries (lexicons/lex_*.csv, lexicons/lexicons_provenance.json), the
-ambiguity classes (ambiguity_classes.csv and .json), data/LICENSE.md as LICENSE.md and the UZH logos
-(media/figures/logos/).
+ambiguity classes (ambiguity_classes.csv and .json) and data/LICENSE.md as LICENSE.md.
 Usage: python -m oevl.export_hf [--data data] [--tauber data/brunetti-length.txt] [--out release/hf]
 """
 import argparse
@@ -78,9 +77,8 @@ def export(data, tauber_path, out):
               "lexicons/lexicons_provenance.json": data / "lexicons_provenance.json",
               "ambiguity_classes.csv": data / "ambiguity_classes.csv",
               "ambiguity_classes.json": data / "ambiguity_classes.json",
-              "LICENSE.md": data / "LICENSE.md", **{f"media/figures/logos/uzh-logo-{c}.png": ROOT / "media" / "figures" / "logos" / f"uzh-logo-{c}.png" for c in ("white", "black")}}
+              "LICENSE.md": data / "LICENSE.md"}
     (out / "lexicons").mkdir(exist_ok=True)
-    (out / "media" / "figures" / "logos").mkdir(parents=True, exist_ok=True)
     for name, src in copies.items():
         shutil.copyfile(src, out / name)
     return counts

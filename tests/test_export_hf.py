@@ -28,7 +28,7 @@ class TestExportHF(unittest.TestCase):
             copies.update({"lexicons/lexicons_provenance.json": DATA / "lexicons_provenance.json",
                            "ambiguity_classes.csv": DATA / "ambiguity_classes.csv",
                            "ambiguity_classes.json": DATA / "ambiguity_classes.json",
-                           "LICENSE.md": DATA / "LICENSE.md", **{f"media/figures/logos/uzh-logo-{c}.png": ROOT / "media" / "figures" / "logos" / f"uzh-logo-{c}.png" for c in ("white", "black")}})
+                           "LICENSE.md": DATA / "LICENSE.md"})
             for name, src in copies.items():  # copied unchanged
                 self.assertEqual((Path(d) / name).read_bytes(), src.read_bytes(), name)
         fields = set(files["train"][0])
