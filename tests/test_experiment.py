@@ -44,6 +44,8 @@ class Tests(unittest.TestCase):
    for name in ('one.csv','two.csv'):(d/name).write_text('marked_form\ngōd\n',encoding='utf8')
    self.assertEqual(run(d/'one.csv').returncode,0)  # a second lexicon file may not share the results folder of the first
    self.assertEqual(run(d/'two.csv').returncode,1)
+   (d/'sub').mkdir();(d/'sub'/'one.csv').write_text('marked_form\ngōdne\n',encoding='utf8')
+   self.assertEqual(run(d/'sub'/'one.csv').returncode,1)  # same name, other content
 
 class RegressionTests(unittest.TestCase):
  def test_full_training_no_cap(self):

@@ -66,7 +66,7 @@ def main():
         sys.exit(f"--gold has {len(gold_lines)} lines but the input has {len(lines)}")
     ext = None if a.lexicon == "none" else a.lexicon
     if ext and not Path(ext).exists():
-        sys.exit(f"{ext} not found: run `bash run_all.sh` once first (or use --lexicon none)")
+        sys.exit(f"{ext} not found (or use --lexicon none)")
 
     print("training the model (takes under a minute) ...", file=sys.stderr)
     train, _, _, _ = build_data(ROOT / "data", EXCLUDE_D3)

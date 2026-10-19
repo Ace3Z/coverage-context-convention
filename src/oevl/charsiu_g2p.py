@@ -202,6 +202,8 @@ def analyse():
 
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "analyse"
+    if sys.argv[2:] not in ([], ["--tiny"]) or (sys.argv[2:] and cmd != "predict"):  # a typo must not overwrite committed output
+        cmd = "usage"
     if cmd == "predict":
         predict(tiny="--tiny" in sys.argv)
     elif cmd == "benchmark":
