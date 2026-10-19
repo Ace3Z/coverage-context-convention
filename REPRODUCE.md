@@ -197,7 +197,7 @@ hf upload Ace3Z/old-english-vowel-length release/hf . --repo-type=dataset --priv
 
 The export writes `release/hf/` (gitignored, regenerated on each run): one JSONL file per split (`train`, `dev`,
 `test_prose` = *Soliloquies*, `test_verse` = Tauber's *Beowulf*, `agreement` = the Harrison & Sharp and Wyatt
-*Beowulf*), the dictionaries (`lexicons/`), the ambiguity class files, `data/LICENSE.md` as `LICENSE.md`, and the dataset card `README.md`, made from `release/hf_card.md` with the token counts read
+*Beowulf*), the dictionaries (`lexicons/`), the ambiguity class files, `release/hf_license.md` as `LICENSE.md`, and the dataset card `README.md`, made from `release/hf_card.md` with the token counts read
 from the written files. Sentences that the leakage audit leaves out of evaluation are kept, with `leakage_excluded`
 set to true. `train` holds all five training works, Zupitza included.
 
