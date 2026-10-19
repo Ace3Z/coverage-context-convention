@@ -39,8 +39,7 @@ editorial convention and editor disagreement.**
 [Pipeline](#-pipeline) •
 [Quickstart](#-quickstart) •
 [Dataset](#-dataset) •
-[Documentation](#-documentation) •
-[Team](#-team)
+[Documentation](#-documentation)
 
 </div>
 
@@ -226,33 +225,6 @@ cl-uzh-26-essentials-code/
   selection run took 12 to 70 minutes and a grid run 13 to 152 minutes (`scripts/encoder_grid.sh`).
 - **CharsiuG2P:** its own 500-word benchmark runs in about 15 minutes on a laptop CPU, and prediction on our test sets
   was made on a GPU.
-
----
-
-## 👥 Team
-
-Course project for *Essentials in Text and Speech Processing*, University of Zurich, HS 2026.
-
-- [Mahbod Tajdini](https://github.com/Ace3Z) ([LinkedIn](https://www.linkedin.com/in/mahbodtajdini/))
-- Hanna Miranovich
-- [Arjun Singh Bhadoria](https://github.com/ArjunSingh48)
-
----
-
-## 📝 Citation
-
-```bibtex
-@misc{tajdini2026oevl,
-  author       = {Tajdini, Mahbod and Miranovich, Hanna and Bhadoria, Arjun Singh},
-  title        = {Coverage, Context, Convention: Restoring Vowel Length in {Old English}},
-  year         = {2026},
-  howpublished = {\url{https://github.com/Ace3Z/cl-uzh-26-essentials-code}},
-  note         = {Course project, Essentials in Text and Speech Processing, University of Zurich}
-}
-```
-
-The work builds on the sources listed in [DATA.md](DATA.md). Please credit them too, and cite Tauber's data if you use
-the verse test set (the dataset card gives the entry).
 
 ---
 

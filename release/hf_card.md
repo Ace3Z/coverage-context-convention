@@ -66,8 +66,7 @@ configs:
 [Dictionaries](#-dictionaries) •
 [Ambiguity Classes](#-ambiguity-classes) •
 [Usage](#-usage) •
-[Limitations](#-limitations) •
-[Citation](#-citation)
+[Limitations](#-limitations)
 
 </div>
 
@@ -357,40 +356,6 @@ was checked against. When you use the data, attribute:
 Project Gutenberg lists the editions of Sweet, Cook & Pitman, Zupitza and Harrison & Sharp, and Clark Hall's
 dictionary, as public domain in the USA. Their Project Gutenberg header and licence are not part of this dataset.
 Check the status of the editions where you are.
-
----
-
-## 📝 Citation
-
-
-```bibtex
-@misc{tajdini2026oevl,
-  author       = {Tajdini, Mahbod and Miranovich, Hanna and Bhadoria, Arjun Singh},
-  title        = {Coverage, Context, Convention: Restoring Vowel Length in {Old English}},
-  year         = {2026},
-  howpublished = {\url{https://huggingface.co/datasets/Ace3Z/old-english-vowel-length}},
-  note         = {Course project, Essentials in Text and Speech Processing, University of Zurich}
-}
-```
-
-If you use `test_verse`, please also cite Tauber's data:
-
-```bibtex
-@misc{tauber-old-english-texts,
-  author       = {Tauber, James},
-  title        = {old-english-texts},
-  howpublished = {\url{https://github.com/old-english-learner-texts/old-english-texts}},
-  note         = {beowulf/raw-data/brunetti-length.txt, CC BY-SA 4.0}
-}
-```
-
----
-
-## 👥 Team
-
-- [Mahbod Tajdini](https://github.com/Ace3Z) ([LinkedIn](https://www.linkedin.com/in/mahbodtajdini/))
-- Hanna Miranovich
-- [Arjun Singh Bhadoria](https://github.com/ArjunSingh48)
 
 ---
 
