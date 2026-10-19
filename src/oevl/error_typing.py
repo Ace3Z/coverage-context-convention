@@ -1,7 +1,8 @@
 """Error typing for the ByT5 sentence arm and CharsiuG2P (plan S11, P13): agreement, kappa and type counts.
 
 results/error_typing/labels.tsv holds 200 sampled errors per system. label_a and label_b come from two independent
-automated annotators, final and note from an automated adjudicator, all pending review by the team.
+automated annotators, final and note from an automated adjudicator. A blind LLM expert review (2026-10-19) later
+changed five finals and explained them in the note column. All labels are pending review by the team.
 
   python -m oevl.error_typing   -> results/error_typing/summary.json and report/generated/tab_errors.tex
 """

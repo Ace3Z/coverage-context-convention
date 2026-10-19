@@ -53,7 +53,7 @@ def classes(path):
         return {}
     with open(path, encoding="utf8") as f:
         rows = list(csv.DictReader(f))
-    # ponytail: the class file is still being written; accept the likely names of its final-label column
+    # the committed class file names its label column 'final'; the other names are accepted for older copies
     col = next((c for c in ("final_label", "final", "class", "label") if rows and c in rows[0]), None)
     if col is None:
         raise SystemExit(f"{path}: needs a skeleton column and a final label column (final_label, final, class or label)")

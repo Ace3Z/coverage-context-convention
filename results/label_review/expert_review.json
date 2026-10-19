@@ -1,0 +1,3939 @@
+{
+ "date": "2026-10-19",
+ "provenance": "LLM agents, not people. Each expert agent was told to act as a senior Old English philologist and labelled its items blind, without the existing labels. Wherever an expert label differed from the existing one, a separate adjudicator agent re-examined the item and decided. The labels are still pending review by the team.",
+ "evidence_used": "Tauber's lemma, part of speech and gloss (data/brunetti-length.txt), the corpus (data/by_source), the dictionaries (data/lex_*.csv), Clark Hall, Bosworth-Toller, Wiktionary, and the editions' own glossaries and notes.",
+ "areas": {
+  "classes": {
+   "labels_reviewed": "data/ambiguity_classes.csv (final)",
+   "summary": {
+    "items": 60,
+    "reviewed": 60,
+    "expert_agrees_with_existing": 58,
+    "flagged": 2,
+    "not_returned": [],
+    "confirmed_by_adjudicator": 2,
+    "changed": [],
+    "defensible_either_way": []
+   },
+   "blind_experts": {
+    "classes-expert-1": [
+     {
+      "key": "þa",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Both readings are þā (adverb/conjunction 'then, when'; demonstrative acc. pl./fem.). The 17 short 'þa' are the same word left unmarked (e.g. Matthew 'Þa cwæð'). No second lemma is involved."
+     },
+     {
+      "key": "þæt",
+      "label": "C",
+      "confidence": "high",
+      "reason": "The 6 'þǣt' tokens (Bright, Sweet, Soliloquies) are the same conjunction or demonstrative þæt. This is stray long-marking, and no dictionary lists a long form."
+     },
+     {
+      "key": "þe",
+      "label": "B",
+      "confidence": "high",
+      "reason": "Guideline example. Relative particle þe is short, while þē is either 2nd-person 'thee' (Tauber: þu p x39) or the instrumental ðē = ðȳ (Clark Hall). Both are function words that differ in function."
+     },
+     {
+      "key": "he",
+      "label": "C",
+      "confidence": "high",
+      "reason": "hē is the personal pronoun 'he' (1704 tokens). The 20 short 'he' tokens are the same pronoun unmarked."
+     },
+     {
+      "key": "to",
+      "label": "C",
+      "confidence": "high",
+      "reason": "tō is the preposition/adverb, always long. The 49 short 'to' tokens (e.g. Bright 'to Wesseaxna rīce') are the same word unmarked."
+     },
+     {
+      "key": "ne",
+      "label": "B",
+      "confidence": "medium",
+      "reason": "Length follows function: adverb ne 'not' is short (Tauber av x139), and conjunction nē 'nor' is long (Tauber c x37). Bright, the WS Gospels, Soliloquies, Zupitza and Harrison-Sharp mark nē only for 'nor'; BT and Wiktionary support it. Sweet and Wyatt leave 'nor' short, which adds a minor editorial part."
+     },
+     {
+      "key": "se",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Guideline example. se/sē is one demonstrative, marked long or short by editorial habit (Tauber se d 'the' short x102 vs 'he/that' long)."
+     },
+     {
+      "key": "þam",
+      "label": "C",
+      "confidence": "high",
+      "reason": "þām is the dative of se/þæt (Clark Hall ðām = ðǣm). The 6 short tokens are the same form unmarked."
+     },
+     {
+      "key": "swa",
+      "label": "C",
+      "confidence": "high",
+      "reason": "swā is the adverb/conjunction 'so, as'. The 4 short tokens are the same word unmarked."
+     },
+     {
+      "key": "þu",
+      "label": "C",
+      "confidence": "high",
+      "reason": "þū is the 2nd-person pronoun. The 2 short tokens are the same pronoun (Clark Hall prints the headword 'ðu (ū)')."
+     },
+     {
+      "key": "is",
+      "label": "A",
+      "confidence": "high",
+      "reason": "Guideline example: is (3 sg. of the verb 'be') vs īs n. 'ice' (Clark Hall). These are two unrelated lexemes."
+     },
+     {
+      "key": "his",
+      "label": "C",
+      "confidence": "medium",
+      "reason": "Both hīs tokens are the possessive (Sweet 'ofer hīs lēode'; Bright). Clark Hall's hīs (BH) = īs 'ice' does not occur in the corpus, so this is stray marking of one word."
+     },
+     {
+      "key": "wæs",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Both wǣs tokens are wæs, pret. of wesan ('sē wǣs Cyneheard hāten'). This is a misprint or editorial marking of the same form."
+     },
+     {
+      "key": "hi",
+      "label": "C",
+      "confidence": "high",
+      "reason": "hī is the pronoun 'they/her' (= hēo, hīe). The single short token in Soliloquies is the same pronoun unmarked."
+     },
+     {
+      "key": "ge",
+      "label": "B",
+      "confidence": "medium",
+      "reason": "Conjunction ge 'and, both' is short (~170 tokens: Bright, Soliloquies, Sweet), and pronoun gē 'ye' is long (~600: Gospels, Bright, Beowulf). These are function words of different class, both in Clark Hall. Zupitza and Harrison-Sharp also write the conjunction as gē, which is a smaller editorial part."
+     },
+     {
+      "key": "me",
+      "label": "C",
+      "confidence": "high",
+      "reason": "mē is dat./acc. of ic. The 8 short tokens are the same pronoun (Clark Hall even prints 'me' under the same sense)."
+     },
+     {
+      "key": "for",
+      "label": "A",
+      "confidence": "high",
+      "reason": "for is a preposition, and fōr is pret. 3 sg. of faran 'went' (Tauber faran v x3; 'Ælfred cyning fōr') or the noun fōr 'journey'. These are different lexemes."
+     },
+     {
+      "key": "þæs",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Every þǣs token is gen. sg. of se/þæt or the adverb þæs ('ic þē þǣs lēan geman', 'þǣs hēhstan goodes'). This is the same word marked long by error."
+     },
+     {
+      "key": "ac",
+      "label": "A",
+      "confidence": "high",
+      "reason": "ac is the conjunction 'but', and āc f. 'oak' appears in Zupitza's tree lists. These are unrelated lexemes."
+     },
+     {
+      "key": "þær",
+      "label": "C",
+      "confidence": "high",
+      "reason": "þǣr is the adverb/conjunction 'there, where'. The 4 short tokens are the same word (Tauber þær av short x1)."
+     },
+     {
+      "key": "we",
+      "label": "C",
+      "confidence": "high",
+      "reason": "wē is the 1st-person plural pronoun (Clark Hall 'we (ē)'). The short tokens are the same pronoun."
+     },
+     {
+      "key": "þæm",
+      "label": "C",
+      "confidence": "high",
+      "reason": "þǣm is dat. sg./pl. of se. The 4 short tokens are the same form unmarked."
+     },
+     {
+      "key": "cwæþ",
+      "label": "C",
+      "confidence": "high",
+      "reason": "cwǣð appears only in Bright's Andreas prose and John. It is still pret. 3 sg. cwæð of cweðan, marked long by error or under the influence of plural cwǣdon."
+     },
+     {
+      "key": "hie",
+      "label": "C",
+      "confidence": "high",
+      "reason": "hīe is nom./acc. pl. of hē. The 3 short 'hie' tokens in Bright are the same pronoun unmarked."
+     },
+     {
+      "key": "nu",
+      "label": "C",
+      "confidence": "high",
+      "reason": "nū is the adverb/conjunction 'now'. The 2 short tokens are the same word."
+     },
+     {
+      "key": "hit",
+      "label": "C",
+      "confidence": "high",
+      "reason": "The single hīt token ('Wel þū hīt ongītst') is the pronoun hit, marked long by error."
+     },
+     {
+      "key": "hig",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Every hīg token (18, all in Zupitza) is the pronoun 'they' (= hīe). Zupitza marks it long and the other editions write hig. Clark Hall's hīg 'hay' does not occur."
+     },
+     {
+      "key": "be",
+      "label": "C",
+      "confidence": "medium",
+      "reason": "The bē tokens are either the preposition be marked long (John 'Bē þām gē smēageað') or OCR or print errors for hē (Bright 'þā hwīle þe bē ... hearpode'). No second dictionary lemma bē is involved."
+     },
+     {
+      "key": "þas",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Both short 'þas' tokens are þās (acc. sg. fem./nom.-acc. pl. of þēs) unmarked in Bright's verse ('on þas frēcnan tīd'). Clark Hall ðas = ðæs is not what occurs here."
+     },
+     {
+      "key": "hine",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Both hīne tokens are acc. of hē ('þe hīne mislǣtt'). Clark Hall hīne = hīwene does not occur."
+     },
+     {
+      "key": "æfter",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Both ǣfter tokens are the preposition æfter ('ǣfter wrǣchwīle', 'ǣfter þām þe'), marked long by error."
+     },
+     {
+      "key": "god",
+      "label": "A",
+      "confidence": "high",
+      "reason": "Guideline example: God n. 'God' (Tauber np x20) vs gōd adj. 'good' (Tauber a x11)."
+     },
+     {
+      "key": "ofer",
+      "label": "A",
+      "confidence": "high",
+      "reason": "ofer is the preposition 'over', and ōfer m. 'shore, bank' (Clark Hall) is a separate noun, attested once in Zupitza's noun list."
+     },
+     {
+      "key": "eow",
+      "label": "C",
+      "confidence": "high",
+      "reason": "ēow is dat./acc. of gē. 'eow' and 'eōw' (1 token each) are the same pronoun with missing or misplaced macrons."
+     },
+     {
+      "key": "hyt",
+      "label": "A",
+      "confidence": "medium",
+      "reason": "hyt is the pronoun 'it' (= hit; Tauber hit p x9), and hȳt is pres. 3 sg. of hȳdan 'hides' (Clark Hall). The long reading has no corpus tokens, so the ambiguity is purely lexical, like man/mān."
+     },
+     {
+      "key": "man",
+      "label": "A",
+      "confidence": "high",
+      "reason": "Guideline example: man/mann 'man, one' vs mān n. 'crime', adj. 'wicked' (Clark Hall)."
+     },
+     {
+      "key": "eac",
+      "label": "C",
+      "confidence": "high",
+      "reason": "ēac is the adverb 'also'. The short token is the same word unmarked."
+     },
+     {
+      "key": "soþlice",
+      "label": "C",
+      "confidence": "high",
+      "reason": "sōþlīce is the adverb 'truly'. The single 'soðlīce' in Matthew is the same word with one macron missing."
+     },
+     {
+      "key": "an",
+      "label": "A",
+      "confidence": "low",
+      "reason": "ān adj./numeral 'one' (Tauber an a x7) contrasts with short an. In context, short an is either the by-form of the preposition on (Beowulf 'an wīg gearwe') or pres. 1/3 sg. of unnan 'grant' ('ic þē an tela', Soliloquies 'ne an ic'). These are distinct lexemes, one of them an open-class verb. B is arguable if ān is treated as a function word."
+     },
+     {
+      "key": "oþre",
+      "label": "C",
+      "confidence": "high",
+      "reason": "ōþre is a form of ōþer 'other'. The 2 short tokens are the same word unmarked."
+     },
+     {
+      "key": "þes",
+      "label": "C",
+      "confidence": "high",
+      "reason": "One demonstrative, nom. sg. masc. 'this'. Zupitza writes ðes 185 times, and the WS Gospels and Bright write ðēs. Clark Hall itself queries the length ('ðēs (e?)'), so this is editorial convention."
+     },
+     {
+      "key": "þis",
+      "label": "B",
+      "confidence": "medium",
+      "reason": "All 6 þīs tokens are dative/instrumental ('on þīs middangearde', 'mid þīs medmiclum scipe', 'on þīs wēstene', 'be þīs wæge'). That is the instrumental ðȳs/þīs of ðēs (Clark Hall 'ðȳs instr. smn. of ðēs'), set against neuter nom./acc. þis. The split is by grammatical function within one lemma."
+     },
+     {
+      "key": "naman",
+      "label": "A",
+      "confidence": "high",
+      "reason": "naman is the oblique case of nama 'name', and nāman is pret. pl. of niman 'took' (Tauber niman v; 'nīode nāman', 'hū fela wyligena gē nāman')."
+     },
+     {
+      "key": "wæron",
+      "label": "C",
+      "confidence": "high",
+      "reason": "wǣron is pret. pl. of wesan. The single short token is the same form unmarked."
+     },
+     {
+      "key": "mæg",
+      "label": "A",
+      "confidence": "high",
+      "reason": "mæg is pres. 3 sg. of magan 'can' (Tauber x19), and mǣg m. is 'kinsman' (Tauber x16; 'Higelāces mǣg')."
+     },
+     {
+      "key": "godes",
+      "label": "A",
+      "confidence": "high",
+      "reason": "Godes is gen. of God, and gōdes is gen. of gōd 'good' ('hwæt gōdes dō ic', 'ǣlces gōdes')."
+     },
+     {
+      "key": "æt",
+      "label": "A",
+      "confidence": "medium",
+      "reason": "æt is the preposition, and ǣt is pret. 3 sg. of etan 'ate' or n. 'food' ('hit ǣt manna līchaman', 'ǣt þā offringhlāfas'). About 4 further ǣt tokens are the preposition marked long by error, which is a smaller editorial share."
+     },
+     {
+      "key": "swiþe",
+      "label": "C",
+      "confidence": "high",
+      "reason": "swīþe is the adverb 'very'. The short tokens are the same adverb (Tauber swiðe av, both ways)."
+     },
+     {
+      "key": "nan",
+      "label": "C",
+      "confidence": "high",
+      "reason": "nān is the pronoun/adjective 'none'. The single short token is the same word."
+     },
+     {
+      "key": "oþ",
+      "label": "C",
+      "confidence": "medium",
+      "reason": "One word, the preposition/conjunction oð 'until'. Zupitza (14) and two stray tokens write ōð, and every other edition writes oþ (~200). The length of oð is disputed between sources (WikiPron/BT long vs Clark Hall short), so this is editorial."
+     },
+     {
+      "key": "hælend",
+      "label": "C",
+      "confidence": "high",
+      "reason": "hǣlend is 'Saviour'. The 2 short tokens in Matthew are the same noun unmarked."
+     },
+     {
+      "key": "min",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Both short tokens are the possessive mīn ('mōdsefa min', 'min cnapa'). Clark Hall min 'small' does not occur."
+     },
+     {
+      "key": "gode",
+      "label": "A",
+      "confidence": "high",
+      "reason": "Gode is dat. of God (Tauber np x6), and gōde is a form of gōd 'good' (Tauber a/n 'good')."
+     },
+     {
+      "key": "na",
+      "label": "C",
+      "confidence": "high",
+      "reason": "nā is the adverb 'not, never'. The single short token is the same word."
+     },
+     {
+      "key": "oþrum",
+      "label": "C",
+      "confidence": "high",
+      "reason": "ōþrum is dat. of ōþer. The single short token is the same word."
+     },
+     {
+      "key": "witodlice",
+      "label": "C",
+      "confidence": "high",
+      "reason": "witodlīce is the adverb 'truly'. The single short token is the same word unmarked."
+     },
+     {
+      "key": "wære",
+      "label": "C",
+      "confidence": "high",
+      "reason": "The single short token (Sweet 'swelce hē tam wære') is wǣre, subj. of wesan. Clark Hall wære = wer II does not occur."
+     },
+     {
+      "key": "gyt",
+      "label": "C",
+      "confidence": "medium",
+      "reason": "Most short tokens are the adverb gīet/gȳt 'yet, still' left unmarked by Zupitza (~43) and Wyatt (~13) ('þā gyt', 'nū gyt'), against ~85 long gȳt elsewhere. Only ~10 short tokens are the dual pronoun git 'you two' (Matthew 'Mage gyt drincan'), so B covers fewer tokens."
+     },
+     {
+      "key": "rice",
+      "label": "C",
+      "confidence": "high",
+      "reason": "rīce is the noun 'kingdom' and the adjective 'powerful'. The 2 short tokens ('heofona rice') are the same noun unmarked."
+     },
+     {
+      "key": "eom",
+      "label": "C",
+      "confidence": "high",
+      "reason": "eom is 'am' (1 sg. of the verb 'be'). ēom in Soliloquies, John and Bright is the same verb marked long by the editor or by error."
+     }
+    ],
+    "classes-expert-2": [
+     {
+      "key": "þa",
+      "label": "C",
+      "confidence": "high",
+      "reason": "þā adv 'then' / conj 'when' / demonstrative (afs, nap) are all long; short þa (17 train, Tauber seo d x1) is the same word left unmarked. No short lexeme exists."
+     },
+     {
+      "key": "þæt",
+      "label": "C",
+      "confidence": "high",
+      "reason": "þæt conj and neuter demonstrative are short. þǣt (6, train only, no dictionary) is the same word marked long by a stray edit or typo."
+     },
+     {
+      "key": "þe",
+      "label": "B",
+      "confidence": "high",
+      "reason": "Relative particle þe (short) vs þē 'thee', dat/acc of þū (Tauber þu p x39), plus instrumental þē = þȳ (CH). Two closed-class functions, both in dictionaries. This is the guideline's B example."
+     },
+     {
+      "key": "he",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Pronoun hē is long. Short he (20) is the same pronoun unmarked. CH 'hē hē' (laughter) has no tokens."
+     },
+     {
+      "key": "to",
+      "label": "C",
+      "confidence": "high",
+      "reason": "tō prep, adv 'too' and the infinitive marker are all long (CH, Tauber). Short 'to' (49) is the same word, unmarked mainly before inflected infinitives. The CH 'to' hit is Gutenberg boilerplate."
+     },
+     {
+      "key": "ne",
+      "label": "B",
+      "confidence": "high",
+      "reason": "ne negative adverb 'not' (Tauber av x139) vs nē conjunction 'nor' (Tauber c x37; BT, Wiktionary). Most long tokens are the nē...nē correlative. Some editions (Wyatt) leave the conjunction unmarked, but that is the minority."
+     },
+     {
+      "key": "se",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Same lemma sē. Sweet and Tauber write the unstressed article se short and the demonstrative/relative pronoun sē long. Length follows the editor's stress habit, not a different word. Guideline C example."
+     },
+     {
+      "key": "þam",
+      "label": "C",
+      "confidence": "high",
+      "reason": "þām dat of se/þæt is long. Short þam (6) is the same form unmarked."
+     },
+     {
+      "key": "swa",
+      "label": "C",
+      "confidence": "high",
+      "reason": "swā adv/conj is long. Short swa (4) is the same word unmarked."
+     },
+     {
+      "key": "þu",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Pronoun þū (CH 'ðu (ū)'). Short þu (2) is the same pronoun unmarked."
+     },
+     {
+      "key": "is",
+      "label": "A",
+      "confidence": "high",
+      "reason": "is, 3sg of wesan/bēon, vs īs n. 'ice' (CH, Zupitza noun list). Two different words. Guideline A example."
+     },
+     {
+      "key": "his",
+      "label": "C",
+      "confidence": "medium",
+      "reason": "Both hīs tokens are possessive 'his' (Bede/Cædmon 'his þā ǣfestan tungan'; Sweet 'ofer hīs lēode'), so the long marking is editorial. CH hīs = īs 'ice' (BH) is lexically possible but has no tokens here."
+     },
+     {
+      "key": "wæs",
+      "label": "C",
+      "confidence": "high",
+      "reason": "wæs pret sg of wesan is short. wǣs (2, train only) is the same verb mis-marked in Bright."
+     },
+     {
+      "key": "hi",
+      "label": "C",
+      "confidence": "high",
+      "reason": "hī pronoun (= hīe/hēo) is long. Short hi is the same pronoun unmarked (Soliloquies, Zupitza)."
+     },
+     {
+      "key": "ge",
+      "label": "B",
+      "confidence": "medium",
+      "reason": "Coordinating conj ge (ǣgþer ge...ge, 'and/both') vs 2pl pronoun gē 'ye' (Tauber ge p x12). Two closed-class words of different class, both in dictionaries, parallel to þe/þē. H&S also marks the conjunction gē (Tauber c x7), which is a minor editorial overlay."
+     },
+     {
+      "key": "me",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Dat/acc of ic. CH lists it as 'me', others as mē: one word marked by editorial convention."
+     },
+     {
+      "key": "for",
+      "label": "A",
+      "confidence": "high",
+      "reason": "Prep for vs fōr, pret 3sg of faran 'went' (Tauber faran v x4; 'Ælfred cyning fōr'). CH also has fōr f. 'journey'. Different lexemes, one of them a content verb."
+     },
+     {
+      "key": "þæs",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Gen of se/þæt and adverbial þæs are short. Every þǣs token (Bright, Soliloquies, Tauber 'þǣs mōdig') is the same word marked long."
+     },
+     {
+      "key": "ac",
+      "label": "A",
+      "confidence": "high",
+      "reason": "Conj ac 'but' vs āc f. 'oak' (CH; 3 Zupitza noun-list tokens). Two different words."
+     },
+     {
+      "key": "þær",
+      "label": "C",
+      "confidence": "high",
+      "reason": "þǣr adv/conj is long (CH). Short þær (4) is the same word unmarked."
+     },
+     {
+      "key": "we",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Pronoun wē (CH 'we (ē)'). Short we (2) is the same pronoun unmarked."
+     },
+     {
+      "key": "þæm",
+      "label": "C",
+      "confidence": "high",
+      "reason": "þǣm dsmn/dp of se is long. Short þæm (4) is the same form unmarked."
+     },
+     {
+      "key": "cwæþ",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Pret 3sg cwæþ of cweþan is short (CH). The 8 cwǣþ tokens (Bright, Andreas) are the singular mis-marked as long, probably by analogy with pl cwǣdon. Same form."
+     },
+     {
+      "key": "hie",
+      "label": "C",
+      "confidence": "high",
+      "reason": "hīe nap pronoun is long (CH). Short hie (3, Bright, incl. OCR 'hIe') is the same pronoun unmarked."
+     },
+     {
+      "key": "nu",
+      "label": "C",
+      "confidence": "high",
+      "reason": "nū adv/conj is long. Short nu (2) is the same word unmarked."
+     },
+     {
+      "key": "hit",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Pronoun hit is short. The single hīt ('Wel þū hīt ongītst', Bright) is the same pronoun mis-marked."
+     },
+     {
+      "key": "hig",
+      "label": "C",
+      "confidence": "medium",
+      "reason": "All 18 hīg tokens are in Zupitza's Ælfric Grammar and mean 'they' ('hīg habbað', 'þæt hīg nǣron'), the same pronoun as hig (= hīe) elsewhere. CH hīg 'hay' has no tokens."
+     },
+     {
+      "key": "be",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Prep be (stressed form bī). bē is not in any dictionary (train only); the tokens are the preposition or probable h/b OCR slips ('būton bē hit eft gebēte'). Same word, editorial or noise."
+     },
+     {
+      "key": "þas",
+      "label": "C",
+      "confidence": "high",
+      "reason": "þās afs/nap of þes is long. The short þas tokens ('on þas frēcnan tīd', 'in þas dēaðdene') are the same form unmarked. CH ðas = ðæs has no tokens."
+     },
+     {
+      "key": "hine",
+      "label": "C",
+      "confidence": "high",
+      "reason": "hine, acc of hē, is short. Both hīne tokens are the pronoun mis-marked ('þæt hīne mon lǣde'). CH hīne = hīwene has no tokens."
+     },
+     {
+      "key": "æfter",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Prep/adv æfter is short. The 2 ǣfter tokens are the same word mis-marked."
+     },
+     {
+      "key": "god",
+      "label": "A",
+      "confidence": "high",
+      "reason": "God m./np 'God' (Tauber x20) vs gōd adj 'good' (Tauber x11). Two different words. Guideline A example."
+     },
+     {
+      "key": "ofer",
+      "label": "A",
+      "confidence": "medium",
+      "reason": "Prep ofer vs ōfer m. 'bank, shore' (CH; Zupitza gender list 'þes ōfer'). The only long token is the noun. Different lexemes."
+     },
+     {
+      "key": "eow",
+      "label": "C",
+      "confidence": "high",
+      "reason": "ēow, dat/acc of gē. The eow and eōw tokens (1 each) are the same pronoun marked differently. The CH homographs (interj, 'sheep') have no tokens."
+     },
+     {
+      "key": "hyt",
+      "label": "A",
+      "confidence": "medium",
+      "reason": "Pronoun hyt (= hit) vs hȳt, pres 3sg of hȳdan 'hides' (CH, WikiPron). The ambiguity comes from the lexicon's lexical homograph, with no long tokens attested. Tauber also has hyt f. 'heat' (Beowulf 2649)."
+     },
+     {
+      "key": "man",
+      "label": "A",
+      "confidence": "high",
+      "reason": "man/mann 'man, one' vs mān n./adj. 'crime, wicked' (CH). Two different words. Guideline A example."
+     },
+     {
+      "key": "eac",
+      "label": "C",
+      "confidence": "high",
+      "reason": "ēac adv 'also' is long. Short eac (1) is the same word unmarked."
+     },
+     {
+      "key": "soþlice",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Adverb sōþlīce. The one soþlīce token (Matthew) is the same word missing its first macron."
+     },
+     {
+      "key": "an",
+      "label": "A",
+      "confidence": "low",
+      "reason": "Short an is two different lexemes: 'an' = 'on' (prep/particle; Tauber pp x2, Bright 'an settan') and pres sg of unnan 'grant' (Tauber v x1; Soliloquies 'ne an ic'). Long ān is the numeral/adjective 'one' (Tauber a). All 6 short tokens fit A; only the 3 prepositional ones could arguably be B."
+     },
+     {
+      "key": "oþre",
+      "label": "C",
+      "confidence": "high",
+      "reason": "ōþer, ōþre ('other') has a long ō. Short oþre (2) is the same word unmarked."
+     },
+     {
+      "key": "þes",
+      "label": "C",
+      "confidence": "medium",
+      "reason": "Demonstrative 'this' (nom sg masc) is written þes by Zupitza (185), Sweet and Tauber and þēs by the Gospel/Bright texts (CH 'ðēs (e?)'). Same word, editorial. A few Soliloquies þes = þæs gen are minor."
+     },
+     {
+      "key": "þis",
+      "label": "C",
+      "confidence": "low",
+      "reason": "þīs (6, train only, no dictionary backing) is always dat/instr ('on þīs middangearde'), i.e. the late instr þȳs. Soliloquies writes the same dative use short ('on þis myddangearde/andweardan līfe' x5), so editors disagree on the same form. B (nom/acc þis vs instr þȳs) is the alternative."
+     },
+     {
+      "key": "naman",
+      "label": "A",
+      "confidence": "high",
+      "reason": "naman, obl. of nama 'name' vs nāman, pret pl of niman 'took' (Tauber niman v; Matthew 'hū fela wyligena gē nāman'). Different lexemes."
+     },
+     {
+      "key": "wæron",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Pret pl wǣron is long. The one short wæron is the same form unmarked."
+     },
+     {
+      "key": "mæg",
+      "label": "A",
+      "confidence": "high",
+      "reason": "mæg, 3sg of magan 'can' (Tauber v x21) vs mǣg m. 'kinsman' (Tauber m x16; 'Higelāces mǣg'). Two different words."
+     },
+     {
+      "key": "godes",
+      "label": "A",
+      "confidence": "high",
+      "reason": "Godes, gen of God, vs gōdes, gen of gōd 'good' ('gōdes weorces', 'hwæt gōdes dō ic'). Same lexical split as god/gōd."
+     },
+     {
+      "key": "æt",
+      "label": "A",
+      "confidence": "high",
+      "reason": "Prep æt vs ǣt, pret 3sg of etan 'ate' ('ǣt þā offringhlāfas'; 'hit ǣt manna līchaman'); CH also has ǣt n. 'food'. Different lexemes."
+     },
+     {
+      "key": "swiþe",
+      "label": "C",
+      "confidence": "high",
+      "reason": "swīþe adv is long (CH). Short swiþe (4, Tauber x1) is the same adverb unmarked."
+     },
+     {
+      "key": "nan",
+      "label": "C",
+      "confidence": "high",
+      "reason": "nān pron/adj is long. The one short nan is the same word unmarked."
+     },
+     {
+      "key": "oþ",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Prep/conj oþ 'until' is short (CH, Tauber). ōþ is almost all Zupitza ('ōð þæt', 'ōð ðis') plus one Bright token: the same word under a different editor's habit."
+     },
+     {
+      "key": "hælend",
+      "label": "C",
+      "confidence": "high",
+      "reason": "hǣlend 'Saviour' is long (CH). Short hælend (2, Matthew) is the same noun unmarked."
+     },
+     {
+      "key": "min",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Both short min tokens are the possessive 'my' ('Hēr is min cnapa'), the same word as mīn. CH †min 'small' is dubious and has no tokens."
+     },
+     {
+      "key": "gode",
+      "label": "A",
+      "confidence": "high",
+      "reason": "Gode, dat of God (Tauber np) vs gōde, inflected gōd 'good' (Tauber a/n 'good'). Two different words."
+     },
+     {
+      "key": "na",
+      "label": "C",
+      "confidence": "high",
+      "reason": "nā adv 'not' is long. The one short na is the same word unmarked."
+     },
+     {
+      "key": "oþrum",
+      "label": "C",
+      "confidence": "high",
+      "reason": "ōþrum, dat of ōþer, is long. The one short oþrum is the same word unmarked."
+     },
+     {
+      "key": "witodlice",
+      "label": "C",
+      "confidence": "high",
+      "reason": "Adverb witodlīce. The one fully unmarked token is the same word."
+     },
+     {
+      "key": "wære",
+      "label": "C",
+      "confidence": "high",
+      "reason": "wǣre, pret subj of wesan, is long. The one short token ('swelce hē tam wære') is the same verb. CH wære = wer II has no tokens."
+     },
+     {
+      "key": "gyt",
+      "label": "C",
+      "confidence": "medium",
+      "reason": "About 43 of 52 short gyt are Zupitza's adverb 'yet' (the gīet/gȳt that all other editions mark long), so this is editorial on the same word. Only about 9 (Matthew/Bright) are dual pronoun gyt = git vs adverb gȳt, which would be B."
+     },
+     {
+      "key": "rice",
+      "label": "C",
+      "confidence": "high",
+      "reason": "rīce n. 'kingdom' and adj. 'powerful' are both long. Short rice (2, Matthew 'heofona rice') is the same word unmarked."
+     },
+     {
+      "key": "eom",
+      "label": "C",
+      "confidence": "high",
+      "reason": "eom, 1sg of bēon/wesan, is short. ēom (Bright 1, Soliloquies 6) is the same verb marked long by an editor. CH eom = heom has no tokens."
+     }
+    ]
+   },
+   "adjudication": [
+    {
+     "key": "þis",
+     "correct_label": "B",
+     "existing_label_is": "correct",
+     "reason": "All 6 þīs tokens are dat./instr. (Bright: 'on þīs middangearde', 'mid þīs medmiclum scipe', 'on þīs wætere', 'þīs folce'; Matthew: 'on þīs wēstene'; Soliloquies: 'be þīs wæge'). That is the instr. sg. m./n. of þes, Clark Hall 'ðȳs instr. smn. of ðēs' and Wiktionary þȳs, with LWS ī for ȳ. Short þis is nom./acc. n. ('Wyrc þis', 'on þis scip', 'on þis carcern'). One lemma, two cases, and the long vowel is etymological, not editorial, so B. Hargrove's short dative 'on þis myddangearde/andweardan līfe' (x5) is editorial noise within one case, which makes C a weaker alternative."
+    },
+    {
+     "key": "gyt",
+     "correct_label": "B",
+     "existing_label_is": "correct",
+     "reason": "Short gyt covers two words. 10 tokens are the dual pronoun git (Matthew x8, 'Mage gyt drincan', 'dō þæt gyt bēoð'; John 'Hwæt sēce gyt'; Bright 'gyt būtū'), and the same gospel editions write the adverb gȳt long. Clark Hall backs both: 'gyt = git pron.' and 'gȳt II. = gīet'. A pronoun-vs-adverb homograph between function words matches B's þe/þē example. The other ~59 short tokens (Zupitza 43, Wyatt 13, John 3) are the adverb left unmarked, an editorial split. But C needs 'same word', which holds for only part of the skeleton, and B comes before C in the order."
+    }
+   ]
+  },
+  "error_types": {
+   "labels_reviewed": "results/error_typing/labels.tsv (final)",
+   "summary": {
+    "items": 400,
+    "reviewed": 400,
+    "expert_agrees_with_existing": 386,
+    "flagged": 14,
+    "not_returned": [],
+    "confirmed_by_adjudicator": 8,
+    "changed": [
+     "6",
+     "247",
+     "249",
+     "270",
+     "273"
+    ],
+    "defensible_either_way": [
+     "211"
+    ]
+   },
+   "blind_experts": {
+    "errors-expert-1-100": [
+     {
+      "key": "1",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "geara adv 'readily, thoroughly' (BT/CH geara = gearwe) vs gēara adv 'of yore' (gen pl of gēar). 'Ðus geara ic wolde cunnan God' means 'know God that thoroughly'."
+     },
+     {
+      "key": "2",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "Relative particle in 'inwidsorge þe hie ær drugon' (Beo 831). Wyatt has þe, matching the system; H&S has þē. Alignment checked."
+     },
+     {
+      "key": "3",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "Relative particle in 'ecum dryhtne þe ic her on starie' (Beo 2796). Wyatt has þe, matching the system. Alignment checked."
+     },
+     {
+      "key": "4",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: sēl, comparative adverb 'better' ('hwæðer sēl mæge'). System's sel = sel/sæl n. 'hall' (BT, CH)."
+     },
+     {
+      "key": "5",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: sæl n. 'hall' ('geond sæl swingeð'). System's sǣl is mf. 'time, occasion, happiness' (CH sǣl)."
+     },
+     {
+      "key": "6",
+      "label": "grammatical",
+      "confidence": "medium",
+      "reason": "Hargrove reads 'sē se þē lufað, sē þē sǣcð … sē þē hæfð' as 'he has thee': þē is the acc. pronoun, and the system chose the relative particle þe. The relative reading is possible but less likely."
+     },
+     {
+      "key": "7",
+      "label": "ceiling",
+      "confidence": "high",
+      "reason": "gold_in_candidates = no. Gold ungemetlice (short suffix) is not among the candidates ungemetlīce | ūngemetlīce."
+     },
+     {
+      "key": "8",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'ofer þē' 'above thee': the pronoun þē, not the relative particle þe."
+     },
+     {
+      "key": "9",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: hof n. 'dwelling, court' (acc). System's hōf is the pret. of hebban 'raised' (separate headword)."
+     },
+     {
+      "key": "10",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "se is the article before 'hearda helm'. se/sē marking is an editorial habit; H&S and Wyatt both have se."
+     },
+     {
+      "key": "11",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Personal pronoun he 'he'. he/hē is a marking habit, same word and function."
+     },
+     {
+      "key": "12",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: fyrena, gen pl of fyren f. 'crime'. System's fȳrena is from fȳren 'fiery' (Wiktionary)."
+     },
+     {
+      "key": "13",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Article se in 'se beadoleoma'. Marking habit only."
+     },
+     {
+      "key": "14",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'hweðer þē ðince' 'whether it seems to thee': dative pronoun, not the particle."
+     },
+     {
+      "key": "15",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Gēata = gen pl of Gēatas 'Geats' (Tauber, H&S, Wyatt). Short geata only exists in Wiktionary as a form of geat 'gate'."
+     },
+     {
+      "key": "16",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "eom 'am', 1sg of wesan. Hargrove (and Bright, 'Ic ēom angin') mark it ēom by habit. Same word and function."
+     },
+     {
+      "key": "17",
+      "label": "ceiling",
+      "confidence": "high",
+      "reason": "gold_in_candidates = no. Gold sōðlice is not among the candidates soðlīce | sōðlīce."
+     },
+     {
+      "key": "18",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'ær gē fyr heonan … feran' 'before ye go further': the 2pl pronoun gē vs the conjunction ge. H&S and Wyatt agree with the gold."
+     },
+     {
+      "key": "19",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Preposition tō in 'to þam geþwære'. to/tō is a marking habit."
+     },
+     {
+      "key": "20",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: gēoce, acc of gēoc f. 'help'. System's geoce = dat of geoc n. 'yoke' (CH)."
+     },
+     {
+      "key": "21",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'æac geara wat' 'also know well': geara = gearwe 'readily, well' vs gēara 'formerly'."
+     },
+     {
+      "key": "22",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Crist 'Christ', same word. Dictionaries disagree on its length (BT and Wiktionary have both crist and crīst; CH has crīst)."
+     },
+     {
+      "key": "23",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'Beowulf Geata': gen pl of Gēatas vs geata, a form of geat 'gate'."
+     },
+     {
+      "key": "24",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "'gleobeames ne god hafoc' (Beo 2263) 'nor'. Wyatt has ne, matching the system. Alignment checked."
+     },
+     {
+      "key": "25",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Article se in 'se ðeodsceaða'."
+     },
+     {
+      "key": "26",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "ǣnlic adj 'excellent, unique', same word. Only the suffix length differs: -lic (BT, CH, Bright verse) vs -līc (BT, Wiktionary, Bright prose)."
+     },
+     {
+      "key": "27",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'þær ðē bið manna þearf' 'where thou hast need of men': dative pronoun ðē. H&S and Wyatt agree with the gold."
+     },
+     {
+      "key": "28",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "Correlative conjunction in 'egðer … ge heora freond ge heora feond' vs the pronoun gē 'ye'."
+     },
+     {
+      "key": "29",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "tō before the inflected infinitive 'to hæbbenne'. Same word, marking habit."
+     },
+     {
+      "key": "30",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Article se in 'swa se rica bebead'."
+     },
+     {
+      "key": "31",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: wēg (lemma wæg) m. 'wave' in 'leton wēg niman'. System's weg = 'way'. Wyatt wēg matches the gold; H&S did not align."
+     },
+     {
+      "key": "32",
+      "label": "editorial",
+      "confidence": "medium",
+      "reason": "ðes is þæs (gen, 'that which') in the text's e-for-æ spelling. Both lexicon patterns (ðes in CH/Zupitza, ðēs in Bright/Matthew/Wiktionary) are the same demonstrative marked by different habits. Hargrove itself writes þǣs elsewhere (item 88)."
+     },
+     {
+      "key": "33",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Article se in 'se aglæca'."
+     },
+     {
+      "key": "34",
+      "label": "editorial",
+      "confidence": "medium",
+      "reason": "'þæt gastlice' is the weak adjective gāstlic. The -lice/-līce difference is an editor's habit: Bright marks the adjective long ('þæt gāstlīce mægen'), Sweet short. It does not mark adjective vs adverb here."
+     },
+     {
+      "key": "35",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "lāðian 'to hate, loathe; afflict' (CH) vs laðian 'to invite, summon'. Separate headwords."
+     },
+     {
+      "key": "36",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'þu þe lufað æall' 'thou who lovest all': relative particle (gold) vs pronoun þē (system)."
+     },
+     {
+      "key": "37",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'þonne þu ðē gebeden hæbbe': reflexive dative pronoun with gebiddan, not the particle."
+     },
+     {
+      "key": "38",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'To þē ic clypige' 'to thee I call': pronoun."
+     },
+     {
+      "key": "39",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Article se in 'se goda'."
+     },
+     {
+      "key": "40",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Gēates, gen sg of Gēat 'Geat' (H&S, Wyatt) vs geates from geat 'gate'."
+     },
+     {
+      "key": "41",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'egðer wilt ge þissa … ge þara': conjunction ge vs pronoun gē."
+     },
+     {
+      "key": "42",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Dative pronoun me in 'me þincð'. me/mē is a marking habit."
+     },
+     {
+      "key": "43",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: lemma gist m. 'stranger, guest'. System's gǣst = gāst 'spirit'. H&S and Wyatt agree with the gold."
+     },
+     {
+      "key": "44",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Pronoun he. Marking habit."
+     },
+     {
+      "key": "45",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'beon ne mæg' 'cannot be': negative adverb ne vs nē 'nor' (the neighbouring nē tokens are 'nor')."
+     },
+     {
+      "key": "46",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Article se in 'se mæra mago'."
+     },
+     {
+      "key": "47",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Article se in 'se wonna hrefn'."
+     },
+     {
+      "key": "48",
+      "label": "grammatical",
+      "confidence": "medium",
+      "reason": "Tauber: git, dual pronoun 'you two'. System's gīt = adverb 'yet' (CH gīt = gīet). Both are function words, so grammatical rather than homograph."
+     },
+     {
+      "key": "49",
+      "label": "grammatical",
+      "confidence": "medium",
+      "reason": "A sentence fragment ('ge hyre God myd to gesceonne'). ge is a conjunction or particle; the pronoun gē 'ye' has no 2pl verb here."
+     },
+     {
+      "key": "50",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: gēong, pret 3sg of gangan 'went'. System's geong = adjective 'young'."
+     },
+     {
+      "key": "51",
+      "label": "grammatical",
+      "confidence": "medium",
+      "reason": "'ðonne nē gelyfað hi na Lazere' = 'neither will they believe Lazarus' (Lk 16:31 neque). Gold nē 'nor/neither' vs the negator ne."
+     },
+     {
+      "key": "52",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: hyrde m. 'guardian' ('rices hyrde'). System's hȳrde = pret. of hȳran 'heard'."
+     },
+     {
+      "key": "53",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'fyrena hyrde' 'keeper of crimes': fyren 'crime' vs fȳren 'fiery'."
+     },
+     {
+      "key": "54",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Preposition tō in 'becuman to þam'."
+     },
+     {
+      "key": "55",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'ahæfð he þē' 'he raises thee': accusative pronoun."
+     },
+     {
+      "key": "56",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'ne ða gōd ne nane don' 'neither those good things nor any': gōd n. 'good' vs god 'God' (class A)."
+     },
+     {
+      "key": "57",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: fyrenum, dat pl of fyren 'crime', used as 'wickedly'. System's fȳrenum = 'fiery'."
+     },
+     {
+      "key": "58",
+      "label": "grammatical",
+      "confidence": "medium",
+      "reason": "'ic þe nu wiðsprece eom gesceadwisnes': Hargrove reads the relative particle ('I who now speak'). The system reads the pronoun þē ('with thee'). The syntax allows both."
+     },
+     {
+      "key": "59",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "rīce n. 'kingdom', gen sg. H&S and Wyatt both have rīces, matching the system. Tauber's short form looks like a slip; the short pattern comes from a single unmarked token in matthew_ws."
+     },
+     {
+      "key": "60",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: wine m. 'friend' ('Wine Scyldinga'). System's wīne = dat of wīn 'wine'."
+     },
+     {
+      "key": "61",
+      "label": "editorial",
+      "confidence": "medium",
+      "reason": "þes is þæs (gen) in 'þes geðafa' 'consenting to that', e-for-æ spelling. Both patterns are editorial markings of the same demonstrative (same reasoning as item 32)."
+     },
+     {
+      "key": "62",
+      "label": "homograph",
+      "confidence": "medium",
+      "reason": "Tauber, CH and Klaeber read gētan 'to destroy, kill' at Beo 2940. BT reads this same line as getan 'to get, take'. Different headwords. H&S and Wyatt agree with the gold."
+     },
+     {
+      "key": "63",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'nē ealle þa þe on heofenum beoð' 'nor (that) all who are in heaven': nē 'nor' vs ne 'not'."
+     },
+     {
+      "key": "64",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'se goda mǣg Higelaces' 'kinsman' vs mæg 'can' (class A)."
+     },
+     {
+      "key": "65",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: maga ns 'son' ('maga Healfdenes'). System's māga = gen pl of mǣg 'kinsmen'."
+     },
+     {
+      "key": "66",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'ic scoc fram ðē' 'I turned from thee': pronoun."
+     },
+     {
+      "key": "67",
+      "label": "grammatical",
+      "confidence": "medium",
+      "reason": "'to ðe cymð' 'comes to thee' is the pronoun. Hargrove's short gold looks like a slip (he usually writes tō þē/ðē), so the system's ðē is probably right."
+     },
+     {
+      "key": "68",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'Ic hit þē gehate' 'I promise it to thee': dative pronoun."
+     },
+     {
+      "key": "69",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'mæg wið mǣge': dat sg of mǣg 'kinsman' vs mæge, subjunctive of magan."
+     },
+     {
+      "key": "70",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Pronoun he. Marking habit."
+     },
+     {
+      "key": "71",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'Ðu se aldsta Feder': article/demonstrative se."
+     },
+     {
+      "key": "72",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'maga Healfdenes' 'son of Healfdene': maga vs māga (gen pl of mǣg)."
+     },
+     {
+      "key": "73",
+      "label": "editorial",
+      "confidence": "medium",
+      "reason": "ongitst, 2sg of ongitan 'understand', same verb. The long form comes from one Bright passage ('Wel þū hīt ongītst', which also marks hīt long), so it is an edition's habit or slip."
+     },
+     {
+      "key": "74",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'folces hyrde' 'guardian of the people' vs hȳrde 'heard'."
+     },
+     {
+      "key": "75",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'Geata clifu' 'cliffs of the Geats' vs geata 'gates'."
+     },
+     {
+      "key": "76",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'ond þē þa andsware … gecyðan' 'make known to thee': dative pronoun. H&S and Wyatt agree with the gold."
+     },
+     {
+      "key": "77",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "Relative in 'eoredgeatwe þe ge þær on standað' (Beo 2867). Wyatt has þe, matching the system. Alignment checked."
+     },
+     {
+      "key": "78",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'Hreþel Geata': gen pl of Gēatas vs geata 'gates'."
+     },
+     {
+      "key": "79",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: þes, nsm 'this' ('ðes eorl'). ðēs is the Bright/Matthew/Wiktionary marking of the same word. H&S and Wyatt are short, like the gold."
+     },
+     {
+      "key": "80",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'egðer stiward ge ðæs welan ge eac': conjunction ge vs pronoun gē."
+     },
+     {
+      "key": "81",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Pronoun he. Marking habit."
+     },
+     {
+      "key": "82",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Article se in 'se æalra betsta creft'."
+     },
+     {
+      "key": "83",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'maga mane fah' (nom sg 'young man') vs māga, gen pl of mǣg."
+     },
+     {
+      "key": "84",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'Ic þæs wine Deniga' 'friend' vs wīne, dat of wīn."
+     },
+     {
+      "key": "85",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'wið þē moton wordum wrixlan' 'with thee': pronoun."
+     },
+     {
+      "key": "86",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'þæt he æft ne cume' 'that it does not come back': ne 'not' vs nē 'nor'."
+     },
+     {
+      "key": "87",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "Adverb swīðe 'very' ('tobrocen swiðe'). H&S and Wyatt both have swīðe, matching the system; Tauber's gold is short."
+     },
+     {
+      "key": "88",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Gen sg demonstrative in 'þæs hehstan goodes'. Hargrove writes þǣs, the system þæs. Same word, marking habit."
+     },
+     {
+      "key": "89",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'maga Healfdenes' 'son' vs māga 'of kinsmen'."
+     },
+     {
+      "key": "90",
+      "label": "homograph",
+      "confidence": "medium",
+      "reason": "Hargrove's hēle = hǣle/hǣlu 'health, salvation' in e-for-æ spelling. System's hele = BT hele 'covering', CH hele f. 'subterfuge', or Wiktionary hele = hell."
+     },
+     {
+      "key": "91",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Article se in 'se ðeodkyning'."
+     },
+     {
+      "key": "92",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'gefrægn mǣg oðerne' 'kinsman' vs mæg 'can' (class A)."
+     },
+     {
+      "key": "93",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Possessive min 'my' ('min sawel'). min/mīn is a marking habit; short min occurs only as unmarked slips in training."
+     },
+     {
+      "key": "94",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Article se in 'se scyldiga man'."
+     },
+     {
+      "key": "95",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: flet n. 'floor, hall' ('on flet boren'). System's flēt = f. 'cream' (BT, CH)."
+     },
+     {
+      "key": "96",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'þæt ic wite buton getweon' 'that I know': subjunctive of witan vs wīte n. 'punishment'."
+     },
+     {
+      "key": "97",
+      "label": "homograph",
+      "confidence": "medium",
+      "reason": "Hargrove's ānweald = BT án-weald 'sole, monarchical power' (ān + weald). System's anweald = onweald 'power' (CH onweald, a-variant). Wiktionary merges the two, and the context ('greatest power') fits both."
+     },
+     {
+      "key": "98",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "'ær ne siþðan' 'neither before nor since' (Beo 718). Wyatt has ne, matching the system. Alignment checked."
+     },
+     {
+      "key": "99",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'Geata leodum' 'to the people of the Geats' vs geata 'gates'."
+     },
+     {
+      "key": "100",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'Geata leode' 'people of the Geats' vs geata 'gates'."
+     }
+    ],
+    "errors-expert-101-200": [
+     {
+      "key": "101",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: se, demonstrative/article nsm 'the' (se weard). se/sē is the same article, and only the marking habit differs. HS se, W se."
+     },
+     {
+      "key": "102",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: wine m. ns 'friend' (wine Scyldunga). The system's wīne is dat. of wīn 'wine (drink)', as in the Bright/Matthew corpus forms. These are different headwords."
+     },
+     {
+      "key": "103",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'Hu þincð þe' means 'how does it seem to thee', so this is þē, 2sg dat. pronoun. The system's þe is the relative/indeclinable particle reading."
+     },
+     {
+      "key": "104",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Infinitive marker to/tō in 'to arimanne'. Same word and same function. Class C."
+     },
+     {
+      "key": "105",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'ðe ma' means 'any the more', the instrumental þē of the demonstrative. The system's ðe is the particle reading, a different function."
+     },
+     {
+      "key": "106",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: hæle m. ns 'man, hero'. The system's hǣle is hǣlu/hǣle 'health, salvation' (Clark Hall, BT), a different headword."
+     },
+     {
+      "key": "107",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: wine m. as 'friend' (holdne wine). The candidate wīne is dat. of wīn 'wine'."
+     },
+     {
+      "key": "108",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'þa ðe þe findon' means 'those who find thee', so this is þē, acc. pronoun. The system's þe is the particle."
+     },
+     {
+      "key": "109",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: se d. nsm 'the' (se wisa). Article se/sē with a marking difference only."
+     },
+     {
+      "key": "110",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'nē mæg ic hyt ... gætecan' means 'nor can I perceive it'. Gold nē is the conjunction 'nor' and the system's ne is the negative adverb 'not'."
+     },
+     {
+      "key": "111",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "Tauber: þe, conjunction 'because', marked þē (instrumental-based, correlative with þy læs, as in Klaeber). The system's short þe is the relative particle 'whom death took', a real alternative syntactic reading. HS and Wyatt are both þē, so the gold is not in doubt."
+     },
+     {
+      "key": "112",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: Geatas np gp 'Geats', marked Gēata. The short candidate geata is gen. pl. of ġet/geat 'gate' (Wiktionary noun form)."
+     },
+     {
+      "key": "113",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Gold mēst means 'most' (hu hi mēst wita geþolodon). The short candidate mest comes only from WikiPron, where it is a late Kentish alternative form of mæst 'mast'."
+     },
+     {
+      "key": "114",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: se d. nsm 'the' (se yldesta). Article, marking only."
+     },
+     {
+      "key": "115",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: se d. nsm 'the' (se fæmnan þegn). Article, marking only."
+     },
+     {
+      "key": "116",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'To ðe ic clypige' means 'to thee I call', so this is þē, dat. pronoun. The system's ðe is the particle."
+     },
+     {
+      "key": "117",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: wine m. ns 'friend' (wine Scyldinga). The candidate wīne is 'wine (drink)'."
+     },
+     {
+      "key": "118",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "In the series 'naþer ne mid eagum ne mid ... ne mid hrine', the target means 'nor'. Gold nē against the system's negative adverb ne."
+     },
+     {
+      "key": "119",
+      "label": "grammatical",
+      "confidence": "medium",
+      "reason": "In 'þæs þe [þe] mare ðearf sie' the relative is already the preceding þe, so the target is þē (dat. 'for thee' or instrumental 'the more'). The system gives the particle reading."
+     },
+     {
+      "key": "120",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "Wyatt reads 'inwitnīþas þe hīe ǣr drugon' with short þe, the same as the system, while the gold is þē. The alignment was checked in the Wyatt text. Tauber: þe r 'which'."
+     },
+     {
+      "key": "121",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "Tauber: þu p. ds 'you' (Ic þe an), so þē is the pronoun 'thee'. The system's þe is the particle. HS and Wyatt are both þē."
+     },
+     {
+      "key": "122",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: flet n. as 'hall' (on flet teon). Wiktionary flēt (Etymology 2) is an alternative form of flīete 'cream'."
+     },
+     {
+      "key": "123",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: hyrde m. ns 'guardian' (wuldres hyrde). The system's hȳrde is the preterite of hȳran 'heard'. Different headwords, both content words."
+     },
+     {
+      "key": "124",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'nē swā clǣne ne forwyrð': the target directly before the verb is the negative adverb ne 'not', as in the gold. The system gives nē 'nor'."
+     },
+     {
+      "key": "125",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "Tauber: ne av. 'not' (wihte ne sceþede). The system's nē is the conjunction 'nor'. HS and Wyatt are both ne."
+     },
+     {
+      "key": "126",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'genoh geare ic wot' means 'I know well enough', the adverb geare/gearwe 'readily, well'. The system's gēare is dat. of gēar 'year' (or gēare 'formerly'). Different headwords."
+     },
+     {
+      "key": "127",
+      "label": "ceiling",
+      "confidence": "high",
+      "reason": "gold_in_candidates = no. Gold æge is absent from the candidates ǣge and ǣgē."
+     },
+     {
+      "key": "128",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: se d. nsm 'the' (se goda). Article, marking only."
+     },
+     {
+      "key": "129",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'nefre ne byð nan ende' has negative adverb ne 'not' before the verb, as in the gold. The system gives nē 'nor'."
+     },
+     {
+      "key": "130",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Infinitive marker to/tō in 'betst to forletende'. Same word and function. Class C."
+     },
+     {
+      "key": "131",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "eac/ēac 'also'. Same adverb, and only the marking differs (Hargrove has ēac elsewhere). Class C."
+     },
+     {
+      "key": "132",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "In 'þæs ðe hire se willa gelamp' the target is the article se 'the'. Marking only."
+     },
+     {
+      "key": "133",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: wigan v. inf. 'fight' (wīgan). The system's short wigan is a form of wiga 'warrior'. Different headwords. HS and Wyatt are both wīgan."
+     },
+     {
+      "key": "134",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Pronoun he/hē 'he', subject of wile. Same word and function. Class C."
+     },
+     {
+      "key": "135",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'min gewit is æce' means 'my mind is eternal', the noun gewit 'understanding'. The system's gewīt is 3sg pres. of gewītan 'depart'."
+     },
+     {
+      "key": "136",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "Tauber: þu p. as 'you' (þæt ic þe sohte), the pronoun þē. The system's þe is the particle."
+     },
+     {
+      "key": "137",
+      "label": "grammatical",
+      "confidence": "medium",
+      "reason": "'befeste þe halne Gode' means 'commit thyself whole to God', the reflexive pronoun 'thee'. Hargrove's gold has short þe and the system has þē. The readings differ in function (particle vs pronoun). Note: the prose gold is probably a slip, because the same edition marks pronoun þē elsewhere."
+     },
+     {
+      "key": "138",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: gangan v. p3s 'went' (gēong). The system's geong is the adjective 'young'."
+     },
+     {
+      "key": "139",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'þe þe mēst neod ys' means 'which is most needful to thee', mēst 'most'. The short mest is the Kentish alternative of mæst 'mast' (WikiPron)."
+     },
+     {
+      "key": "140",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "Tauber: þæt d. isn '(because of) that', ðē sēl 'any the better', instrumental. The system's ðe is the relative/indeclinable particle. HS þē and Wyatt ðē agree with the gold."
+     },
+     {
+      "key": "141",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'hu swiðe lyst ðe þæs' means 'how greatly does it please thee', dat. pronoun þē. The system gives the particle."
+     },
+     {
+      "key": "142",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: se d. nsm 'the' (se leoma). Article, marking only."
+     },
+     {
+      "key": "143",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: sel av. comparative 'better' (ðy sēl). The short sel is Wiktionary sel n. 'hall' (= sæl/sele, Heorot sincfāge sel). Different headwords."
+     },
+     {
+      "key": "144",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: est f. dp 'good will', ēstum. The short estum comes from Bright's Ohthere/Wulfstan 'mid Estum', the people name Este (Ests)."
+     },
+     {
+      "key": "145",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: wine m. 'friend' (wine Scyldinga). The candidate wīne is 'wine (drink)'."
+     },
+     {
+      "key": "146",
+      "label": "ceiling",
+      "confidence": "high",
+      "reason": "gold_in_candidates = no. Gregorius (unmarked) is not among gregōrius, grēgorius and grēgōrius."
+     },
+     {
+      "key": "147",
+      "label": "grammatical",
+      "confidence": "medium",
+      "reason": "In 'and þe oðre ðe þu er embe sprece' ('and the others you spoke of'), þe is the demonstrative/article. The system's þē is the pronoun 'thee', a different function."
+     },
+     {
+      "key": "148",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: se d. nsm 'the' (se ðeoden). Article, marking only."
+     },
+     {
+      "key": "149",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: se d. nsm 'the' (se hearda). Article, marking only."
+     },
+     {
+      "key": "150",
+      "label": "grammatical",
+      "confidence": "medium",
+      "reason": "Sentence-initial 'Nē lyst me': gold nē 'nor' against the system's ne 'not'. These are different functions. Note: the gold is questionable, because ne + verb reads naturally as the negative adverb."
+     },
+     {
+      "key": "151",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: we p. ap 'us', ūsic. The short usic comes from Bright ('Gefreoða usic') and is the same pronoun with the same function, so only the marking differs."
+     },
+     {
+      "key": "152",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "HS line 790 reads 'mægene strengest on þǣm dæge' with long þǣm, the same as the system, while the gold is þæm. Tauber has þǣm in the parallel line 197, so it is inconsistent itself. Wyatt is not aligned (OCR 'þǣem')."
+     },
+     {
+      "key": "153",
+      "label": "other",
+      "confidence": "medium",
+      "reason": "Soliloquies 00238 'A.' is the speaker label for Augustinus, between 'Heald þonne hys bebodu.' and 'Hwilce bebodu?' (see also 'G.' for Gescēadwīsnes). It is not an Old English word (ā 'ever', or the interjection), so this is a normalisation fault."
+     },
+     {
+      "key": "154",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'naðer nē myd þæs modes eagan' is correlative 'neither/nor', gold nē. The system's ne is the negative adverb."
+     },
+     {
+      "key": "155",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'ne þe nan eallunga ne gemet' means 'nor does anyone find thee', the pronoun þē. The system gives the particle."
+     },
+     {
+      "key": "156",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "Wyatt has 'lāþ ond longsum þe on ðā lēode' with short þe, the same as the system, while the gold is þē (relative). The alignment was checked."
+     },
+     {
+      "key": "157",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Pronoun he/hē, subject. Same word and function. Class C."
+     },
+     {
+      "key": "158",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "Wyatt has 'sūð ne norð' with short ne, the same as the system, while the gold is nē. The alignment was checked."
+     },
+     {
+      "key": "159",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: hyrde m. ns 'guardian' (fyrena hyrde). The candidate hȳrde means 'heard'."
+     },
+     {
+      "key": "160",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: se d. nsm 'the' (se wyrm). Article, marking only."
+     },
+     {
+      "key": "161",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: Geatas gp 'Geats', Gēata. The short candidate geata is gen. pl. of ġet 'gate'."
+     },
+     {
+      "key": "162",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'heora agnu þe mare' means 'their own the greater', the instrumental þē. The system's þe is the particle."
+     },
+     {
+      "key": "163",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "Wyatt has 'byrnum werede þe þus' with short þe, the same as the system, while the gold is þē. The alignment was checked."
+     },
+     {
+      "key": "164",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'hweðer þu libbe þe ne libbe' means 'whether you live or not', the conjunction þe 'or' as in the gold. The system's þē is the pronoun/instrumental reading."
+     },
+     {
+      "key": "165",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: gemet n. ns 'faculty, measure'. The system's gemēt is a pres. form of gemētan 'meet, find'."
+     },
+     {
+      "key": "166",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'ne læt þe nanwiht wiðerweardes beon' means 'let nothing adverse be to thee', the pronoun þē. The system gives the particle."
+     },
+     {
+      "key": "167",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'ælcne ðara þe maga si' means 'each who is able', the adjective maga 'able, strong'. The system's māga is gen. pl. of mǣg 'kinsman'."
+     },
+     {
+      "key": "168",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: Geatas gp 'Geats', Gēata. The short candidate geata means 'of gates'."
+     },
+     {
+      "key": "169",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: fyren f. gp 'crime' (fyrena frofre). Wiktionary fȳrena is a form of the adjective fȳren 'fiery'."
+     },
+     {
+      "key": "170",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: gewitan v. inf. 'ascertain' (from witan 'know'). The system's gewītan means 'depart'."
+     },
+     {
+      "key": "171",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: Geatas gp 'Geats'. The short geata means 'of gates'."
+     },
+     {
+      "key": "172",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'Hweðer ðincð þe' means 'which seems to thee', the dat. pronoun þē. The system gives the particle."
+     },
+     {
+      "key": "173",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: god n. ds 'good actions', gōde. The system's gode is from god 'God'. Class A. HS and Wyatt are both gōde."
+     },
+     {
+      "key": "174",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "HS 'þāra þe þǣr' and Wyatt 'þāra ðe þǣr' both have the short particle, the same as the system, while the gold is ðē (relative 'whom'). The alignment was checked."
+     },
+     {
+      "key": "175",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Preposition To/tō in 'To þam ic clypige'. Same word and function. Class C."
+     },
+     {
+      "key": "176",
+      "label": "grammatical",
+      "confidence": "medium",
+      "reason": "'man naþer ne ða god nē nane don ne mæge': gold ne against the system's nē is the choice between 'not' and correlative 'nor'. Note: Hargrove marks nē after nāðer in 00674, so this gold may be inconsistent."
+     },
+     {
+      "key": "177",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: Geatas gp 'Geats' (Geata leod). The short geata means 'of gates'."
+     },
+     {
+      "key": "178",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'pone þoðer þe seo lyne on awriten is' means 'the ball on which the line is written', the relative particle þe as in the gold. The system's þē is the pronoun/instrumental."
+     },
+     {
+      "key": "179",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: se d. nsm 'the' (se manscaða). Article, marking only."
+     },
+     {
+      "key": "180",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "HS and Wyatt both have 'gefremed þæt þīn dōm', short þæt, the same as the system. The gold þǣt (Tauber conj. 'that') is anomalous. The alignment was checked."
+     },
+     {
+      "key": "181",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'swa se ancer' has the article se 'the'. Marking only."
+     },
+     {
+      "key": "182",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Preposition To/tō in 'To þam Gode'. Same word and function. Class C."
+     },
+     {
+      "key": "183",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "Wyatt has 'Ne þæt se āglǣca' with short Ne, the same as the system, while the gold is Nē (HS Nē). The alignment was checked."
+     },
+     {
+      "key": "184",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: hæle m. ns 'man' (hæle hildedior). The candidate hǣle means 'health, salvation'."
+     },
+     {
+      "key": "185",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'ge þa þe wytan ... ge þa þe nyton' means 'both those who ... and those who', the correlative conjunction ge. The system's gē is the 2pl pronoun 'ye'."
+     },
+     {
+      "key": "186",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "Wyatt has 'sweorceð ne gesacu' with short ne, the same as the system, while the gold is nē. The alignment was checked."
+     },
+     {
+      "key": "187",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'Ðu þe oferswiðdest deað' means 'thou who overcamest death', the relative particle þe as in the gold. The system's þē is the pronoun."
+     },
+     {
+      "key": "188",
+      "label": "editorial",
+      "confidence": "medium",
+      "reason": "ælc/ǣlc 'each' is the same pronoun with the same function. The dictionaries have ǣlc, and Hargrove has ǣlcne elsewhere, so the short gold is probably a slip in the edition, not a different word."
+     },
+     {
+      "key": "189",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'nese, nē min nē nanes mannes' is the correlative 'neither/nor'. The system's ne is the negative adverb."
+     },
+     {
+      "key": "190",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'ic eom nē hwa min feder wæs' means 'nor who my father was', gold nē. The system gives ne 'not'."
+     },
+     {
+      "key": "191",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'nē þæt nat' means 'nor do I know that', gold nē. The system gives ne 'not'."
+     },
+     {
+      "key": "192",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'se ylca Cornelius' has the article se. Marking only."
+     },
+     {
+      "key": "193",
+      "label": "grammatical",
+      "confidence": "medium",
+      "reason": "'Nē dincð me æac nan wundor': gold nē 'nor' against the system's ne 'not'. Note: the gold is questionable, because ne + verb reads naturally as 'not'."
+     },
+     {
+      "key": "194",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: hyrde m. ns 'guardian' (hringa hyrde). The candidate hȳrde means 'heard'."
+     },
+     {
+      "key": "195",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'cuman to þe' means 'come to thee', the pronoun þē. The system gives the particle."
+     },
+     {
+      "key": "196",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: se d. nsm 'the' (se mere). Article, marking only."
+     },
+     {
+      "key": "197",
+      "label": "editorial",
+      "confidence": "medium",
+      "reason": "eom 'am', the verb with the same function. Hargrove's ēom is a nonstandard mark (eom has a short diphthong), so the gold is probably wrong. Same word, marking only. Class C."
+     },
+     {
+      "key": "198",
+      "label": "editorial",
+      "confidence": "medium",
+      "reason": "Tauber: þe r. 'which', marked þē (Tauber marks the relative particle long). The system's short þe is the same relative particle, so the function is the same and only the convention differs. This departs from class B. HS and Wyatt are both þē, so it is not gold_in_doubt."
+     },
+     {
+      "key": "199",
+      "label": "editorial",
+      "confidence": "medium",
+      "reason": "Sentence-initial ælc/ǣlc 'each', the same word. The gold is unmarked where the dictionaries and Hargrove elsewhere have ǣlc, so the gold is probably wrong. Marking only."
+     },
+     {
+      "key": "200",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Pronoun we/wē, subject. Same word and function. Class C."
+     }
+    ],
+    "errors-expert-201-300": [
+     {
+      "key": "201",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Ac opens the clause, so it is the conjunction ac 'but'. System āc means 'oak', a noun under a different headword."
+     },
+     {
+      "key": "202",
+      "label": "homograph",
+      "confidence": "medium",
+      "reason": "Tauber has bite m. 'bite, cut' (ds), as in 'bite irena'. System bīte is a form of the verb bītan, which has its own headword. Both are content words."
+     },
+     {
+      "key": "203",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "In 'þæs swiðost ðe' the ðe is the causal or relative particle. System ðē is the pronoun 'thee'. Class B."
+     },
+     {
+      "key": "204",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'ic ne ongyte' uses ne as the verbal negator 'not'. System nē means 'nor'. Class B."
+     },
+     {
+      "key": "205",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'ic wolde witan' is witan 'to know'. System wītan is 'to blame' or the plural of wita 'councillors'. These are different headwords. The class column is empty."
+     },
+     {
+      "key": "206",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'se mere' is the article. se and sē are the same word and differ only in marking habit. H&S and Wyatt both have se. Class C."
+     },
+     {
+      "key": "207",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'se goda mæg' is weak gōd 'good'. System goda is the genitive plural of god 'god', as in Bright's 'ūra goda'. H&S and Wyatt both have gōda."
+     },
+     {
+      "key": "208",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "In 'þara þe mid Beowulfe' þe is the relative particle. System þē is 'thee'. Class B."
+     },
+     {
+      "key": "209",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'geahsian be heom' is the preposition be, which BT also writes bē. The word and its function are the same. Class C."
+     },
+     {
+      "key": "210",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'se besta creft' is the article se. The difference is marking only. Class C."
+     },
+     {
+      "key": "211",
+      "label": "homograph",
+      "confidence": "medium",
+      "reason": "'þinne cniht' is the possessive þīn 'thy'. Short þinne has its own dictionary entry as a form of þynne 'thin' (Wiktionary etymology 2, BT). The class column is empty."
+     },
+     {
+      "key": "212",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'his modor' is the possessive his. his and hīs differ by marking habit only, and H&S and Wyatt both have his. Class C."
+     },
+     {
+      "key": "213",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'þæt hehste god' is neuter gōd 'the highest good'. System god means 'God'. Class A."
+     },
+     {
+      "key": "214",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'weron ðe þæt sædon' is the relative particle. System ðē is 'thee'. Class B."
+     },
+     {
+      "key": "215",
+      "label": "other",
+      "confidence": "low",
+      "reason": "Tauber gives bēgen 'both'. The system put length on the second syllable (begēn), a pattern no edition or dictionary has and which is not among the candidates. The IPA is faithful, so this is not segment. It is not a homograph, grammatical pair or habit variant."
+     },
+     {
+      "key": "216",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'his mæges' is the possessive his. Marking difference only, and both editions have his. Class C."
+     },
+     {
+      "key": "217",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "ǣnlic 'splendid' is the same word either way. Only the suffix length differs: Hargrove and Clark Hall have -lic, while Bright, H&S and Wiktionary have -līc."
+     },
+     {
+      "key": "218",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'Ne wæs' is the negator 'not'. System nē means 'nor'. Class B."
+     },
+     {
+      "key": "219",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'hwæðer ... lichamlice sien þe gastlice' uses þe as the conjunction 'or'. System þē is 'thee'. Class B."
+     },
+     {
+      "key": "220",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "swīðe 'very' is the same adverb either way. The short form comes from unmarked tokens in Bright. Class C."
+     },
+     {
+      "key": "221",
+      "label": "editorial",
+      "confidence": "medium",
+      "reason": "'ænige hwile' is the accusative of hwīl 'while'. Short hwile is not a separate word. It comes from unmarked 'þā hwile þe' in the editions. H&S and Wyatt have hwīle. The class column is empty."
+     },
+     {
+      "key": "222",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'nawit swiðe' is the adverb swīðe. Marking difference only. Class C."
+     },
+     {
+      "key": "223",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'swa man þone kyng sceal' uses the indefinite pronoun man 'one'. System mān means 'crime'. Class A."
+     },
+     {
+      "key": "224",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'ealle þa þe god sint' is the adjective gōd 'good'. System god means 'God'. Class A."
+     },
+     {
+      "key": "225",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'þu þe lufað' is the relative particle. System þē is 'thee'. Class B."
+     },
+     {
+      "key": "226",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'to þe becumen' is the preposition to. to and tō differ by habit only. Class C."
+     },
+     {
+      "key": "227",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'Ne bið' is the negator 'not'. System nē means 'nor'. Class B."
+     },
+     {
+      "key": "228",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'Se ðe ægþer gescop' is the relative 'he who'. System ðē is 'thee'. Class B."
+     },
+     {
+      "key": "229",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'þa witon þe þa habbað' has þe as the relative particle. System þē is 'thee'. Class B."
+     },
+     {
+      "key": "230",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'na þæt þing ne lufede' uses the negator ne. System nē means 'nor'. Class B."
+     },
+     {
+      "key": "231",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'se aldor' is the article. Marking only, and both editions have se. Class C."
+     },
+     {
+      "key": "232",
+      "label": "editorial",
+      "confidence": "medium",
+      "reason": "'andgitlice leoht' is the noun lēoht 'light'. Clark Hall, BT and Wiktionary mark every lēoht long. The short form is unmarked edition text (Bright's leoht 'levis', Sweet). It is the same word."
+     },
+     {
+      "key": "233",
+      "label": "editorial",
+      "confidence": "medium",
+      "reason": "Tauber has con as the present 3sg of cunnan 'can'. cōn is no real word: BT lists it, and Bright's 'cōn' looks like a corrupt cōm. The difference is marking only. Both editions have con."
+     },
+     {
+      "key": "234",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'ælc man' is the noun man 'person'. System mān means 'crime'. Class A."
+     },
+     {
+      "key": "235",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'oþ þæt' is the preposition or conjunction oþ 'until'. BT writes ōþ and others write oþ, so the difference is habit. H&S and Wyatt are unmarked. Class C."
+     },
+     {
+      "key": "236",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber has wite as the present subjunctive 3sg of witan 'know'. System wīte means 'punishment', a different headword."
+     },
+     {
+      "key": "237",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'þone þe ðu ... sceoldest' is the relative particle. System þē is 'thee'. Class B."
+     },
+     {
+      "key": "238",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'swiðe swotele' is the adverb swīðe. Marking only. Class C."
+     },
+     {
+      "key": "239",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'beo nu godes modes' means 'be of good mind', so this is gōdes. System godes means 'God's'. Class A."
+     },
+     {
+      "key": "240",
+      "label": "editorial",
+      "confidence": "medium",
+      "reason": "'be hys geornful byt' has the preposition be 'about' in both readings. be and bē are habit variants. Class C."
+     },
+     {
+      "key": "241",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'me to wisdome fultmiað' is the preposition to. Marking only. Class C."
+     },
+     {
+      "key": "242",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'wæs god cyning' means 'good king', so this is gōd. System god means 'God'. Both editions have gōd."
+     },
+     {
+      "key": "243",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'woldest æac witan' is witan 'know'. System wītan means 'blame' or 'councillors'. Different headwords."
+     },
+     {
+      "key": "244",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'to þam geþwære' means 'so harmonious' and has the preposition tō in both readings. Marking only. Class C."
+     },
+     {
+      "key": "245",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'oþ ðæt' means 'until'. oþ and ōþ differ by dictionary habit only. Class C."
+     },
+     {
+      "key": "246",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'niode naman' is nāman, the preterite plural of niman 'took'. System naman is a form of nama 'name'. Both editions have nāman."
+     },
+     {
+      "key": "247",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'þæs awriten' is the past participle āwriten 'written'. System āwrīten is the present subjunctive plural of the same verb āwrītan, so the readings differ in inflection."
+     },
+     {
+      "key": "248",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'swiðe niwan' is the adverb swīðe. Marking only. Class C."
+     },
+     {
+      "key": "249",
+      "label": "homograph",
+      "confidence": "medium",
+      "reason": "'sceall gar wesan' is wesan 'to be'. System wēsan is Clark Hall's ±wēsan 'to soak, macerate', a different headword. Both editions have wesan. The class column is empty."
+     },
+     {
+      "key": "250",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'forþam he swa micla' is the pronoun he. he and hē differ by habit only. Class C."
+     },
+     {
+      "key": "251",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'God ne si æce' uses the negator 'not'. System nē means 'nor'. Class B."
+     },
+     {
+      "key": "252",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'rehte be ðam uttran bysinum' is the preposition be. Marking only. Class C."
+     },
+     {
+      "key": "253",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'hreþre ne mihte' uses the negator. System nē means 'nor'. Class B."
+     },
+     {
+      "key": "254",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'Ða se eorl' is the article. Marking only. Class C."
+     },
+     {
+      "key": "255",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'ac ic wolde witan' is the conjunction 'but'. System āc means 'oak'. Class A."
+     },
+     {
+      "key": "256",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'be unleasra manna sægena' is the preposition be. Marking only. Class C."
+     },
+     {
+      "key": "257",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'æalles þæs þe ic ... wilnode' is the relative particle. System þē is 'thee'. Class B."
+     },
+     {
+      "key": "258",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'mec se mansceaða' is the article. Marking only. Class C."
+     },
+     {
+      "key": "259",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'þær gegnum for' is fōr, the preterite of faran 'went'. System for is the preposition. Both editions have fōr. Class A."
+     },
+     {
+      "key": "260",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'nu ic eom siðes fus' is eom 'am' in both readings. Marking only, and both editions have eom. Class C."
+     },
+     {
+      "key": "261",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'sceal ... man geþeon' is the noun man 'man, one'. System mān means 'crime'. Class A."
+     },
+     {
+      "key": "262",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber has sēl as the comparative adverb 'better'. System sel means 'hall', a form of sæl. Both editions have sēl."
+     },
+     {
+      "key": "263",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'eallunga ne gemet' uses the verbal negator 'not'. System nē means 'nor'. Class B."
+     },
+     {
+      "key": "264",
+      "label": "editorial",
+      "confidence": "medium",
+      "reason": "Tauber gives þyle m. 'spokesman', and Wiktionary marks it short. þȳle is listed (BT, Wiktionary forms), but I found no separate word. So the dictionaries disagree on one content word. Both editions have þyle."
+     },
+     {
+      "key": "265",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'swaswa man deor ... feht' uses the indefinite pronoun man 'one'. System mān means 'crime'. Class A."
+     },
+     {
+      "key": "266",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'men ne cunnon' uses the negator. System nē means 'nor'. Class B."
+     },
+     {
+      "key": "267",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'gif hit is swa' is the verb is. System īs means 'ice'. Class A."
+     },
+     {
+      "key": "268",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'me is swiðe geheme' is the verb is. System īs means 'ice'. Class A."
+     },
+     {
+      "key": "269",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'ælces þinges þe we ... wilniað' is the relative particle. System þē is 'thee'. Class B."
+     },
+     {
+      "key": "270",
+      "label": "homograph",
+      "confidence": "medium",
+      "reason": "Tauber has mīnne, acc. sg. masc. of mīn 'my'. Short minne is in the dictionaries as a form of min 'small, vile' (Wiktionary) and as myne 'love' (Clark Hall). Both editions have mīnne."
+     },
+     {
+      "key": "271",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'gyf hy him ne gelyfað' uses the negator. System nē means 'nor'. Class B."
+     },
+     {
+      "key": "272",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'on hwilcum tungle he nu is' is the pronoun he. Marking only. Class C."
+     },
+     {
+      "key": "273",
+      "label": "homograph",
+      "confidence": "medium",
+      "reason": "'endedæg ... minne' is mīnne 'my'. Short minne is a separate word, min 'small, vile' or myne 'love'. Both editions have mīnne."
+     },
+     {
+      "key": "274",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'Ongeat þa se goda' is the article. Marking only. Class C."
+     },
+     {
+      "key": "275",
+      "label": "editorial",
+      "confidence": "medium",
+      "reason": "gebrōhton is the preterite plural of bringan 'brought' in both readings, and the dictionaries have long ō. The prose gold's short o looks wrong, since Hargrove left it unmarked. The difference is marking only."
+     },
+     {
+      "key": "276",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'þa hwile þe he' is the conjunction particle 'while'. System þē is 'thee'. Class B."
+     },
+     {
+      "key": "277",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'ðara þe on Scedenigge' is the relative particle. System þē is 'thee'. Class B."
+     },
+     {
+      "key": "278",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'guma gode gewyrcean' means 'by good deeds', so this is gōde. System gode is the dative of god 'God'. Both editions have gōde."
+     },
+     {
+      "key": "279",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'witu þe he gearnod hæfde' is the relative particle. System þē is 'thee'. Class B."
+     },
+     {
+      "key": "280",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'be sæm tweonum' is the preposition be. Marking only. Class C."
+     },
+     {
+      "key": "281",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'þu þe ... wealst' is the relative particle. System þē is 'thee'. Class B."
+     },
+     {
+      "key": "282",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'Ne gefrægen ic' uses the negator. System nē means 'nor'. Class B."
+     },
+     {
+      "key": "283",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'þu þe æart ana ece' is the relative particle. System þē is 'thee'. Class B."
+     },
+     {
+      "key": "284",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'geðafa ne eart' uses the negator. System nē means 'nor'. Class B."
+     },
+     {
+      "key": "285",
+      "label": "homograph",
+      "confidence": "medium",
+      "reason": "Tauber has hyra, the genitive plural of hīe 'their'. System hȳra means 'hireling' (Clark Hall, BT; 'Sē hȳra' in John). Both editions have hyra."
+     },
+     {
+      "key": "286",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'his myne' is the possessive. Marking only. Class C."
+     },
+     {
+      "key": "287",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'þara ðe in Swiorice' is the relative particle. System ðē is 'thee'. H&S þe and Wyatt ðe are both unmarked. Class B."
+     },
+     {
+      "key": "288",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber has fær n. 'vessel' (as). System fǣr means 'sudden danger, attack', a different headword. Both editions have fær."
+     },
+     {
+      "key": "289",
+      "label": "homograph",
+      "confidence": "medium",
+      "reason": "Hargrove's hēle is 'health' (hǣlu/hǣle), as at 00023 and 00323. System hele is a form of helan 'conceal' or hele 'subterfuge'. Different headwords."
+     },
+     {
+      "key": "290",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'on þa wisan þe þu' is the relative particle. System þē is 'thee'. Class B."
+     },
+     {
+      "key": "291",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'næfre hit ... ne swac' uses the negator. System nē means 'nor'. Class B."
+     },
+     {
+      "key": "292",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'þæt he ne mage' uses the negator. System nē means 'nor'. Class B."
+     },
+     {
+      "key": "293",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'ic sylf þe oðer þing' uses þe as 'or'. System þē is 'thee'. Class B."
+     },
+     {
+      "key": "294",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'Ne talige ic' uses the negator. System nē means 'nor'. Class B."
+     },
+     {
+      "key": "295",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "H&S 'Cēol up geþrang' has unmarked up at the same position, which matches the system's up against gold ūp. Wyatt has ūp. I checked the alignment."
+     },
+     {
+      "key": "296",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'se ðe lengest leofað' is the relative particle. System ðē is 'thee'. Class B."
+     },
+     {
+      "key": "297",
+      "label": "homograph",
+      "confidence": "medium",
+      "reason": "'be hyre leohte' is hyre, the genitive of hēo 'her (the sun's)'. System hȳre is a form of hȳr 'hire' or hēore 'pleasant' (Wiktionary, Clark Hall)."
+     },
+     {
+      "key": "298",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'ne his myne wisse' is the possessive. Marking only. Class C."
+     },
+     {
+      "key": "299",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'heard be hiltum' is the preposition be. Marking only. Class C."
+     },
+     {
+      "key": "300",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'ac ic hyt þe ne mæg' is the conjunction 'but'. System āc means 'oak'. Class A."
+     }
+    ],
+    "errors-expert-301-400": [
+     {
+      "key": "301",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'bearne ne truwode': Tauber lemma ne, adverb, 'not'. System nē is the conjunction 'nor'. The IPA neː is faithful apart from length, and HS and Wyatt both read ne."
+     },
+     {
+      "key": "302",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'ac ælc hæfð' uses ac, the conjunction 'but'. System āc is the noun 'oak'. IPA ɑːk is faithful."
+     },
+     {
+      "key": "303",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'wiht ne logon' uses negative adverb ne 'not', against nē 'nor'. HS and Wyatt both read ne."
+     },
+     {
+      "key": "304",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'me lystæ witan' is witan 'to know' (wāt). System wītan is 'to reproach, blame', a different headword. Class column is empty."
+     },
+     {
+      "key": "305",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: lemma mæg (m.) 'kinsman', gen. pl. māga. Short maga belongs to magu/maga 'son, young man' or maga 'stomach'. HS and Wyatt read māga. Class column is empty."
+     },
+     {
+      "key": "306",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Possessive his 'his' in both readings. hīs is only a habit of marking. HS and Wyatt read his."
+     },
+     {
+      "key": "307",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'gehaten is' uses is, 3sg of beon 'is'. System īs is 'ice'."
+     },
+     {
+      "key": "308",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'þæt hy ne forletan' uses negative adverb ne 'not', against nē 'nor'."
+     },
+     {
+      "key": "309",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'god ond geatolic' uses the adjective gōd 'good'. System god is 'God'. HS and Wyatt read gōd."
+     },
+     {
+      "key": "310",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'gesceadwisnes ðines modes þe ðe wiðsprecð': target þe is the relative particle 'which'. System þē is the pronoun 'thee'."
+     },
+     {
+      "key": "311",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: lemma hæle (m.) 'man, hero'. hǣle is hǣlu 'health' (Clark Hall: hǣle = hǣlu). HS and Wyatt read hæle. Class column is empty."
+     },
+     {
+      "key": "312",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: lemma mæg (m.) 'kinsman', so mǣg. System mæg is the verb 'can' (magan). The IPA j for final g is regular. HS and Wyatt read mǣg."
+     },
+     {
+      "key": "313",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'þæt ic ne mage' uses negative adverb ne 'not', against nē 'nor'."
+     },
+     {
+      "key": "314",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Definite article se in 'se æglæca' in both readings. Only the marking differs. HS and Wyatt read se."
+     },
+     {
+      "key": "315",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "'ic eom gearu' uses eom 'am' in both readings. The marking ēom is a habit. IPA e͜oːm is faithful."
+     },
+     {
+      "key": "316",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Possessive his in 'his magum' in both readings. HS and Wyatt read his."
+     },
+     {
+      "key": "317",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Article se in 'ðonne se myddaneard' in both readings. Only the marking differs."
+     },
+     {
+      "key": "318",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: 'ne god hafoc' is the adjective god, glossed 'good', so gōd. System god is 'God'. HS and Wyatt read gōd."
+     },
+     {
+      "key": "319",
+      "label": "editorial",
+      "confidence": "medium",
+      "reason": "Tauber: beon pr3p, 'be', so bīoð. CharsiuG2P renders every io as i͜u (biowulf bi͜uwulf, biodan bi͜uːdan in ipa.tsv). That is a regular mapping, not a segment error, so only the length differs. HS and Wyatt read bīoð."
+     },
+     {
+      "key": "320",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'lufum ne underfehst' uses negative adverb ne 'not', against nē 'nor'."
+     },
+     {
+      "key": "321",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: oþer (adj.) 'other', dsm, so ōðrum. The short oðrum in the lexicon comes from one unmarked Bright token. Same word, and HS and Wyatt read ōðrum."
+     },
+     {
+      "key": "322",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: 'larena god' is the adjective god (nsm), glossed 'good', so gōd. System god is 'God'. HS and Wyatt read gōd."
+     },
+     {
+      "key": "323",
+      "label": "editorial",
+      "confidence": "medium",
+      "reason": "Tauber: onfon p3s, 'receive', so onfēng. Clark Hall itself prints 'onfeng II. pret. 3 sg. of onfōn' unmarked, and Bright has onfeng three times. The sources disagree on the length of the same verb form."
+     },
+     {
+      "key": "324",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'Ac ic gelyfe' uses the conjunction ac 'but'. System āc is 'oak'."
+     },
+     {
+      "key": "325",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'gewislice witan fulne wisdom' uses witan 'to know'. System wītan is 'to blame'. Class column is empty."
+     },
+     {
+      "key": "326",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'hwæthwugu þæs þe ic æt ham beþorfte' uses the relative þe after þæs. System þē is the pronoun 'thee'."
+     },
+     {
+      "key": "327",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'se þe oft manegum scod' uses the relative particle þe, against þē 'thee'. HS and Wyatt read þe."
+     },
+     {
+      "key": "328",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "Gold ūp, system up. HS has up at the same place ('Het þa up beran'), so it agrees with the system. Wyatt has ūp."
+     },
+     {
+      "key": "329",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'Ne meahte' uses negative adverb ne 'not', against nē 'nor'. HS reads ne, Wyatt Ne."
+     },
+     {
+      "key": "330",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'ða ðe brentingas ... drifað' uses the relative particle ðe. System ðē is the pronoun 'thee'. HS reads þe, Wyatt ðe."
+     },
+     {
+      "key": "331",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Preposition be 'by' in 'be þisse anre bysena' in both readings. bē is a marking habit."
+     },
+     {
+      "key": "332",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'secga ænegum þara þe' uses the relative particle þe, against þē 'thee'. HS and Wyatt read þe."
+     },
+     {
+      "key": "333",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Article se in 'se wyrm' in both readings. HS and Wyatt read se."
+     },
+     {
+      "key": "334",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'æall þa þe lybbað' uses the relative particle þe, against þē 'thee'."
+     },
+     {
+      "key": "335",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "The adverb swīðe 'very' in 'swiðe godne' in both readings. The short swiðe comes from two unmarked Bright tokens."
+     },
+     {
+      "key": "336",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'Ne meahton we' uses negative adverb ne 'not', against nē 'nor'. HS and Wyatt read Ne."
+     },
+     {
+      "key": "337",
+      "label": "homograph",
+      "confidence": "medium",
+      "reason": "'þine agene hele and þin agen lyf': Hargrove's hēle stands for hǣlu 'health, salvation'. Short hele is a separate Clark Hall headword, 'hele f. subterfuge'. IPA xele is faithful. Class column is empty."
+     },
+     {
+      "key": "338",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: lytel (adj.) 'little', asf, so lȳtle. Short lytle appears only in Zupitza and Bosworth-Toller forms. Same word, and HS and Wyatt read lȳtle."
+     },
+     {
+      "key": "339",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'freode ne woldon' uses negative adverb ne 'not', against nē 'nor'."
+     },
+     {
+      "key": "340",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "Continues the previous sentence: 'lōcigan ongēan þās sunnan, þe wē hǣr gesēoð'. The target is the relative particle 'which', and system þē is 'thee'."
+     },
+     {
+      "key": "341",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'þinne cniht þe wet er æmbe sprecon' uses the relative particle þe 'whom'. System þē is 'thee'."
+     },
+     {
+      "key": "342",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: lāf (f.) 'heirloom', np, so lāfe. Short lafe comes from one unmarked Bright token. Same word, and HS and Wyatt read lāfe."
+     },
+     {
+      "key": "343",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'ac æom ful nah ormod' uses the conjunction ac 'but'. System āc is 'oak'."
+     },
+     {
+      "key": "344",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'ælc þara astynt þe on ðe gewunað' uses the relative particle þe. System þē is 'thee'."
+     },
+     {
+      "key": "345",
+      "label": "homograph",
+      "confidence": "medium",
+      "reason": "'þæt þe mæst neod sy' uses the superlative mǣst 'most'. Short mæst is the noun 'mast' (Clark Hall mæst m.; Beowulf 'be mæste'). Class column is empty."
+     },
+     {
+      "key": "346",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'and ne can ic hine' uses negative adverb ne 'not', against nē 'nor'."
+     },
+     {
+      "key": "347",
+      "label": "other",
+      "confidence": "medium",
+      "reason": "Gold þǣt marks the conjunction þæt 'that' ('geearnian þæt ic si wurðe') as long. No dictionary supports þǣt, and Hargrove marks it long in only 4 of about 650 tokens, so the gold is a typo and the system's þæt is right. Steps 4 to 6 would give editorial."
+     },
+     {
+      "key": "348",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: gemet (n.) 'means', as, in 'mid gemete'. System gemēte belongs to the verb gemētan 'find, meet'. HS and Wyatt read gemete. Class column is empty."
+     },
+     {
+      "key": "349",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'þæt him man befæst' uses the indefinite pronoun man 'one'. System mān is the noun 'crime, wickedness'."
+     },
+     {
+      "key": "350",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'ða twa ðing þe ic simle wilnode' uses the relative particle þe, against þē 'thee'."
+     },
+     {
+      "key": "351",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'gelocnian þe myd liðum ... þe myd stiðum' uses correlative þe ... þe, 'either ... or'. System þē is the pronoun or instrumental."
+     },
+     {
+      "key": "352",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Preposition be in 'be sumum dæle' in both readings. Only the marking differs."
+     },
+     {
+      "key": "353",
+      "label": "other",
+      "confidence": "medium",
+      "reason": "Gold þǣt marks the neuter article in 'forlǣt hē þǣt scyp' as long. That has no lexical basis and is a sporadic Hargrove typo (4 of about 650), so the system's þæt is correct. Steps 4 to 6 would give editorial."
+     },
+     {
+      "key": "354",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Article se in 'se hearda Higelaces þegn' in both readings. HS and Wyatt read se."
+     },
+     {
+      "key": "355",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Adverb swīðe in 'ful swiðe' in both readings. The short swiðe is a stray unmarked form in Bright."
+     },
+     {
+      "key": "356",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'openlice witan wilt' uses witan 'to know'. System wītan is 'to blame'. Class column is empty."
+     },
+     {
+      "key": "357",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'æce weron ðe neron' uses ðe 'or' (whether ... or not). System ðē is a pronoun reading."
+     },
+     {
+      "key": "358",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Dative personal pronoun me in 'answarode me' in both readings. mē is a marking habit."
+     },
+     {
+      "key": "359",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'Ic hyt wolde witan afandud' uses witan 'to know'. System wītan is 'to blame'. Class column is empty."
+     },
+     {
+      "key": "360",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'dysi man þe wilnat' uses the relative particle þe, against þē 'thee'."
+     },
+     {
+      "key": "361",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'him bebeorgan ne con' uses negative adverb ne 'not', against nē 'nor'."
+     },
+     {
+      "key": "362",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'Ic hyt ne rehte' uses negative adverb ne 'not', against nē 'nor'."
+     },
+     {
+      "key": "363",
+      "label": "homograph",
+      "confidence": "medium",
+      "reason": "'ælcre be hyre andefne' uses hyre, gen./dat. of hēo 'her'. hȳre is a separate content headword (Clark Hall 'hȳre = hēore' 'pleasant'; also hȳr 'hire', hȳran 'hear'). Class column is empty."
+     },
+     {
+      "key": "364",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'Ne getweoge ic' uses negative adverb ne 'not', against nē 'nor'."
+     },
+     {
+      "key": "365",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: lāf 'heirloom', as, in 'ealde lafe'. Same word. HS and Wyatt read lāfe."
+     },
+     {
+      "key": "366",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'gif hi ne sædon' uses negative adverb ne 'not', against nē 'nor'."
+     },
+     {
+      "key": "367",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "Gold ūp, system up. HS has up at the same place ('yðgeblond up astigeð'), agreeing with the system. Wyatt has ūp."
+     },
+     {
+      "key": "368",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Article se in 'se fær begeat' in both readings. HS and Wyatt read se."
+     },
+     {
+      "key": "369",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Preposition be in 'be ðam ongytan' in both readings. Only the marking differs."
+     },
+     {
+      "key": "370",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "nān 'none', dat. nānum, in 'nanum oðrum'. Short nanum comes from one unmarked Bright token. Same word. Class column is empty."
+     },
+     {
+      "key": "371",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'þæt ic hym ne gelife' uses negative adverb ne 'not', against nē 'nor'."
+     },
+     {
+      "key": "372",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'Hu ne sceal ic' uses negative adverb ne 'not', against nē 'nor'."
+     },
+     {
+      "key": "373",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'þe ma þe hyt hær byð': the target is the second þe, the comparative particle 'than'. System þē is the instrumental or pronoun reading."
+     },
+     {
+      "key": "374",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Possessive his in 'mid his eorla gedriht' in both readings. HS and Wyatt read his."
+     },
+     {
+      "key": "375",
+      "label": "homograph",
+      "confidence": "medium",
+      "reason": "'þæt ic hyre a ðe ma wilige' uses the pronoun hyre 'her'. hȳre is a different content headword ('pleasant', 'hire', 'hear'). Class column is empty."
+     },
+     {
+      "key": "376",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'Si ðam þanc ðe þe manað' uses the relative particle ðe 'who'. System ðē is 'thee'."
+     },
+     {
+      "key": "377",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Genitive his 'of it' in 'ic his mæahte' in both readings. Only the marking differs."
+     },
+     {
+      "key": "378",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'Se læce þe ic wilnige' uses the relative particle þe, against þē 'thee'."
+     },
+     {
+      "key": "379",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Possessive his in 'his dom alæg' in both readings. HS and Wyatt read his."
+     },
+     {
+      "key": "380",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'Seo sawel is gastlic' uses is 'is'. System īs is 'ice'."
+     },
+     {
+      "key": "381",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Possessive his in 'under his mæges scyld' in both readings. HS and Wyatt read his."
+     },
+     {
+      "key": "382",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "Gold ūp, system up. HS and Wyatt both have up at the same place ('holm up ætbær')."
+     },
+     {
+      "key": "383",
+      "label": "editorial",
+      "confidence": "medium",
+      "reason": "'þe nis nan gesceaft' uses nis 'is not'. nīs is only a one-off Bright marking, not a separate word. Same word and function. Class column is empty."
+     },
+     {
+      "key": "384",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'locian mæg ne mæg þeah' uses negative adverb ne 'not', against nē 'nor'."
+     },
+     {
+      "key": "385",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "In 'ne æac wunian ne mihte' the target is the second ne, the negative adverb 'not'. The 'nor' is the first ne. System nē is 'nor'."
+     },
+     {
+      "key": "386",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'se þe his wordes geweald' uses the relative particle þe, against þē 'thee'. HS and Wyatt read þe."
+     },
+     {
+      "key": "387",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'hawien ðes þe heo geseon wolden' uses the relative þe after ðæs. System þē is 'thee'."
+     },
+     {
+      "key": "388",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "In 'þæt man forwirðe þæt man þe forlete' the target is the second man, the indefinite pronoun 'one'. System mān is 'crime'."
+     },
+     {
+      "key": "389",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'nan man ne si' uses the noun man 'man'. System mān is 'crime, wickedness'."
+     },
+     {
+      "key": "390",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: sīð (m.) 'time', in 'forma sið'. Short sið comes from stray unmarked tokens (Bright, one Wyatt line). Same word, and HS and Wyatt read sīð here."
+     },
+     {
+      "key": "391",
+      "label": "editorial",
+      "confidence": "medium",
+      "reason": "Tauber: onfon p3s 'receive', so onfēng. Clark Hall prints the preterite unmarked and Bright has onfeng, so the sources disagree on the same form. HS and Wyatt read onfēng."
+     },
+     {
+      "key": "392",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'wæpna ne recceð' uses negative adverb ne 'not', against nē 'nor'. HS and Wyatt read ne."
+     },
+     {
+      "key": "393",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: sīð 'journey' in 'wæs sið Beowulfes'. Same word. HS and Wyatt read sīð."
+     },
+     {
+      "key": "394",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'lufige ne an ic hys' uses negative adverb ne 'not' (I do not grant). System nē is 'nor'."
+     },
+     {
+      "key": "395",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "Tauber: god (adj.) dsm, glossed 'good', so gōdum, 'for the good one'. System godum is dat. pl. of god 'god'. HS and Wyatt read gōdum."
+     },
+     {
+      "key": "396",
+      "label": "homograph",
+      "confidence": "high",
+      "reason": "'þæt is soð metod' uses is 'is'. System īs is 'ice'. HS and Wyatt read is."
+     },
+     {
+      "key": "397",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Article se in 'se hearmscaþa' in both readings. HS and Wyatt read se."
+     },
+     {
+      "key": "398",
+      "label": "grammatical",
+      "confidence": "high",
+      "reason": "'se se þe bær lic gefreddan wolde' uses the relative particle þe, against þē 'thee'."
+     },
+     {
+      "key": "399",
+      "label": "editorial",
+      "confidence": "high",
+      "reason": "Tauber: be (prep.) in 'lær be þon'. Same word and function. HS and Wyatt read be."
+     },
+     {
+      "key": "400",
+      "label": "gold_in_doubt",
+      "confidence": "high",
+      "reason": "Gold gȳt, system gyt. Wyatt has gyt at the same place ('Þa gyt hie'), agreeing with the system. HS has gȳt. The IPA j for palatal g is regular."
+     }
+    ]
+   },
+   "adjudication": [
+    {
+     "key": "6",
+     "correct_label": "grammatical",
+     "existing_label_is": "wrong",
+     "reason": "The gold has 'Sē se þē lufað, sē þē sǣcð; sē se þē fylið, sē þē hæfð', with all four þē long. This translates Soliloquia I.1.3 'quem attendere...amare; quem videre...habere' ('he who follows thee has thee'), so the target is acc. 'thee'. Hargrove separates the particle from the pronoun elsewhere (00041 'þe þē flȳgð'), so the system's short þe is the relative-particle reading, a class B function difference."
+    },
+    {
+     "key": "32",
+     "correct_label": "grammatical",
+     "existing_label_is": "correct",
+     "reason": "'hāwien ðes þe hēo gesēon wolden' has ðes = gen. ðæs 'that which' (Clark Hall: 'ðes = ðæs'). The long ðēs in the encoder's lexicon (Bright, WS Matthew, Wiktionary þēs) is only ever nom. masc. 'this'. The readings differ in lemma and case, so the class C label for þes 'this' does not apply to this token."
+    },
+    {
+     "key": "61",
+     "correct_label": "grammatical",
+     "existing_label_is": "correct",
+     "reason": "'ic wæs ǣac þes geðafa' is gen. þæs with geþafa 'consenting to that'. Hargrove also writes þes for gen. þæs in 00315 and 00490. The system's þēs exists in the lexicon only as nom. 'this' (Bright, Matthew, Wiktionary), so the readings differ in case and lemma."
+    },
+    {
+     "key": "67",
+     "correct_label": "editorial",
+     "existing_label_is": "correct",
+     "reason": "'tō ðe cymð' can only be the pronoun 'thee', and Hargrove writes tō þē/ðē long 21 of 22 times, so the short gold is a slip. Under the prose rule (type by steps 4 to 6), gold and system are the same pronoun in the same function and only the marking differs. 'Grammatical' would wrongly imply the gold reads the relative particle."
+    },
+    {
+     "key": "97",
+     "correct_label": "editorial",
+     "existing_label_is": "correct",
+     "reason": "'mǣstne anweald' means 'greatest power' in both readings. BT cites the same verse (Mt 28:18 'ǣlc ánweald') under án-weald that Bright's WS Matthew prints as anweald. The BT supplement also says many an-weald passages may belong under either form, and Wiktionary gives 'power' under ānweald. So the dictionaries disagree on the length of one content word."
+    },
+    {
+     "key": "137",
+     "correct_label": "editorial",
+     "existing_label_is": "correct",
+     "reason": "'befeste þe hālne Gode' is the reflexive pronoun 'thee', agreeing with acc. hālne, and Hargrove writes 'befeste ðē' long elsewhere. The short gold is a slip, and under the prose rule the two readings are the same pronoun with different marking."
+    },
+    {
+     "key": "211",
+     "correct_label": "homograph",
+     "existing_label_is": "defensible",
+     "reason": "In 'þinne cniht', þinne is the possessive 'thy'. Short þinne is listed in Wiktionary (etym. 2) and WikiPron /ˈθin.ne/ as a form of þynne 'thin'. No edition marks the possessive short by habit: WS Matthew has it once against 14 þīnne. That single Matthew slip in the training lexicon is why editorial stays defensible."
+    },
+    {
+     "key": "233",
+     "correct_label": "homograph",
+     "existing_label_is": "correct",
+     "reason": "Tauber has con as pr3s of cunnan 'can' (l. 1746), and H&S, Wyatt, Clark Hall and Bright all have short con. The lexicon's long cōn comes only from Bright's misprint of cōm 'came' (Ælfric's Preface to Genesis, 'tō mannum cōn and began'). BT's cón is a separate adjective headword, 'bold' (v. céne). So no source marks 'can' long, and editorial does not apply."
+    },
+    {
+     "key": "247",
+     "correct_label": "grammatical",
+     "existing_label_is": "wrong",
+     "reason": "'līnan þæs āwriten' is the past participle of āwrītan (short ablaut grade). Wiktionary lists āwrīten as the present subjunctive plural, so the readings differ in inflection. No edition marks the participle long: āwriten appears in Bright, Sweet, Zupitza, Matthew and Hargrove, and āwrīten in none of them."
+    },
+    {
+     "key": "249",
+     "correct_label": "homograph",
+     "existing_label_is": "wrong",
+     "reason": "Tauber has wesan as the infinitive 'be' (l. 3021), and H&S and Wyatt both have wesan. The system's wēsan is a separate verb, 'to soak, macerate' (Clark Hall ±wēsan, BT wésan 'to steep, soak', Wiktionary wesan etym. 3). Two content words under different headwords make this a homograph."
+    },
+    {
+     "key": "270",
+     "correct_label": "homograph",
+     "existing_label_is": "wrong",
+     "reason": "Tauber has minne as asm of min 'my' (l. 2012), and H&S and Wyatt both have mīnne. In the CharsiuG2P lexicon, short minne is only Bright's Wanderer 'minne wisse', deliberately short next to two mīnne in the same sentence (Clark Hall: minne II = myne 'love'), and WikiPron /ˈmin.ne/ = min 'small, vile'. No training edition marks the possessive short, so the editorial habit condition fails. The class column is empty."
+    },
+    {
+     "key": "273",
+     "correct_label": "homograph",
+     "existing_label_is": "wrong",
+     "reason": "Same as 270: Tauber has mīnne asm 'my' (l. 638), and both editions have mīnne. Short minne in the lexicon is only myne 'love' (Bright, Clark Hall) or min 'small' (Wiktionary/WikiPron), never the possessive marked short."
+    },
+    {
+     "key": "347",
+     "correct_label": "editorial",
+     "existing_label_is": "correct",
+     "reason": "This is the conjunction þæt in 'geearnian þǣt ic sī wurðe', and gold þǣt is a sporadic Hargrove marking (4 of about 653). The guidelines say a doubtful prose gold is typed by steps 4 to 6, not as 'other'. The two readings are the same word and function, and Sweet's Primer also has þǣt, which makes the skeleton class C."
+    },
+    {
+     "key": "353",
+     "correct_label": "editorial",
+     "existing_label_is": "correct",
+     "reason": "The article þæt in 'forlǣt hē þǣt scyp' is the same word and function in both readings, and only the marking differs. Under the prose rule a sporadic gold þǣt is typed by steps 4 to 6, which gives editorial (class C þæt|þǣt). 'Other' is not the route the guidelines set for prose."
+    }
+   ]
+  },
+  "disagreements": {
+   "labels_reviewed": "results/agreement/disagreements_checked.tsv (label)",
+   "summary": {
+    "items": 100,
+    "reviewed": 100,
+    "expert_agrees_with_existing": 94,
+    "flagged": 6,
+    "not_returned": [],
+    "confirmed_by_adjudicator": 1,
+    "changed": [
+     "5",
+     "18",
+     "20",
+     "68"
+    ],
+    "defensible_either_way": [
+     "57"
+    ]
+   },
+   "blind_experts": {
+    "disagreements-expert": [
+     {
+      "key": "1",
+      "label": "normalisation fault",
+      "confidence": "high",
+      "reason": "ungēara adv. 'soon' (gēara). Both editions mark the long diphthong. H&S puts the macron on the second letter (eā), Wyatt on the first (ēa)."
+     },
+     {
+      "key": "2",
+      "label": "normalisation fault",
+      "confidence": "high",
+      "reason": "giō/gēo adv. 'formerly'. Both mark it long; only the macron's position in the digraph differs (iō vs īo)."
+     },
+     {
+      "key": "3",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "fūslic adj. 'ready', neut. pl. -u. Wyatt prints inflected -licu short every time (frēolicu, lāðlicu, ǣnlicu, þyslicu) but uninflected fūslīc long: retained -u implies a light syllable. H&S has -līcu."
+     },
+     {
+      "key": "4",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "Conj. 'nor' in 'wordum ne worcum'. H&S marks conj. nē 40 times; Wyatt prints ne almost everywhere (only 3 nē). Systematic convention."
+     },
+     {
+      "key": "5",
+      "label": "other",
+      "confidence": "medium",
+      "reason": "H&S slip. Dat. of feorh is fēore (compensatory lengthening). H&S marks the same compound geoguðfēore at l.2664 and fēore 5x, but leaves this one (l.537) unmarked. Wyatt has fēore 7/7."
+     },
+     {
+      "key": "6",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "dohtor 'daughter'. H&S prints dōhtor 7/7 and Wyatt dohtor 7/7, so it is a consistent policy. B-T lists both."
+     },
+     {
+      "key": "7",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "l.1943: different reading of the word. H&S has līg 'flame' + torn; Wyatt has lige- < lyge 'lie' (Tauber lemma lyge-torn 'pretended insult'), with a short vowel."
+     },
+     {
+      "key": "8",
+      "label": "normalisation fault",
+      "confidence": "high",
+      "reason": "gēomormōd 'sad-minded'. Both mark it long; only the macron placement differs (eō vs ēo)."
+     },
+     {
+      "key": "9",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "bune f. 'cup'. H&S bunan 2/2 (matches B-T and Clark Hall bune), Wyatt būnan 2/2. Consistent policy on each side."
+     },
+     {
+      "key": "10",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. Adv. earfoðlīce: Wyatt prints earfoðlīce at the other 5 occurrences."
+     },
+     {
+      "key": "11",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. ēode, pret. of gān, is long. Wyatt has ēode 8x and capital Ēode 2x elsewhere."
+     },
+     {
+      "key": "12",
+      "label": "genuine editorial difference",
+      "confidence": "medium",
+      "reason": "l.414 'under heofenes hador'. Wyatt prints hador here but hādor adj. 'clear' at l.497, so he reads a separate word (Tauber: haðor n. 'vault'). H&S has hādor 'brightness' in both places."
+     },
+     {
+      "key": "13",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "gīt/gȳt adv. 'yet'. H&S gȳt 13/13, Wyatt gyt 13/13 (he never marks git/gyt). Systematic convention."
+     },
+     {
+      "key": "14",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. gūð 'battle' is long and Wyatt marks gūð- in every one of about 60 other compounds."
+     },
+     {
+      "key": "15",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "Conj. 'nor' in 'ādl nē yldo'. Same H&S nē vs Wyatt ne convention."
+     },
+     {
+      "key": "16",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. Adv. þā 'then' is long; Wyatt marks ðā/þā about 320 times and leaves it bare only about 8 times."
+     },
+     {
+      "key": "17",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. ǣrfæder: fæder has short æ, and Wyatt prints fæder short 17/17. A spurious macron."
+     },
+     {
+      "key": "18",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. Contracted verb geþēon 'prosper' (l.25) is long; Wyatt marks it at its other occurrence."
+     },
+     {
+      "key": "19",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. bēag 'ring' is long; Wyatt prints bēaga 4x elsewhere."
+     },
+     {
+      "key": "20",
+      "label": "other",
+      "confidence": "high",
+      "reason": "H&S slip. mōd (l.1931, Mōd Þrȳðo) is long; H&S marks mōd 7x plus all mōd- compounds. The macron is missing on the sentence-initial capital."
+     },
+     {
+      "key": "21",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "gȳt 'yet': H&S marks it, Wyatt never does (13/13 each side)."
+     },
+     {
+      "key": "22",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. ūtan 'from outside' is long; Wyatt has ūtan 3x. The next word (heold) is also unmarked in the same Wyatt line."
+     },
+     {
+      "key": "23",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "þrōwian 'suffer'. H&S prints þrowian forms short 5/5, Wyatt long 5/5 (Clark Hall ðrōwian). Consistent policy."
+     },
+     {
+      "key": "24",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. Pronoun mē is long; Wyatt has mē 47x. The OCR error 'hȳclan' in the same Wyatt line shows the transcription is noisy here."
+     },
+     {
+      "key": "25",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. Relative adv. þǣr 'where' is long; Wyatt marks þǣr/ðǣr about 117 times."
+     },
+     {
+      "key": "26",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "up/ūp adv. Wyatt prints ūp 8/10, H&S up 10/10. B-T and Clark Hall list both up and ūp."
+     },
+     {
+      "key": "27",
+      "label": "genuine editorial difference",
+      "confidence": "low",
+      "reason": "orcnēas 'evil spirits of the dead' (orc + nē 'corpse'). Obscure hapax: H&S marks -nēas, Wyatt leaves it unmarked, plausibly because the etymology was uncertain. A Wyatt omission cannot be ruled out."
+     },
+     {
+      "key": "28",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. Adv. þā 'then' is long; Wyatt almost always marks it (ðā/þā/Ðā/Þā)."
+     },
+     {
+      "key": "29",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "wrǣt 'ornament'. H&S marks the wrǣt- family long 9/9 (as B-T and Clark Hall); Wyatt prints it short 9/9."
+     },
+     {
+      "key": "30",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "wrǣtta gen. pl. of wrǣt: the same consistent H&S long vs Wyatt short policy."
+     },
+     {
+      "key": "31",
+      "label": "genuine editorial difference",
+      "confidence": "medium",
+      "reason": "Adv. comp. of cymlīc 'comely'. Wyatt's cymlīcor matches B-T's headword cymlīc (short y); H&S follows cȳme (Clark Hall)."
+     },
+     {
+      "key": "32",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. Possessive þīn is long; Wyatt marks þīnra/ðīnra at the other occurrences and þīn- throughout."
+     },
+     {
+      "key": "33",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "Indeclinable relative particle 'dǣd ... þe wē'. H&S systematically marks the bare relative þē (about 40 cases, e.g. 'gife þē him god sealde'); Wyatt prints it short."
+     },
+     {
+      "key": "34",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "wel adv. 'well'. H&S wēl 12/12 (+wēlhwylc), Wyatt wel 12/12. B-T lists wel/wēl."
+     },
+     {
+      "key": "35",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. þæt has short æ; Wyatt prints þæt about 370 times and þǣt only 6 (a spurious macron)."
+     },
+     {
+      "key": "36",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "Conj. 'nor' (l.2348 'ne him þæs wyrmes wīg'). H&S nē vs Wyatt ne convention."
+     },
+     {
+      "key": "37",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. dōm 'glory' is long; Wyatt prints dōm 8x elsewhere."
+     },
+     {
+      "key": "38",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "up/ūp adv. (cēol up geþrang). Wyatt's usual ūp vs H&S's consistent up."
+     },
+     {
+      "key": "39",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "hlið 'slope, cliff' is short in B-T and Wiktionary. H&S prints hlīð- long consistently (hlīðe, hlīðes); Wyatt short."
+     },
+     {
+      "key": "40",
+      "label": "normalisation fault",
+      "confidence": "high",
+      "reason": "iū adv. 'formerly'. Both mark it long; only the position differs (iū vs īu)."
+     },
+     {
+      "key": "41",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "wel 'well' (hēt hine wel brūcan): H&S wēl vs Wyatt wel convention."
+     },
+     {
+      "key": "42",
+      "label": "genuine editorial difference",
+      "confidence": "medium",
+      "reason": "hildetux 'battle-tusk', hapax. Clark Hall lists tux and tūx, B-T tusc short, so Wyatt's short reading is defensible."
+     },
+     {
+      "key": "43",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. hēold, pret. of healdan, is long; Wyatt has hēold 22x. The same line also loses the macron on ūtan."
+     },
+     {
+      "key": "44",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "Relative particle (wilna þe ic geweald hæbbe): H&S marks the bare relative þē, Wyatt prints it short."
+     },
+     {
+      "key": "45",
+      "label": "genuine editorial difference",
+      "confidence": "low",
+      "reason": "līðwǣge 'cup for drink' (līð 'strong drink'); B-T lists both lið and līð. Wyatt marks wǣge but leaves lið- short, which suggests a deliberate reading, but this is a hapax."
+     },
+     {
+      "key": "46",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "gȳt 'yet': H&S marks it, Wyatt never does."
+     },
+     {
+      "key": "47",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "Relative particle (monige þe his mǣg wriðon): H&S þē vs Wyatt þe convention."
+     },
+     {
+      "key": "48",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "wel 'well' (þæt ic þē wel herige): H&S wēl vs Wyatt wel convention."
+     },
+     {
+      "key": "49",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "Relative particle (mid þǣre sorge þe him ... belamp): H&S þē vs Wyatt þe convention."
+     },
+     {
+      "key": "50",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "Conj. 'nor' (searonīðas ne mē swōr): H&S nē vs Wyatt ne convention."
+     },
+     {
+      "key": "51",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. Conj. swā 'as' is long; Wyatt marks swā/Swā 123 times and leaves it bare only 4."
+     },
+     {
+      "key": "52",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. ēast is long; Wyatt prints ĒastDena with the macron at both other occurrences."
+     },
+     {
+      "key": "53",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. þēod is long; Wyatt marks þēod-/ðēod- in about 60 other tokens, including þēodcyning(a)."
+     },
+     {
+      "key": "54",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "gȳt 'yet': H&S marks it, Wyatt never does."
+     },
+     {
+      "key": "55",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. Conj. swā is long; this is one of only 4 bare forms against 123 marked in Wyatt."
+     },
+     {
+      "key": "56",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. Bēowulf is printed with the macron 28 times in Wyatt."
+     },
+     {
+      "key": "57",
+      "label": "other",
+      "confidence": "medium",
+      "reason": "H&S, damaged MS line 2219: sīe = sēo dem. (Tauber nsf seo), long. H&S marks sīe elsewhere, but its conjectural line is unmarked and garbled ('ðioð idh'), so this is not a clean length choice."
+     },
+     {
+      "key": "58",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "Name Wīhstān (wīh 'idol', long). H&S Wīh- 5/5, Wyatt Wih- 5/5 (and Weohstān unmarked). Consistent policy."
+     },
+     {
+      "key": "59",
+      "label": "normalisation fault",
+      "confidence": "high",
+      "reason": "winegēomor. Both mark the long diphthong; only the macron placement differs (eō vs ēo)."
+     },
+     {
+      "key": "60",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "Conj. 'nor' (sūð ne norð): H&S nē vs Wyatt ne convention."
+     },
+     {
+      "key": "61",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "Different reading of the word: H&S gǣst (= gāst 'spirit'), Wyatt gæst 'guest/stranger'. Each edition is consistent (2/2)."
+     },
+     {
+      "key": "62",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "Conj. ge...ge 'both...and'. Wyatt prints the conj. ge short (7x) and the pronoun gē 'ye' long (12x); H&S marks gē throughout."
+     },
+     {
+      "key": "63",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. þæt has short æ. The same Wyatt line 2586 also has spurious wǣs and a second þǣt, so the whole line is a transcription error."
+     },
+     {
+      "key": "64",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "Conj. 'nor' (ne tealdon, ne hyne on medobence): H&S nē vs Wyatt ne convention."
+     },
+     {
+      "key": "65",
+      "label": "normalisation fault",
+      "confidence": "high",
+      "reason": "gēardagum 'days of yore'. Both mark it long; only the position differs (eā vs ēa)."
+     },
+     {
+      "key": "66",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "Conj. 'nor' (ne gesacu ōhwǣr): H&S nē vs Wyatt ne convention."
+     },
+     {
+      "key": "67",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. Conj. þæt has short æ; it sits in the same corrupted Wyatt line as items 63 and 90."
+     },
+     {
+      "key": "68",
+      "label": "other",
+      "confidence": "low",
+      "reason": "Probable Wyatt omission. rīxian/rīcsian 'rule' (< rīce) is long in B-T, Clark Hall and Wiktionary, and no source supports a short vowel. Single occurrence, so a deliberate choice is not excluded."
+     },
+     {
+      "key": "69",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "Conj. 'nor' (ne on bǣl hladan): H&S nē vs Wyatt ne convention."
+     },
+     {
+      "key": "70",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "l.1076 'Ne hūru Hildeburh'. H&S reads conj. nē 'nor', Wyatt the particle ne. Fits the same consistent convention."
+     },
+     {
+      "key": "71",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "singal 'continual' (short in B-T and Clark Hall). H&S marks singāl- 3/3, Wyatt short 3/3."
+     },
+     {
+      "key": "72",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "gȳt 'yet': H&S marks it, Wyatt never does."
+     },
+     {
+      "key": "73",
+      "label": "genuine editorial difference",
+      "confidence": "low",
+      "reason": "higeþīhtig 'strong of purpose', hapax; the lexica vary (þīhtig/þyhtig). Wyatt's unmarked -þihtig- may be a deliberate reading; an omission is possible."
+     },
+     {
+      "key": "74",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. wīc 'dwelling' is long; Wyatt marks wīc, wīcum, wīcstede and dēaþwīc elsewhere."
+     },
+     {
+      "key": "75",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "Name Hæðcyn. H&S has short Hæð- 4/4, Wyatt Hǣð- (hǣð 'heath') 3/3. A different etymology, applied consistently."
+     },
+     {
+      "key": "76",
+      "label": "other",
+      "confidence": "high",
+      "reason": "H&S slip. Dat. þǣm is long; H&S has þǣm 37x and this is its only bare form (also its only initial ð)."
+     },
+     {
+      "key": "77",
+      "label": "other",
+      "confidence": "high",
+      "reason": "H&S slip. The noun gripe 'grip' is short; H&S prints mundgripe short at the other 4 occurrences, and gripe/fǣrgripe/nȳdgripe short too."
+     },
+     {
+      "key": "78",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. cwōm, pret. of cuman, is long; Wyatt has becwōm 3x and cwōm 15x."
+     },
+     {
+      "key": "79",
+      "label": "normalisation fault",
+      "confidence": "high",
+      "reason": "begēaton, pret. pl. of begitan. Both mark it long; only the macron placement differs (eā vs ēa)."
+     },
+     {
+      "key": "80",
+      "label": "genuine editorial difference",
+      "confidence": "medium",
+      "reason": "'Eart þū se Bēowulf, sē þe': H&S reads a stressed demonstrative sē, Wyatt the article se (and marks the following sē). Both editions distinguish se/sē elsewhere (63 vs 63)."
+     },
+     {
+      "key": "81",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "Pret. of onbregdan. Wyatt consistently has -brǣd (ābrǣd, gebrǣd), with lengthening after loss of g (brægd > brǣd); H&S has short -bræd."
+     },
+     {
+      "key": "82",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. wōc, pret. of wacan, is long; Wyatt has onwōc, onwōcon and wōc elsewhere."
+     },
+     {
+      "key": "83",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "þyslic, neut. pl. -u: Wyatt's consistent short -licu convention (see item 3) against H&S -līcu."
+     },
+     {
+      "key": "84",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. ēodon is long; Wyatt marks ēodon elsewhere and marks capital Ēode."
+     },
+     {
+      "key": "85",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. Prep. æt has short æ; Wyatt prints æt 62x. A spurious macron."
+     },
+     {
+      "key": "86",
+      "label": "normalisation fault",
+      "confidence": "high",
+      "reason": "iūmonna 'of men of old'. Both mark it long; only the position differs (iū vs īu)."
+     },
+     {
+      "key": "87",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "dohtor: H&S consistently has dōhtor, Wyatt consistently dohtor."
+     },
+     {
+      "key": "88",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "singal: H&S marks singāl- consistently, Wyatt consistently short."
+     },
+     {
+      "key": "89",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "Conj. ge 'and' (l.1340): Wyatt prints the conj. short and keeps gē for the pronoun 'ye'; H&S has gē."
+     },
+     {
+      "key": "90",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. wæs has short æ (Wyatt wæs 248x); it is in the corrupted Wyatt line 2586 with spurious þǣt."
+     },
+     {
+      "key": "91",
+      "label": "other",
+      "confidence": "high",
+      "reason": "H&S slip. sīð 'time' (forman sīðe) is long; H&S has sīðe 12x."
+     },
+     {
+      "key": "92",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. hē is long; Wyatt has hē/Hē 278x and only 4 bare forms."
+     },
+     {
+      "key": "93",
+      "label": "normalisation fault",
+      "confidence": "high",
+      "reason": "Pret. of sceððan (gescēod). Both mark it long; only the macron placement differs (eō vs ēo)."
+     },
+     {
+      "key": "94",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "Relative particle (wera and wīfa þe þæt wīnreced ...): H&S þē vs Wyatt þe convention."
+     },
+     {
+      "key": "95",
+      "label": "other",
+      "confidence": "high",
+      "reason": "Wyatt slip. l.47 'Þā gȳt': adv. þā is long, and Wyatt marks Þā/Ðā 76 times as a capital."
+     },
+     {
+      "key": "96",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "welhwylc 'every': H&S wēl- 3/3, Wyatt wel- 3/3, the same wēl/wel policy."
+     },
+     {
+      "key": "97",
+      "label": "normalisation fault",
+      "confidence": "high",
+      "reason": "hygegiōmor. Both mark it long; only the position differs (iō vs īo)."
+     },
+     {
+      "key": "98",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "þrōwian 'suffer': H&S consistently short, Wyatt consistently long."
+     },
+     {
+      "key": "99",
+      "label": "genuine editorial difference",
+      "confidence": "high",
+      "reason": "wel 'well' (þēah hē ūðe wel): H&S wēl vs Wyatt wel convention."
+     },
+     {
+      "key": "100",
+      "label": "other",
+      "confidence": "medium",
+      "reason": "H&S slip. Dat. of wīg 'war' with gg spelling. H&S prints wigge short at l.1656 and l.1770, so this wīgge (l.1783) breaks its own practice; Wyatt has wigge 3/3."
+     }
+    ]
+   },
+   "adjudication": [
+    {
+     "key": "5",
+     "correct_label": "other",
+     "existing_label_is": "wrong",
+     "reason": "H&S slip in its own text at l.537: its glossary says 'geoguð-feorh ... on geogoð- (geoguð-) fēore, 537, 2665', so the editors meant the vowel long (dat. of feorh, compensatory lengthening). Wyatt fēore and Tauber/Brunetti ġeogoðfēore agree. H&S's other unmarked feore (934 tō wīdan feore, 1844 on swā geongum feore) are deliberate and the glossary confirms them, so they do not count against this."
+    },
+    {
+     "key": "18",
+     "correct_label": "other",
+     "existing_label_is": "wrong",
+     "reason": "Probable Wyatt slip at l.25. Wyatt prints geþēon at 910, has no footnote at 25, and marks other contracted forms long where meter needs uncontracted scansion (slēa 681, flēon 820, tēon 1036), so he has no convention of leaving such forms unmarked. Tauber/Brunetti also leaves 25 unmarked, but that follows its own general metrical convention (it also has slea, fleon, teon), so the match is not evidence of a choice by Wyatt. H&S glossary: ge-þēon, 25, 911."
+    },
+    {
+     "key": "20",
+     "correct_label": "other",
+     "existing_label_is": "wrong",
+     "reason": "H&S slip, not our processing: the raw Gutenberg text has 'Mod Þrȳðo wæg' (l.1931). H&S reads mōd 'pride' as the object of wæg (its note credits the name 'Modthrytho' to G. and does not adopt it), and it marks mōd and every mōd- compound long elsewhere (mōd 7x, glossary mōd st. n.). Wyatt has Mōd."
+    },
+    {
+     "key": "57",
+     "correct_label": "other",
+     "existing_label_is": "defensible",
+     "reason": "H&S prints the damaged l.2221 diplomatically ('þæt sie . . . . ðioð . . . . . / . idh . folc-beorn') and leaves it unglossed: sīe under wesan cites only 435 and 683, and nothing cites 2221 under se/sēo. So 'sie' is a bare MS fragment, not a vowel-length decision. Wyatt reads sīe (Tauber nsf seo, sīe). Calling it a deliberate editorial choice is arguable, but the guideline's 'really mark its vowel length differently' is not met."
+    },
+    {
+     "key": "68",
+     "correct_label": "other",
+     "existing_label_is": "wrong",
+     "reason": "Wyatt omission at l.144. Every source has a long vowel: rīxian/rīcsian in B-T, Clark Hall and Wiktionary, H&S glossary 'pret. sg. rīxode, 144', Tauber rīxode, and Bright and the WS Matthew rīxode/rīxað. Wyatt marks rīcsian at 2211, and long vowels before x elsewhere (līxte 3x, wrīxlan), so it is not a policy of shortening before x."
+    },
+    {
+     "key": "100",
+     "correct_label": "genuine editorial difference",
+     "existing_label_is": "correct",
+     "reason": "The editions read different words at l.1783. H&S's note on l.1784 cites the conjecture wigge geweorðad 'honored in war', and its glossary has 'wīg-ge-weorðad, pret. part., war-honored, 1784?', so the macron marks the wīg- element (Tauber also has wīggeweorþad), while plain dat. wigge stays unmarked at 1657/1771. Wyatt's footnote on 1783 says 'I have followed the MS.' and reads dat. wigge + weorþad, unmarked like his other wigge."
+    }
+   ]
+  }
+ }
+}
