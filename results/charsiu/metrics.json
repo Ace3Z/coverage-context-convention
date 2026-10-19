@@ -27,12 +27,12 @@
     "of_those_word_model_right": 2032,
     "of_those_bilateral_model_right": 2006,
     "by_charsiu_dictionary": {
-      "seen/correct": 8183,
-      "seen/not_alignable": 33,
-      "seen/wrong_length": 2659,
-      "unseen/correct": 3882,
-      "unseen/not_alignable": 92,
-      "unseen/wrong_length": 1800
+      "in_dict/correct": 8183,
+      "in_dict/not_alignable": 33,
+      "in_dict/wrong_length": 2659,
+      "not_in_dict/correct": 3882,
+      "not_in_dict/not_alignable": 92,
+      "not_in_dict/wrong_length": 1800
     },
     "experiment_populations": {
       "n": 16649,
@@ -77,11 +77,11 @@
     "of_those_word_model_right": 1372,
     "of_those_bilateral_model_right": 1349,
     "by_charsiu_dictionary": {
-      "seen/correct": 6538,
-      "seen/wrong_length": 2017,
-      "unseen/correct": 4409,
-      "unseen/not_alignable": 259,
-      "unseen/wrong_length": 2206
+      "in_dict/correct": 6538,
+      "in_dict/wrong_length": 2017,
+      "not_in_dict/correct": 4409,
+      "not_in_dict/not_alignable": 259,
+      "not_in_dict/wrong_length": 2206
     },
     "experiment_populations": {
       "n": 15431,
@@ -126,12 +126,12 @@
     "of_those_word_model_right": 786,
     "of_those_bilateral_model_right": 760,
     "by_charsiu_dictionary": {
-      "seen/correct": 7373,
-      "seen/not_alignable": 4,
-      "seen/wrong_length": 1457,
-      "unseen/correct": 6131,
-      "unseen/not_alignable": 8,
-      "unseen/wrong_length": 2388
+      "in_dict/correct": 7373,
+      "in_dict/not_alignable": 4,
+      "in_dict/wrong_length": 1457,
+      "not_in_dict/correct": 6131,
+      "not_in_dict/not_alignable": 8,
+      "not_in_dict/wrong_length": 2388
     },
     "experiment_populations": {
       "n": 17361,

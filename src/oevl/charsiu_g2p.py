@@ -1,6 +1,6 @@
 """Error analysis of CharsiuG2P (Zhu et al. 2022): its own Old English benchmark, then our test sets.
 
-Part 1 (needs torch + transformers; about 15 minutes on a laptop CPU):
+Part 1 (needs torch + transformers; a few minutes on a recent laptop CPU):
   python -m oevl.charsiu_g2p benchmark    -> results/charsiu/benchmark.json and benchmark.tsv
 It runs the published checkpoint on the repository's 500 Old English test words with the repository's evaluation
 settings (prefix "<ang>:", one word per call, 5 beams, the default max_length of 20), then again with max_length=50,
@@ -139,10 +139,10 @@ def predict(batch_size=64, tiny=False):
 def analyse():
     with open(OUT / "ipa.tsv", encoding="utf8") as f:
         ipa = {r["word"]: r["ipa"] for r in csv.DictReader(f, delimiter="\t")}
-    charsiu_train = set()
+    charsiu_dict = set()
     dict_path = ROOT / "data/charsiu_ang_dict_words.txt"   # every word of CharsiuG2P's ang dictionary (its train, dev and test words)
     if dict_path.exists():
-        charsiu_train = set(dict_path.read_text(encoding="utf8").split())
+        charsiu_dict = set(dict_path.read_text(encoding="utf8").split())
     train, _, _, _ = build_data(ROOT / "data", EXCLUDE_D3)  # populations as in results/wikipron
     lex, counts = lexicon(train, str(ROOT / "data/lex_wikipron.csv"))
     summary = {"model": MODEL, "prefix": PREFIX}
@@ -175,8 +175,8 @@ def analyse():
             cats[cat] += 1
             if ambiguous:
                 amb_cats[cat] += 1
-            if charsiu_train:
-                seen_cats[("seen" if r["bare"].lower() in charsiu_train else "unseen", cat)] += 1
+            if charsiu_dict:
+                seen_cats[("in_dict" if r["bare"].lower() in charsiu_dict else "not_in_dict", cat)] += 1
             if cat == "wrong_length" and ambiguous:
                 wrong_len_amb += 1
                 d = preds[r["id"]]
