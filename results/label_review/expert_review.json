@@ -4,6 +4,7 @@
  "evidence_used": "Tauber's lemma, part of speech and gloss (data/brunetti-length.txt), the corpus (data/by_source), the dictionaries (data/lex_*.csv), Clark Hall, Bosworth-Toller, Wiktionary, and the editions' own glossaries and notes.",
  "areas": {
   "classes": {
+   "key_means": "skeleton, as in data/ambiguity_classes.csv",
    "labels_reviewed": "data/ambiguity_classes.csv (final)",
    "summary": {
     "items": 60,
@@ -757,6 +758,7 @@
    ]
   },
   "error_types": {
+   "key_means": "the item column of results/error_typing/labels.tsv",
    "labels_reviewed": "results/error_typing/labels.tsv (final)",
    "summary": {
     "items": 400,
@@ -3274,6 +3276,7 @@
    ]
   },
   "disagreements": {
+   "key_means": "1-based data row of results/agreement/disagreements_checked.tsv (not its key column, which holds the skeleton)",
    "labels_reviewed": "results/agreement/disagreements_checked.tsv (label)",
    "summary": {
     "items": 100,
