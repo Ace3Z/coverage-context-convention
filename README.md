@@ -17,9 +17,8 @@
   <a href="https://huggingface.co/datasets/Ace3Z/old-english-vowel-length">
     <img src="https://img.shields.io/badge/Hugging%20Face-Dataset-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black" alt="Dataset"/>
   </a>
-  <a href="report/main.tex">
-    <img src="https://img.shields.io/badge/Report-LaTeX%20source-b31b1b?style=for-the-badge" alt="Report"/>
-  </a>
+  <!-- TODO: link the report PDF once it is uploaded -->
+  <img src="https://img.shields.io/badge/Report-PDF%20TODO-b31b1b?style=for-the-badge" alt="Report: TODO"/>
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/Licence-MIT-2ea44f?style=for-the-badge" alt="Licence"/>
   </a>
@@ -105,7 +104,7 @@ sentence-level bootstrap 95% intervals over seed-averaged predictions.
 | CharsiuG2P's errors are mostly length | its own 500-word Old English test | WER **0.208** reproduced, **0.188** with 50 decoding steps, where **75.5%** of word errors are length only |
 
 The ambiguity classes and the error types were labelled by two independent LLM annotators and are still pending
-review by the team. Full tables, caveats and the run-to-run variance are in the report (`report/main.tex`).
+review by the team. Full tables, caveats and the run-to-run variance are in the report (**TODO:** link the PDF).
 
 ---
 
@@ -190,7 +189,7 @@ The README is the map. The details live in focused files:
 | [REPRODUCE.md](REPRODUCE.md) | Installation, the systems and the evaluation protocol, and every command: the full run, single experiments, corpus and dictionary rebuilds, the ByT5 GPU grid, encoder tables without a GPU, CharsiuG2P, smoke tests, `try_text`, the dataset export and upload, and the layout of `results/`. |
 | [DATA.md](DATA.md) | The corpus and its splits, the dev set, the leakage audit, decision D3, the layout of `data/`, and the licence of every source. |
 | [notebooks/README.md](notebooks/README.md) | The Kaggle and Colab launchers for the ByT5 pilot. |
-| [report/main.tex](report/main.tex) | The report. `bash run_all.sh` compiles it to `REPORT.pdf`. |
+| Report (PDF) | **TODO:** link the PDF once it is uploaded. Its LaTeX source is [report/main.tex](report/main.tex), and `bash run_all.sh` compiles it to `REPORT.pdf`. |
 | [LICENSE](LICENSE), [data/LICENSE.md](data/LICENSE.md) | Code licence (MIT) and the licence of every data file. |
 
 ---
