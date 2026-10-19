@@ -34,10 +34,10 @@ configs:
 <table>
   <tr>
     <td align="center" valign="middle">
-      <a href="https://www.uzh.ch/"><picture>
-        <source media="(prefers-color-scheme: dark)" srcset="media/figures/logos/uzh-logo-white.png"/>
-        <img src="media/figures/logos/uzh-logo-black.png" height="70" alt="University of Zurich"/>
-      </picture></a>
+      <a href="https://www.uzh.ch/">
+        <img class="block dark:hidden" src="https://huggingface.co/datasets/Ace3Z/old-english-vowel-length/resolve/main/media/figures/logos/uzh-logo-black.png" height="70" alt="University of Zurich"/>
+        <img class="hidden dark:block" src="https://huggingface.co/datasets/Ace3Z/old-english-vowel-length/resolve/main/media/figures/logos/uzh-logo-white.png" height="70" alt="University of Zurich"/>
+      </a>
     </td>
   </tr>
 </table>
