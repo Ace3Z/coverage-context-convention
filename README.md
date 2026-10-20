@@ -98,7 +98,7 @@ words spelled alike that differ in function.
 | Coverage matters most on verse | *Beowulf*, all tokens, frequency prior | 82.40% with training forms, 92.38% with all four dictionaries |
 | Context helps most on grammatical homographs | *Soliloquies*, class B (*þe/þē*, *ne/nē*), ByT5 | 62.66% from the word alone, 76.47% with two words each side (+13.82, 11.39 to 16.18) |
 | Context helps prose overall | *Soliloquies*, lexicon-ambiguous tokens, ByT5 | 88.91% from the word alone, 91.31% with two words each side (+2.40, 1.92 to 2.89) |
-| On verse the word alone is enough | *Beowulf*, lexicon-ambiguous tokens, ByT5 | 90.04% from the word alone, 89.43% with the full sentence (−0.61, −1.06 to −0.15) |
+| On verse the word alone is enough | *Beowulf*, lexicon-ambiguous tokens, ByT5 | 90.04% from the word alone, 89.83% with two words each side (−0.20, −0.62 to +0.21), and one unseen name, *Gēata* (39 tokens), decides the sign |
 | Editors differ most on grammatical words | Wyatt against Klaeber (Tauber), lexicon-ambiguous / class B | 96.08% / 78.07% agreement |
 | CharsiuG2P's errors are mostly about length | its own 500-word Old English test set | word error rate 0.208 as published and 0.188 with 50 decoding steps, where 75.5% of the word errors differ only in vowel length |
 
