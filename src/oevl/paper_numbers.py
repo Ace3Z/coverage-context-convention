@@ -169,8 +169,8 @@ def correct(row, cols):
 # ---------------------------------------------------------------- worked examples (asserted, so the paper stays true)
 def example_soliloquies_00026(preds, enc):
     """In 'Ic clypie tō þē, Drihten, þū þe æall geworhtest' the first þē is the pronoun and the second þe the relative
-    particle. The prior, every logistic run and every ByT5 word run mark both short, and every local2 run gets both
-    right."""
+    particle. The prior, every word, left and bilateral logistic run and every ByT5 word run mark both short, and every
+    local2 run gets both right (and every conjoined run, asserted in conjoined)."""
     toks = [p for p in preds if p["sentence_id"] == "soliloquies:00026"]
     need(" ".join(t["gold"] for t in toks).startswith("Ic clypie tō þē Drihten þū þe æall geworhtest"),
          "the text of soliloquies:00026")
@@ -617,6 +617,9 @@ def conjoined(put, ctx):
     for st, s in SETS:
         test = ctx.held[s]
         runs = [E.predict(ctx.train, test, lex, counts, "conjoined", seed) for seed in (1, 2, 3)]
+        if s == "soliloquies":  # the worked example: every conjoined run gets the pronoun þē long and the relative short
+            ex = [i for i, r in enumerate(test) if r["sentence_id"] == "soliloquies:00026"]
+            need(all((p[ex[3]], p[ex[6]]) == ("1", "0") for p in runs), "soliloquies:00026: the conjoined runs")
         ev = [E.evaluate(test, p, lex, counts, ctx.cls) for p in runs]
         for name, pop in POPS if s != "john_ws" else (("Lex", "lexicon_ambiguous"), ("ClsB", "class_B")):
             vals = [e["accuracy"] if pop == "accuracy" else e[pop]["accuracy"] for e in ev]
@@ -667,6 +670,10 @@ def editors(put, ctx):
     cls = classes(DATA / "ambiguity_classes.csv")
     pairs = [(x, y) for x, y in align(ctx.wy, ctx.tb) if cls.get(x["key"]) == "B"]
     need(len(pairs) == wt["n"], "the Wyatt and Tauber class B tokens")
+    glosses = {t["id"]: g for t, (_, g) in zip(ctx.tb, ctx.tb_cols)}
+    you = [(x, y) for x, y in pairs if glosses[y["id"]].startswith("you")]  # þē 'thee' and gē 'ye', by Tauber's glosses
+    need(you and all(sum(p[i]["gold_pattern"] == "1" for p in you) >= 0.95 * len(you) for i in (0, 1)),
+         "Wyatt and Klaeber nearly always mark the pronouns þē and gē long")
     beo = ctx.enc["tauber_beowulf"]
     l2, word = runs_of(next(iter(beo.values())), "local2", "capfull"), runs_of(next(iter(beo.values())), "word", "capfull")
 
