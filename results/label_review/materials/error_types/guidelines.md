@@ -1,9 +1,16 @@
 # Error typing guidelines
 
-> Note added in this repository: this is the text given to the two LLM runs that typed the errors, with references to
-> internal planning notes removed. The "two annotators" are these two runs, and a third run of the same LLM settled
-> their disagreements instead of a joint discussion. A closing section on regenerating the items is left out, because
-> its script is not in this repository.
+> Note added in this repository: this is the text given to the two runs of one LLM, Claude Opus 5.5 (model id
+> `claude-opus-5-5`), that typed the errors, with references to internal planning notes removed. The "two annotators"
+> are these two runs, and a third run of the same LLM settled their disagreements instead of a joint discussion. A
+> closing section on regenerating the items is left out, because its script is not in this repository. The runs wrote
+> `labels_a.tsv` and `labels_b.tsv` (columns `system`, `set`, `id`, `type`, `confidence`, `reason`), not
+> `items_<initials>.tsv`. The settled labels, five of them later changed by a blind review, are the `final` and `note`
+> columns of `results/error_typing/labels.tsv`, not `items_resolved.tsv`. The run folder
+> `exp_grid/capfull/sentence_s1` is not committed, and its predictions are the `capfull/sentence_s1` column of
+> `results/encoder/<set>_predictions.tsv.gz`. The CharsiuG2P sample was drawn before decision D3. Since then
+> `charsiu_g2p.analyse` leaves Zupitza out as well, which gives a pool of 2,589 errors (1,583 prose, 1,006 verse), and 2
+> of the 200 sampled tokens are not lexicon-ambiguous there.
 
 Two annotators type the same 400 errors independently. Cohen's kappa is reported, then the differences are resolved together.
 

@@ -97,10 +97,11 @@ on it. The project's final systems leave `zupitza_grammar` out of training and s
 | `soliloquies` | test_prose | Alfred's *Soliloquies* | Hargrove, 1902 | https://en.wikisource.org/wiki/King_Alfred%27s_Old_English_Version_of_St._Augustine%27s_Soliloquies | Wikisource, CC BY-SA 4.0 |
 | `tauber_beowulf` | test_verse | *Beowulf* | Tauber, with the length marks of the Perseus text of Klaeber's 1922 edition | https://github.com/old-english-learner-texts/old-english-texts (`beowulf/raw-data/brunetti-length.txt`) | CC BY-SA 4.0, attribution to James Tauber |
 | `hs_beowulf` | agreement | *Beowulf*, *Finnsburh Fragment* | Harrison & Sharp, 4th revised edition (first 1883) | https://www.gutenberg.org/ebooks/9701 | Project Gutenberg, public domain in the USA |
-| `wyatt_beowulf` | agreement | *Beowulf*, *Finnsburh Fragment* | Wyatt, 1894 | https://en.wikisource.org/wiki/Beowulf_(Wyatt) | Wikisource, CC BY-SA 4.0 |
+| `wyatt_beowulf` | agreement | *Beowulf*, *Finnsburh Fragment* (without its first 18 lines) | Wyatt, 1894 | https://en.wikisource.org/wiki/Beowulf_(Wyatt) | Wikisource, CC BY-SA 4.0 |
 
 Each edition's Old English text was extracted, normalised to Unicode NFC with length marked only by macrons
-(Zupitza's circumflexes were converted), and split into sentences and tokens. Notes, translations and Latin and
+(Zupitza's circumflexes and those of 12 words in Tauber's file were converted, and other marks such as the dots of
+ċ and ġ were dropped), and split into sentences and tokens. Notes, translations and Latin and
 English lines were removed, but a few short English, Latin and markup fragments remain, for example in
 `bright_reader:00937` to `00943`. In `sweet_primer:00236` the extraction split a þā into `þ` and a short `a`.
 

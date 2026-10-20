@@ -40,9 +40,10 @@ editable, because the code finds `data/` and `results/` relative to the reposito
 
 ## Evaluation
 
-Accuracy is reported on all tokens and on three harder populations: lexicon-ambiguous tokens (two or more candidate
-patterns), attested-ambiguous tokens (at least two patterns, each seen at least twice in training), and minority
-readings (the gold pattern is seen in training, but less often than the most frequent one there). The
+Accuracy (a token counts only if every vowel has the gold length) is reported on all tokens and on three harder
+populations: lexicon-ambiguous tokens (two or more candidate patterns), attested-ambiguous tokens (at least two
+patterns, each seen at least twice in training), and minority readings (the gold pattern is seen in training, but
+less often than the most frequent one there). The
 lexicon-ambiguous tokens are also split by ambiguity class (`class_A`, `class_B`, `class_C` in `metrics.json`) for the
 60 skeletons (spellings without macrons) in `data/ambiguity_classes.csv`, with `class_unlisted` for the rest. Two
 separate runs of one LLM, Claude Opus 5.5 (model id `claude-opus-5-5`), assigned the classes with the same written
@@ -78,7 +79,7 @@ It takes about two minutes and has six steps:
 1. Inputs. It uses `data/brunetti-length.txt` (Tauber's *Beowulf* gold) and `data/ang_latn_broad.tsv` (WikiPron Old
    English) if they are present and downloads them otherwise, then prints their SHA-256. `oevl.audit_splits` prints
    the word 6-gram overlap of each held-out set with each training work and writes `data/leakage_excluded.json`.
-2. Unit tests in `tests/`.
+2. The 89 unit tests in `tests/` (one is skipped unless Matthew's Wikisource download from section 3 is cached).
 3. Dictionaries. `oevl.wikipron_to_marked` writes `data/lex_wikipron.csv`. The three proposal dictionaries ship in
    `data/`, so `oevl.build_lexicons --unions-only` only rebuilds the unions. Without them it downloads and converts
    the original sources.
@@ -141,10 +142,14 @@ the three held-out sets. Without `--out` it writes to `results/encoder/`, next t
 for new runs.
 
 `scripts/encoder_grid.sh` has the exact commands behind `results/encoder/`: 24 dev selection runs, whose rule
-`oevl.select_config` applies (`selection.json`), then 39 runs of the chosen setting. `oevl.encoder_summary --runs`
-pools those into `summary.json`, the per-token prediction tables (`*_predictions.tsv.gz`),
-`report/generated/tab_encoder.tex` and `numbers_encoder.tex`. The run folders themselves are not committed. GPU
-training is not bit-for-bit repeatable, so a new run can differ slightly.
+`oevl.select_config` applies (`selection.json`), then 39 runs of the chosen setting with seeds 1 to 3: the left,
+sentence, local2 and local5 arms at byte caps (`--max-bytes`) of 128, 256 and 2,560 (the full cap), and the word arm
+at the full cap only. `oevl.encoder_summary --runs` pools those into `summary.json`, the per-token prediction tables
+(`*_predictions.tsv.gz`), `report/generated/tab_encoder.tex` and `numbers_encoder.tex`. The table and the numbers give
+every arm at the full cap over its three seeds, and the left and sentence arms also at the two smaller caps. The
+inputs of local2 and local5 never reach 128 bytes, so their runs at the three caps are replicates, which
+`summary.json` and `numbers_encoder.tex` also pool over all nine runs. The run folders themselves are not committed.
+GPU training is not bit-for-bit repeatable, so a new run can differ slightly.
 
 The ByT5 pilot trains all five arms on 10,000 training examples, using the notebooks in `notebooks/` on Kaggle or
 Colab (see `notebooks/README.md`). Its logic is in `oevl.pilot`. The pilots ran before D3, so `oevl.pilot` still
@@ -240,7 +245,7 @@ results/
 ├── encoder/                    selection.json, summary.json, <set>_predictions.tsv.gz
 ├── charsiu/                    benchmark.json, benchmark.tsv, ipa.tsv, metrics.json
 ├── error_typing/               labels.tsv, summary.json (400 error types labelled by two runs of one LLM, settled
-│                               by a third run and checked by hand)
+│                               by a third run, checked by a blind review and then by hand)
 └── label_review/               expert_review.json (the blind review of all 560 labels) and materials/ (the
                                 guidelines, the item sheets, and labels_a.tsv and labels_b.tsv of the two runs
                                 that labelled the classes and the error types)

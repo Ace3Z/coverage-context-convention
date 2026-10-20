@@ -18,9 +18,10 @@ After each finished arm the results folder is packed into `encoder_pilot_<bytes>
 download. To resume in a new session on Kaggle, add that zip, a renamed copy such as `... (1).zip`, or its extracted
 folder as input. On Colab, upload the zip to `/content`. Finished arms are copied in, checked and skipped, and an arm
 that was interrupted starts again from the beginning. No new arm starts after 9 hours of the notebook session,
-counted from the first code cell, so an arm cannot run into Kaggle's 12-hour limit.
+counted from the first code cell, to leave time for the last arm before Kaggle's 12-hour limit.
 
 The pilots are exploratory. With only 10,000 examples and one epoch, an arm's score also reflects how fast it learns,
-so the pilot's ranking of arms need not match the full-data ranking. A full CPU dry run of the same loop:
+so the pilot's ranking of arms need not match the full-data ranking in `results/encoder/`. A full CPU dry run of
+the same loop:
 
     PYTHONPATH=src python -m oevl.pilot --tiny --allow-cpu --skip-model-check --max-bytes 128 --out /tmp/pilot

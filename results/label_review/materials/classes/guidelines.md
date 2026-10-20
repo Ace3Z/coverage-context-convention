@@ -1,8 +1,12 @@
 # Ambiguity classes: annotation guidelines
 
-> Note added in this repository: this is the text given to the two LLM runs that labelled the classes, with two
-> references to internal planning notes removed. "The other annotator" is the other run, and a third run of the same
-> LLM settled their disagreements instead of a joint discussion.
+> Note added in this repository: this is the text given to the two runs of one LLM, Claude Opus 5.5 (model id
+> `claude-opus-5-5`), that labelled the classes, with two references to internal planning notes removed. "The other
+> annotator" is the other run, and a third run of the same LLM settled their disagreements instead of a joint
+> discussion. The item sheet was made from the corpus and dictionaries of commit f9deda8, before later fixes to both,
+> and uses all five training works (Zupitza included), so some of its counts and sources differ from the current
+> `data/`. The `clarkhall` match ignored case and a final hyphen, so prefix entries such as `ge-` are included, and the
+> value for `to` and part of the value for `for` are lines from the Project Gutenberg front matter and licence.
 
 Give each skeleton in `items.tsv` exactly one class, A, B or C. Work alone and do not
 look at the other annotator's labels. The two label sets are compared with Cohen's

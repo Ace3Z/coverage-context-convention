@@ -6,13 +6,14 @@ Attribution-ShareAlike 4.0 International licence (CC BY-SA 4.0, https://creative
 A file that combines several sources takes the strictest licence among them. `data/raw/` holds downloads for
 rebuilding and is not part of the repository.
 
-Each statement was checked on 2026-10-18 against the licence file or the source page named in the last column.
+Each statement was checked on 2026-10-20 against the licence file or the source page named in the last column.
 
 ## Corpus: `by_source/*.jsonl` and `manifest.json`
 
 The corpus bundle is released under CC BY-SA 4.0, because five of the nine works are Wikisource
-transcriptions. The printed editions themselves are out of copyright. `manifest.json` records the source URL of each work,
-and, for the five works whose committed file `oevl.build_corpus` produced, the retrieval date and SHA-256 of each input.
+transcriptions. The printed editions themselves are in the public domain in the United States. `manifest.json` records
+the source URL of each work, and, for the five works whose committed file `oevl.build_corpus` produced, the retrieval
+date and SHA-256 of each input.
 
 | File | Work, editor, year | Source | Licence of the source | Checked |
 |---|---|---|---|---|
@@ -29,14 +30,14 @@ and, for the five works whose committed file `oevl.build_corpus` produced, the r
 The Project Gutenberg header and licence are not part of the extracted text. Attribution for the Wikisource works:
 the Wikisource contributors of each page, at the URLs above.
 
-## Inputs copied unchanged
+## Inputs copied from other projects
 
 | File | Source | Licence | Checked |
 |---|---|---|---|
 | `brunetti-length.txt` | James Tauber, *old-english-texts*, `beowulf/raw-data/brunetti-length.txt`, https://github.com/old-english-learner-texts/old-english-texts | CC BY-SA 4.0, attribution to James Tauber. Tauber built it from Brunetti's analysis and the Perseus text of *Beowulf*, both of which his README calls CC-licensed | repository `LICENSE` (CC BY-SA 4.0), `README.md` ("All other text and data is made available under a Creative Commons Attribution-ShareAlike 4.0 International License with attribution to James Tauber"), `beowulf/README.md` |
 | `ang_latn_broad.tsv` | WikiPron, `data/scrape/tsv/ang_latn_broad.tsv`, https://github.com/CUNY-CL/wikipron | CC BY-SA 4.0 (Wiktionary content). The WikiPron code is Apache-2.0, but its README says the Wiktionary data in `data/` "has its own licensing terms" and links Wiktionary:Copyrights, which dual-licenses entry text under CC BY-SA 4.0 and the GFDL. We use it under CC BY-SA 4.0 | WikiPron `README.md` (License section) and `LICENSE.txt`, https://en.wiktionary.org/wiki/Wiktionary:Copyrights |
 | `charsiu_ang_test.tsv` | CharsiuG2P `data/test/ang.tsv` at commit `0c929390759fb94f8ecdfc05cc0bc5f2ff2dc0f4`, https://github.com/lingjzhu/CharsiuG2P | CC BY-SA 4.0 (Wiktionary content). The CharsiuG2P repository is MIT, but its `sources/info/wikipron/ang_latn_broad_info.txt` and `ang_latn_narrow_info.txt` name WikiPron's Old English files as the source of its Old English data. Those files label the data Apache 2.0, which is WikiPron's code licence. We follow WikiPron's README for the data | CharsiuG2P `LICENSE` (MIT), `README.md`, `sources/info/wikipron/` |
-| `charsiu_ang_dict_words.txt` | the word list of the same CharsiuG2P Old English dictionary | CC BY-SA 4.0, as above | as above |
+| `charsiu_ang_dict_words.txt` | the distinct words of CharsiuG2P's Old English pronunciation dictionary `dicts/ang.tsv` at the same commit, without the pronunciations | CC BY-SA 4.0, as above | as above |
 
 ## Dictionaries derived for this project
 

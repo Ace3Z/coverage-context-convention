@@ -213,8 +213,8 @@ coverage-context-convention/
 ├── scripts/encoder_grid.sh  exact GPU commands behind results/encoder/
 ├── tests/                   unit tests, run by run_all.sh
 ├── data/                    corpus (by_source/), Tauber and WikiPron inputs, dictionaries, class files
-├── results/                 one folder per experiment: metrics, predictions, logs
-├── report/                  main.tex and generated/ tables, numbers and figure
+├── results/                 one folder per experiment: metrics, predictions, logs, labels
+├── report/                  main.tex and generated/ tables, numbers and figures
 ├── notebooks/               Kaggle and Colab launchers for the ByT5 pilot
 ├── release/                 dataset card and licence file for the Hugging Face copy
 ├── media/figures/logos/     logos
@@ -239,7 +239,8 @@ coverage-context-convention/
 ## 📜 Licence
 
 The code is released under the MIT licence in [LICENSE](LICENSE). The data is CC BY-SA 4.0 unless
-[data/LICENSE.md](data/LICENSE.md) says otherwise, and each source keeps its own terms.
+[data/LICENSE.md](data/LICENSE.md) says otherwise, and each source keeps its own terms. The files in `results/` quote
+corpus text, so they are CC BY-SA 4.0 as well.
 
 ---
 
