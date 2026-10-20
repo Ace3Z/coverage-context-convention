@@ -258,8 +258,8 @@
       "other": 36
     },
     "labelled_by": [
-      "automated assistant, not a team member",
-      "automated assistant, not a team member; label changed by a blind LLM expert review on 2026-10-19 (see note and results/label_review/)"
+      "automated assistant, not a team member; checked by hand by Mahbod Tajdini, who changed none (reported 2026-10-20)",
+      "automated assistant, not a team member; label changed by a blind LLM expert review on 2026-10-19 (see note and results/label_review/); checked by hand by Mahbod Tajdini, who changed none (reported 2026-10-20)"
     ]
   }
 }

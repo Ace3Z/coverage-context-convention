@@ -45,7 +45,7 @@ restoration of these marks and measure four limits: disagreement between editors
 context and dictionary coverage. Coverage moves the most on verse: a frequency prior on Tauber's \textit{Beowulf}
 rises from \NTBeoAllFreq\% to \NABeoAllFreq\% of tokens when dictionaries supply the candidates. Context helps where
 grammar decides the reading. On grammatical homographs in Alfred's \textit{Soliloquies} (a class assigned by LLM-based
-annotators and not yet reviewed by us), a ByT5 scorer that sees two words on either side reaches
+annotators and checked by one of us), a ByT5 scorer that sees two words on either side reaches
 \NEncRepSolClsBLocalTwo\%, against \NEncCapfullSolClsBWord\% for the word alone. It gains nothing on lexical or
 editorial homographs, and on all ambiguous \textit{Beowulf} tokens the word alone does as well as any context arm.
 Wyatt's and Klaeber's editions of \textit{Beowulf} agree on \NPairWTLex\% of ambiguous tokens and on only
@@ -81,7 +81,7 @@ left-context arm asks for Old English. CharsiuG2P \cite{zhu2022} covers Old Engl
 whose Old English data come from WikiPron \cite{lee2020}, but it reads isolated words. Tauber \cite{tauber2021} added
 the vowel lengths of the Perseus text of Klaeber's edition \cite{klaeber1922} to Brunetti's token-level tagging of
 \textit{Beowulf}, which gives us a gold standard. We know of no evaluation on Old English running text that sets a
-model against the disagreement between editors.
+model against editor disagreement.
 
 \section{Data}
 Table~\ref{tab:data} lists the nine editions, all transcriptions from Project Gutenberg or Wikisource
@@ -123,7 +123,7 @@ most frequent ambiguous skeletons also carry a class: \NClassA{} \emph{lexical} 
 \emph{editorial} (C, one word marked by habit: \emph{he/hē}). Two independent LLM-based annotators assigned the
 classes (Cohen's $\kappa=\NClassKappa$ \cite{cohen1960}), an automated adjudicator settled their two disagreements,
 % data/ambiguity_classes.json, n_disagreements
-and we have not yet reviewed the labels.
+and one of us checked all of them by hand.
 
 \section{Systems and protocol}\label{sec:systems}
 All systems choose among the same candidates and predict all-short for a word without any. Besides the prior,
@@ -189,7 +189,7 @@ class B (Section~\ref{sec:context}), and against Wyatt the prior agrees more oft
 training editions mark these words more like Wyatt than like Klaeber.
 
 An LLM-based assistant labelled a random sample of \NCheckN{} Harrison \& Sharp and Wyatt disagreements, and a
-second, blind LLM review corrected four of them (not yet checked by us): \NCheckEditorial{} editorial, \NCheckNorm{} macrons on the other letter of a digraph that our
+second, blind LLM review corrected four of them (then all checked by one of us): \NCheckEditorial{} editorial, \NCheckNorm{} macrons on the other letter of a digraph that our
 normalisation could align, \NCheckAlign{} alignment faults and \NCheckOther{} others, mostly probable slips.
 
 The proposal promised to report disagreement instead of a model if agreement was low. We fixed what counts as low
@@ -271,7 +271,7 @@ unknown words and \NBeoNoCandTrue\% lack the gold candidate. With all four sourc
 \NBeoGainDict{} points, \NBeoGainDictWiki{} of them beyond WikiPron. Over the same WikiPron prior no ByT5 arm gains
 more than \NEncBestCtxGainBeo{} points on all verse tokens, and the word arm alone gains \NEncWordGainBeo. On prose the
 two limits are closer: beyond WikiPron the dictionaries add \NSolGainDictWiki{} points and the best context arm
-\NEncBestCtxGainSol. More candidates also mean more ambiguity. Adding the proposal dictionaries to WikiPron raises the
+\NEncBestCtxGainSol. More candidates also mean more ambiguity. The proposal dictionaries raise the
 ambiguous verse tokens from \NWBeoLexN{} to \NABeoLexN{}, and on these the bilateral model falls below the
 prior (\NABeoLexBil\% against \NABeoLexFreq\%).
 
@@ -316,13 +316,13 @@ gets length right on \NCharsiuSolAll\% of prose and \NCharsiuBeoAll\% of verse t
 \NWBeoLexFreq\%). Our word-only logistic model (seed~1) gets \NCharsiuSolLexWordFix{} of CharsiuG2P's \NCharsiuSolLexWrong{} length
 errors on ambiguous prose tokens right (\NCharsiuSolLexWordFixShare\%) and the bilateral model \NCharsiuSolLexBilFix,
 so the edition's habit for the word, not context, repairs most of them. CharsiuG2P was built for
-word lists from Wiktionary transcriptions, not to follow an edition's conventions in running text, so the gap reflects the
+Wiktionary word lists, not to follow an edition's conventions in running text, so the gap reflects the
 task as much as the model.
 
 \section{Error analysis}
 Two independent LLM-based annotators typed \NErrItems{} random lexicon-ambiguous errors from each of the ByT5 sentence
 arm (full cap, seed~1) and CharsiuG2P, pooled over both test sets ($\kappa=\NErrKappa$). An automated adjudicator
-resolved their disagreements, a second, blind LLM review corrected five labels, and we have not yet reviewed them
+resolved their disagreements, a second, blind LLM review corrected five labels, and one of us checked all of them
 (Table~\ref{tab:errors}). The CharsiuG2P sample
 was drawn before Zupitza left training. ByT5 errors spread evenly over homographs (\NErrEncHomograph), grammatical
 pairs (\NErrEncGrammatical) and editorial habit (\NErrEncEditorial). For \NErrEncGoldInDoubt{} more, another edition
@@ -346,7 +346,7 @@ agrees with one editor and is scored against another.
 \paragraph{Deviations.} Coverage became one of four limits, so the abstract also reports all-token
 accuracy. Instead of an encoder, a fine-tuned encoder-decoder (ByT5) scores the candidates, one
 checkpoint per arm on identical data. The trained systems keep the candidate set of our first pipeline, so the proposal's three dictionaries enter only the coverage comparison. LLM-based annotators, not two of us, labelled the ambiguity classes, the error types and the
-disagreement sample, and a second, blind LLM review checked all 560 labels.
+disagreement sample. A blind LLM review, then one of us, checked all 560.
 
 \paragraph{Limitations.} We predict editorial convention, not pronunciation: the dictionaries and the gold descend
 from the same nineteenth-century philology. Tauber's gold is Klaeber's editorial opinion, taken over from the Perseus
@@ -360,7 +360,7 @@ the two are closer (\NSolGainDictWiki{} against \NEncBestCtxGainSol). Context he
 but it leaves lexical and editorial ambiguity untouched. The LLM-based annotators label \NErrEncEditorial{} of
 \NErrItems{} sampled ByT5 errors as editorial habit, and on grammatical words two independent editors agree on only
 \NPairWTClsB\% of tokens, so a single gold edition cannot tell a wrong model from a different convention. Next we
-will train and test within one editorial tradition and check the automated labels ourselves.
+will train and test within one editorial tradition.
 
 \begin{thebibliography}{99}
 \raggedright

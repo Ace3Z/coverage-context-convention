@@ -1,5 +1,5 @@
 {
-  "provenance": "The labels come from two independent automated annotators (label_a, label_b) and an automated adjudicator (final, adjudication_note). They are pending review by the team.",
+  "provenance": "The labels come from two independent automated annotators (label_a, label_b) and an automated adjudicator (final, adjudication_note). Mahbod Tajdini later checked all 60 final labels by hand and changed none (reported 2026-10-20).",
   "classes": {
     "A": "lexical: two different words (god/gōd, man/mān, is/īs)",
     "B": "grammatical: same spelling, different word class or function, both with dictionary backing (þe relative particle vs þē \"thee\")",
@@ -79,5 +79,5 @@
       "ambiguous_tokens_outside_list": 4927
     }
   },
-  "expert_review": "2026-10-19: two blind LLM experts relabelled all 60 skeletons and agreed with the final label on 58. An adjudicator upheld the final label for the other two (þis and gyt, both B), so no label changed. The expert labels and the adjudication are in results/label_review/expert_review.json. The labels are still pending review by the team."
+  "expert_review": "2026-10-19: two blind LLM experts relabelled all 60 skeletons and agreed with the final label on 58. An adjudicator upheld the final label for the other two (þis and gyt, both B), so no label changed. The expert labels and the adjudication are in results/label_review/expert_review.json. A team member then checked all 60 by hand and changed none."
 }

@@ -1,6 +1,6 @@
 {
  "date": "2026-10-19",
- "provenance": "LLM agents, not people. Each expert agent was told to act as a senior Old English philologist and labelled its items blind, without the existing labels. Wherever an expert label differed from the existing one, a separate adjudicator agent re-examined the item and decided. The labels are still pending review by the team.",
+ "provenance": "LLM agents, not people. Each expert agent was told to act as a senior Old English philologist and labelled its items blind, without the existing labels. Wherever an expert label differed from the existing one, a separate adjudicator agent re-examined the item and decided. Mahbod Tajdini later checked all 560 labels by hand and changed none (reported 2026-10-20).",
  "evidence_used": "Tauber's lemma, part of speech and gloss (data/brunetti-length.txt), the corpus (data/by_source), the dictionaries (data/lex_*.csv), Clark Hall, Bosworth-Toller, Wiktionary, and the editions' own glossaries and notes.",
  "areas": {
   "classes": {

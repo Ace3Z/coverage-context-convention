@@ -204,7 +204,7 @@ num["LeakSolSent"], num["LeakSolTok"] = str(LK["soliloquies"]["sentences"]), str
 num["LeakDevSent"], num["LeakDevTok"] = str(LK["john_ws"]["sentences"]), str(LK["john_ws"]["tokens"])
 num["DevTokens"] = f"{W['john_ws']['frequency']['n']:,}"
 
-# error typing (results/error_typing/summary.json): automated annotators, pending team review
+# error typing (results/error_typing/summary.json): automated annotators, checked by hand
 ET = rjson("results/error_typing/summary.json")
 for system, s in (("encoder_sentence", "Enc"), ("charsiug2p", "Charsiu")):
     for t, k in ET["counts"][system].items():

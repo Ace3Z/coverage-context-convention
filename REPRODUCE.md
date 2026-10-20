@@ -43,8 +43,8 @@ readings (the gold pattern is seen in training but is not the most frequent one 
 are also split by ambiguity class (`class_A`, `class_B`, `class_C` in `metrics.json`) for the 60 skeletons (spellings
 without macrons) in `data/ambiguity_classes.csv`, with `class_unlisted` for the rest. Two LLM annotators and an
 automated adjudicator assigned the classes. A second, blind LLM review agreed with 58 of them, and an LLM
-adjudicator kept the other two (`results/label_review/`). The team has not reviewed the classes yet. The 60 skeletons
-were picked by their frequency in the training works (Zupitza included) and both test sets, and they are kept under
+adjudicator kept the other two (`results/label_review/`). Mahbod Tajdini then checked all 60 by hand and changed none.
+The 60 skeletons were picked by their frequency in the training works (Zupitza included) and both test sets, and they are kept under
 decision D3. With training forms plus WikiPron, the `d3` block of `data/ambiguity_classes.json` records that `hi`
 is no longer lexicon-ambiguous without Zupitza, and that 6,759 of the 36,203 lexicon-ambiguous tokens counted there
 fall outside the list.
@@ -224,12 +224,11 @@ results/
 ├── all/
 ├── wikipron_with_zupitza/      the Zupitza ablation
 ├── agreement/                  metrics.json, disagreements.tsv, agreement.log, and disagreements_checked.tsv
-│                               (100 disagreements labelled by an LLM and checked by a blind LLM review,
-│                               not yet reviewed by the team)
+│                               (100 disagreements labelled by an LLM, checked by a blind LLM review and then
+│                               by hand)
 ├── encoder/                    selection.json, summary.json, <set>_predictions.tsv.gz
 ├── charsiu/                    benchmark.json, benchmark.tsv, ipa.tsv, metrics.json
-├── error_typing/               labels.tsv, summary.json (400 error types labelled by LLMs, not yet reviewed by
-│                               the team)
+├── error_typing/               labels.tsv, summary.json (400 error types labelled by LLMs and checked by hand)
 └── label_review/               expert_review.json: the blind LLM review of all 560 LLM labels
 report/
 ├── main.tex

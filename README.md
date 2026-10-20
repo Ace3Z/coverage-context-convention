@@ -105,7 +105,8 @@ words spelled alike that differ in function.
 
 LLM annotators labelled the ambiguity classes, the error types and a sample of editor disagreements. A second, blind
 LLM review agreed with 538 of these 560 labels. An LLM adjudicator kept 13 of the 22 the review disputed and
-corrected the other nine (`results/label_review/`). Nobody on the team has reviewed the labels yet.
+corrected the other nine (`results/label_review/`). Mahbod Tajdini then checked all 560 labels by hand and
+changed none.
 The report has the full tables, the caveats and the run-to-run variance (TODO: link the PDF).
 
 ---

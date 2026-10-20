@@ -11,7 +11,7 @@ without Zupitza (decision D3) + WikiPron.
 If data/ambiguity_classes.csv exists (columns skeleton and a final A/B/C label), agreement is also given per class.
 If results/agreement/disagreements_checked.tsv exists (the seed-1 sample of 100 Harrison and Sharp vs Wyatt
 disagreements, labelled by an automated assistant; a blind LLM expert review on 2026-10-19 changed four labels, see the
-labelled_by column; all pending team review), its label counts are added to metrics.json.
+labelled_by column; a team member later checked all 100 by hand), its label counts are added to metrics.json.
 """
 import collections
 import csv
@@ -49,7 +49,7 @@ def kappa(x, y):
 
 
 def classes(path):
-    """skeleton -> A, B or C from the class file (automated labels pending team review); empty when the file is absent."""
+    """skeleton -> A, B or C from the class file (LLM labels, checked by hand); empty when the file is absent."""
     if not Path(path).exists():
         return {}
     with open(path, encoding="utf8") as f:
