@@ -9,6 +9,7 @@ Usage: python -m oevl.build_report
 import collections
 import csv
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -184,7 +185,8 @@ if len(collapsed) != 1:
 num["CollapseSolAll"], num["CollapseSolLex"] = f"{collapsed[0]['sol_all']:.2f}", f"{collapsed[0]['sol_lexamb']:.2f}"
 num["CollapseEpochs"] = str(collapsed[0]["epochs"])
 num["CollapseDevLex"], num["CollapseDevMostLong"] = f"{collapsed[0]['dev_lexamb']:.2f}", f"{collapsed[0]['dev_most_long']:.2f}"
-ENC = {c: C for c, C in rjson("results/encoder/summary.json").items() if c not in ("local_replicates", "replicate_spread")}
+from oevl.encoder_summary import configs  # noqa: E402
+ENC = configs(rjson("results/encoder/summary.json"))
 num["GridRuns"] = str(sum(len(A["seeds"]) for C in ENC.values() for A in C["arms"].values()))
 num["GridCollapsed"] = str(sum(A["n_collapsed"] for C in ENC.values() for A in C["arms"].values()))
 num["EncTrainExamples"] = f"{ENC['capfull']['settings']['train_examples']:,}"
@@ -204,7 +206,7 @@ num["LeakSolSent"], num["LeakSolTok"] = str(LK["soliloquies"]["sentences"]), str
 num["LeakDevSent"], num["LeakDevTok"] = str(LK["john_ws"]["sentences"]), str(LK["john_ws"]["tokens"])
 num["DevTokens"] = f"{W['john_ws']['frequency']['n']:,}"
 
-# error typing (results/error_typing/summary.json): automated annotators, checked by hand
+# error typing (results/error_typing/summary.json): LLM labels, checked by hand
 ET = rjson("results/error_typing/summary.json")
 for system, s in (("encoder_sentence", "Enc"), ("charsiug2p", "Charsiu")):
     for t, k in ET["counts"][system].items():
@@ -215,11 +217,12 @@ num["ErrItems"] = str(ET["agreement"]["encoder_sentence"]["n"])
 # WikiPron conversion statistics, recomputed with the same converter used by run_all.sh
 import re  # noqa: E402
 from oevl.wikipron_to_marked import mark  # noqa: E402
-wp_rows = wp_ok = 0
+wp_rows = wp_alpha = wp_ok = 0
 wp_forms = set()
 for line in open(ROOT / "data" / "ang_latn_broad.tsv", encoding="utf8"):
     bare_w, ipa = line.rstrip("\n").split("\t")[:2]
     wp_rows += 1
+    wp_alpha += bool(re.fullmatch(r"[a-zþðæ]+", bare_w.lower()))
     if re.fullmatch(r"[a-zþðæ]+", bare_w.lower()) and (m := mark(bare_w, ipa)) is not None:
         wp_ok += 1
         wp_forms.add(m)
@@ -229,6 +232,7 @@ if lex_rows != len(wp_forms):
 num["WikiRows"] = f"{wp_rows:,}"
 num["WikiForms"] = f"{lex_rows:,}"
 num["WikiAligned"] = f"{100 * wp_ok / wp_rows:.1f}"
+num["WikiAlignedN"], num["WikiAlignedAlpha"] = f"{wp_ok:,}", f"{100 * wp_ok / wp_alpha:.1f}"  # of the alphabetic rows
 
 # ---------------------------------------------------------------- per-word table (training-only run)
 pw = {r["word"]: r for r in csv.DictReader(open(ROOT / "results" / "training_only" / "soliloquies_per_word.csv",
@@ -345,23 +349,44 @@ for a, short in (("word", "Word"), ("left", "Left"), ("sentence", "Bil")):
 
 # ---------------------------------------------------------------- tables
 ORDER = ["zupitza_grammar", "bright_reader", "matthew_ws", "sweet_primer", "physiologus", "john_ws", "soliloquies",
-         "hs_beowulf", "wyatt_beowulf"]
+         "hs_beowulf", "wyatt_beowulf", "tauber_beowulf"]
 TITLES = {"zupitza_grammar": "Ælfric's \\textit{Grammar}", "bright_reader": "\\textit{Anglo-Saxon Reader}",
-          "matthew_ws": "Gospel of Matthew (W.~Saxon)", "sweet_primer": "\\textit{Anglo-Saxon Primer}",
-          "physiologus": "\\textit{Physiologus}", "john_ws": "Gospel of John (W.~Saxon)",
+          "matthew_ws": "Gospel of Matthew", "sweet_primer": "\\textit{Anglo-Saxon Primer}",
+          "physiologus": "\\textit{Physiologus}", "john_ws": "Gospel of John",
           "soliloquies": "Alfred's \\textit{Soliloquies}",
-          "hs_beowulf": "\\textit{Beowulf}", "wyatt_beowulf": "\\textit{Beowulf}"}
-ROLE = {"zupitza_grammar": "ablation", "john_ws": "dev", "soliloquies": "prose test", "hs_beowulf": "agreement", "wyatt_beowulf": "agreement"}
-GENRE = {"prose": "prose", "verse": "verse", "mixed": "mixed"}
-rows = []
+          "hs_beowulf": "\\textit{Beowulf}", "wyatt_beowulf": "\\textit{Beowulf}", "tauber_beowulf": "\\textit{Beowulf}"}
+# shown as printed, not as the manifest has it: Matthew was transcribed from the 1910 printing, and every text taken
+# from Sweet's Primer is prose
+EDITOR = {"matthew_ws": "Bright, 1910 printing", "hs_beowulf": "Harrison \\& Sharp 1883$^a$",
+          "wyatt_beowulf": "Wyatt 1894$^b$", "tauber_beowulf": "Klaeber 1922"}
+GENRE = {"sweet_primer": "prose"}
+ROLE = {"zupitza_grammar": "ablation", "john_ws": "dev", "soliloquies": "prose test", "tauber_beowulf": "verse test",
+        "hs_beowulf": "agreement", "wyatt_beowulf": "agreement"}
+tauber_meta = {"editor": "Klaeber", "year": 1922, "genre": "verse", "origin": "Tauber"}
+fin = [sum(len(r["tokens"]) for r in E.load(ROOT / "data/by_source" / f"{k}.jsonl") if "finnsburg" in r["section"].lower())
+       for k in ("wyatt_beowulf", "hs_beowulf")]
+rows, sentences = [], len({t["sentence_id"] for t in beo})
 for k in ORDER:
-    s = manifest[k]
-    editor = s["editor"].replace("&", r"\&")  # no backslash inside f-string braces (Python 3.11)
-    rows.append(f"{TITLES[k]} & {editor}, {s['year']} & {GENRE[s['genre']]} & "
-                f"{s['tokens']:,} & {ROLE.get(k, 'train')} \\\\")
+    s = manifest.get(k, tauber_meta)
+    toks = beo if k == "tauber_beowulf" else list(E.tokens(E.load(ROOT / "data/by_source" / f"{k}.jsonl")))
+    sentences += 0 if k == "tauber_beowulf" else s["units"]
+    long = 100 * sum(t["gold_pattern"].count("1") for t in toks) / sum(len(t["gold_pattern"]) for t in toks)
+    role = ROLE.get(k, "train")
+    if k in ("john_ws", "soliloquies", "tauber_beowulf"):  # the share of scored tokens unseen in training
+        held = beo if k == "tauber_beowulf" else E.heldout(ROOT / "data", k)
+        role += f" ({100 * sum(not lex_t.get(t['key']) for t in held) / len(held):.2f})"
+    src = "PG" if "gutenberg" in s["origin"] else "WS" if "wikisource" in s["origin"] else "Tauber"
+    editor = EDITOR.get(k) or s["editor"].replace("&", r"\&") + f" {s['year']}"
+    rows.append(f"{TITLES[k]} & {editor} & {src} & {GENRE.get(k, s['genre'])} & {len(toks):,} & {long:.2f} & {role} \\\\")
+release = sum(s["tokens"] for s in manifest.values()) + len(beo)
+notes = (f"$^a$Project Gutenberg revision of the 4th edition (copyright 1883). $^b$Its \\textit{{Finnsburh Fragment}} is "
+         f"incomplete ({fin[0]} of {fin[1]} tokens). Scored tokens: dev {W['john_ws']['frequency']['n']:,}, prose "
+         f"{n(W, 'soliloquies', 'accuracy'):,}, verse {n(W, 'tauber_beowulf', 'accuracy'):,}. Training without Zupitza: "
+         f"{W['dataset']['train']:,} tokens. Hugging Face release: {sentences:,} sentences, {release:,} tokens.")
 (OUT / "tab_data.tex").write_text(
-    "\\begin{tabular}{@{}lllrl@{}}\n\\toprule\nEdition & Editor, year & Genre & Tokens & Role \\\\\n\\midrule\n"
-    + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf8")
+    "\\begin{tabular}{@{}llllrrl@{}}\n\\toprule\nEdition & Editor, printing & Source & Genre & Tokens & \\% long & "
+    "Role (\\% unseen) \\\\\n\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n"
+    f"\\multicolumn{{7}}{{@{{}}p{{\\linewidth}}@{{}}}}{{\\footnotesize {notes}}} \\\\\n\\end{{tabular}}\n", encoding="utf8")
 
 hdr = ("\\begin{tabular}{@{}lrrrrrr@{}}\n\\toprule\n & \\multicolumn{3}{c}{\\textit{Soliloquies} (prose)} & "
        "\\multicolumn{3}{c}{\\textit{Beowulf} (verse)} \\\\\n\\cmidrule(lr){2-4}\\cmidrule(l){5-7}\n")
@@ -498,7 +523,8 @@ if shutil.which("pdflatex"):
     for _ in range(2):
         r = subprocess.run(["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "main.tex"],
                            cwd=ROOT / "report", capture_output=True, text=True,
-                           errors="replace")  # pdflatex echoes T1 bytes (þ, ý) that are not UTF-8
+                           errors="replace",  # pdflatex echoes T1 bytes (þ, ý) that are not UTF-8
+                           env={**os.environ, "SOURCE_DATE_EPOCH": "1792454400"})  # fixed PDF dates and ID: same bytes
         if r.returncode:
             print(r.stdout[-3000:])
             sys.exit("pdflatex failed; see report/main.log")

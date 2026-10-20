@@ -61,4 +61,5 @@ echo "== 6/6 report tables, numbers and figure"
 python -m oevl.error_typing   # error typing table from the adjudicated labels in results/error_typing/labels.tsv
 python -m oevl.encoder_summary --from-tsv   # encoder table and numbers from the committed GPU predictions (no GPU)
 python -m oevl.select_config   # the encoder selection rule on the committed dev runs -> results/encoder/selection.json
+python -m oevl.paper_numbers   # the paper's other numbers, Figure 1 and its worked examples -> numbers_paper.tex
 python -m oevl.build_report

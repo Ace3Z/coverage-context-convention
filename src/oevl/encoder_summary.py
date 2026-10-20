@@ -8,10 +8,14 @@ capfull). Writes to --out:
     lexicon-ambiguous and class B tokens, a sentence bootstrap of seed-mean correctness and McNemar per seed.
   <set>_predictions.tsv.gz: one row per token: id, sentence, gold, then per config the prior, the population flags
     and class, then one column per run (<config>/<arm>_s<seed>) with its pattern. Read the patterns as strings.
-Every accuracy and paired statistic in summary.json is computed from these tables alone.
+Every accuracy and paired statistic in summary.json is computed from these tables alone, except that minority_reading
+is recomputed from the data with experiment.flags (see minority()): the committed tables keep the flag the runs
+recorded, which also counted ties with the most frequent training pattern.
 local2 and local5 never reach a cap (see REPLICATES), so their runs at the caps of one config group are replicates:
 summary.json labels them (identical_inputs_at), pools them under local_replicates and lists their spread per seed
-under replicate_spread, and the table and numbers show them once, pooled.
+under replicate_spread. The table and the numbers give them, like every other arm, at the full cap (the largest cap of
+their group) over its seeds, and the numbers also give them pooled (EncRep...). identical_runs counts the distinct
+prediction sets among all runs and lists the runs whose predictions agree on every token.
 Writes to --report: tab_encoder.tex and numbers_encoder.tex (numbers.tex is left alone).
 Usage: python -m oevl.encoder_summary --runs DIR --out results/encoder
        python -m oevl.encoder_summary --from-tsv   (no GPU runs: recomputes summary.json and the .tex files from the
@@ -25,7 +29,7 @@ import re
 import statistics
 from pathlib import Path
 
-from oevl.experiment import TESTS, mcnemar
+from oevl.experiment import TESTS, build_data, flags, heldout, lexicon, mcnemar
 from oevl.stats import bootstrap_diff
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -42,7 +46,7 @@ REPLICATE_NOTE = ("local2 and local5 inputs never exceed 103 bytes (local2 57), 
                   "arm and seed at caps 128, 256 and full share inputs, data order and seed: they are replicates, not "
                   "different caps. Their per-config entries are kept as run. Here each arm is pooled over all its runs "
                   "(mean and sample SD over runs), and the bootstrap uses each token's correctness averaged over them.")
-BLOCKS = ("local_replicates", "replicate_spread")  # summary.json keys that are not configs
+BLOCKS = ("local_replicates", "replicate_spread", "identical_runs")  # summary.json keys that are not configs
 
 
 def configs(summary):
@@ -126,7 +130,27 @@ def runs_from_summary(summary):
     return metrics
 
 
-def summarise(tables, metrics):
+def minority(tables, metrics):
+    """Set each config's minority_reading column to experiment.flags on the data, in memory (main() calls this after
+    writing the tables), and return the configs whose recorded column differed. The committed runs recorded the flag
+    before it left out training-count ties."""
+    by_ex, stale = {}, set()
+    for cfg, runs in metrics.items():
+        ex = tuple(next(iter(runs.values())).get("exclude_train") or ())
+        if ex not in by_ex:
+            counts = lexicon(build_data(ROOT / "data", ex)[0])[1]  # the flag needs only the training counts
+            by_ex[ex] = {r["id"]: flags(r, {}, counts)["minority_reading"] for s in tables for r in heldout(ROOT / "data", s)}
+        for table in tables.values():
+            if f"{cfg}:frequency" in table[0]:
+                for t in table:
+                    flag = str(int(by_ex[ex][t["id"]]))
+                    if t[f"{cfg}:minority_reading"] != flag:
+                        stale.add(cfg)
+                    t[f"{cfg}:minority_reading"] = flag
+    return stale
+
+
+def summarise(tables, metrics, stale=()):
     out = {}
     for cfg, runs in metrics.items():
         arms = sorted({a for a, _ in runs}, key=arm_order)
@@ -150,6 +174,8 @@ def summarise(tables, metrics):
                 for p, ix in idx.items():
                     vals = [acc(table, ix, f"{cfg}/{a}_s{sd}") for sd in seeds[a]]
                     for v, sd in zip(vals, seeds[a]):  # the tables must reproduce each run's own numbers
+                        if p == "minority_reading" and cfg in stale:  # the runs scored the flag they recorded
+                            continue
                         own = runs[a, sd]["arms"][a][s][p]["accuracy"]
                         if (v is None) != (own is None) or (v is not None and abs(v - own) > 1e-6):
                             raise SystemExit(f"{cfg}/{a}_s{sd} {s} {p}: {v} from the predictions, {own} in metrics.json")
@@ -243,6 +269,16 @@ def replicates(tables, summary):
     summary["local_replicates"], summary["replicate_spread"] = pooled, spread
 
 
+def identical_runs(tables, summary):
+    """Group the runs whose predictions agree on every token of every set (adds summary["identical_runs"])."""
+    runs = [k for k in next(iter(tables.values()))[0] if "/" in k]
+    groups = {}
+    for k in runs:
+        groups.setdefault(tuple(t.get(k) for table in tables.values() for t in table), []).append(k)
+    summary["identical_runs"] = {"runs": len(runs), "distinct": len(groups),
+                                 "groups": [g for g in groups.values() if len(g) > 1]}
+
+
 def pct(x, signed=False):
     return "" if x is None else f"{100 * x:+.2f}" if signed else f"{100 * x:.2f}"
 
@@ -260,6 +296,12 @@ def tag(name):
                                                                         if c.isalnum())
 
 
+def full_caps(summary):
+    """Replicate arm -> its full cap, the largest cap of its group: the only config that shows it per config."""
+    return {a: max(A["identical_inputs_at"], key=lambda c: summary[c]["settings"]["max_bytes"])
+            for C in configs(summary).values() for a, A in C["arms"].items() if "identical_inputs_at" in A}
+
+
 def numbers(summary):
     num = {}
 
@@ -268,9 +310,10 @@ def numbers(summary):
             raise SystemExit(f"macro {k} defined twice")
         num[k] = v
 
+    full = full_caps(summary)  # a replicate arm per config only at its full cap, and all its runs pooled below
     for cfg, C in configs(summary).items():
         c = "Enc" + tag(cfg)
-        arms = {a: A for a, A in C["arms"].items() if "identical_inputs_at" not in A}  # replicates: pooled below
+        arms = {a: A for a, A in C["arms"].items() if full.get(a, cfg) == cfg}
         for a, A in arms.items():
             put(f"{c}{tag(a)}Seeds", str(len(A["seeds"])))
             put(f"{c}{tag(a)}Collapsed", str(A["n_collapsed"]))
@@ -309,6 +352,14 @@ def numbers(summary):
                 put(k, pct(r["diff"], True))
                 put(k + "Lo", pct(r["lo"], True))
                 put(k + "Hi", pct(r["hi"], True))
+    for a in sorted({a for C in configs(summary).values() for a in C["arms"]}, key=arm_order):  # every run of an arm
+        vals = [v for C in configs(summary).values() if a in C["arms"]
+                for v in C["arms"][a]["sets"].get("soliloquies", {}).get("class_B", {}).get("values", [])]
+        if vals:
+            put(f"EncRunsSolClsB{tag(a)}Min", pct(min(vals)))
+            put(f"EncRunsSolClsB{tag(a)}Max", pct(max(vals)))
+    if "identical_runs" in summary:
+        put("EncRunsDistinct", str(summary["identical_runs"]["distinct"]))
     for a, seeds in summary.get("replicate_spread", {}).items():  # the widest min-max range over the seeds
         for s in PAIRED_SETS:
             for p in PAIRED_POPS:
@@ -328,25 +379,23 @@ def table_tex(summary):
              "Cap & System & Runs & Collapsed & " + " & ".join(lab for _ in sets for _, lab in pops) + " \\\\",
              "\\midrule"]
 
-    def row(a, A, runs):
+    def row(a, A):
         cells = []
         for s, _ in sets:
             for p, _ in pops:
                 r = A["sets"].get(s, {}).get(p, {})
                 cells.append(pct(r.get("mean")) + ("" if r.get("sd") is None else f"$\\pm${pct(r['sd'])}"))
         name = NAMES.get(a) or f"Local {a[5:]}"
-        return f" & {name} & {runs} & {A['n_collapsed']} & " + " & ".join(cells) + " \\\\"
+        return f" & {name} & {len(A['seeds'])} & {A['n_collapsed']} & " + " & ".join(cells) + " \\\\"
 
+    full = full_caps(summary)  # a replicate arm shows only at its full cap, like the numbers
     for k, (cfg, C) in enumerate(configs(summary).items()):
         if k:
             lines.append("\\addlinespace")
         cells = [pct(C["frequency"].get(s, {}).get(p, {}).get("accuracy")) for s, _ in sets for p, _ in pops]
         label = cfg.removeprefix("cap").replace("_", "\\_")
         lines.append(f"{label} & Frequency & & & " + " & ".join(cells) + " \\\\")
-        lines += [row(a, A, len(A["seeds"])) for a, A in C["arms"].items() if "identical_inputs_at" not in A]
-    if "local_replicates" in summary:  # the same inputs at every cap: one row per arm over all its runs
-        lines += ["\\addlinespace", "\\multicolumn{4}{@{}l}{\\textit{Any cap (replicates)}} \\\\"]
-        lines += [row(a, A, len(A["runs"])) for a, A in summary["local_replicates"]["arms"].items()]
+        lines += [row(a, A) for a, A in C["arms"].items() if full.get(a, cfg) == cfg]
     return "\n".join(lines + ["\\bottomrule", "\\end{tabular}"]) + "\n"
 
 
@@ -373,8 +422,9 @@ def main():
         cols = list(table[0])
         text = "\t".join(cols) + "\n" + "".join("\t".join(t[c] for c in cols) + "\n" for t in table)
         (out / f"{s}_predictions.tsv.gz").write_bytes(gzip.compress(text.encode("utf8"), mtime=0))  # byte-stable
-    summary = summarise(tables, metrics)
+    summary = summarise(tables, metrics, minority(tables, metrics))
     replicates(tables, summary)
+    identical_runs(tables, summary)
     (out / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
     (rep / "tab_encoder.tex").write_text(table_tex(summary), encoding="utf8")
     (rep / "numbers_encoder.tex").write_text(numbers(summary), encoding="utf8")

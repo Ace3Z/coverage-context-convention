@@ -99,7 +99,7 @@ POPS = {"accuracy": [0, 1, 2, 3], "lexicon_ambiguous": [0, 1, 2], "attested_ambi
         "class_A": [], "class_B": [0, 1], "class_C": [2], "class_unlisted": []}
 
 
-def fake_run(folder, arm, seed, preds):
+def fake_run(folder, arm, seed, preds, max_bytes=128):
     """A finished encoder run on four soliloquies tokens in two sentences, as encoder_experiment writes it."""
     folder.mkdir(parents=True)
     rows = [{"id": f"sol:{i}", "sentence_id": f"sol:{i // 2}", "gold_pattern": g, "frequency": "0",
@@ -110,10 +110,11 @@ def fake_run(folder, arm, seed, preds):
            for k, ix in POPS.items()}
     arm_summary = {"train_loss_per_epoch": [0.5], "final_train_loss": 0.5, "collapsed": seed == 2,
                    "soliloquies": {**sol, "most_long_share": 0.5, "prior_agreement": 0.5}}
-    (folder / "metrics.json").write_text(json.dumps({"seed": seed, "max_bytes": 128, "exclude_train": [],
+    (folder / "metrics.json").write_text(json.dumps({"seed": seed, "max_bytes": max_bytes, "exclude_train": [],
                                                      "arms": {arm: arm_summary}}))
 
 
+@mock.patch.object(encoder_summary, "minority", lambda tables, metrics: set())  # the fixture ids are not in data/
 class TestSummary(unittest.TestCase):
     def test_pools_seeds_and_pairs_systems(self):
         with tempfile.TemporaryDirectory() as d:
@@ -150,8 +151,8 @@ class TestSummary(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             d = Path(d)
             fake_run(d / "runs/cap128/local2_s1", "local2", 1, ["0", "0", "0", "1"])
-            fake_run(d / "runs/cap256/local2_s1", "local2", 1, GOLD)
-            fake_run(d / "runs/cap256/left_s1", "left", 1, GOLD)
+            fake_run(d / "runs/cap256/local2_s1", "local2", 1, GOLD, 256)
+            fake_run(d / "runs/cap256/left_s1", "left", 1, GOLD, 256)
             run(encoder_summary.main, "--runs", str(d / "runs"), "--out", str(d / "enc"), "--report", str(d / "gen"))
             s = json.loads((d / "enc/summary.json").read_text())
             self.assertEqual(s["cap128"]["arms"]["local2"]["identical_inputs_at"], ["cap128", "cap256"])
@@ -165,12 +166,19 @@ class TestSummary(unittest.TestCase):
             self.assertAlmostEqual(s["local_replicates"]["paired"]["soliloquies"]["lexicon_ambiguous"]
                                    ["local2-frequency"]["diff"], 1 / 6)
             tab, num = (d / "gen/tab_encoder.tex").read_text(), (d / "gen/numbers_encoder.tex").read_text()
-            self.assertIn("Any cap (replicates)", tab)
-            self.assertIn(" & Local 2 & 2 & 0 & ", tab)
+            self.assertNotIn("replicates", tab)
+            self.assertIn(" & Local 2 & 1 & 0 & 100.00", tab)  # only at its full cap, 256 bytes, like the numbers
             self.assertEqual(tab.count("Local 2"), 1)
             self.assertIn("\\newcommand{\\NEncRepSolLexLocalTwoVsFreq}{+16.67}", num)
             self.assertIn("\\newcommand{\\NEncRepSolClsBLocalTwoSpread}{50.00}", num)
-            self.assertNotIn("NEncCapOneTwoEightSolLexLocalTwo", num)
+            self.assertNotIn("NEncCapOneTwoEightSolLexLocalTwo", num)  # a replicate arm only at its full cap
+            self.assertIn("\\newcommand{\\NEncCapTwoFiveSixSolLexLocalTwo}{100.00}", num)
+            self.assertIn("\\newcommand{\\NEncCapTwoFiveSixSolLexLocalTwoVsFreq}{+33.33}", num)
+            self.assertIn("\\newcommand{\\NEncRunsSolClsBLocalTwoMin}{50.00}", num)  # over every run of the arm
+            self.assertIn("\\newcommand{\\NEncRunsSolClsBLocalTwoMax}{100.00}", num)
+            self.assertEqual(s["identical_runs"],
+                             {"runs": 3, "distinct": 2, "groups": [["cap256/left_s1", "cap256/local2_s1"]]})
+            self.assertIn("\\newcommand{\\NEncRunsDistinct}{2}", num)
             self.check_from_tsv(d)
 
     def check_from_tsv(self, d):
@@ -201,6 +209,21 @@ class TestSummary(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 run(encoder_summary.main, "--runs", str(Path(d) / "runs"), "--out", str(Path(d) / "enc"),
                     "--report", str(Path(d) / "gen"))
+
+
+class TestMinority(unittest.TestCase):
+    def test_recomputed_from_the_data(self):
+        """The summary counts strict minority readings of the committed tables, on which the prior is never right."""
+        out = ROOT / "results/encoder"
+        tables = encoder_summary.read_tables(out)
+        metrics = encoder_summary.runs_from_summary(json.loads((out / "summary.json").read_text(encoding="utf8")))
+        with contextlib.redirect_stdout(io.StringIO()):
+            stale = encoder_summary.minority(tables, metrics)
+        self.assertEqual(stale, set(metrics))  # the committed tables keep the flag that counted ties
+        for s, n in (("john_ws", 278), ("soliloquies", 607), ("tauber_beowulf", 325)):
+            mino = [t for t in tables[s] if t["capfull:minority_reading"] == "1"]
+            self.assertEqual(len(mino), n, s)
+            self.assertFalse(any(t["capfull:frequency"] == t["gold"] for t in mino), s)
 
 
 @unittest.skipUnless(importlib.util.find_spec("transformers"), "needs torch and transformers (requirements.txt)")

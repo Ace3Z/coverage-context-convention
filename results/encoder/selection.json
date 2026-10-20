@@ -896,7 +896,7 @@
    "lexicon_ambiguous": {
     "n": 7782,
     "frequency": 94.87,
-    "oracle": 99.94,
+    "oracle": 99.5,
     "word": {
      "seeds": [
       94.49,
@@ -928,7 +928,7 @@
    "accuracy": {
     "n": 16649,
     "frequency": 95.89,
-    "oracle": 98.76,
+    "oracle": 98.05,
     "word": {
      "seeds": [
       95.71,
@@ -992,7 +992,7 @@
    "lexicon_ambiguous_shared_7639": {
     "n": 7639,
     "frequency": 95.12,
-    "oracle": 99.93,
+    "oracle": 99.49,
     "word": {
      "mean": 94.73,
      "sd": 0.03
@@ -1012,7 +1012,7 @@
    "lexicon_ambiguous": {
     "n": 7639,
     "frequency": 95.6,
-    "oracle": 99.93,
+    "oracle": 99.49,
     "word": {
      "seeds": [
       95.33,
@@ -1044,7 +1044,7 @@
    "accuracy": {
     "n": 16649,
     "frequency": 96.13,
-    "oracle": 98.68,
+    "oracle": 97.92,
     "word": {
      "seeds": [
       96.01,

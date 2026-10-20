@@ -7,10 +7,25 @@ class Tests(unittest.TestCase):
  def test_oracle_oov(self):
   rs=[{'key':'x','gold_pattern':'1'},{'key':'y','gold_pattern':'0'},{'key':'z','gold_pattern':'1'}]
   self.assertEqual(oracle(rs,{'y':{'0'},'z':{'0'}}),['0','0','0'])
+ def test_oracle_credits_only_reachable_gold(self):
+  # all-short gold counts only for a word without candidates. A word whose candidates lack the gold is out of reach
+  rs=[{'key':'x','gold_pattern':'0'},{'key':'w','gold_pattern':'0'},{'key':'v','gold_pattern':'01'}]
+  lex={'w':{'1':set()},'v':{'10':set(),'11':set()}}
+  self.assertEqual([p==r['gold_pattern'] for p,r in zip(oracle(rs,lex),rs)],[True,False,False])
  def test_ambiguity(self):
   lex={'a':{'0','1'}};cts=collections.defaultdict(collections.Counter,{'a':collections.Counter({'0':8,'1':2})})
   self.assertEqual(flags({'key':'a','gold_pattern':'1'},lex,cts),{'lexicon_ambiguous':True,'attested_ambiguous':True,'minority_reading':True})
+ def test_minority_is_strict(self):
+  # a pattern tied with the most frequent one is no minority reading, so the prior can never be right on one
+  cts=collections.defaultdict(collections.Counter,{'a':collections.Counter({'00':2,'01':2,'10':1})})
+  self.assertEqual([flags({'key':'a','gold_pattern':g},{},cts)['minority_reading'] for g in ('00','01','10','11')],[False,False,True,False])
+  self.assertFalse(flags({'key':'b','gold_pattern':'1'},{},cts)['minority_reading'])
  def test_mcnemar(self):self.assertEqual(mcnemar(['0'],['1'],['1'])['p_exact'],1.0)
+ def test_conjoined_features(self):
+  # the post hoc arm: the bilateral features plus each neighbour tied to the target word
+  r={'sentence':['ic','clypie','to','þe','Drihten'],'index':3,'bare':'þe'}
+  d=features(r,'conjoined')
+  self.assertEqual(set(d)-set(features(r,'sentence')),{'W|L1=þe|to','W|L2=þe|clypie','W|R1=þe|drihten','W|R2=þe|<EOS>'})
  def test_source_split(self):
   tr,pr,hs,wy=build_data(str(Path(__file__).resolve().parents[1]/'data'))
   self.assertTrue(tr and pr and hs and wy);self.assertNotIn('soliloquies',{r['source'] for r in tr})

@@ -49,15 +49,18 @@ def lexicon(train,external=None):
 def flags(r,lex,counts):
  pats=lex.get(r['key'],set()); ct=counts.get(r['key'],{})
  att=sum(v>=2 for v in ct.values())>=2
- minority=bool(ct.get(r['gold_pattern'],0)) and r['gold_pattern']!=max(ct,key=lambda p:(ct[p],p))
+ # strict: the gold occurs in training, but less often than the most frequent pattern (a tied pattern is no minority)
+ minority=0<ct.get(r['gold_pattern'],0)<max(ct.values())
  return {'lexicon_ambiguous':len(pats)>=2,'attested_ambiguous':att,'minority_reading':minority}
 
 def features(r,arm):
  ts=r['sentence'];i=r['index'];w=key(r['bare']);d={'word='+w:1,'prefix='+w[:2]:1,'suffix='+w[-2:]:1}
- if arm in ('left','sentence'):
+ if arm in ('left','sentence','conjoined'):
   for n in (1,2):d[f'L{n}='+ (key(ts[i-n]) if i>=n else '<BOS>')]=1
- if arm=='sentence':
+ if arm in ('sentence','conjoined'):
   for n in (1,2):d[f'R{n}='+ (key(ts[i+n]) if i+n<len(ts) else '<EOS>')]=1
+ if arm=='conjoined':  # post hoc diagnostic (oevl.paper_numbers), not run by main(): each neighbour also tied to the word
+  d.update({f'W|{k[:2]}={w}|{k[3:]}':1 for k in list(d) if k[0] in 'LR'})
  return d
 
 def i32(X):
@@ -96,8 +99,9 @@ def evaluate(test,preds,lex,counts,cls=None):
  return out
 
 def oracle(test,lex):
- # Oracle must use the same OOV fallback as the actual systems.
- return [r['gold_pattern'] if r['gold_pattern'] in lex.get(r['key'],set()) else '0'*len(r['gold_pattern']) for r in test]
+ # The achievable ceiling of any candidate chooser: the gold when it is a candidate, else a wrong candidate (min() keeps
+ # it deterministic), and all short, as every system writes it, only for a word without any candidate
+ return [r['gold_pattern'] if r['gold_pattern'] in lex.get(r['key'],{}) else min(lex[r['key']]) if lex.get(r['key']) else '0'*len(r['gold_pattern']) for r in test]
 
 def mcnemar(a,b,gold):
  from scipy.stats import binomtest
