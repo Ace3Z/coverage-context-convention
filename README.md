@@ -29,9 +29,9 @@
 
 # Coverage, Context, Convention: Restoring Vowel Length in Old English
 
-**Old English editions mark long vowels with macrons that the manuscripts never wrote. We ask what limits putting
-them back automatically, and measure four limits on the same tokens: dictionary coverage, sentence context,
-editorial convention and editor disagreement.**
+**Many editions of Old English mark long vowels with macrons, which the manuscripts do not mark systematically. We
+ask what limits putting them back automatically, and measure three limits on the same tokens: candidate coverage,
+sentence context and editorial convention.**
 
 [Overview](#-overview) •
 [Headline results](#-headline-results) •
