@@ -113,7 +113,7 @@ class~B from \NEncCapfullSolClsBWord\% to \NEncCapfullSolClsBLocalTwo\% and bare
 the prior's class~B score by \NPairWTClsBPriorGap{} points, \NPSwapRatio{} times the context gain on the same tokens
 with Klaeber as gold. We contribute a length-marked corpus of nine editions (to our knowledge the first besides
 Tauber's \textit{Beowulf}), an evaluation that separates the three limits, a reanalysis of CharsiuG2P \cite{zhu2022},
-and code that recomputes every number here from the released data and model predictions.
+and code that recomputes every result here from the released data and model predictions.
 
 \paragraph{Related work.} Yarowsky \cite{yarowsky1994} restored Spanish and French accents with decision lists over
 word-specific collocations, taking accented text as a fully objective standard, which Old English editions are not.
@@ -132,9 +132,8 @@ Table~\ref{tab:data} lists the corpus: nine editions printed from 1880 to 1921 w
 transcriptions \cite{editions} and cleaned them with character mappings counted in a manifest (some files rebuild inexactly, as their
 extraction scripts are lost). The Hugging Face release (CC BY-SA
 4.0) keeps each sentence's work, editor, year, genre and section, per-token length patterns and a leakage flag.
-The corpus has \NPCorpusOverTauber{} times the tokens of Tauber's \textit{Beowulf}, to our knowledge the only other
-openly licensed corpus with vowel length per token, and together they hold three editions of \textit{Beowulf} to
-compare. Word lists lack context, and treebanks such as YCOE \cite{ycoe2003} carry, as far as we know, no length marks.
+The corpus has \NPCorpusOverTauber{} times the tokens of Tauber's \textit{Beowulf}, and together they hold three
+editions of \textit{Beowulf} to compare. Word lists lack context, and treebanks such as YCOE \cite{ycoe2003} carry, as far as we know, no length marks.
 
 \begin{table}[t]
 \centering\footnotesize
@@ -179,8 +178,8 @@ than agreement between people, and as the hand check saw the model's labels, we 
 human labels that Pangakis et al.\ \cite{pangakis2023} call for.
 
 \section{Model training}\label{sec:training}
-\paragraph{Baselines.} All systems are supervised, choose among the same candidates and output all short for a word
-without any. The frequency prior, fixed in our proposal after Yarowsky \cite{yarowsky1994}, picks a word's most
+\paragraph{Baselines.} All our systems are supervised, choose among the same candidates and output all short for a
+word without any. The frequency prior, fixed in our proposal after Yarowsky \cite{yarowsky1994}, picks a word's most
 frequent training pattern and, for an unseen word, the pattern most sources list, with ties going to fewer long
 vowels. Logistic classifiers (scikit-learn \cite{pedregosa2011}, untuned, three seeds) see sparse indicators of the
 word and its first and last two letters (\emph{word}), plus the two preceding words (\emph{left}), plus the two
@@ -188,8 +187,8 @@ following words (\emph{bilateral}). These context features are not conjoined wit
 \emph{tō}' shifts every word's scores alike. After the ByT5 results we added a post hoc \emph{conjoined} variant with the
 word-by-neighbour features of earlier work \cite{yarowsky1994,gorman2018}.
 
-\paragraph{ByT5.} Our main model fine-tunes ByT5-small \cite{xue2022} with PyTorch \cite{paszke2019} and Transformers
-\cite{wolf2020} to score candidates. The input is the bare word, alone or in context with the target marked
+\paragraph{ByT5.} As our main model we fine-tune ByT5-small \cite{xue2022} with PyTorch \cite{paszke2019} and
+Transformers \cite{wolf2020} to score candidates. The input is the bare word, alone or in context with the target marked
 \texttt{[[ ]]}, the output is its pattern string, and a candidate's score is the summed log-probability of its bytes,
 free of length bias since candidates are equally long. Arms differ only in the input: \emph{word}, \emph{left} (all
 preceding words), \emph{sentence}, \emph{local2} and \emph{local5} (two or five words on each side), all trained on the
@@ -211,8 +210,8 @@ arm, three seeds each). About fifty exploratory runs were scored on the test set
 and the selection runs also logged test scores. The choice used development scores only.
 
 \paragraph{Changes from the proposal.} The corpus grew to nine editions. A ByT5 encoder-decoder replaced the planned
-encoder classifier. WikiPron superseded the proposed dictionaries as the main candidate source. We added the local2
-and local5 arms and chose local2 as the headline arm after the test results. The class~B headline and the gold swap
+encoder classifier. WikiPron superseded the proposed dictionaries as the main candidate source. We added the logistic
+baselines and the local2 and local5 arms, and chose local2 as the headline arm after the test results. The class~B headline and the gold swap
 of Section~\ref{sec:convention} were not planned. An LLM labelled what we had planned to label ourselves. We set the
 threshold for reporting editor disagreement instead of a model only after measuring, so it decided nothing.
 
@@ -248,12 +247,12 @@ and class B. Classes: LLM labels checked by one of us. $^\dagger$Post hoc diagno
 \label{tab:context}
 \begin{tabular}{@{}lrrrrrrrr@{}}
 \toprule
- & \multicolumn{4}{c}{\textit{Soliloquies} (prose)} & \multicolumn{4}{c}{\textit{Beowulf} (verse)} \\
+ & \multicolumn{4}{c}{Prose (\textit{Soliloquies})} & \multicolumn{4}{c}{Verse (\textit{Beowulf})} \\
 \cmidrule(lr){2-5}\cmidrule(l){6-9}
  & Lex.-amb. & A & B & C & Lex.-amb. & A & B & C \\
 \textit{n} & \NEncCapfullSolLexN & \NEncCapfullSolClsAN & \NEncCapfullSolClsBN & \NEncCapfullSolClsCN & \NEncCapfullBeoLexN & \NEncCapfullBeoClsAN & \NEncCapfullBeoClsBN & \NEncCapfullBeoClsCN \\
 \midrule
-Frequency prior & \NEncCapfullSolLexFreq & \NEncCapfullSolClsAFreq & \NEncCapfullSolClsBFreq & \NEncCapfullSolClsCFreq & \NEncCapfullBeoLexFreq & \NEncCapfullBeoClsAFreq & \NEncCapfullBeoClsBFreq & \NEncCapfullBeoClsCFreq \\
+Frequency prior & \NEncCapfullSolLexFreq\phantom{$\pm$0.00} & \NEncCapfullSolClsAFreq & \NEncCapfullSolClsBFreq\phantom{$\pm$0.00} & \NEncCapfullSolClsCFreq & \NEncCapfullBeoLexFreq\phantom{$\pm$0.00} & \NEncCapfullBeoClsAFreq & \NEncCapfullBeoClsBFreq\phantom{$\pm$0.00} & \NEncCapfullBeoClsCFreq \\
 \lgrow{Logistic bilateral}{Bil}
 \lgrow{Logistic conjoined$^\dagger$}{Conj}
 \encrow{ByT5 word}{Word}
@@ -357,7 +356,7 @@ against Klaeber is our two-editor reference. They agree on \NPairWTLex\% of ambi
 on \NPairWTClsB\% of class~B. Both texts nearly always mark the pronouns \emph{þē} `thee' and \emph{gē} `ye' long, but
 in \NPWTClsBDisWyattShort{} of their \NPWTClsBDis{} class~B disagreements Klaeber marks a \emph{nē}, \emph{gȳt}
 `yet', \emph{gē} `and' or relative \emph{þē} long and Wyatt's text does not. Of a labelled sample of \NCheckN{}
-Harrison and Sharp and Wyatt disagreements, \NCheckEditorial{} are editorial, \NCheckNorm{} put the macron on the
+disagreements between Harrison and Sharp and Wyatt, \NCheckEditorial{} are editorial, \NCheckNorm{} put the macron on the
 other letter of a digraph and \NCheckOther{} are other, mostly apparent slips in one text, so the editions probably
 agree on length more often than we measure. On the \NPairWTClsBN{} shared class~B tokens, the prior agrees with Wyatt
 on \NPairWTClsBPriorWyatt\% and with Klaeber on \NPairWTClsBPriorTauber\%, a swing of \NPairWTClsBPriorGap{} points,
@@ -385,20 +384,20 @@ class). In \textit{Beowulf} line 2796, \emph{ēcum dryhtne þē ic hēr on stari
 Wyatt's text does and is scored wrong against Klaeber's \emph{þē}.
 
 \paragraph{CharsiuG2P.} CharsiuG2P \cite{zhu2022} is a multilingual ByT5 model that reads isolated words, trained on
-pronunciation lists (WikiPron's for Old English). It was built for dictionary pronunciation, not an edition's
-marking in running text, so our scores measure its fit to our editors, not G2P quality. We run it
+pronunciation lists (WikiPron's for Old English). It was built for dictionary pronunciation, so our scores
+measure how well it fits our editors' marking in running text. We run it
 as published (prefix \texttt{<ang>:}) and map its IPA to patterns with our aligner, counting unmappable outputs as
 wrong. We reproduce its published Old English scores exactly (WER \NCharsiuWer, PER \NCharsiuPer). Its evaluation
 stops decoding at Transformers' default of 20 steps, truncating \NCharsiuTrunc{} of \NCharsiuN{} outputs. With 50
 steps the WER is \NCharsiuWerFixed, and \NCharsiuLenOnly{} of \NCharsiuWordErrors{} word errors are length-only.
 On our text it gets length right on \NCharsiuSolAll\% of prose and \NCharsiuBeoAll\% of verse tokens (prior:
-\NWSolAllFreq\% and \NWBeoAllFreq\%), and of its \NPCharsiuLexWrongSol{} ambiguous prose length errors the
-context-free prior repairs \NPCharsiuFixPriorSolShare\%.
+\NWSolAllFreq\% and \NWBeoAllFreq\%), and of CharsiuG2P's \NPCharsiuLexWrongSol{} ambiguous prose length errors
+the context-free prior repairs \NPCharsiuFixPriorSolShare\%.
 
 \paragraph{Limitations.} One test text per genre lets single words decide results (\emph{Gēata}, \emph{þe}), and
 training is \NPTrainBrightShare\% Bright's, like the development text. The gold follows one editor, and we have not
-proofread the transcriptions against the print. An LLM made the labels and only one of us, not blind to the
-systems, checked them, so there is no human agreement. ByT5 never ran with dictionary candidates. Within these
+proofread the transcriptions against the print. An LLM made the labels, and only one of us checked them, seeing the
+model's labels, so no agreement between human annotators was measured. ByT5 never ran with dictionary candidates. Within these
 caveats, missing candidates cost more than context adds in both genres, and on the \textit{Beowulf} class~B tokens the
 choice of gold edition moves the prior's score more than context does.
 
@@ -406,7 +405,7 @@ choice of gold edition moves the prior's score more than context does.
 Training and testing within one editorial tradition, and scoring against several editions at once, would separate
 convention from error. Proofread test texts, ByT5 with dictionary candidates, a dictionary-free tagger
 \cite{gershuni2022} for unlisted patterns, deterministic training with five or more seeds per arm
-\cite{summers2021}, a second human annotator and more verse would address the main caveats.
+\cite{summers2021}, independent human labels for a sample and more verse would address the main caveats.
 
 \begin{thebibliography}{99}
 \raggedright\small
