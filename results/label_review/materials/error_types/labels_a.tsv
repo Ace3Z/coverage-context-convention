@@ -1,0 +1,401 @@
+system	set	id	type	confidence	reason
+encoder_sentence	soliloquies	soliloquies:00128:29	homograph	medium	geara 'readily, well' (gearo/geare) vs gēara 'formerly'
+encoder_sentence	tauber_beowulf	tauber:220:11	gold_in_doubt	high	Wyatt þe matches system; relative particle
+encoder_sentence	tauber_beowulf	tauber:685:44	gold_in_doubt	high	Wyatt þe matches system; relative particle
+encoder_sentence	tauber_beowulf	tauber:623:10	homograph	high	sēl 'better' vs sel 'hall'
+encoder_sentence	tauber_beowulf	tauber:566:9	homograph	high	sæl 'hall' vs sǣl 'time, joy'
+encoder_sentence	soliloquies	soliloquies:00044:12	editorial	medium	compound relative 'sē þe hæfð'; Hargrove marks þē here by habit (cf. 00044); class B
+encoder_sentence	soliloquies	soliloquies:00348:14	ceiling	high	gold not in candidates
+encoder_sentence	soliloquies	soliloquies:00103:4	grammatical	high	'ofer þe' pronoun þē 'thee' vs relative þe
+encoder_sentence	tauber_beowulf	tauber:79:3	homograph	high	hof 'court' vs hōf 'raised' (hebban)
+encoder_sentence	tauber_beowulf	tauber:564:1	editorial	high	article se/sē
+encoder_sentence	soliloquies	soliloquies:00699:52	editorial	high	pronoun he/hē
+encoder_sentence	tauber_beowulf	tauber:40:2	homograph	high	fyrena 'crimes' vs fȳrena 'fiery/fire'
+encoder_sentence	tauber_beowulf	tauber:401:5	editorial	high	article se/sē
+encoder_sentence	soliloquies	soliloquies:00597:8	grammatical	high	'hweðer þe ðince' dative pronoun þē vs relative þe
+encoder_sentence	tauber_beowulf	tauber:597:7	homograph	medium	Gēata 'Geats' vs geata 'of gates'
+encoder_sentence	soliloquies	soliloquies:00246:7	editorial	high	eom/ēom same verb form
+encoder_sentence	soliloquies	soliloquies:00081:4	ceiling	high	gold not in candidates
+encoder_sentence	tauber_beowulf	tauber:64:7	grammatical	high	'ær ge fyr' pronoun gē 'ye' vs conj ge
+encoder_sentence	soliloquies	soliloquies:00031:30	editorial	high	'to þam' adverb tō, marking only
+encoder_sentence	tauber_beowulf	tauber:658:5	homograph	high	gēoc 'help' vs geoc 'yoke'
+encoder_sentence	soliloquies	soliloquies:00617:12	homograph	medium	geara 'readily' vs gēara 'formerly'
+encoder_sentence	soliloquies	soliloquies:00686:4	editorial	high	Crist/Crīst same name
+encoder_sentence	tauber_beowulf	tauber:308:21	homograph	medium	Gēata 'Geats' vs geata 'of gates'
+encoder_sentence	tauber_beowulf	tauber:566:5	gold_in_doubt	high	Wyatt ne matches system
+encoder_sentence	tauber_beowulf	tauber:571:1	editorial	high	article se/sē
+encoder_sentence	soliloquies	soliloquies:00003:44	editorial	high	suffix -lic/-līc, same word
+encoder_sentence	tauber_beowulf	tauber:474:35	grammatical	high	'þær ðe bið' dative pronoun ðē vs particle ðe
+encoder_sentence	soliloquies	soliloquies:00696:24	grammatical	high	'ge ... ge' both/and vs gē 'ye'
+encoder_sentence	soliloquies	soliloquies:00356:9	editorial	high	to before inflected infinitive
+encoder_sentence	tauber_beowulf	tauber:504:4	editorial	high	article se/sē
+encoder_sentence	tauber_beowulf	tauber:751:36	homograph	high	wēg 'wave' vs weg 'way'
+encoder_sentence	soliloquies	soliloquies:00284:18	grammatical	medium	ðes = gen. þæs 'of that' vs ðēs 'this' (Bright/WS marking); class C
+encoder_sentence	tauber_beowulf	tauber:260:18	editorial	high	article se/sē
+encoder_sentence	soliloquies	soliloquies:00089:28	editorial	high	suffix -lice/-līce, same word
+encoder_sentence	soliloquies	soliloquies:00449:7	homograph	medium	lāðian 'loathe' vs laðian 'invite'
+encoder_sentence	soliloquies	soliloquies:00032:5	grammatical	high	'þu þe lufað' relative þe vs pronoun þē
+encoder_sentence	soliloquies	soliloquies:00023:22	grammatical	high	reflexive pronoun ðē vs particle ðe
+encoder_sentence	soliloquies	soliloquies:00029:1	grammatical	high	'To þe' pronoun þē vs particle þe
+encoder_sentence	tauber_beowulf	tauber:400:2	editorial	high	article se/sē
+encoder_sentence	tauber_beowulf	tauber:165:7	homograph	medium	Gēates 'Geat's' vs geates 'gate's'
+encoder_sentence	soliloquies	soliloquies:00007:9	grammatical	high	'ge ... ge' both/and vs gē 'ye'
+encoder_sentence	soliloquies	soliloquies:00599:1	editorial	high	pronoun me/mē
+encoder_sentence	tauber_beowulf	tauber:466:9	homograph	high	gæst 'guest' vs gǣst 'spirit'
+encoder_sentence	soliloquies	soliloquies:00255:32	editorial	high	pronoun he/hē
+encoder_sentence	soliloquies	soliloquies:00671:35	grammatical	high	'beon ne mæg' negative ne vs nē 'nor'
+encoder_sentence	tauber_beowulf	tauber:512:11	editorial	high	article se/sē
+encoder_sentence	tauber_beowulf	tauber:730:17	editorial	high	article se/sē
+encoder_sentence	tauber_beowulf	tauber:133:0	grammatical	medium	dual pronoun git 'you two' vs gīt 'yet' (class B like gyt); class empty
+encoder_sentence	soliloquies	soliloquies:00263:0	grammatical	medium	conjunction ge vs pronoun gē 'ye'
+encoder_sentence	tauber_beowulf	tauber:750:29	homograph	high	gēong 'went' vs geong 'young'
+encoder_sentence	soliloquies	soliloquies:00688:12	grammatical	medium	gold reads nē 'neither'; ne 'not' also fits
+encoder_sentence	tauber_beowulf	tauber:742:7	homograph	high	hyrde 'guardian' vs hȳrde 'heard'
+encoder_sentence	tauber_beowulf	tauber:196:3	homograph	high	fyrena 'crimes' vs fȳrena 'fiery'
+encoder_sentence	soliloquies	soliloquies:00290:12	editorial	high	preposition to/tō
+encoder_sentence	soliloquies	soliloquies:00514:3	grammatical	high	object pronoun þē vs particle þe
+encoder_sentence	soliloquies	soliloquies:00285:12	homograph	high	gōd 'good' vs god 'God'
+encoder_sentence	tauber_beowulf	tauber:452:64	homograph	high	fyrenum 'wickedly' vs fȳrenum 'fiery'
+encoder_sentence	soliloquies	soliloquies:00258:6	grammatical	high	'ic þe nu wiðsprece' relative þe vs pronoun þē
+encoder_sentence	tauber_beowulf	tauber:742:6	gold_in_doubt	high	HS and Wyatt rīces match system; gold short looks wrong
+encoder_sentence	tauber_beowulf	tauber:10:0	homograph	high	wine 'friend' vs wīne 'wine'
+encoder_sentence	soliloquies	soliloquies:00405:17	grammatical	medium	þes = gen. þæs 'of that' vs þēs 'this'; class C
+encoder_sentence	tauber_beowulf	tauber:714:20	homograph	medium	gētan 'destroy' vs getan (gietan 'get')
+encoder_sentence	soliloquies	soliloquies:00659:16	grammatical	high	nē 'nor' vs negative ne
+encoder_sentence	tauber_beowulf	tauber:199:4	homograph	high	mǣg 'kinsman' vs mæg 'can'
+encoder_sentence	tauber_beowulf	tauber:390:8	homograph	high	maga 'son' vs māga gen. pl. of mǣg
+encoder_sentence	soliloquies	soliloquies:00087:7	grammatical	high	'fram ðe' pronoun ðē vs particle ðe
+encoder_sentence	soliloquies	soliloquies:00214:10	editorial	low	'to ðe cymð' is pronoun; gold leaves unstressed ðe unmarked (habit/slip), system right
+encoder_sentence	tauber_beowulf	tauber:371:2	grammatical	high	object pronoun þē vs particle þe
+encoder_sentence	tauber_beowulf	tauber:505:10	homograph	high	mǣge 'kinsman' vs mæge 'may'
+encoder_sentence	soliloquies	soliloquies:00414:39	editorial	high	pronoun he/hē
+encoder_sentence	soliloquies	soliloquies:00105:1	editorial	high	article se/sē
+encoder_sentence	tauber_beowulf	tauber:541:49	homograph	high	maga 'son' vs māga 'of kinsmen'
+encoder_sentence	soliloquies	soliloquies:00484:7	editorial	medium	ongitst/ongītst same verb, Bright marks long
+encoder_sentence	tauber_beowulf	tauber:723:22	homograph	high	hyrde 'guardian' vs hȳrde 'heard'
+encoder_sentence	tauber_beowulf	tauber:493:31	homograph	medium	Gēata 'Geats' vs geata 'of gates'
+encoder_sentence	tauber_beowulf	tauber:91:34	grammatical	high	dative pronoun þē vs particle þe
+encoder_sentence	tauber_beowulf	tauber:700:27	gold_in_doubt	high	Wyatt þe matches system
+encoder_sentence	tauber_beowulf	tauber:97:18	homograph	medium	Gēata 'Geats' vs geata 'of gates'
+encoder_sentence	tauber_beowulf	tauber:442:26	editorial	high	demonstrative ðes 'this', marking only
+encoder_sentence	soliloquies	soliloquies:00219:20	grammatical	high	'ge ... ge' both/and vs gē 'ye'
+encoder_sentence	soliloquies	soliloquies:00431:1	editorial	high	pronoun he/hē
+encoder_sentence	soliloquies	soliloquies:00395:13	editorial	high	article se/sē
+encoder_sentence	tauber_beowulf	tauber:255:29	homograph	high	maga 'kinsman' vs māga 'of kinsmen'
+encoder_sentence	tauber_beowulf	tauber:91:16	homograph	high	wine 'friend' vs wīne 'wine'
+encoder_sentence	tauber_beowulf	tauber:94:8	grammatical	high	'wið þe' pronoun þē vs particle þe
+encoder_sentence	soliloquies	soliloquies:00624:16	grammatical	high	'ne cume' negative ne vs nē 'nor'
+encoder_sentence	tauber_beowulf	tauber:260:5	gold_in_doubt	high	HS and Wyatt swīðe match system
+encoder_sentence	soliloquies	soliloquies:00033:51	editorial	high	gen. article þæs/þǣs
+encoder_sentence	tauber_beowulf	tauber:47:3	homograph	high	maga 'son' vs māga 'of kinsmen'
+encoder_sentence	soliloquies	soliloquies:00314:7	homograph	medium	hēle (=hǣle 'health') vs hele 'hell/cover'
+encoder_sentence	tauber_beowulf	tauber:542:1	editorial	high	article se/sē
+encoder_sentence	tauber_beowulf	tauber:615:5	homograph	high	mǣg 'kinsman' vs mæg 'can'
+encoder_sentence	soliloquies	soliloquies:00640:4	editorial	high	possessive min/mīn
+encoder_sentence	soliloquies	soliloquies:00657:5	editorial	high	article se/sē
+encoder_sentence	tauber_beowulf	tauber:430:5	homograph	high	flet 'floor, hall' vs flēt 'cream'
+encoder_sentence	soliloquies	soliloquies:00189:38	homograph	high	wite 'know' (subj.) vs wīte 'punishment'
+encoder_sentence	soliloquies	soliloquies:00574:6	editorial	low	'power'; editors differ ān-/an- (Hargrove ānweald, WS Gospels anweald); could be homograph
+encoder_sentence	tauber_beowulf	tauber:185:15	gold_in_doubt	high	Wyatt ne matches system
+encoder_sentence	tauber_beowulf	tauber:480:7	homograph	medium	Gēata 'Geats' vs geata 'of gates'
+encoder_sentence	tauber_beowulf	tauber:580:14	homograph	medium	Gēata 'Geats' vs geata 'of gates'
+encoder_sentence	tauber_beowulf	tauber:452:45	editorial	high	article se/sē
+encoder_sentence	tauber_beowulf	tauber:533:3	homograph	high	wine 'friend' vs wīne 'wine'
+encoder_sentence	soliloquies	soliloquies:00590:2	grammatical	high	dative pronoun þē vs particle þe
+encoder_sentence	soliloquies	soliloquies:00070:12	editorial	high	to before inflected infinitive
+encoder_sentence	soliloquies	soliloquies:00692:14	grammatical	high	instrumental ðē in 'ðe ma' vs particle ðe
+encoder_sentence	tauber_beowulf	tauber:429:10	homograph	high	hæle 'hero' vs hǣle 'health'
+encoder_sentence	tauber_beowulf	tauber:97:30	homograph	high	wine 'friend' vs wīne 'wine'
+encoder_sentence	soliloquies	soliloquies:00094:7	grammatical	high	'þa ðe þe findon' pronoun þē vs particle
+encoder_sentence	tauber_beowulf	tauber:583:10	editorial	high	article se/sē
+encoder_sentence	soliloquies	soliloquies:00173:9	grammatical	medium	nē 'nor' vs negative ne
+encoder_sentence	tauber_beowulf	tauber:123:24	grammatical	medium	'þy læs ... þe' causal/instrumental þē (all editions long) vs relative þe
+encoder_sentence	tauber_beowulf	tauber:638:4	homograph	medium	Gēata 'Geats' vs geata 'of gates'
+encoder_sentence	soliloquies	soliloquies:00585:5	homograph	medium	mēst (=mǣst 'most') vs mest 'mast'
+encoder_sentence	tauber_beowulf	tauber:66:1	editorial	high	article se/sē
+encoder_sentence	tauber_beowulf	tauber:522:13	editorial	high	article se/sē
+encoder_sentence	soliloquies	soliloquies:00032:1	grammatical	high	'To ðe' pronoun ðē vs particle ðe
+encoder_sentence	tauber_beowulf	tauber:38:9	homograph	high	wine 'friend' vs wīne 'wine'
+encoder_sentence	soliloquies	soliloquies:00040:29	grammatical	high	'ne ... ne' nē 'nor' vs ne 'not'
+encoder_sentence	soliloquies	soliloquies:00435:8	grammatical	medium	dative pronoun/instrumental þē vs relative þe
+encoder_sentence	tauber_beowulf	tauber:480:17	gold_in_doubt	high	Wyatt þe matches system
+encoder_sentence	tauber_beowulf	tauber:320:1	grammatical	high	'Ic þe an' pronoun þē vs particle þe
+encoder_sentence	tauber_beowulf	tauber:271:8	homograph	high	flet 'floor' vs flēt 'cream'
+encoder_sentence	tauber_beowulf	tauber:242:15	homograph	high	hyrde 'guardian' vs hȳrde 'heard'
+encoder_sentence	soliloquies	soliloquies:00624:21	grammatical	high	'ne forwyrð' negative ne vs nē 'nor'
+encoder_sentence	tauber_beowulf	tauber:399:15	grammatical	high	'ne sceþede' negative ne vs nē 'nor'
+encoder_sentence	soliloquies	soliloquies:00185:2	homograph	medium	geare 'well' vs gēare 'formerly'
+encoder_sentence	soliloquies	soliloquies:00182:13	ceiling	high	gold not in candidates
+encoder_sentence	tauber_beowulf	tauber:91:41	editorial	high	article se/sē
+encoder_sentence	soliloquies	soliloquies:00277:23	grammatical	high	'ne byð' negative ne vs nē 'nor'
+encoder_sentence	soliloquies	soliloquies:00011:65	editorial	high	to before inflected infinitive
+encoder_sentence	soliloquies	soliloquies:00230:10	editorial	high	eac/ēac same adverb
+encoder_sentence	tauber_beowulf	tauber:161:34	editorial	high	article se/sē
+encoder_sentence	tauber_beowulf	tauber:618:10	homograph	high	wīgan 'fight' vs wigan 'warrior'
+encoder_sentence	soliloquies	soliloquies:00286:35	editorial	high	pronoun he/hē
+encoder_sentence	soliloquies	soliloquies:00641:6	homograph	high	gewit 'mind' vs gewīt 'departs'
+encoder_sentence	tauber_beowulf	tauber:109:14	grammatical	high	object pronoun þē vs particle þe
+encoder_sentence	soliloquies	soliloquies:00513:5	editorial	low	reflexive pronoun 'befeste þe'; gold leaves it unmarked (habit/slip)
+encoder_sentence	tauber_beowulf	tauber:241:5	homograph	high	gēong 'went' vs geong 'young'
+encoder_sentence	soliloquies	soliloquies:00531:13	homograph	medium	mēst (=mǣst 'most') vs mest 'mast'
+encoder_sentence	tauber_beowulf	tauber:660:37	grammatical	high	instrumental ðē 'ðe sel' vs particle ðe
+encoder_sentence	soliloquies	soliloquies:00362:3	grammatical	high	dative pronoun ðē vs particle ðe
+encoder_sentence	tauber_beowulf	tauber:412:1	editorial	high	article se/sē
+encoder_sentence	tauber_beowulf	tauber:570:18	homograph	high	sēl 'better' vs sel 'hall'
+encoder_sentence	tauber_beowulf	tauber:309:11	editorial	medium	ēstum 'favour'; Bright leaves it unmarked, no other word
+encoder_sentence	tauber_beowulf	tauber:516:11	homograph	high	wine 'friend' vs wīne 'wine'
+encoder_sentence	soliloquies	soliloquies:00004:49	ceiling	high	gold not in candidates
+encoder_sentence	soliloquies	soliloquies:00601:9	grammatical	medium	'þe oðre' late article þe vs pronoun þē
+encoder_sentence	tauber_beowulf	tauber:540:1	editorial	high	article se/sē
+encoder_sentence	tauber_beowulf	tauber:104:18	editorial	high	article se/sē
+encoder_sentence	soliloquies	soliloquies:00123:0	grammatical	low	clause-initial Ne: gold nē 'nor' vs negative ne
+encoder_sentence	tauber_beowulf	tauber:116:12	editorial	high	usic/ūsic same pronoun form
+encoder_sentence	tauber_beowulf	tauber:209:10	gold_in_doubt	high	HS þǣm matches system
+encoder_sentence	soliloquies	soliloquies:00238:0	other	high	'A' is the speaker label (Augustinus), not a word
+encoder_sentence	soliloquies	soliloquies:00674:7	grammatical	medium	'naðer ne' correlative nē vs adverb ne
+encoder_sentence	soliloquies	soliloquies:00042:15	grammatical	medium	'ne þe nan ... gemet' pronoun þē vs particle þe
+encoder_sentence	tauber_beowulf	tauber:47:21	gold_in_doubt	high	Wyatt þe matches system
+encoder_sentence	soliloquies	soliloquies:00573:9	editorial	high	pronoun he/hē
+encoder_sentence	tauber_beowulf	tauber:227:10	gold_in_doubt	high	Wyatt ne matches system
+encoder_sentence	tauber_beowulf	tauber:196:4	homograph	high	hyrde 'guardian' vs hȳrde 'heard'
+encoder_sentence	tauber_beowulf	tauber:573:1	editorial	high	article se/sē
+encoder_sentence	tauber_beowulf	tauber:93:13	homograph	medium	Gēata 'Geats' vs geata 'of gates'
+encoder_sentence	soliloquies	soliloquies:00656:13	grammatical	high	instrumental þē 'þe mare' vs particle þe
+encoder_sentence	tauber_beowulf	tauber:60:21	gold_in_doubt	high	Wyatt þe matches system
+encoder_sentence	soliloquies	soliloquies:00535:21	grammatical	high	'þe ne libbe' conj þe 'or' vs pronoun þē
+encoder_sentence	tauber_beowulf	tauber:624:5	homograph	high	gemet 'fitting' vs gemēt 'finds'
+encoder_sentence	soliloquies	soliloquies:00514:13	grammatical	high	dative pronoun þē vs particle þe
+encoder_sentence	soliloquies	soliloquies:00003:6	homograph	high	maga 'able' vs māga 'of kinsmen'
+encoder_sentence	tauber_beowulf	tauber:161:25	homograph	medium	Gēata 'Geats' vs geata 'of gates'
+encoder_sentence	tauber_beowulf	tauber:161:43	homograph	high	fyrena 'crimes' vs fȳrena 'fiery'
+encoder_sentence	tauber_beowulf	tauber:357:7	homograph	high	gewitan 'know' vs gewītan 'depart'
+encoder_sentence	tauber_beowulf	tauber:314:6	homograph	medium	Gēata 'Geats' vs geata 'of gates'
+encoder_sentence	soliloquies	soliloquies:00482:2	grammatical	high	dative pronoun þē vs particle þe
+encoder_sentence	tauber_beowulf	tauber:7:4	homograph	high	gōde 'good' vs gode 'God'
+encoder_sentence	tauber_beowulf	tauber:288:15	gold_in_doubt	high	HS and Wyatt ðe match system
+encoder_sentence	soliloquies	soliloquies:00030:0	editorial	high	preposition To/Tō
+encoder_sentence	soliloquies	soliloquies:00285:10	grammatical	low	'naþer ne' correlative; gold ne vs nē (gold inconsistent with item 154)
+encoder_sentence	tauber_beowulf	tauber:384:1	homograph	medium	Gēata 'Geats' vs geata 'of gates'
+encoder_sentence	soliloquies	soliloquies:00190:44	grammatical	high	relative þe vs pronoun þē
+encoder_sentence	tauber_beowulf	tauber:192:5	editorial	high	article se/sē
+encoder_sentence	tauber_beowulf	tauber:249:6	gold_in_doubt	high	HS and Wyatt þæt match system; gold þǣt looks wrong
+encoder_sentence	soliloquies	soliloquies:00199:38	editorial	high	article se/sē
+encoder_sentence	soliloquies	soliloquies:00077:0	editorial	high	preposition To/Tō
+encoder_sentence	tauber_beowulf	tauber:193:0	gold_in_doubt	high	Wyatt Ne matches system
+encoder_sentence	tauber_beowulf	tauber:749:5	homograph	high	hæle 'hero' vs hǣle 'health'
+encoder_sentence	soliloquies	soliloquies:00032:19	grammatical	high	'ge ... ge' both/and vs gē 'ye'
+encoder_sentence	tauber_beowulf	tauber:452:17	gold_in_doubt	high	Wyatt ne matches system
+encoder_sentence	soliloquies	soliloquies:00056:1	grammatical	high	'Ðu þe oferswiðdest' relative þe vs pronoun þē
+encoder_sentence	soliloquies	soliloquies:00068:23	editorial	high	ælc/ǣlc same word
+encoder_sentence	soliloquies	soliloquies:00018:3	grammatical	high	'ne min ne' nē 'nor' vs ne
+encoder_sentence	soliloquies	soliloquies:00705:9	grammatical	high	nē 'nor' vs negative ne
+encoder_sentence	soliloquies	soliloquies:00012:15	grammatical	medium	'ne þæt nat' gold nē 'nor' vs ne
+encoder_sentence	soliloquies	soliloquies:00391:4	editorial	high	article se/sē
+encoder_sentence	soliloquies	soliloquies:00329:0	grammatical	low	clause-initial Ne: gold nē 'nor' vs negative ne
+encoder_sentence	tauber_beowulf	tauber:561:19	homograph	high	hyrde 'guardian' vs hȳrde 'heard'
+encoder_sentence	soliloquies	soliloquies:00098:4	grammatical	high	'to þe' pronoun þē vs particle þe
+encoder_sentence	tauber_beowulf	tauber:359:6	editorial	high	article se/sē
+encoder_sentence	soliloquies	soliloquies:00211:14	editorial	high	eom/ēom same verb form
+encoder_sentence	tauber_beowulf	tauber:727:14	grammatical	medium	'þe us seceað' causal þē (both editions long) vs relative þe
+encoder_sentence	soliloquies	soliloquies:00408:0	editorial	high	ælc/ǣlc same word
+encoder_sentence	soliloquies	soliloquies:00054:5	editorial	high	pronoun we/wē
+charsiug2p	soliloquies	soliloquies:00258:0	homograph	high	ac 'but' vs āc 'oak'
+charsiug2p	tauber_beowulf	tauber:564:25	homograph	high	bite 'bite, cut' vs bīte (bītan)
+charsiug2p	soliloquies	soliloquies:00098:22	grammatical	high	'þæs ... ðe' conj ðe vs pronoun ðē
+charsiug2p	soliloquies	soliloquies:00466:21	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	soliloquies	soliloquies:00223:8	homograph	high	witan 'know' vs wītan 'blame'
+charsiug2p	tauber_beowulf	tauber:359:6	editorial	high	article se/sē
+charsiug2p	tauber_beowulf	tauber:199:3	homograph	high	gōda 'good' vs goda 'of gods'
+charsiug2p	tauber_beowulf	tauber:274:6	grammatical	high	'þara þe' relative þe vs pronoun þē
+charsiug2p	soliloquies	soliloquies:00694:24	editorial	high	preposition be/bē
+charsiug2p	soliloquies	soliloquies:00393:3	editorial	high	article se/sē
+charsiug2p	soliloquies	soliloquies:00167:4	editorial	medium	possessive þīnne (like min/mīn); lexicon þinne also 'thin'
+charsiug2p	tauber_beowulf	tauber:336:11	editorial	high	his/hīs same pronoun
+charsiug2p	soliloquies	soliloquies:00038:4	homograph	high	gōd 'good' (noun) vs god 'God'
+charsiug2p	soliloquies	soliloquies:00708:12	grammatical	high	relative ðe vs pronoun ðē
+charsiug2p	tauber_beowulf	tauber:139:7	other	medium	IPA puts length on 2nd vowel (begēn), not a lexicon reading; same word bēgen
+charsiug2p	tauber_beowulf	tauber:664:13	editorial	high	his/hīs same pronoun
+charsiug2p	soliloquies	soliloquies:00003:44	editorial	high	suffix -lic/-līc, IPA faithful
+charsiug2p	tauber_beowulf	tauber:185:0	grammatical	high	'Ne wæs' negative ne vs nē 'nor'
+charsiug2p	soliloquies	soliloquies:00489:39	grammatical	high	'þe gastlice' conj þe 'or' vs pronoun þē
+charsiug2p	soliloquies	soliloquies:00418:23	editorial	high	swiðe/swīðe same adverb
+charsiug2p	tauber_beowulf	tauber:627:36	editorial	medium	hwīle 'while', short form only unmarked spelling
+charsiug2p	soliloquies	soliloquies:00187:7	editorial	high	swiðe/swīðe same adverb
+charsiug2p	soliloquies	soliloquies:00601:21	homograph	high	man 'one' vs mān 'crime'
+charsiug2p	soliloquies	soliloquies:00040:49	homograph	high	gōd 'good' vs god 'God'
+charsiug2p	soliloquies	soliloquies:00032:5	grammatical	high	'þu þe lufað' relative þe vs pronoun þē
+charsiug2p	soliloquies	soliloquies:00033:84	editorial	high	preposition to/tō
+charsiug2p	tauber_beowulf	tauber:498:0	grammatical	high	'Ne bið' negative ne vs nē 'nor'
+charsiug2p	soliloquies	soliloquies:00008:1	grammatical	high	'Se ðe' relative ðe vs pronoun ðē
+charsiug2p	soliloquies	soliloquies:00695:42	grammatical	medium	relative þe vs pronoun þē
+charsiug2p	soliloquies	soliloquies:00405:37	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	tauber_beowulf	tauber:96:8	editorial	high	article se/sē
+charsiug2p	soliloquies	soliloquies:00039:5	editorial	medium	lēoht 'light', short leoht only unmarked spelling
+charsiug2p	tauber_beowulf	tauber:453:12	editorial	low	con 'can'; cōn is a BT/Bright marking, same word
+charsiug2p	soliloquies	soliloquies:00411:18	homograph	high	man 'man' vs mān 'crime'
+charsiug2p	tauber_beowulf	tauber:161:11	editorial	high	oþ/ōþ same conjunction
+charsiug2p	tauber_beowulf	tauber:361:9	homograph	high	wite 'know' vs wīte 'punishment'
+charsiug2p	tauber_beowulf	tauber:521:18	grammatical	high	'þone þe' relative þe vs pronoun þē
+charsiug2p	soliloquies	soliloquies:00422:4	editorial	high	swiðe/swīðe same adverb
+charsiug2p	soliloquies	soliloquies:00648:3	homograph	high	gōdes 'good' vs godes 'God's'
+charsiug2p	soliloquies	soliloquies:00421:6	editorial	high	preposition be/bē
+charsiug2p	soliloquies	soliloquies:00408:17	editorial	high	preposition to/tō
+charsiug2p	tauber_beowulf	tauber:228:12	homograph	high	gōd 'good' vs god 'God'
+charsiug2p	soliloquies	soliloquies:00562:33	homograph	high	witan 'know' vs wītan 'blame'
+charsiug2p	soliloquies	soliloquies:00031:30	editorial	high	'to þam' adverb tō, marking only
+charsiug2p	tauber_beowulf	tauber:76:16	editorial	high	oþ/ōþ same conjunction
+charsiug2p	tauber_beowulf	tauber:535:7	homograph	high	nāman 'took' vs naman 'name'
+charsiug2p	soliloquies	soliloquies:00183:14	editorial	low	participle of āwrītan; āwrīten is a dictionary variant, same verb
+charsiug2p	soliloquies	soliloquies:00350:11	editorial	high	swiðe/swīðe same adverb
+charsiug2p	tauber_beowulf	tauber:730:3	editorial	low	wesan 'be'; wēsan treated as dictionary variant
+charsiug2p	soliloquies	soliloquies:00573:9	editorial	high	pronoun he/hē
+charsiug2p	soliloquies	soliloquies:00226:10	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	soliloquies	soliloquies:00629:24	editorial	high	preposition be/bē
+charsiug2p	tauber_beowulf	tauber:386:26	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	tauber_beowulf	tauber:399:1	editorial	high	article se/sē
+charsiug2p	soliloquies	soliloquies:00356:11	homograph	high	ac 'but' vs āc 'oak'
+charsiug2p	soliloquies	soliloquies:00582:53	editorial	high	preposition be/bē
+charsiug2p	soliloquies	soliloquies:00543:11	grammatical	high	relative þe vs pronoun þē
+charsiug2p	tauber_beowulf	tauber:619:24	editorial	high	article se/sē
+charsiug2p	tauber_beowulf	tauber:376:11	homograph	high	fōr 'went' vs for 'for'
+charsiug2p	tauber_beowulf	tauber:390:14	editorial	high	eom/ēom same verb form
+charsiug2p	tauber_beowulf	tauber:7:28	homograph	high	man 'man' vs mān 'crime'
+charsiug2p	tauber_beowulf	tauber:623:10	homograph	high	sēl 'better' vs sel 'hall'
+charsiug2p	soliloquies	soliloquies:00042:18	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	tauber_beowulf	tauber:301:3	editorial	low	þyle 'orator'; þȳle only a dictionary variant
+charsiug2p	soliloquies	soliloquies:00435:53	homograph	high	man 'one' vs mān 'crime'
+charsiug2p	tauber_beowulf	tauber:39:65	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	tauber_beowulf	tauber:71:13	homograph	high	is 'is' vs īs 'ice'
+charsiug2p	soliloquies	soliloquies:00317:28	homograph	high	is 'is' vs īs 'ice'
+charsiug2p	soliloquies	soliloquies:00675:28	grammatical	high	relative þe vs pronoun þē
+charsiug2p	tauber_beowulf	tauber:512:18	editorial	medium	possessive mīnne (like min/mīn)
+charsiug2p	soliloquies	soliloquies:00688:9	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	soliloquies	soliloquies:00153:22	editorial	high	pronoun he/hē
+charsiug2p	tauber_beowulf	tauber:164:10	editorial	medium	possessive mīnne (like min/mīn)
+charsiug2p	tauber_beowulf	tauber:400:2	editorial	high	article se/sē
+charsiug2p	soliloquies	soliloquies:00195:3	editorial	high	gebrōhton same verb, short only unmarked
+charsiug2p	soliloquies	soliloquies:00306:27	grammatical	high	'þa hwile þe' conj þe vs pronoun þē
+charsiug2p	tauber_beowulf	tauber:438:49	grammatical	high	'ðara þe' relative þe vs pronoun þē
+charsiug2p	tauber_beowulf	tauber:7:4	homograph	high	gōde 'good' vs gode 'God'
+charsiug2p	soliloquies	soliloquies:00685:26	grammatical	high	relative þe vs pronoun þē
+charsiug2p	tauber_beowulf	tauber:342:8	editorial	high	preposition be/bē
+charsiug2p	soliloquies	soliloquies:00040:5	grammatical	high	relative þe vs pronoun þē
+charsiug2p	tauber_beowulf	tauber:263:0	grammatical	high	'Ne gefrægen' negative ne vs nē
+charsiug2p	soliloquies	soliloquies:00064:6	grammatical	high	relative þe vs pronoun þē
+charsiug2p	soliloquies	soliloquies:00586:30	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	tauber_beowulf	tauber:696:21	homograph	medium	pronoun hyra 'their' vs hȳra (hȳr 'hire'); class empty
+charsiug2p	tauber_beowulf	tauber:635:11	editorial	high	his/hīs same pronoun
+charsiug2p	tauber_beowulf	tauber:593:16	grammatical	high	'þara ðe' relative ðe vs pronoun ðē
+charsiug2p	tauber_beowulf	tauber:10:15	homograph	high	fær 'vessel' vs fǣr 'peril'
+charsiug2p	soliloquies	soliloquies:00314:7	homograph	medium	hēle (=hǣle 'health') vs hele 'hell/cover'
+charsiug2p	soliloquies	soliloquies:00313:9	grammatical	high	relative þe vs pronoun þē
+charsiug2p	tauber_beowulf	tauber:387:33	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	soliloquies	soliloquies:00415:10	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	soliloquies	soliloquies:00012:12	grammatical	high	'þe oðer þing' conj þe 'or' vs pronoun þē
+charsiug2p	soliloquies	soliloquies:00377:0	grammatical	high	'Ne talige' negative ne vs nē
+charsiug2p	tauber_beowulf	tauber:493:38	gold_in_doubt	high	HS up matches system; IPA faithful
+charsiug2p	tauber_beowulf	tauber:511:47	grammatical	high	'se ðe' relative ðe vs pronoun ðē
+charsiug2p	soliloquies	soliloquies:00421:65	homograph	medium	pronoun hyre 'her' vs hȳre (hȳr/hȳran)
+charsiug2p	tauber_beowulf	tauber:41:10	editorial	high	his/hīs same pronoun
+charsiug2p	tauber_beowulf	tauber:413:11	editorial	high	preposition be/bē
+charsiug2p	soliloquies	soliloquies:00645:7	homograph	high	ac 'but' vs āc 'oak'
+charsiug2p	tauber_beowulf	tauber:591:22	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	soliloquies	soliloquies:00661:14	homograph	high	ac 'but' vs āc 'oak'
+charsiug2p	tauber_beowulf	tauber:228:5	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	soliloquies	soliloquies:00495:3	homograph	high	witan 'know' vs wītan 'blame'
+charsiug2p	tauber_beowulf	tauber:511:40	homograph	high	māga 'of kinsmen' vs maga 'son'
+charsiug2p	tauber_beowulf	tauber:670:11	editorial	high	his/hīs same pronoun
+charsiug2p	soliloquies	soliloquies:00004:112	homograph	high	is 'is' vs īs 'ice'
+charsiug2p	soliloquies	soliloquies:00698:33	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	tauber_beowulf	tauber:410:28	homograph	high	gōd 'good' vs god 'God'
+charsiug2p	soliloquies	soliloquies:00246:12	grammatical	high	relative þe vs pronoun þē
+charsiug2p	tauber_beowulf	tauber:429:10	homograph	high	hæle 'hero' vs hǣle 'health'
+charsiug2p	tauber_beowulf	tauber:547:2	homograph	high	mǣg 'kinsman' vs mæg 'can'
+charsiug2p	soliloquies	soliloquies:00385:26	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	tauber_beowulf	tauber:111:5	editorial	high	article se/sē
+charsiug2p	soliloquies	soliloquies:00081:17	editorial	high	eom/ēom same verb form
+charsiug2p	tauber_beowulf	tauber:301:22	editorial	high	his/hīs same pronoun
+charsiug2p	soliloquies	soliloquies:00673:7	editorial	high	article se/sē
+charsiug2p	tauber_beowulf	tauber:566:6	homograph	high	gōd 'good' vs god 'God'
+charsiug2p	tauber_beowulf	tauber:523:1	editorial	medium	bīoð 'are', short only unmarked; IPA i͜u for io not a segment error
+charsiug2p	soliloquies	soliloquies:00377:16	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	tauber_beowulf	tauber:389:3	editorial	high	oðrum/ōðrum same word
+charsiug2p	tauber_beowulf	tauber:69:4	homograph	high	gōd 'good' vs god 'God'
+charsiug2p	tauber_beowulf	tauber:315:2	homograph	medium	onfēng 'received' vs onfeng n. 'reception'
+charsiug2p	soliloquies	soliloquies:00666:0	homograph	high	ac 'but' vs āc 'oak'
+charsiug2p	soliloquies	soliloquies:00648:54	homograph	high	witan 'know' vs wītan 'blame'
+charsiug2p	soliloquies	soliloquies:00002:7	grammatical	high	relative þe vs pronoun þē
+charsiug2p	tauber_beowulf	tauber:487:22	grammatical	high	'se þe' relative þe vs pronoun þē
+charsiug2p	tauber_beowulf	tauber:495:2	gold_in_doubt	high	HS up matches system; IPA faithful
+charsiug2p	tauber_beowulf	tauber:722:0	grammatical	high	'Ne meahte' negative ne vs nē
+charsiug2p	tauber_beowulf	tauber:687:29	grammatical	high	'ða ðe' relative ðe vs pronoun ðē
+charsiug2p	soliloquies	soliloquies:00628:11	editorial	high	preposition be/bē
+charsiug2p	tauber_beowulf	tauber:223:8	grammatical	high	'þara þe' relative þe vs pronoun þē
+charsiug2p	tauber_beowulf	tauber:648:13	editorial	high	article se/sē
+charsiug2p	soliloquies	soliloquies:00036:15	grammatical	high	relative þe vs pronoun þē
+charsiug2p	soliloquies	soliloquies:00418:33	editorial	high	swiðe/swīðe same adverb
+charsiug2p	tauber_beowulf	tauber:742:0	grammatical	high	'Ne meahton' negative ne vs nē
+charsiug2p	soliloquies	soliloquies:00323:23	homograph	medium	hēle (=hǣle 'health') vs hele 'hell/cover'
+charsiug2p	tauber_beowulf	tauber:517:5	editorial	medium	lȳtle 'little', short only unmarked
+charsiug2p	tauber_beowulf	tauber:613:27	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	soliloquies	soliloquies:00338:0	grammatical	high	relative þe (continues 00337) vs pronoun þē
+charsiug2p	soliloquies	soliloquies:00162:6	grammatical	high	relative þe vs pronoun þē
+charsiug2p	tauber_beowulf	tauber:519:4	editorial	medium	lāfe 'heirlooms', short only unmarked
+charsiug2p	soliloquies	soliloquies:00466:31	homograph	high	ac 'but' vs āc 'oak'
+charsiug2p	soliloquies	soliloquies:00041:19	grammatical	high	relative þe vs pronoun þē
+charsiug2p	soliloquies	soliloquies:00119:16	homograph	medium	mǣst 'most' vs mæst 'mast'
+charsiug2p	soliloquies	soliloquies:00147:7	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	soliloquies	soliloquies:00025:23	editorial	medium	conj þæt; Hargrove marks þǣt by habit
+charsiug2p	tauber_beowulf	tauber:207:10	homograph	high	gemete 'measure' vs gemēte 'find'
+charsiug2p	soliloquies	soliloquies:00018:19	homograph	high	man 'one' vs mān 'crime'
+charsiug2p	soliloquies	soliloquies:00533:15	grammatical	high	relative þe vs pronoun þē
+charsiug2p	soliloquies	soliloquies:00448:21	grammatical	high	'þe ... þe' conj 'or' vs pronoun þē
+charsiug2p	soliloquies	soliloquies:00494:1	editorial	high	preposition be/bē
+charsiug2p	soliloquies	soliloquies:00196:15	editorial	medium	article þæt; Hargrove marks þǣt by habit
+charsiug2p	tauber_beowulf	tauber:723:1	editorial	high	article se/sē
+charsiug2p	soliloquies	soliloquies:00348:10	editorial	high	swiðe/swīðe same adverb
+charsiug2p	soliloquies	soliloquies:00646:4	homograph	high	witan 'know' vs wītan 'blame'
+charsiug2p	soliloquies	soliloquies:00562:47	grammatical	high	'ðe neron' conj 'or' vs pronoun ðē
+charsiug2p	soliloquies	soliloquies:00115:2	editorial	high	pronoun me/mē
+charsiug2p	soliloquies	soliloquies:00311:3	homograph	high	witan 'know' vs wītan 'blame'
+charsiug2p	soliloquies	soliloquies:00303:6	grammatical	high	relative þe vs pronoun þē
+charsiug2p	tauber_beowulf	tauber:453:11	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	soliloquies	soliloquies:00313:2	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	soliloquies	soliloquies:00505:5	homograph	medium	pronoun hyre 'her' vs hȳre (hȳr/hȳran)
+charsiug2p	soliloquies	soliloquies:00572:0	grammatical	high	'Ne getweoge' negative ne vs nē
+charsiug2p	tauber_beowulf	tauber:211:6	editorial	medium	lāfe 'heirloom', short only unmarked
+charsiug2p	soliloquies	soliloquies:00613:11	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	tauber_beowulf	tauber:363:2	gold_in_doubt	high	HS up matches system; IPA faithful
+charsiug2p	tauber_beowulf	tauber:277:27	editorial	high	article se/sē
+charsiug2p	soliloquies	soliloquies:00214:19	editorial	high	preposition be/bē
+charsiug2p	soliloquies	soliloquies:00033:17	editorial	medium	nānum same word, short only unmarked
+charsiug2p	soliloquies	soliloquies:00592:16	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	soliloquies	soliloquies:00702:1	grammatical	high	'Hu ne' negative ne vs nē
+charsiug2p	soliloquies	soliloquies:00644:13	grammatical	high	'þe ma þe' conj 'than' þe vs þē
+charsiug2p	tauber_beowulf	tauber:92:10	editorial	high	his/hīs same pronoun
+charsiug2p	soliloquies	soliloquies:00352:9	homograph	medium	pronoun hyre vs hȳre (hȳr/hȳran)
+charsiug2p	soliloquies	soliloquies:00472:3	grammatical	high	relative ðe vs pronoun ðē
+charsiug2p	soliloquies	soliloquies:00195:30	editorial	high	his/hīs same pronoun
+charsiug2p	soliloquies	soliloquies:00456:2	grammatical	high	relative þe vs pronoun þē
+charsiug2p	tauber_beowulf	tauber:401:34	editorial	high	his/hīs same pronoun
+charsiug2p	soliloquies	soliloquies:00392:2	homograph	high	is 'is' vs īs 'ice'
+charsiug2p	tauber_beowulf	tauber:658:12	editorial	high	his/hīs same pronoun
+charsiug2p	tauber_beowulf	tauber:134:7	gold_in_doubt	high	HS and Wyatt up match system; IPA faithful
+charsiug2p	soliloquies	soliloquies:00031:10	editorial	high	nis/nīs same form
+charsiug2p	soliloquies	soliloquies:00414:25	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	soliloquies	soliloquies:00026:18	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	tauber_beowulf	tauber:22:19	grammatical	high	'se þe' relative þe vs pronoun þē
+charsiug2p	soliloquies	soliloquies:00284:19	grammatical	high	relative þe vs pronoun þē
+charsiug2p	soliloquies	soliloquies:00043:6	homograph	high	man 'one' vs mān 'crime'
+charsiug2p	soliloquies	soliloquies:00305:4	homograph	high	man 'man' vs mān 'crime'
+charsiug2p	tauber_beowulf	tauber:185:4	editorial	medium	sīð 'time', short only unmarked
+charsiug2p	tauber_beowulf	tauber:394:13	homograph	medium	onfēng 'received' vs onfeng n. 'reception'
+charsiug2p	tauber_beowulf	tauber:111:11	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	tauber_beowulf	tauber:503:2	editorial	medium	sīð 'journey', short only unmarked
+charsiug2p	soliloquies	soliloquies:00410:14	grammatical	high	'ne an ic' negative ne vs nē
+charsiug2p	tauber_beowulf	tauber:733:17	homograph	high	gōdum 'good one' vs godum 'gods'
+charsiug2p	tauber_beowulf	tauber:421:33	homograph	high	is 'is' vs īs 'ice'
+charsiug2p	tauber_beowulf	tauber:201:5	editorial	high	article se/sē
+charsiug2p	soliloquies	soliloquies:00412:7	grammatical	high	'se se þe' relative þe vs pronoun þē
+charsiug2p	tauber_beowulf	tauber:449:3	editorial	high	preposition be/bē
+charsiug2p	tauber_beowulf	tauber:14:1	gold_in_doubt	high	Wyatt gyt matches system; IPA faithful

@@ -27,9 +27,12 @@ editable, because the code finds `data/` and `results/` relative to the reposito
 - Frequency prior: the most frequent pattern in training. For a word not seen in training it takes the pattern that
   most dictionaries list, then the one with the fewest long vowels.
 - Logistic models: logistic classifiers that choose among the dictionary's candidates. They see the word, the word
-  plus two words on the left, or the word plus two words on each side, and run with seeds 1, 2 and 3.
-- Oracle: picks the gold pattern whenever it is a candidate. Like every system, it writes a word with no candidates
-  as all short.
+  plus two words on the left, or the word plus two words on each side, and run with seeds 1, 2 and 3. A fourth,
+  word-conjoined model adds each neighbour tied to the target word to the bilateral features. It is a post hoc
+  diagnostic, designed after the ByT5 results and not tuned, and only `oevl.paper_numbers` runs it.
+- Oracle: the achievable ceiling of any system that chooses among the candidates. It is right when the gold pattern
+  is a candidate, or when the word has no candidates and its gold is all short, because like every system it writes
+  such a word all short. Otherwise it is wrong.
 - ByT5: ByT5-small fine-tuned on the same examples. One arm sees the word only, one the left context, one the whole
   sentence, and two arms see two or five words on each side. The dictionary proposes the candidate patterns and the
   model scores each one.
@@ -39,26 +42,30 @@ editable, because the code finds `data/` and `results/` relative to the reposito
 
 Accuracy is reported on all tokens and on three harder populations: lexicon-ambiguous tokens (two or more candidate
 patterns), attested-ambiguous tokens (at least two patterns, each seen at least twice in training), and minority
-readings (the gold pattern is seen in training but is not the most frequent one there). The lexicon-ambiguous tokens
-are also split by ambiguity class (`class_A`, `class_B`, `class_C` in `metrics.json`) for the 60 skeletons (spellings
-without macrons) in `data/ambiguity_classes.csv`, with `class_unlisted` for the rest. Two LLM annotators and an
-automated adjudicator assigned the classes. A second, blind LLM review agreed with 58 of them, and an LLM
-adjudicator kept the other two (`results/label_review/`). Mahbod Tajdini then checked all 60 by hand and changed none.
+readings (the gold pattern is seen in training, but less often than the most frequent one there). The
+lexicon-ambiguous tokens are also split by ambiguity class (`class_A`, `class_B`, `class_C` in `metrics.json`) for the
+60 skeletons (spellings without macrons) in `data/ambiguity_classes.csv`, with `class_unlisted` for the rest. Two
+separate runs of one LLM, Claude Opus 5.5 (model id `claude-opus-5-5`), assigned the classes with the same written
+guidelines, and a third run settled their two disagreements. A blind review by further runs of the same model agreed
+with 58 of the 60, and another run kept the other two (`results/label_review/`). Mahbod Tajdini then checked all 60
+by hand and changed none.
 The 60 skeletons were picked by their frequency in the training works (Zupitza included) and both test sets, and they are kept under
 decision D3. With training forms plus WikiPron, the `d3` block of `data/ambiguity_classes.json` records that `hi`
 is no longer lexicon-ambiguous without Zupitza, and that 6,759 of the 36,203 lexicon-ambiguous tokens counted there
 fall outside the list.
 
 Results are the mean and sample standard deviation over seeds. A difference between two systems gets a 95%
-sentence-level bootstrap interval on each token's correctness averaged over seeds (`oevl.stats`). Exact McNemar tests
-are stored as well (per seed for ByT5, seed 1 for the logistic models).
+sentence-level bootstrap interval on each token's correctness averaged over seeds (`oevl.stats`). For a few ByT5
+contrasts `oevl.paper_numbers` also gives intervals that resample the runs as well as the sentences (40,000 draws). Exact McNemar
+tests are stored as well (per seed for ByT5, seed 1 for the logistic models).
 
 `run_all.sh` runs four candidate settings: training forms only, training forms plus WikiPron (the main setting), the
 three proposal dictionaries, and all four sources together. `check_expected` freezes 660 values from these settings,
 the Zupitza ablation and the editor agreement. It passes on macOS with Python 3.11 and 3.14 and on Linux with
 Python 3.14. On Linux a few McNemar p-values differ from the committed ones in the 15th significant digit, which the
-check tolerates. Where none of the Times-like fonts the figure asks for is installed, it falls back to DejaVu Serif,
-so its PDF differs too.
+check tolerates. The committed figures embed Times New Roman, the third serif font they ask for. Where matplotlib
+finds Liberation Serif or Nimbus Roman first, or none of the three and falls back to DejaVu Serif, the figure PDFs
+differ in their bytes.
 
 ## 1. Reproduce everything
 
@@ -82,10 +89,12 @@ It takes about two minutes and has six steps:
    output and `oevl.agreement` writes `results/agreement/`.
 5. `oevl.check_expected` fails if any of the 660 frozen values changes.
 6. `oevl.error_typing`, `oevl.encoder_summary --from-tsv` and `oevl.select_config` rebuild the error table, the
-   ByT5 table and numbers, and `results/encoder/selection.json` from committed files without a GPU (section 5). Then
-   `oevl.build_report` writes `report/generated/` (numbers, tables, figure), checks the worked examples against the
-   predictions, and compiles `REPORT.pdf` if `pdflatex` is installed. Without LaTeX, upload `report/` to Overleaf and
-   compile `main.tex`.
+   ByT5 table and numbers, and `results/encoder/selection.json` from committed files without a GPU (section 5).
+   `oevl.paper_numbers` computes the other numbers the paper may print into `report/generated/numbers_paper.tex`,
+   draws Figure 1 (`report/generated/fig_coverage.pdf`) and stops the run if a worked example no longer holds. Then
+   `oevl.build_report` writes the rest of `report/generated/` (numbers, tables, figure), checks the worked examples
+   against the predictions, and compiles `REPORT.pdf` if `pdflatex` is installed. Without LaTeX, upload `report/` to
+   Overleaf and compile `main.tex`.
 
 ## 2. Run a single experiment
 
@@ -149,7 +158,9 @@ PYTHONPATH=src python -m oevl.select_config
 ```
 
 `run_all.sh` runs both. They rebuild the ByT5 table and numbers and `results/encoder/selection.json` from the
-committed prediction tables and run records.
+committed prediction tables and run records. The `minority_reading` columns of the committed tables keep the flag the
+runs recorded, which also counted ties with the most frequent training pattern. `encoder_summary` recomputes the flag
+from the data, so `summary.json` and the numbers count only strict minority readings.
 
 ## 6. CharsiuG2P error analysis
 
@@ -224,15 +235,19 @@ results/
 ├── all/
 ├── wikipron_with_zupitza/      the Zupitza ablation
 ├── agreement/                  metrics.json, disagreements.tsv, agreement.log, and disagreements_checked.tsv
-│                               (100 disagreements labelled by an LLM, checked by a blind LLM review and then
-│                               by hand)
+│                               (100 disagreements labelled by one run of an LLM, checked by a blind review by
+│                               further runs of the same model and then by hand)
 ├── encoder/                    selection.json, summary.json, <set>_predictions.tsv.gz
 ├── charsiu/                    benchmark.json, benchmark.tsv, ipa.tsv, metrics.json
-├── error_typing/               labels.tsv, summary.json (400 error types labelled by LLMs and checked by hand)
-└── label_review/               expert_review.json: the blind LLM review of all 560 LLM labels
+├── error_typing/               labels.tsv, summary.json (400 error types labelled by two runs of one LLM, settled
+│                               by a third run and checked by hand)
+└── label_review/               expert_review.json (the blind review of all 560 labels) and materials/ (the
+                                guidelines, the item sheets, and labels_a.tsv and labels_b.tsv of the two runs
+                                that labelled the classes and the error types)
 report/
 ├── main.tex
-└── generated/                  tables, numbers and figure (build_report, encoder_summary, error_typing)
+└── generated/                  tables, numbers and figures (build_report, encoder_summary, error_typing,
+                                paper_numbers)
 release/
 ├── hf_card.md                  template of the Hugging Face dataset card
 └── hf_license.md               licence file of the Hugging Face copy

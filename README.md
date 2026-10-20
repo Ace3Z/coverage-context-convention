@@ -89,24 +89,28 @@ how far editors agree. `bash run_all.sh` reproduces every number and table in th
 
 ## 📊 Headline results
 
-The ByT5 rows are means over three seeds (nine runs for the two-words-each-side arm, whose input is the same at
-every byte cap), and the intervals are 95% sentence-level bootstrap intervals on each token's correctness averaged
-over seeds. Lexicon-ambiguous tokens have two or more candidate patterns, and class B holds grammatical homographs,
+The ByT5 rows are means over three seeds at the full byte cap, and the intervals are 95% sentence-level bootstrap
+intervals on each token's correctness averaged over seeds. Lexicon-ambiguous tokens have two or more candidate patterns, and class B holds grammatical homographs,
 words spelled alike that differ in function.
 
 | Finding | Tokens | Result |
 |---|---|---|
 | Coverage matters most on verse | *Beowulf*, all tokens, frequency prior | 82.40% with training forms, 92.38% with all four dictionaries |
-| Context helps most on grammatical homographs | *Soliloquies*, class B (*þe/þē*, *ne/nē*), ByT5 | 62.66% from the word alone, 76.39% with two words each side (+13.73, 11.29 to 16.03) |
-| Context helps prose overall | *Soliloquies*, lexicon-ambiguous tokens, ByT5 | 88.91% from the word alone, 91.30% with two words each side (+2.39, 1.91 to 2.87) |
+| Context helps most on grammatical homographs | *Soliloquies*, class B (*þe/þē*, *ne/nē*), ByT5 | 62.66% from the word alone, 76.47% with two words each side (+13.82, 11.39 to 16.18) |
+| Context helps prose overall | *Soliloquies*, lexicon-ambiguous tokens, ByT5 | 88.91% from the word alone, 91.31% with two words each side (+2.40, 1.92 to 2.89) |
 | On verse the word alone is enough | *Beowulf*, lexicon-ambiguous tokens, ByT5 | 90.04% from the word alone, 89.43% with the full sentence (−0.61, −1.06 to −0.15) |
 | Editors differ most on grammatical words | Wyatt against Klaeber (Tauber), lexicon-ambiguous / class B | 96.08% / 78.07% agreement |
 | CharsiuG2P's errors are mostly about length | its own 500-word Old English test set | word error rate 0.208 as published and 0.188 with 50 decoding steps, where 75.5% of the word errors differ only in vowel length |
 
-LLM annotators labelled the ambiguity classes, the error types and a sample of editor disagreements. A second, blind
-LLM review agreed with 538 of these 560 labels. An LLM adjudicator kept 13 of the 22 the review disputed and
-corrected the other nine (`results/label_review/`). Mahbod Tajdini then checked all 560 labels by hand and
-changed none.
+An LLM, Claude Opus 5.5 (model id `claude-opus-5-5`), made the 560 labels. Two separate runs of it labelled the
+ambiguity classes and the error types with the same written guidelines, and a third run settled their disagreements.
+A single run labelled a sample of 100 editor disagreements. A blind review by further runs of the same model agreed
+with 538 of the 560 labels, and of the 22 it disputed another run kept 13 and corrected nine. Mahbod Tajdini then
+checked all 560 labels by hand and changed none. The guidelines, the item sheets and the labels of the two runs
+(`labels_a.tsv`, `labels_b.tsv`) are in `results/label_review/materials/`, and the blind review is in
+`results/label_review/expert_review.json`. The settled labels are in `data/ambiguity_classes.csv` and
+`results/error_typing/labels.tsv`, and the single run's labels of the disagreements in
+`results/agreement/disagreements_checked.tsv`.
 The report has the full tables, the caveats and the run-to-run variance (TODO: link the PDF).
 
 ---
@@ -114,8 +118,8 @@ The report has the full tables, the caveats and the run-to-run variance (TODO: l
 ## 🧩 Pipeline
 
 The code is the Python package `oevl` in `src/oevl/`. `bash run_all.sh` runs every CPU stage from the committed
-inputs and rebuilds all tables. Rebuilding the corpus or the dictionaries from their sources, the CharsiuG2P
-benchmark and the GPU runs have their own commands in [REPRODUCE.md](REPRODUCE.md).
+inputs and rebuilds all tables, figures and the numbers the report prints. Rebuilding the corpus or the dictionaries
+from their sources, the CharsiuG2P benchmark and the GPU runs have their own commands in [REPRODUCE.md](REPRODUCE.md).
 
 | # | Stage | Module | Writes |
 |---|---|---|---|
@@ -127,7 +131,7 @@ benchmark and the GPU runs have their own commands in [REPRODUCE.md](REPRODUCE.m
 | 6 | ByT5 grid and selection (GPU) | `encoder_experiment.py`, `select_config.py`, `encoder_summary.py`, `stats.py`, `scripts/encoder_grid.sh` | `results/encoder/`, `report/generated/tab_encoder.tex` and `numbers_encoder.tex` |
 | 7 | CharsiuG2P error analysis | `charsiu_g2p.py` | `results/charsiu/` |
 | 8 | Error typing | `error_typing.py` | `results/error_typing/`, `report/generated/tab_errors.tex` |
-| 9 | Frozen check and report | `check_expected.py`, `build_report.py` | `report/generated/`, `REPORT.pdf` |
+| 9 | Frozen check, paper numbers and report | `check_expected.py`, `paper_numbers.py`, `build_report.py` | `report/generated/`, `REPORT.pdf` |
 
 `try_text.py` adds macrons to your own sentences, `export_hf.py` writes the Hugging Face copy of the data, and
 `pilot.py` runs the GPU pilot from the Kaggle and Colab notebooks in `notebooks/`.
@@ -221,7 +225,7 @@ coverage-context-convention/
 
 ## 🖥️ Compute
 
-- `bash run_all.sh` takes about two minutes on an Apple M-series laptop, including 75 unit tests (one is skipped unless
+- `bash run_all.sh` takes about two minutes on an Apple M-series laptop, including 89 unit tests (one is skipped unless
   the Wikisource download is cached), 660 frozen checks and the report.
 - `requirements.txt` installs and passes those checks on macOS with Python 3.11 and 3.14, and on Linux with Python 3.14
   and a CUDA GPU.

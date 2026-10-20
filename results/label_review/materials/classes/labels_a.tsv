@@ -1,0 +1,61 @@
+skeleton	label	confidence	reason
+þa	C	high	same word þā (adv/conj/dem.); short þa (17 vs 2505) is unmarked editorial variant
+þæt	C	high	same word þæt; þǣt (6, train only, no dictionary) is stray editorial marking
+þe	B	high	relative particle þe vs pronoun þē 'thee' / instr. þē=þȳ; also C: Tauber marks some relative þē
+he	C	high	same pronoun hē; short he (20) is editorial omission
+to	C	high	same word tō (prep/adv/infinitive marker); short to (49) is editorial habit
+ne	B	medium	negative adverb ne 'not' vs conjunction nē 'nor', both dictionary-backed; also C: Clark Hall does not distinguish
+se	C	high	same demonstrative sē; editors split se/sē by habit (guideline example)
+þam	C	high	same word þām (dat. of se); short þam (6) is unmarked variant
+swa	C	high	same word swā; short swa (4) is editorial omission
+þu	C	high	same pronoun þū; short þu (2) is editorial omission
+is	A	high	verb is 'is' vs noun īs 'ice' (guideline example)
+his	C	medium	both corpus hīs tokens are the possessive his mis-marked; also A: Clark Hall hīs = īs 'ice', unattested here
+wæs	C	high	same verb wæs; wǣs (2, train only) is mis-marking
+hi	C	high	same pronoun hī; short hi (1) is editorial omission
+ge	B	high	conjunction ge 'and/both' vs pronoun gē 'ye'; also C: Tauber marks some conjunction ge long
+me	C	high	same pronoun mē; short me (8) is editorial; Clark Hall me = menn is irrelevant
+for	A	high	preposition for vs fōr 'went' (pret. of faran) / noun 'journey'
+þæs	C	high	same word þæs (gen. of se/þæt); þǣs (2) is stray marking
+ac	A	high	conjunction ac 'but' vs noun āc 'oak'
+þær	C	high	same word þǣr; short þær (4) is editorial omission
+we	C	high	same pronoun wē; short we (2) is editorial omission
+þæm	C	high	same word þǣm (dat. of se); short þæm (4) is unmarked variant
+cwæþ	C	high	same verb form cwæð (pret. sg.); cwǣþ (8, one source, no dictionary) is editorial
+hie	C	high	same pronoun hīe; short hie (3) is editorial omission
+nu	C	high	same word nū; short nu (2) is editorial omission
+hit	C	high	same pronoun hit; hīt (1) is mis-marking
+hig	C	medium	corpus hīg tokens (Zupitza) are the pronoun 'they' marked long; also A: Clark Hall hīg = hīeg 'hay', unattested
+be	C	low	same preposition be; bē (3, no dictionary) looks like transcription errors for hē, not a real reading
+þas	C	high	same demonstrative þās; short þas tokens are acc. pl. unmarked in verse; also B: Clark Hall ðas = ðæs gen. sg.
+hine	C	medium	both hīne tokens are pronoun hine mis-marked; also A: Clark Hall hīne = hīwene, unattested
+æfter	C	high	same preposition æfter; ǣfter (2) is mis-marking
+god	A	high	noun god 'God' vs adjective gōd 'good' (guideline example)
+ofer	A	high	preposition ofer vs noun ōfer 'bank, shore'
+eow	C	high	same pronoun ēow; eow and eōw (1 each) are mis-markings
+hyt	A	medium	pronoun hyt (=hit) vs hȳt 'hides' (pres. 3 sg. of hȳdan); hȳt has no corpus tokens
+man	A	high	man 'one/man' vs mān 'crime, evil' (guideline example); mān has no corpus tokens
+eac	C	high	same word ēac; short eac (1) is editorial omission
+soþlice	C	high	same adverb sōþlīce; soþlīce (1) is editorial omission
+an	B	medium	an (= on prep, or unnan 'I grant') vs numeral/indef. ān 'one', both function words; also A: arguably unrelated lexemes
+oþre	C	high	same adjective ōþre; short oþre (2) is editorial omission
+þes	C	high	same demonstrative 'this'; Clark Hall 'ðēs (e?)' shows editors split þes/þēs by habit
+þis	B	medium	nom./acc. neut. þis vs instr./dat. þīs (=þȳs) in the þīs examples; also C: þīs has no dictionary backing here
+naman	A	high	noun naman (obl. of nama 'name') vs nāman 'took' (pret. pl. of niman)
+wæron	C	high	same verb wǣron; short wæron (1) is mis-marking
+mæg	A	high	verb mæg 'can' vs noun mǣg 'kinsman'
+godes	A	high	Godes 'of God' vs gōdes 'of good'
+æt	A	high	preposition æt vs ǣt 'ate' (pret. of etan) / noun 'food'
+swiþe	C	high	same adverb swīþe; short swiþe (4) is editorial omission
+nan	C	high	same word nān; short nan (1) is editorial omission
+oþ	C	high	same preposition oþ 'until'; dictionaries and editors disagree on ōþ, classic editorial habit
+hælend	C	high	same noun hǣlend; hælend (2) is editorial omission
+min	C	high	all short min tokens are the possessive mīn; also A: Clark Hall min 'small' (dubious), unattested
+gode	A	high	Gode 'to God' vs gōde 'good' (adj./noun)
+na	C	high	same adverb nā; short na (1) is editorial omission
+oþrum	C	high	same adjective ōþrum; short oþrum (1) is editorial omission
+witodlice	C	high	same adverb witodlīce; short witodlice (1) is editorial omission
+wære	C	high	the short wære token is verb wǣre mis-marked; also A: Clark Hall wære = wer II, unattested
+gyt	B	medium	dual pronoun gyt (=git 'you two') vs adverb gȳt (=gīet 'yet'); also A: arguably unrelated lexemes
+rice	C	high	same word rīce; short rice (2) is editorial omission
+eom	C	high	same verb eom; ēom (1) is mis-marking

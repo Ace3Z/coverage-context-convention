@@ -1,0 +1,61 @@
+skeleton	label	confidence	reason
+þa	C	high	same word (adv/conj þā and article þā are all long); short þa is unmarked editorial spelling
+þæt	C	high	same conj/demonstrative þæt; þǣt (6) is a stray editorial or error mark
+þe	B	high	relative particle þe vs pronoun þē 'thee' (also instr. þē = þȳ); other: some relatives marked long by editors (C)
+he	C	high	same pronoun hē; short he is unmarked spelling
+to	C	high	same word tō (prep and adv 'too' both long); short to is unmarked spelling
+ne	B	high	negative particle ne 'not' vs conjunction nē 'nor'; other: a few nē 'not' tokens are editorial (C)
+se	C	medium	guideline example, article/pronoun sē marked long or short by habit; other: Tauber splits article se vs pronoun sē (B)
+þam	C	high	same dat. þām; short þam is unmarked
+swa	C	high	same adv/conj swā; short swa is unmarked
+þu	C	high	same pronoun þū; Clark Hall 'ðu (ū)' shows editorial variation
+is	A	high	verb is 'is' vs noun īs 'ice' (guideline example)
+his	C	medium	both hīs tokens are the pronoun his mis-marked; other: Clark Hall hīs = īs 'ice' (A, no tokens)
+wæs	C	high	same pret. wæs; wǣs (2) are stray marks
+hi	C	high	same pronoun hī; short hi is unmarked
+ge	B	high	conjunction ge 'and, both' vs pronoun gē 'ye'; other: some gē conj tokens are editorial (C)
+me	C	high	same pronoun mē; Clark Hall me = menn is negligible
+for	A	high	preposition for vs fōr pret. of faran 'went' (also noun 'journey')
+þæs	C	high	same gen. þæs; þǣs (2) are stray editorial marks
+ac	A	high	conjunction ac 'but' vs noun āc 'oak'
+þær	C	high	same adv/conj þǣr; short þær is unmarked
+we	C	high	same pronoun wē; short we is unmarked
+þæm	C	high	same dat. þǣm; short þæm is unmarked
+cwæþ	C	high	same 3sg pret. cwæð; cwǣð (8, Bright reader only) is non-standard editorial length
+hie	C	high	same pronoun hīe; short hie is unmarked
+nu	C	high	same adverb nū; short nu is unmarked
+hit	C	high	same pronoun hit; hīt (1) is a misprint
+hig	C	medium	hīg tokens (Zupitza) are the pronoun 'they' marked long; other: Clark Hall hīg = hīeg 'hay' (A, no tokens)
+be	C	medium	bē tokens look like misprints (for hē or þe), not a separate word; preposition be is short
+þas	C	high	same afs/nap þās; short þas is unmarked (Clark Hall ðas = gen. ðæs is negligible)
+hine	C	medium	hīne tokens are the pronoun hine mis-marked; other: Clark Hall hīne = hīwene (A, no tokens)
+æfter	C	high	same preposition æfter; ǣfter (2) are stray marks
+god	A	high	noun God vs adjective gōd 'good' (guideline example)
+ofer	A	high	preposition ofer vs noun ōfer 'bank, shore'
+eow	C	high	same pronoun ēow; eow and eōw are unmarked or mis-marked
+hyt	A	high	pronoun hyt 'it' vs verb hȳt 'hides' (hȳdan); also noun hyt 'heat'
+man	A	high	man 'man, one' vs mān 'crime' (guideline example)
+eac	C	high	same adverb ēac; short eac is unmarked
+soþlice	C	high	same adverb sōþlīce; soþlīce (1) is unmarked
+an	A	medium	an (= prep on, or unnan 'I grant') vs numeral/adj ān 'one'; other: B if numeral and preposition both count as function words
+oþre	C	high	same adjective ōþre; short oþre is unmarked
+þes	C	medium	same demonstrative 'this'; its length is itself uncertain (Clark Hall 'ðēs (e?)'), editions differ
+þis	B	low	þīs tokens are instr./dat. þīs (= þȳs) vs nom/acc neut. þis; other: C, since þīs is attested only in the training text
+naman	A	high	noun naman 'name' vs verb nāman 'took' (niman pret. pl.)
+wæron	C	high	same pret. pl. wǣron; short wæron is unmarked
+mæg	A	high	verb mæg 'can' vs noun mǣg 'kinsman'
+godes	A	high	gen. Godes 'God's' vs gōdes 'good' (adj or noun)
+æt	A	high	preposition æt vs ǣt pret. of etan 'ate' or noun 'food'
+swiþe	C	high	same adverb swīþe; short swiþe is unmarked
+nan	C	high	same pronoun nān; short nan is unmarked
+oþ	C	high	same prep/conj oþ; ōþ (15) is editorial marking
+hælend	C	high	same noun hǣlend; short hælend is unmarked
+min	C	high	same possessive mīn; other: Clark Hall min 'small' (A, dubious, no tokens)
+gode	A	high	dat. Gode 'God' vs gōde 'good'
+na	C	high	same adverb nā; short na is unmarked
+oþrum	C	high	same ōþrum; short oþrum is unmarked
+witodlice	C	high	same adverb witodlīce; short form is unmarked
+wære	C	high	same verb form wǣre; short token is unmarked; other: Clark Hall wære = wer (A, no tokens)
+gyt	A	medium	dual pronoun git/gyt 'you two' vs adverb gȳt 'yet, still'; other: B if both count as function words
+rice	C	high	same word rīce (noun 'kingdom' and adj 'powerful' both long); short rice is unmarked
+eom	C	high	same verb eom 'am'; ēom (1 train token) is editorial marking

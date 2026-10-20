@@ -31,9 +31,10 @@ the results used.
 
 Zupitza's *Grammar* is a Latin grammar written in Old English. The plan kept it out of dev and test and left open
 whether to train on it. We decided on the John dev set, on the 7,639 lexicon-ambiguous tokens (training forms plus
-WikiPron) that both settings share. Dropping Zupitza raised the ByT5 sentence arm from 95.28% (its best setting with
-Zupitza, seeds 1 and 2) to 96.00%, the prior from 95.12% to 95.60%, and the bilateral logistic model from 94.72% to
-95.23% (seeds 1 to 3).
+WikiPron) that both settings share. Dropping Zupitza raised the prior from 95.12% to 95.60% and the bilateral
+logistic model from 94.72% to 95.23% (seeds 1 to 3). The best ByT5 sentence-arm setting without Zupitza also beats the
+best one with it (95.99% against 95.28%, seeds 1 and 2), but at the five matched settings without a collapsed run the
+change ranges from -0.34 to +0.99 points, so ByT5 is consistent with the decision rather than evidence for it.
 
 So every system in `results/<setting>/` trains without Zupitza. So do `oevl.try_text`, the ByT5 default, the coverage
 numbers in the report, the CharsiuG2P populations, and the prior that `oevl.agreement` compares the editors with.
@@ -66,7 +67,7 @@ data/
 ├── lex_proposal.csv
 ├── lex_all.csv
 ├── lexicons_provenance.json
-├── ambiguity_classes.csv       60 skeletons with their A/B/C class
+├── ambiguity_classes.csv       60 skeletons with their A/B/C class (LLM labels, checked by hand)
 ├── ambiguity_classes.json      label provenance, agreement, counting rule, D3 notes
 ├── leakage_excluded.json       dev and test sentences left out of scoring
 ├── charsiu_ang_test.tsv        CharsiuG2P's Old English test words
