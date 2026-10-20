@@ -29,8 +29,8 @@
 
 # Coverage, Context, Convention: Restoring Vowel Length in Old English
 
-**Many editions of Old English mark long vowels with macrons, which the manuscripts do not mark systematically. We
-ask what limits putting them back automatically, and measure three limits on the same tokens: candidate coverage,
+**Many editions of Old English mark long vowels with macrons, but the manuscripts do not mark length systematically.
+We ask what limits putting the macrons back automatically, and measure three limits on the same tokens: candidate coverage,
 sentence context and editorial convention.**
 
 [Overview](#-overview) •
@@ -69,7 +69,7 @@ that see the neighbouring words pick the pronoun* þē *'thee' over the relative
 
 ## 📖 Overview
 
-Old English manuscripts do not show vowel length, so *god* 'God' and *gōd* 'good' look the same, and so do the
+Old English manuscripts do not mark vowel length systematically, so in bare text *god* 'God' and *gōd* 'good' look the same, and so do the
 relative particle *þe* and the pronoun *þē* 'thee'. Modern editions add macrons by hand. A system for this task sees
 the bare word, takes the length patterns a dictionary lists for it, and picks one.
 
@@ -83,20 +83,20 @@ how far editors agree. `bash run_all.sh` reproduces every number and table in th
 | Coverage | Is the right spelling among the candidates? | dictionary ablation, `results/<setting>/` |
 | Context | Do the neighbouring words pick the right candidate? | `results/encoder/`, `results/wikipron/` |
 | Convention | How much of the remaining error is editorial habit? | ambiguity classes, `results/error_typing/` |
-| Disagreement | How often do two editors mark a word the same way? | `results/agreement/` |
+| Convention: editor agreement | How often do two editors mark a word the same way? | `results/agreement/` |
 
 ---
 
 ## 📊 Headline results
 
 The ByT5 rows are means over three seeds at the full byte cap, and the intervals are 95% sentence-level bootstrap
-intervals on each token's correctness averaged over seeds. Lexicon-ambiguous tokens have two or more candidate patterns, and class B holds grammatical homographs,
-words spelled alike that differ in function.
+intervals on each token's correctness averaged over seeds. Lexicon-ambiguous tokens have two or more candidate patterns, and class B holds five closed-class
+words (*þe*, *ne*, *ge*, *gyt*, *þis*) whose long and short forms differ in function.
 
 | Finding | Tokens | Result |
 |---|---|---|
 | Coverage matters most on verse | *Beowulf*, all tokens, frequency prior | 82.40% with training forms, 92.38% with all four dictionaries |
-| Context helps most on grammatical homographs | *Soliloquies*, class B (*þe/þē*, *ne/nē*), ByT5 | 62.66% from the word alone, 76.47% with two words each side (+13.82, 11.39 to 16.18) |
+| Context helps five closed-class words (class B) | *Soliloquies*, class B (*þe/þē*, *ne/nē*), ByT5 | 62.66% from the word alone, 76.47% with two words each side (+13.82, 11.39 to 16.18) |
 | Context helps prose overall | *Soliloquies*, lexicon-ambiguous tokens, ByT5 | 88.91% from the word alone, 91.31% with two words each side (+2.40, 1.92 to 2.89) |
 | On verse the word alone is enough | *Beowulf*, lexicon-ambiguous tokens, ByT5 | 90.04% from the word alone, 89.83% with two words each side (−0.20, −0.62 to +0.21), and one unseen name, *Gēata* (39 tokens), decides the sign |
 | Editors differ most on grammatical words | Wyatt against Klaeber (Tauber), lexicon-ambiguous / class B | 96.08% / 78.07% agreement |

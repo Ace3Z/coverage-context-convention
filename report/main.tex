@@ -105,7 +105,7 @@ editor's marking convention, not pronunciation.
 
 To our knowledge, no system has restored Old English vowel length in context. We measure three limits on the same
 two test texts. \emph{Coverage} (Section~\ref{sec:coverage}) asks whether the right candidate exists, and with WikiPron
-candidates, for most errors of a frequency prior (which picks each word's most frequent pattern) it does not. \emph{Context}
+candidates, for most errors of a frequency prior (which picks each word's most frequent pattern), it does not. \emph{Context}
 (Section~\ref{sec:context}) asks whether neighbouring words can pick it out, and they help mainly class~B, chiefly
 \emph{þe/þē}. \emph{Convention} (Section~\ref{sec:convention}) asks whose marking the gold follows, and on class~B the
 choice of \textit{Beowulf} edition moves the prior more than context adds. We contribute a length-marked corpus of nine
@@ -116,7 +116,7 @@ and tested code whose one script recomputes every result here from the released 
 \paragraph{Related work.} Yarowsky \cite{yarowsky1994} restored Spanish and French accents with decision lists over
 word-specific collocations, taking accented text as a fully objective standard, which Old English editions are not.
 Latin \cite{winge2015} and Ancient Greek \cite{cleland2026} macronisers use taggers, lemmatisers and morphological
-analysers or large pretraining \cite{cullhed2026}. Winge already bounded his Latin system with a lexicon oracle and
+analysers or large pretraining \cite{cullhed2026}. Winge \cite{winge2015} already bounded his Latin system with a lexicon oracle and
 traced the largest group of its disagreements with a hand-marked text to marking conventions. Gershuni and Pinter
 \cite{gershuni2022} restore Hebrew diacritics with a character tagger instead of candidates, and Esmail et al.\
 \cite{esmail2022} measure how much lookahead helps Arabic diacritisation. We test lookahead with a model that sees only
@@ -152,7 +152,7 @@ sentences and \NLeakSolSent{} \textit{Soliloquies} sentence from scoring, and th
 Preprocessing normalises Unicode (NFC), keeps the macron as the only diacritic, drops English and Latin lines by their
 function words, splits sentences at end punctuation and takes letter runs as tokens. A token's \emph{key} is its lower-cased form without macrons, and its
 \emph{pattern} has one digit per vowel letter, 1 for a macron: Harrison and Sharp's \emph{geārdagum} (0100) and
-Klaeber's \emph{gēardagum} (1000) share the key \emph{geardagum}, and differ only in which digraph letter bears the macron.
+Klaeber's \emph{gēardagum} (1000) share the key \emph{geardagum} and differ only in which digraph letter bears the macron.
 
 A key's candidates are its training patterns plus those of every listed form with that key. Our main list is WikiPron
 \cite{lee2020}, whose IPA we convert to spellings by aligning vowel units with IPA nuclei (\NWikiAligned\% of
@@ -218,7 +218,7 @@ threshold for reporting editor disagreement instead of a model only after measur
 Our main finding: missing candidates cost more than context adds on both test texts, and on the \textit{Beowulf} class~B tokens
 the choice of gold edition moves the prior's score more than context adds. We score token accuracy, as a reader needs
 the whole word: a token counts only if every vowel has the gold length. On all tokens, marking nothing
-scores \NPAllShortSol\% (prose) and \NPAllShortBeo\% (verse), the prior \NWSolAllFreq\% and \NWBeoAllFreq\%, and local2
+scores \NPAllShortSol\% (prose) and \NPAllShortBeo\% (verse), the WikiPron prior \NWSolAllFreq\% and \NWBeoAllFreq\%, and local2
 \NEncCapfullSolAllLocalTwo\% and \NEncCapfullBeoAllLocalTwo\%. Differences carry 95\% intervals from a paired bootstrap
 over sentences \cite{efron1993}, whose tokens are not independent (1,000 draws, correctness averaged over runs,
 runs held fixed). Intervals and $p$-values are not corrected for multiple comparisons, and we claim no difference
@@ -287,14 +287,14 @@ also lists \emph{geata} `gates'. The prior falls back to fewer long vowels and m
 all of them in every seed, and the sentence arm none. Without \emph{Gēata} (post hoc), local2 minus word
 is \dci{NPBeoLexNoGeataLocalTwoVsWord} and sentence minus word \dci{NPBeoLexNoGeataBilVsWord}, both below our
 one-point margin. On all prose tokens local2 adds \NPEncGainLocalTwoSol{} points to the WikiPron prior
-(sentence arm \NPEncGainBilSol) out of the \NPHeadroomSolPts{} a better chooser could add, less than the three other
-dictionaries add (\NSolGainDictWiki). On all verse tokens the word arm alone does as well as local2
+(sentence arm \NPEncGainBilSol) out of the \NPHeadroomSolPts{} a better chooser could add. The three other
+dictionaries add more (\NSolGainDictWiki). On all verse tokens the word arm alone does as well as local2
 (\NEncCapfullBeoAllWord\% and \NEncCapfullBeoAllLocalTwo\%).
 
 The bilateral logistic model gains less over its word model (prose class~B \dci{NBootSolClsBBilVsWord}), as its
 features cannot express that `previous word \emph{tō}' matters for \emph{þe} alone. The post hoc conjoined variant can,
 and on prose we cannot tell it from local2 (local2 minus conjoined on class~B: \dci{NPLocalTwoVsConjSolClsB}), while
-on verse local2 leads by less than a point (\dci{NPLocalTwoVsConjBeoLex}).
+on ambiguous verse tokens local2 leads by less than a point (\dci{NPLocalTwoVsConjBeoLex}).
 Training variance limits the table: over the sentence arm's nine runs at the three caps, prose class~B spans
 \NEncRunsSolClsBBilMin\% to \NEncRunsSolClsBBilMax\%. Local inputs never reach a cap, so local
 runs of one seed repeat the same training at each cap, yet local5 replicates differ by up to
@@ -404,7 +404,7 @@ measured.
 \section{Future work}
 If convention explains most \textit{Beowulf} class~B and \emph{se} errors, training and testing in one editorial
 tradition should reduce them, and scoring against several editions would show what remains. The main caveats
-call for proofread test texts, ByT5 with dictionary candidates, a dictionary-free tagger \cite{gershuni2022} for
+call for proofread test texts, ByT5 with all four sources, a dictionary-free tagger \cite{gershuni2022} for
 unlisted patterns (weaker than dictionary-based systems on unseen words), deterministic training with five or more seeds
 \cite{summers2021}, more verse and independent human labels for a sample.
 
