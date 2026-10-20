@@ -91,7 +91,8 @@ how far editors agree. `bash run_all.sh` reproduces every number and table in th
 
 The ByT5 rows are means over three seeds at the full byte cap, and the intervals are 95% sentence-level bootstrap
 intervals on each token's correctness averaged over seeds. Lexicon-ambiguous tokens have two or more candidate
-patterns, and class B holds five closed-class words (*þe*, *ne*, *ge*, *gyt*, *þis*) whose long and short forms differ in function.
+patterns, and class B holds five closed-class words (*þe*, *ne*, *ge*, *gyt*, *þis*) whose long and short forms differ
+in function.
 
 | Finding | Tokens | Result |
 |---|---|---|
