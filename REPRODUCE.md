@@ -48,8 +48,8 @@ lexicon-ambiguous tokens are also split by ambiguity class (`class_A`, `class_B`
 60 skeletons (spellings without macrons) in `data/ambiguity_classes.csv`, with `class_unlisted` for the rest. Two
 separate runs of one LLM, Claude Opus 5.5 (model id `claude-opus-5-5`), assigned the classes with the same written
 guidelines, and a third run settled their two disagreements. A blind review by further runs of the same model agreed
-with 58 of the 60, and another run kept the other two (`results/label_review/`). All 60 then went through a full
-manual review, which changed none.
+with 58 of the 60, and another run kept the other two (`results/label_review/`). One of us then briefly reviewed part
+of them by hand and changed none.
 The 60 skeletons were picked by their frequency in the training works (Zupitza included) and both test sets, and they are kept under
 decision D3. With training forms plus WikiPron, the `d3` block of `data/ambiguity_classes.json` records that `hi`
 is no longer lexicon-ambiguous without Zupitza, and that 6,759 of the 36,203 lexicon-ambiguous tokens counted there
@@ -116,8 +116,8 @@ PYTHONPATH=src python -m oevl.build_lexicons
 ```
 
 `oevl.build_corpus` fetches an edition into `data/raw/corpus/` and rebuilds its file and manifest entry: the URL,
-retrieval date and SHA-256 of each input, and the work's `role` (train, dev, test or agreement). The first extraction
-scripts were lost, so the rules were worked out from the files. After `clean_corpus`, `matthew_ws`, `bright_reader`,
+retrieval date and SHA-256 of each input, and the work's `role` (train, dev, test or agreement). The original extraction
+script is not part of this repository, so the rules were worked out from the files. After `clean_corpus`, `matthew_ws`, `bright_reader`,
 `physiologus`, `hs_beowulf` and `john_ws` rebuild byte for byte. The other four rebuilds contain all but four of their
 65,991 committed tokens in order, but some sentences differ, mostly where the original language filter dropped short
 lines (the module docstring has the details). Those four committed files were kept as they are. `john_ws.jsonl`
@@ -241,11 +241,11 @@ results/
 ├── wikipron_with_zupitza/      the Zupitza ablation
 ├── agreement/                  metrics.json, disagreements.tsv, agreement.log, and disagreements_checked.tsv
 │                               (100 disagreements labelled by one run of an LLM, checked by a blind review by
-│                               further runs of the same model and then by hand)
+│                               further runs of the same model, and in part by hand)
 ├── encoder/                    selection.json, summary.json, <set>_predictions.tsv.gz
 ├── charsiu/                    benchmark.json, benchmark.tsv, ipa.tsv, metrics.json
 ├── error_typing/               labels.tsv, summary.json (400 error types labelled by two runs of one LLM, settled
-│                               by a third run, checked by a blind review and then by hand)
+│                               checked by a blind review, and in part by hand)
 └── label_review/               expert_review.json (the blind review of all 560 labels) and materials/ (the
                                 guidelines, the item sheets, and labels_a.tsv and labels_b.tsv of the two runs
                                 that labelled the classes and the error types)
