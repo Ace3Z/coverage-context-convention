@@ -4,6 +4,8 @@ __pycache__/
 .pytest_cache/
 .DS_Store
 report/main.aux
+report/main.bbl
+report/main.blg
 report/main.log
 report/main.out
 report/main.pdf

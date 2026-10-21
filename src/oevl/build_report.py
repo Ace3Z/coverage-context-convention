@@ -520,14 +520,14 @@ print("worked examples verified against results/wikipron/soliloquies_predictions
 
 # ---------------------------------------------------------------- compile
 if shutil.which("pdflatex"):
-    for _ in range(2):
-        r = subprocess.run(["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "main.tex"],
-                           cwd=ROOT / "report", capture_output=True, text=True,
+    for cmd in (["pdflatex"], ["bibtex"], ["pdflatex"], ["pdflatex"]):  # bibtex reads references.bib after the first pass
+        args = cmd + (["-interaction=nonstopmode", "-halt-on-error", "main.tex"] if cmd[0] == "pdflatex" else ["main"])
+        r = subprocess.run(args, cwd=ROOT / "report", capture_output=True, text=True,
                            errors="replace",  # pdflatex echoes T1 bytes (þ, ý) that are not UTF-8
                            env={**os.environ, "SOURCE_DATE_EPOCH": "1792454400"})  # fixed PDF dates and ID: same bytes
         if r.returncode:
             print(r.stdout[-3000:])
-            sys.exit("pdflatex failed; see report/main.log")
+            sys.exit(f"{cmd[0]} failed; see report/main.log or main.blg")
     shutil.copy(ROOT / "report" / "main.pdf", ROOT / "REPORT.pdf")
     print("compiled REPORT.pdf")
 else:

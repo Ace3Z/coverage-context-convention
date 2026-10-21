@@ -25,7 +25,7 @@
 \newunicodechar{Ē}{\=E}\newunicodechar{Ō}{\=O}\newunicodechar{Ū}{\=U}\newunicodechar{Ǣ}{\=\AE}
 \newunicodechar{ċ}{\.c}\newunicodechar{ġ}{\.g}
 \usepackage{booktabs}
-\usepackage{cite}  % sorted citation numbers
+\usepackage[nocompress]{cite}  % sorted citation numbers, listed rather than joined by a dash
 \usepackage{flafter}  % a float never appears before its place in the text
 \usepackage[font=small,labelfont=bf]{caption}
 \usepackage{xurl}
@@ -126,7 +126,7 @@ variation, which here includes editorial convention.
 \section{Data set}\label{sec:data}
 Table~\ref{tab:data} lists the corpus: nine editions printed from 1880 to 1921 with \NCorpusTokens{} tokens in
 \NPCorpusSentences{} sentences, plus Tauber's \textit{Beowulf}. We took Project Gutenberg and Wikisource
-transcriptions \cite{editions} and cleaned them with character mappings, each counted in a manifest (some files cannot
+transcriptions \cite{zupitza1880,bright1913,bright1910,sweet1905,cook1921,bright1904,hargrove1902,harrison1883,wyatt1894} and cleaned them with character mappings, each counted in a manifest (some files cannot
 be rebuilt exactly, as their extraction scripts are lost). The Hugging Face release (CC BY-SA
 4.0) keeps each sentence's work, editor, year, genre and section, per-token length patterns and a leakage flag.
 We built the corpus because word lists lack context, treebanks such as YCOE \cite{ycoe2003} carry, as far as we know,
@@ -408,100 +408,9 @@ call for proofread test texts, ByT5 with all four sources, a dictionary-free tag
 unlisted patterns (weaker than dictionary-based systems on unseen words), deterministic training with five or more seeds
 \cite{summers2021}, more verse and independent human labels for a sample.
 
-\begin{thebibliography}{99}
-\raggedright\small
-\bibitem{claude2026} Anthropic. Claude Opus 5.5 (model id \texttt{claude-opus-5-5}), used through Claude Code, 18 to
-20 October 2026. \url{https://docs.anthropic.com/en/docs/about-claude/models/overview}.
-\bibitem{cohen1960} J.~Cohen. A coefficient of agreement for nominal scales. \textit{Educational and Psychological
-Measurement}, 20(1):37--46, 1960. \url{https://doi.org/10.1177/001316446002000104}.
-\bibitem{cullhed2026} E.~Cullhed and A.~Thörn Cleland. Stoicheia: Character-level masked diffusion for Ancient Greek
-textual restoration, parsing, and metrical scansion. arXiv:2608.07249, 2026. \url{https://arxiv.org/abs/2608.07249}.
-\bibitem{dodge2020} J.~Dodge, G.~Ilharco, R.~Schwartz, A.~Farhadi, H.~Hajishirzi and N.~A.~Smith. Fine-tuning
-pretrained language models: Weight initializations, data orders, and early stopping. arXiv:2002.06305, 2020.
-\url{https://arxiv.org/abs/2002.06305}.
-\bibitem{editions} The editions as transcribed. Project Gutenberg, \url{https://www.gutenberg.org/ebooks/}:
-J.~A.~Harrison and R.~Sharp, \textit{Bēowulf} and \textit{The Fight at Finnsburh}, fourth edition, revised, Ginn and
-Company (copyright 1883), ebook 9701 in its revised Project Gutenberg version; J.~Zupitza, \textit{Ælfrics Grammatik
-und Glossar}, Weidmann, Berlin, 1880, ebook 45861; H.~Sweet, \textit{An Anglo-Saxon Primer}, eighth edition,
-Clarendon Press, Oxford, 1905, ebook 34316; A.~S.~Cook and J.~H.~Pitman, \textit{The Old English Physiologus}, Yale
-University Press, 1921, ebook 14529. Wikisource, \url{https://en.wikisource.org/wiki/}: A.~J.~Wyatt,
-\textit{Beowulf}, Cambridge University Press, 1894
-(\href{https://en.wikisource.org/wiki/Beowulf_(Wyatt)}{\nolinkurl{Beowulf_(Wyatt)}}); J.~W.~Bright, \textit{An
-Anglo-Saxon Reader}, third edition, Henry Holt, New York, 1913
-(\href{https://en.wikisource.org/wiki/Bright's_Anglo-Saxon_Reader}{\nolinkurl{Bright's_Anglo-Saxon_Reader}});
-J.~W.~Bright, \textit{The Gospel of Saint Matthew in West-Saxon}, D.~C.~Heath, Boston, 1910 printing
-(\href{https://en.wikisource.org/wiki/Evangelium_Secundum_Mattheum:_the_Gospel_of_Saint_Matthew_in_West-Saxon}{\nolinkurl{Evangelium_Secundum_Mattheum:_the_Gospel_of_Saint_Matthew_in_West-Saxon}});
-J.~W.~Bright and L.~M.~Harris, \textit{The Gospel of Saint John in West-Saxon}, D.~C.~Heath, Boston, 1904
-(\href{https://en.wikisource.org/wiki/Index:Gospel_of_Saint_John_in_West-Saxon.djvu}{\nolinkurl{Index:Gospel_of_Saint_John_in_West-Saxon.djvu}});
-H.~L.~Hargrove, \textit{King Alfred's Old English Version of St.\ Augustine's Soliloquies}, Henry Holt, New York, 1902
-(\href{https://en.wikisource.org/wiki/King_Alfred's_Old_English_Version_of_St._Augustine's_Soliloquies}{\nolinkurl{King_Alfred's_Old_English_Version_of_St._Augustine's_Soliloquies}}).
-\bibitem{efron1993} B.~Efron and R.~J.~Tibshirani. \textit{An Introduction to the Bootstrap}. Chapman and Hall, New
-York, 1993. \url{https://doi.org/10.1201/9780429246593}.
-\bibitem{esmail2022} S.~Esmail, K.~Bar and N.~Dershowitz. How much does lookahead matter for disambiguation? Partial
-Arabic diacritization case study. \textit{Computational Linguistics}, 48(4):1103--1123, 2022.
-\url{https://doi.org/10.1162/coli_a_00456}.
-\bibitem{gershuni2022} E.~Gershuni and Y.~Pinter. Restoring Hebrew diacritics without a dictionary. In
-\textit{Findings of the Association for Computational Linguistics: NAACL 2022}, pages 1010--1018, 2022.
-\url{https://doi.org/10.18653/v1/2022.findings-naacl.75}.
-\bibitem{gorman2018} K.~Gorman, G.~Mazovetskiy and V.~Nikolaev. Improving homograph disambiguation with supervised
-machine learning. In \textit{Proceedings of LREC 2018}, pages 1349--1352, Miyazaki, Japan, 2018.
-\url{https://aclanthology.org/L18-1215/}.
-\bibitem{klaeber1922} F.~Klaeber, editor. \textit{Beowulf and the Fight at Finnsburg}. D.~C.~Heath, Boston, 1922.
-Perseus Digital Library text Perseus:text:2003.01.0001.
-\url{https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:2003.01.0001}.
-\bibitem{lee2020} J.~L.~Lee, L.~F.~E.~Ashby, M.~E.~Garza, Y.~Lee-Sikka, S.~Miller, A.~Wong, A.~D.~McCarthy and
-K.~Gorman. Massively multilingual pronunciation modeling with WikiPron. In \textit{Proceedings of LREC 2020}, pages
-4223--4228, 2020. \url{https://aclanthology.org/2020.lrec-1.521/}.
-\bibitem{mokrowiecki2015} T.~Mokrowiecki. Acute accents as graphic markers of vowel quantity in two Late Old English
-manuscripts. \textit{English Language and Linguistics}, 19(3):407--436, 2015.
-\url{https://doi.org/10.1017/S1360674315000015}.
-\bibitem{pangakis2023} N.~Pangakis, S.~Wolken and N.~Fasching. Automated annotation with generative AI requires
-validation. arXiv:2306.00176, 2023. \url{https://arxiv.org/abs/2306.00176}.
-\bibitem{paszke2019} A.~Paszke et al. PyTorch: An imperative style, high-performance deep learning library. In
-\textit{Advances in Neural Information Processing Systems 32 (NeurIPS 2019)}, 2019.
-\url{https://proceedings.neurips.cc/paper/2019/hash/bdbca288fee7f92f2bfa9f7012727740-Abstract.html}.
-\bibitem{pedregosa2011} F.~Pedregosa et al. Scikit-learn: Machine learning in Python. \textit{Journal of Machine
-Learning Research}, 12:2825--2830, 2011. \url{https://jmlr.org/papers/v12/pedregosa11a.html}.
-\bibitem{plank2022} B.~Plank. The `problem' of human label variation: On ground truth in data, modeling and
-evaluation. In \textit{Proceedings of EMNLP 2022}, pages 10671--10682, 2022.
-\url{https://aclanthology.org/2022.emnlp-main.731/}.
-\bibitem{clarkhall} Serg078. Conversion of the Clark Hall Dictionary of Old English to TEI (commit b53fc7d),
-2026. Unlicense. Source: J.~R.~Clark Hall, \textit{A Concise Anglo-Saxon Dictionary}, Project Gutenberg ebook 31543.
-\url{https://github.com/Serg078/Conversion-of-The-Clark-Hall-Dictionary-of-Old-English-to-TEI}.
-\bibitem{summers2021} C.~Summers and M.~J.~Dinneen. Nondeterminism and instability in neural network optimization. In
-\textit{Proceedings of ICML 2021}, PMLR 139:9913--9922, 2021.
-\url{https://proceedings.mlr.press/v139/summers21a.html}.
-\bibitem{tauber2021} J.~Tauber. \textit{old-english-texts}, \texttt{beowulf/raw-data/brunetti-length.txt} (commit
-1d944111), 2021. Brunetti's tokenisation and tagging of \textit{Beowulf} with vowel lengths added from the Perseus
-text. CC BY-SA 4.0. \url{https://github.com/old-english-learner-texts/old-english-texts}.
-\bibitem{ycoe2003} A.~Taylor, A.~Warner, S.~Pintzuk and F.~Beths. \textit{The York-Toronto-Helsinki Parsed Corpus of
-Old English Prose (YCOE)}. University of York, distributed by the Oxford Text Archive, 2003.
-\url{https://varieng.helsinki.fi/CoRD/corpora/YCOE/}.
-\bibitem{cleland2026} A.~Thörn Cleland and E.~Cullhed. Automatic annotation of Ancient Greek vowel length.
-arXiv:2608.01935, 2026. \url{https://arxiv.org/abs/2608.01935}.
-\bibitem{bosworth} O.~Tichý, M.~Roček et al. \textit{Bosworth-Toller's Anglo-Saxon Dictionary online}.
-LINDAT/CLARIAH-CZ, Charles University, 2021. Based on J.~Bosworth and T.~N.~Toller (1898, Supplement 1921). CC BY
-4.0. \url{http://hdl.handle.net/11234/1-3532}.
-\bibitem{virtanen2020} P.~Virtanen et al. SciPy 1.0: Fundamental algorithms for scientific computing in Python.
-\textit{Nature Methods}, 17(3):261--272, 2020. \url{https://doi.org/10.1038/s41592-019-0686-2}.
-\bibitem{winge2015} J.~Winge. \textit{Automatic annotation of Latin vowel length}. Bachelor's thesis in Language
-Technology, Uppsala University, 2015. \url{https://alatius.com/macronizer/winge2015.pdf}.
-\bibitem{wolf2020} T.~Wolf et al. Transformers: State-of-the-art natural language processing. In \textit{Proceedings
-of EMNLP 2020: System Demonstrations}, pages 38--45, 2020. \url{https://aclanthology.org/2020.emnlp-demos.6/}.
-\bibitem{xue2022} L.~Xue, A.~Barua, N.~Constant, R.~Al-Rfou, S.~Narang, M.~Kale, A.~Roberts and C.~Raffel. ByT5:
-Towards a token-free future with pre-trained byte-to-byte models. \textit{Transactions of the ACL}, 10:291--306, 2022.
-\url{https://doi.org/10.1162/tacl_a_00461}.
-\bibitem{yarowsky1994} D.~Yarowsky. Decision lists for lexical ambiguity resolution: Application to accent
-restoration in Spanish and French. In \textit{Proceedings of ACL 1994}, pages 88--95, Las Cruces, New Mexico, 1994.
-\url{https://doi.org/10.3115/981732.981745}.
-\bibitem{ylonen2022} T.~Ylonen. Wiktextract: Wiktionary as machine-readable structured data. In \textit{Proceedings
-of LREC 2022}, pages 1317--1325, 2022. Data: \url{https://kaikki.org/dictionary/Old\%20English/}.
-\url{https://aclanthology.org/2022.lrec-1.140/}.
-\bibitem{zhu2022} J.~Zhu, C.~Zhang and D.~Jurgens. ByT5 model for massively multilingual grapheme-to-phoneme
-conversion. In \textit{Proceedings of Interspeech 2022}, pages 446--450, 2022.
-\url{https://doi.org/10.21437/Interspeech.2022-538}. Code and per-language results (commit 0c929390):
-\url{https://github.com/lingjzhu/CharsiuG2P}.
-\end{thebibliography}
+{\small\raggedright
+\bibliographystyle{abbrvurl}
+\bibliography{references}}
 
 \section*{Use of AI tools}
 We used an AI assistant (Claude, Anthropic) for help with the code and the text of this report, and to produce the

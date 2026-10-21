@@ -15,7 +15,7 @@ pip install -r requirements.txt
 
 `requirements.txt` holds every direct dependency. The CPU pipeline uses scikit-learn 1.8.0, scipy 1.16.3, numpy 2.3.5 and
 matplotlib 3.10.8. ByT5 and CharsiuG2P use torch 2.2 or later and transformers 4.57.6. Training needs a GPU, and the
-committed ByT5 runs used torch 2.11.0 with CUDA 12.8. `pdflatex` is optional and compiles `REPORT.pdf`. The `hf`
+committed ByT5 runs used torch 2.11.0 with CUDA 12.8. `pdflatex` and `bibtex` are optional and compile `REPORT.pdf`. The `hf`
 command for uploading the dataset comes with `huggingface_hub`, which transformers already installs.
 
 `run_all.sh` puts `src` on `PYTHONPATH`, so the `oevl` package itself does not have to be installed. To run modules by
@@ -94,8 +94,8 @@ It takes about two minutes and has six steps:
    `oevl.paper_numbers` computes the other numbers the paper may print into `report/generated/numbers_paper.tex`,
    draws Figure 1 (`report/generated/fig_coverage.pdf`) and stops the run if a worked example no longer holds. Then
    `oevl.build_report` writes the rest of `report/generated/` (numbers, tables, figure), checks the worked examples
-   against the predictions, and compiles `REPORT.pdf` if `pdflatex` is installed. Without LaTeX, upload `report/` to
-   Overleaf and compile `main.tex`.
+   against the predictions, and compiles `REPORT.pdf` (pdflatex, bibtex, then pdflatex twice) if `pdflatex` is
+   installed. Without LaTeX, upload `report/` to Overleaf and compile `main.tex`.
 
 ## 2. Run a single experiment
 
@@ -251,6 +251,8 @@ results/
                                 that labelled the classes and the error types)
 report/
 ├── main.tex
+├── references.bib
+├── logo_uzh.pdf
 └── generated/                  tables, numbers and figures (build_report, encoder_summary, error_typing,
                                 paper_numbers)
 release/

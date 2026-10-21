@@ -215,7 +215,7 @@ coverage-context-convention/
 ├── tests/                   unit tests, run by run_all.sh
 ├── data/                    corpus (by_source/), Tauber and WikiPron inputs, dictionaries, class files
 ├── results/                 one folder per experiment: metrics, predictions, logs, labels
-├── report/                  main.tex, the UZH logo and generated/ tables, numbers and figures
+├── report/                  main.tex, references.bib, the UZH logo and generated/ tables, numbers and figures
 ├── notebooks/               Kaggle and Colab launchers for the ByT5 pilot
 ├── release/                 dataset card and licence file for the Hugging Face copy
 ├── media/figures/logos/     logos
