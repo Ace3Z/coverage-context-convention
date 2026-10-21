@@ -127,7 +127,7 @@ variation, which here includes editorial convention.
 Table~\ref{tab:data} lists the corpus: nine editions printed from 1880 to 1921 with \NCorpusTokens{} tokens in
 \NPCorpusSentences{} sentences, plus Tauber's \textit{Beowulf}. We took Project Gutenberg and Wikisource
 transcriptions \cite{zupitza1880,bright1913,bright1910,sweet1905,cook1921,bright1904,hargrove1902,harrison1883,wyatt1894} and cleaned them with character mappings, each counted in a manifest (some files cannot
-be rebuilt exactly, as their extraction scripts are lost). The Hugging Face release (CC BY-SA
+be rebuilt exactly from this repository). The Hugging Face release (CC BY-SA
 4.0) keeps each sentence's work, editor, year, genre and section, per-token length patterns and a leakage flag.
 We built the corpus because word lists lack context, treebanks such as YCOE \cite{ycoe2003} carry, as far as we know,
 no length marks, and Tauber's \textit{Beowulf} is a single poem. Our corpus has \NPCorpusOverTauber{} times its
@@ -170,9 +170,9 @@ disagreements were labelled by a large language model, Claude Opus 5.5 \cite{cla
 agents with written guidelines. For the classes and the error types, two runs of the model labelled every item
 separately (Cohen's $\kappa$ \NClassKappa{} and \NErrKappa{} \cite{cohen1960}), and a third run settled their
 disagreements. A single run labelled the disagreement sample. A blind review by further runs of the same model changed
-\NPReviewChanged{} of the \NPReviewItems{} labels. All \NPReviewItems{} labels then went through a full manual
-review, which changed none. As both annotators are runs of one model, $\kappa$ measures that model's consistency rather
-than agreement between people, and as the manual review was not blind to the model's labels, we lack the comparison with independent
+\NPReviewChanged{} of the \NPReviewItems{} labels. One of us then briefly checked part of them by hand
+and changed none. As both annotators are runs of one model, $\kappa$ measures that model's consistency rather
+than agreement between people, and as that check was partial and not blind, we lack the comparison with independent
 human labels that Pangakis et al.\ \cite{pangakis2023} call for.
 
 \section{Model training}\label{sec:training}
@@ -325,8 +325,8 @@ Class B & \NPairHWClsB{} (\NPairHWClsBK) & \NPairHTClsB{} (\NPairHTClsBK) & \NPa
 \begin{minipage}[t]{0.46\textwidth}
 \centering\footnotesize\captionsetup{font=footnotesize}
 \setlength{\tabcolsep}{3pt}
-\caption{Sampled error types (LLM labels, manually reviewed, $\kappa$ \NPErrKappaEnc{} for ByT5,
-\NPErrKappaCharsiu{} for CharsiuG2P).}
+\caption{Sampled error types (LLM labels, partly hand-checked; $\kappa$ \NPErrKappaEnc{} ByT5,
+\NPErrKappaCharsiu{} CharsiuG2P).}
 \label{tab:errors}
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
@@ -398,8 +398,8 @@ prior, and of CharsiuG2P's \NPCharsiuLexWrongSol{} ambiguous prose length errors
 \paragraph{Limitations.} One test text per genre lets single words decide results (\emph{Gēata}, \emph{þe}), and
 \NPTrainBrightShare\% of training is Bright's, as is the development text, so choices made on it may favour his
 conventions. The gold follows one editor, and we have not proofread the transcriptions against the print. An LLM made
-the labels, and the manual review was done by one person with the model's labels visible, so no agreement between
-human annotators was measured.
+the labels, and one person briefly reviewed only part of them, so no agreement between human annotators was
+measured.
 
 \section{Future work}
 If convention explains most \textit{Beowulf} class~B and \emph{se} errors, training and testing in one editorial
@@ -413,8 +413,9 @@ unlisted patterns (weaker than dictionary-based systems on unseen words), determ
 \bibliography{references}}
 
 \section*{Use of AI tools}
-We used an AI assistant (Claude, Anthropic) for help with the code and the text of this report, and to produce the
-labels described in Sections~\ref{sec:prep} and~\ref{sec:eval}, which were then reviewed manually.
-We directed the work and take responsibility for its content.
+We used AI assistants throughout the project. Most of the code and parts of this report were written with Claude
+(Anthropic), and our first pipeline and the Kaggle and Colab notebooks with ChatGPT (OpenAI), under our direction.
+An LLM also produced the labels described in Sections~\ref{sec:prep} and~\ref{sec:eval}, of which one of us briefly
+reviewed part by hand. We checked the results and take responsibility for the content.
 
 \end{document}
