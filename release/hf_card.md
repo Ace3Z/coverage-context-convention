@@ -80,8 +80,8 @@ on it. The project's final systems leave `zupitza_grammar` out of training and s
 - `ambiguity_classes.csv` lists the 60 most frequent ambiguous spellings, each labelled lexical (A), grammatical (B)
   or editorial (C). Two separate runs of one LLM, Claude Opus 5.5 (model id `claude-opus-5-5`), labelled them with
   the same written guidelines, and a third run settled their two disagreements. A blind review by further runs of the
-  same model agreed with 58 of them and another run kept the other two, so no label changed. Mahbod Tajdini, one of the
-  authors, then checked all 60 by hand and changed none. `ambiguity_classes.json` records the class definitions, the
+  same model agreed with 58 of them and another run kept the other two, so no label changed. All 60 then went through a full manual
+  review, which changed none. `ambiguity_classes.json` records the class definitions, the
   agreement between the two runs and the counting rule.
 
 ## Source data

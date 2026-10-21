@@ -48,8 +48,8 @@ lexicon-ambiguous tokens are also split by ambiguity class (`class_A`, `class_B`
 60 skeletons (spellings without macrons) in `data/ambiguity_classes.csv`, with `class_unlisted` for the rest. Two
 separate runs of one LLM, Claude Opus 5.5 (model id `claude-opus-5-5`), assigned the classes with the same written
 guidelines, and a third run settled their two disagreements. A blind review by further runs of the same model agreed
-with 58 of the 60, and another run kept the other two (`results/label_review/`). Mahbod Tajdini then checked all 60
-by hand and changed none.
+with 58 of the 60, and another run kept the other two (`results/label_review/`). All 60 then went through a full
+manual review, which changed none.
 The 60 skeletons were picked by their frequency in the training works (Zupitza included) and both test sets, and they are kept under
 decision D3. With training forms plus WikiPron, the `d3` block of `data/ambiguity_classes.json` records that `hi`
 is no longer lexicon-ambiguous without Zupitza, and that 6,759 of the 36,203 lexicon-ambiguous tokens counted there
