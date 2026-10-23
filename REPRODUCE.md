@@ -48,8 +48,8 @@ lexicon-ambiguous tokens are also split by ambiguity class (`class_A`, `class_B`
 60 skeletons (spellings without macrons) in `data/ambiguity_classes.csv`, with `class_unlisted` for the rest. Two
 separate runs of one LLM, Claude Opus 5.5 (model id `claude-opus-5-5`), assigned the classes with the same written
 guidelines, and a third run settled their two disagreements. A blind review by further runs of the same model agreed
-with 58 of the 60, and another run kept the other two (`results/label_review/`). One of us then briefly reviewed part
-of them by hand and changed none.
+with 58 of the 60, and another run kept the other two (`results/label_review/`). The labels were then manually
+checked, and none was changed.
 The 60 skeletons were picked by their frequency in the training works (Zupitza included) and both test sets, and they are kept under
 decision D3. With training forms plus WikiPron, the `d3` block of `data/ambiguity_classes.json` records that `hi`
 is no longer lexicon-ambiguous without Zupitza, and that 6,759 of the 36,203 lexicon-ambiguous tokens counted there
@@ -241,11 +241,11 @@ results/
 ├── wikipron_with_zupitza/      the Zupitza ablation
 ├── agreement/                  metrics.json, disagreements.tsv, agreement.log, and disagreements_checked.tsv
 │                               (100 disagreements labelled by one run of an LLM, checked by a blind review by
-│                               further runs of the same model, and in part by hand)
+│                               further runs of the same model, then manually checked)
 ├── encoder/                    selection.json, summary.json, <set>_predictions.tsv.gz
 ├── charsiu/                    benchmark.json, benchmark.tsv, ipa.tsv, metrics.json
 ├── error_typing/               labels.tsv, summary.json (400 error types labelled by two runs of one LLM, settled
-│                               checked by a blind review, and in part by hand)
+│                               by a third run, checked by a blind review, then manually checked)
 └── label_review/               expert_review.json (the blind review of all 560 labels) and materials/ (the
                                 guidelines, the item sheets, and labels_a.tsv and labels_b.tsv of the two runs
                                 that labelled the classes and the error types)

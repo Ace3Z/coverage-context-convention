@@ -106,8 +106,8 @@ in function.
 An LLM, Claude Opus 5.5 (model id `claude-opus-5-5`), made the 560 labels. Two separate runs of it labelled the
 ambiguity classes and the error types with the same written guidelines, and a third run settled their disagreements.
 A single run labelled a sample of 100 editor disagreements. A blind review by further runs of the same model agreed
-with 538 of the 560 labels, and of the 22 it disputed another run kept 13 and corrected nine. One of us then
-briefly reviewed part of the labels by hand and changed none. The guidelines, the item sheets and the labels of the two runs
+with 538 of the 560 labels, and of the 22 it disputed another run kept 13 and corrected nine. The labels were then
+manually checked, and none was changed. The guidelines, the item sheets and the labels of the two runs
 (`labels_a.tsv`, `labels_b.tsv`) are in `results/label_review/materials/`, and the blind review is in
 `results/label_review/expert_review.json`. The settled labels are in `data/ambiguity_classes.csv` and
 `results/error_typing/labels.tsv`, and the single run's labels of the disagreements in

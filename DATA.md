@@ -67,7 +67,7 @@ data/
 ├── lex_proposal.csv
 ├── lex_all.csv
 ├── lexicons_provenance.json
-├── ambiguity_classes.csv       60 skeletons with their A/B/C class (LLM labels, checked by hand)
+├── ambiguity_classes.csv       60 skeletons with their A/B/C class (LLM labels, manually checked)
 ├── ambiguity_classes.json      label provenance, agreement, counting rule, D3 notes
 ├── leakage_excluded.json       dev and test sentences left out of scoring
 ├── charsiu_ang_test.tsv        CharsiuG2P's Old English test words
