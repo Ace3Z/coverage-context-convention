@@ -1,8 +1,9 @@
-"""Apply the encoder selection rule (the selection search and decision D3) to the 24 dev runs and write results/encoder/selection.json.
+"""Apply the encoder selection rule (the selection search and decision D3) to the 24 dev runs and write
+results/encoder/selection.json.
 
 The runs are the ByT5 sentence arm, seeds 1 and 2, with and without Zupitza, lr 1e-4 and 3e-4, 1, 3 and 5 epochs
 (scripts/encoder_grid.sh). By default their dev numbers come from the "runs" list of the committed selection.json, so
-no GPU is needed; --runs DIR reads them from the run folders (DIR/<z|noz>_lr<LR>_ep<N>/sentence_s<seed>) instead.
+no GPU is needed. --runs DIR reads them from the run folders (DIR/<z|noz>_lr<LR>_ep<N>/sentence_s<seed>) instead.
 The logistic john_ws comparison comes from results/wikipron (D3) and results/wikipron_with_zupitza (run_all.sh).
 Usage: python -m oevl.select_config [--runs DIR]
 """
@@ -18,16 +19,30 @@ RULE = ("Highest mean dev lexicon-ambiguous accuracy over seeds 1-2. Configurati
 
 
 def pct(x):
+    """A fraction as a percent rounded to two decimals, None stays None."""
     return round(100 * x, 2) if x is not None else None
 
 
 def jsonl(p):
+    """All records of the JSON-lines file at path p, as a list of dicts."""
     with open(p, encoding="utf8") as f:
         return [json.loads(line) for line in f]
 
 
 def read_runs(runs, shared):
-    """One row per run folder, as the committed "runs" list holds it (percent, two decimals)."""
+    """One row per selection run folder, in the form of the committed "runs" list (scores in percent, two decimals).
+
+    runs: the folder holding <z|noz>_lr<LR>_ep<N>/sentence_s<seed>/, each with the metrics.json and
+    john_ws_predictions.jsonl that oevl.encoder_experiment writes. shared: the set of ids of the lexicon-ambiguous dev
+    tokens without Zupitza (see main). Asserts that every run used a 2,560-byte cap, batch 32 and only the sentence
+    arm, and that every run without Zupitza flags exactly the shared tokens as lexicon-ambiguous. A run counts as with
+    Zupitza when its exclude_train list is empty. dev_lexamb scores a run on its own lexicon-ambiguous tokens,
+    dev_lexamb_shared on the shared ones. The test scores (sol_*, beo_*) play no part in the rule, but build_report
+    quotes those of the collapsed run. "cfg" is the configuration folder name, "minutes" the training time (one
+    decimal), and "collapsed" the flag encoder_experiment sets from the soliloquies scores. Every run must have scored
+    soliloquies and tauber_beowulf (KeyError otherwise), so "collapsed" is True or False here. Losses are copied as
+    they are. Rows are sorted with Zupitza first, then by lr, epochs and seed.
+    """
     rows = []
     for m in sorted(Path(runs).glob("*/sentence_s*/metrics.json")):
         d = json.loads(m.read_text(encoding="utf8"))
@@ -55,7 +70,17 @@ def read_runs(runs, shared):
 
 
 def select(rows):
-    """The rule above: configurations scored best first, those tied with the best, and the choice among them."""
+    """Apply RULE to the run rows: every configuration scored best first, those tied with the best, and the choice.
+
+    rows: run dicts as read_runs returns them (only zupitza, lr, epochs, seed, dev_lexamb, dev_lexamb_n,
+    dev_lexamb_shared and collapsed are read). Runs are grouped by (zupitza, lr, epochs), and "mean" is the mean of
+    the runs' dev_lexamb percents (already rounded to two decimals), rounded to three decimals. The seeds in a group
+    are averaged as found, not checked, and dev_lexamb_n is the group's first run's. Configurations at most 0.1 points
+    below the best mean count as tied (with a 1e-9 float tolerance), and the choice is the tied one with the fewest
+    epochs, then Zupitza kept, then the lower lr. mean_on_shared_7639 (the same mean over dev_lexamb_shared) and
+    collapses (the number of runs flagged collapsed) are reported but do not enter the rule.
+    Returns (scored, tied, choice), where choice is one of the dicts in tied and scored.
+    """
     configs = {}
     for r in rows:
         configs.setdefault((r["zupitza"], r["lr"], r["epochs"]), []).append(r)
@@ -71,11 +96,21 @@ def select(rows):
 
 
 def logistic(folder, shared=None):
-    """The logistic models on john_ws (percent), and with `shared` the same arms on those tokens only."""
+    """Accuracy of the logistic baselines on john_ws from results/<folder>/metrics.json, in percent.
+
+    Returns a dict keyed by population: "lexicon_ambiguous", "accuracy" (all john_ws tokens) and "class_B". Each holds
+    n (the population's token count, from the frequency entry), the frequency prior and oracle accuracy, and for the
+    word, left and sentence (bilateral) arms the three seed accuracies (two decimals) with their mean and sample sd
+    (computed before rounding). With shared (a set of token ids), it also reads
+    results/<folder>/john_ws_predictions.jsonl, asserts that the number of rows with a shared id equals len(shared),
+    and adds "lexicon_ambiguous_shared_7639": the same models scored on those tokens only (n, frequency, oracle, and
+    per arm the mean and sd over seeds 1 to 3, without per-seed values). The key names 7639 whatever n is.
+    """
     m = json.loads((ROOT / "results" / folder / "metrics.json").read_text(encoding="utf8"))["john_ws"]
     res = {}
     for pop in ("lexicon_ambiguous", "accuracy", "class_B"):
         def get(k):
+            """The metrics entry k for this population ("accuracy" is the entry's top level, over all tokens)."""
             return m[k] if pop == "accuracy" else m[k][pop]
         res[pop] = {"n": get("frequency")["n"], "frequency": pct(get("frequency")["accuracy"]),
                     "oracle": pct(get("oracle")["accuracy"])}
@@ -88,6 +123,7 @@ def logistic(folder, shared=None):
         assert len(ps) == len(shared)
 
         def a(k):
+            """Percent of the shared tokens whose prediction column k equals the gold pattern."""
             return 100 * sum(d[k] == d["gold_pattern"] for d in ps) / len(ps)
         res["lexicon_ambiguous_shared_7639"] = {
             "n": len(ps), "frequency": round(a("frequency_prediction"), 2), "oracle": round(a("oracle_prediction"), 2),
@@ -98,6 +134,18 @@ def logistic(folder, shared=None):
 
 
 def main():
+    """Write results/encoder/selection.json from the selection runs and the logistic D3 comparison, print the choice.
+
+    Reads the lexicon-ambiguous john_ws ids of results/wikipron and results/wikipron_with_zupitza and asserts that the
+    first (without Zupitza) is a strict subset of the second. The 24 run rows come from --runs (read_runs) or else
+    from the "runs" list of the existing selection.json, which is then overwritten. Exits if there are not 24 rows, or
+    if the configuration with the highest mean_on_shared_7639 (the first one on equal values) is not the rule's
+    choice, since population_note says both scorings give the same choice. That check does not rerun the tie rule on
+    the shared means. Nothing is written when a check fails. The descriptive fields (what, code_commit, command,
+    grid, rule, population_note and their D3 counterparts) are fixed text, so the commit fc8a0b2 and the token
+    counts 7,782 and 7,639 in population_note are not checked here. The numbers come from the runs and from
+    results/wikipron and results/wikipron_with_zupitza (metrics.json and john_ws_predictions.jsonl).
+    """
     ap = argparse.ArgumentParser()
     ap.add_argument("--runs", help="folder of <z|noz>_lr<LR>_ep<N>/sentence_s<seed> runs (default: the committed list)")
     a = ap.parse_args()

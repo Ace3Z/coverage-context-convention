@@ -1,6 +1,10 @@
 """Fail the run if any headline value differs from the frozen reference results.
 
-Checks counts exactly, proportions to 0.00005 and McNemar p-values to 0.0005.
+Reads results/<setting>/metrics.json for the four candidate settings and the Zupitza ablation, and
+results/agreement/metrics.json. Checks counts exactly, accuracies, agreements and kappas to 0.00005 (the frozen values
+are rounded to four decimals) and McNemar p-values to 0.0005 absolute, and that no seed-1 McNemar p-value of the
+training-only setting on Beowulf falls below 0.12. That makes 660 checks when every file is complete.
+Prints PASSED, or FAILED with one line per mismatch or missing entry, and exits 0 or 1.
 Usage: python -m oevl.check_expected
 """
 import json
@@ -11,8 +15,10 @@ ROOT = Path(__file__).resolve().parents[2]
 PROP_TOL, P_TOL = 0.00005, 0.0005
 POPS = ("accuracy", "lexicon_ambiguous", "attested_ambiguous", "minority_reading")
 
-# (folder, test) -> population -> n, frequency, word, left, bilateral (means over seeds 1-3), oracle
-# The four settings train without Zupitza (decision D3); results_wikipron_with_zupitza is the D3 ablation with all five works
+# (folder, test) -> population -> (n, frequency, word, left, bilateral, oracle): n is the population's token count and
+# the rest are accuracies, with word, left and bilateral (the "sentence" arm in metrics.json) as means of seeds 1 to 3.
+# The four settings train without Zupitza (decision D3), and results_wikipron_with_zupitza is the D3 ablation with all
+# five works.
 EXPECTED = {
     ("results_wikipron", "john_ws"): {
         "accuracy": (16649, .9613, .9601, .9591, .9596, .9792),
@@ -106,7 +112,10 @@ EXPECTED = {
     },
 }
 
-# (folder, test) -> pair -> (a_wrong_b_right, a_right_b_wrong, p)
+# (folder, test) -> pair -> (a_wrong_b_right, a_right_b_wrong, p) for the exact McNemar tests on seed 1 (mcnemar_seed1).
+# p is p_exact to three significant figures, frozen as 0.0 when it is below 1e-6. It is checked to 0.0005 absolute, so
+# a frozen 0.0 or a tiny p only asserts a p-value of at most about 0.0005.
+# results_training_only on tauber_beowulf has no entry here. Only its p-values are checked, against MIN_P_TRAINING_ONLY.
 MCNEMAR = {
     ("results_wikipron", "john_ws"): {
         "frequency_vs_word_seed1": (12, 33, 0.00246),
@@ -221,10 +230,11 @@ MCNEMAR = {
         "left_seed1_vs_sentence_seed1": (14, 15, 1.0),
     },
 }
-# training-only on Beowulf: no model differs from another at p < 0.12 (min p 0.1597)
+# training-only on Beowulf: no seed-1 McNemar pair of the prior and the three arms reaches p < 0.12 (min p 0.1597)
 MIN_P_TRAINING_ONLY = {"tauber_beowulf": 0.12}
 
-# folder -> (aligned, all agreement, all kappa, ambiguous n, ambiguous agreement, ambiguous kappa)
+# folder -> (aligned, all agreement, all kappa, ambiguous n, ambiguous agreement, ambiguous kappa) in editor_agreement:
+# Harrison and Sharp against Wyatt, with "ambiguous" meaning lexicon-ambiguous under that setting's lexicon
 AGREEMENT = {
     "results_wikipron": (16833, .9773, .9733, 4387, .9608, .9423),
     "results_training_only": (16833, .9773, .9733, 3874, .9566, .9326),
@@ -233,7 +243,8 @@ AGREEMENT = {
     "results_wikipron_with_zupitza": (16833, .9773, .9733, 4420, .9604, .9419),
 }
 
-# results/agreement: editor pair -> (aligned, ambiguous n, ambiguous agreement, ambiguous kappa)
+# results/agreement: editor pair -> (aligned, ambiguous n, ambiguous agreement, ambiguous kappa), where hs is Harrison
+# and Sharp, wyatt is Wyatt and tauber is Tauber's gold, with the lexicon of results_wikipron
 AGREEMENT_PAIRS = {
     "hs-wyatt": (16833, 4387, .9608, .9423),
     "hs-tauber": (16573, 4332, .9882, .9827),
@@ -242,19 +253,32 @@ AGREEMENT_PAIRS = {
 
 
 def acc(d, pop):
+    """Return an arm's accuracy on a population: overall for "accuracy", else d[pop]["accuracy"] (None if empty).
+
+    d is one arm's entry for a test in metrics.json, as experiment.evaluate writes it.
+    """
     return d["accuracy"] if pop == "accuracy" else d[pop]["accuracy"]
 
 
 def main() -> int:
+    """Compare the metrics files with the frozen values, print the verdict and return the exit code (0 or 1).
+
+    A missing metrics file, test, McNemar pair or editor entry is recorded as an error but not counted as a check, so
+    the FAILED line can report more errors than checks. A key missing inside an entry that is present raises KeyError.
+    The p floor in MIN_P_TRAINING_ONLY runs over whatever pairs mcnemar_seed1 holds, so it checks nothing when they are
+    absent.
+    """
     errors, checked = [], 0
 
     def close(label, got, want, tol):
+        """Count one check and record an error if got is None or differs from want by more than tol."""
         nonlocal checked
         checked += 1
         if got is None or abs(got - want) > tol:
             errors.append(f"{label}: got {got}, expected {want}")
 
     def equal(label, got, want):
+        """Count one check and record an error unless got equals want."""
         nonlocal checked
         checked += 1
         if got != want:
@@ -291,6 +315,7 @@ def main() -> int:
                 continue
             equal(f"{folder}/{test}/mcnemar/{pair}/a_wrong_b_right", r["a_wrong_b_right"], b01)
             equal(f"{folder}/{test}/mcnemar/{pair}/a_right_b_wrong", r["a_right_b_wrong"], b10)
+            # max(1, p) is 1 for any p-value, so the tolerance is P_TOL absolute
             close(f"{folder}/{test}/mcnemar/{pair}/p", r["p_exact"], p, P_TOL * max(1, p))
     for test, floor in MIN_P_TRAINING_ONLY.items():
         d = metrics.get("results_training_only", {}).get(test, {}).get("mcnemar_seed1", {})

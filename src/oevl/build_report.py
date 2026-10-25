@@ -1,9 +1,22 @@
-"""Generate every number and table used in report/main.tex, and an accuracy figure, from data/ and results/.
+"""Generate report/generated/numbers.tex, six tables and an accuracy figure from data/ and results/, then compile.
 
+Reads results/<setting>/metrics.json of the five logistic settings (training_only, wikipron, proposal, all,
+wikipron_with_zupitza), results/training_only/soliloquies_per_word.csv, the WikiPron run's predictions
+(results/wikipron/{soliloquies, tauber_beowulf}_predictions.jsonl), results/{agreement, charsiu, encoder,
+error_typing}/ and data/ (manifest, ambiguity classes, leakage audit, WikiPron TSV, lex_wikipron.csv, Tauber's
+Beowulf, by_source/*.jsonl).
 Writes report/generated/{numbers.tex, tab_data.tex, tab_main.tex, tab_ablation.tex, tab_perword.tex,
-tab_classes.tex, tab_bootstrap.tex, fig_accuracy.pdf}. It also checks that the worked examples quoted in the report match the
-predictions, and compiles report/main.tex to REPORT.pdf when pdflatex is installed (otherwise upload report/ to
-Overleaf).
+tab_classes.tex, tab_bootstrap.tex, fig_accuracy.pdf}. Of these, main.tex inputs only numbers.tex (and uses only some
+of its macros) and tab_data.tex. Its other generated macros come from numbers_encoder.tex (oevl.encoder_summary) and
+numbers_paper.tex (oevl.paper_numbers).
+All work runs at module level, so importing the module runs the whole build. The run stops with sys.exit when a check
+fails: the two Soliloquies worked examples (the sentences starting "Ic clypie tō þē" and "Tō þē ic clypige") against
+the prior and the logistic runs, the first also against every ByT5 word and local2 run, Beowulf 2796 against the
+full-cap ByT5 runs and its row in results/error_typing/labels.tsv, the CharsiuG2P reproduction against its
+published WER and PER, the WikiPron conversion against data/lex_wikipron.csv, and a few consistency checks between
+result files. A failed LaTeX pass also stops it.
+When pdflatex is installed it runs pdflatex, bibtex and pdflatex twice in report/ and copies main.pdf to REPORT.pdf
+(otherwise upload report/ to Overleaf).
 Usage: python -m oevl.build_report
 """
 import collections
@@ -27,6 +40,7 @@ TESTS = (("soliloquies", "Soliloquies"), ("tauber_beowulf", "Beowulf"))
 
 
 def load(folder):
+    """Return results/<folder>/metrics.json, one logistic setting's metrics from oevl.experiment, as a dict."""
     return json.loads((ROOT / "results" / folder / "metrics.json").read_text(encoding="utf8"))
 
 
@@ -35,14 +49,24 @@ P, A, Z = load("proposal"), load("all"), load("wikipron_with_zupitza")  # propos
 
 
 def pct(x):
+    """Format a fraction as a percentage with two decimals and no % sign, e.g. 0.87836 gives "87.84"."""
     return f"{100 * x:.2f}"
 
 
 def acc(d, pop):
+    """Accuracy (a fraction) of one system entry of metrics.json, such as frequency or oracle, on a population.
+
+    pop "accuracy" (all scored tokens) reads d["accuracy"], any other population name reads d[pop]["accuracy"]."""
     return d["accuracy"] if pop == "accuracy" else d[pop]["accuracy"]
 
 
 def val(m, test, system, pop, sd=False):
+    """Accuracy of one system on one population of a held-out set, as a percentage string (see pct).
+
+    m: a metrics.json dict, test: a held-out set key such as "soliloquies", pop: "accuracy" (all tokens) or a population
+    such as "lexicon_ambiguous" or "class_B". "frequency" and "oracle" are deterministic and read directly, "word",
+    "left" and "sentence" give the mean over seeds from seed_summary. With sd=True a logistic system also gets
+    "$\\pm$" and its sample SD over seeds in points."""
     t = m[test]
     if system in ("frequency", "oracle"):
         return pct(acc(t[system], pop))
@@ -51,14 +75,19 @@ def val(m, test, system, pop, sd=False):
 
 
 def n(m, test, pop):
+    """Number of scored tokens of a population of one held-out set, read from the frequency entry ("accuracy" = all)."""
     return m[test]["frequency"]["n"] if pop == "accuracy" else m[test]["frequency"][pop]["n"]
 
 
 def p_fmt(p):
+    """Format a p-value as plain text.
+
+    Four decimals from 0.001 up, four decimals with trailing zeros stripped from 0.0001 up (0.000999 gives "0.001"),
+    and below that one decimal in exponent form, e.g. "4.8e-13" (not LaTeX math)."""
     return f"{p:.4f}" if p >= 0.001 else f"{p:.4f}".rstrip("0") if p >= 0.0001 else f"{p:.1e}"
 
 
-# ---------------------------------------------------------------- numbers used in the prose
+# ---------------------------------------------------------------- numbers for numbers.tex (main.tex uses only some)
 num = {}
 manifest = json.loads((ROOT / "data" / "manifest.json").read_text(encoding="utf8"))["sources"]
 num["CorpusTokens"] = f"{sum(s['tokens'] for s in manifest.values()):,}"
@@ -109,6 +138,7 @@ num["DThreeSolAllCost"] = f"{100 * (Z['soliloquies']['frequency']['accuracy'] - 
 
 
 def rjson(path):
+    """Read a JSON file given by its path relative to the repository root."""
     return json.loads((ROOT / path).read_text(encoding="utf8"))
 
 
@@ -130,7 +160,7 @@ for pair, short in (("hs-wyatt", "HW"), ("hs-tauber", "HT"), ("wyatt-tauber", "W
             num[f"Gate{short}{ed}"], num[f"Gate{short}{ed}Floor"] = f"{g['gap_points']:.2f}", pct(g["floor"])
 wt_b = AG["pairs"]["wyatt-tauber"]["class_B"]
 num["PairWTClsBPriorGap"] = f"{100 * (wt_b['prior_vs_wyatt'] - wt_b['prior_vs_tauber']):.2f}"
-# class B disagreements between Harrison & Sharp and Wyatt, and how many are ne/nē (the PG revision's ne = nē)
+# class B disagreements between Harrison & Sharp and Wyatt, and how many are ne (the PG revision prints nē, Wyatt ne)
 cls_b = {r["skeleton"] for r in csv.DictReader(open(ROOT / "data" / "ambiguity_classes.csv", encoding="utf8"))
          if r["final"] == "B"}
 hw_b = [r for r in csv.DictReader(open(ROOT / "results/agreement/disagreements.tsv", encoding="utf8"), delimiter="\t")
@@ -157,7 +187,7 @@ num["CharsiuN"] = str(b20["n"])
 for test, short in (("soliloquies", "Sol"), ("tauber_beowulf", "Beo")):
     e = CM[test]["experiment_populations"]
     num[f"Charsiu{short}All"], num[f"Charsiu{short}Lex"] = pct(e["accuracy"]), pct(e["lexicon_ambiguous"]["accuracy"])
-cs = CM["soliloquies"]  # its length errors on ambiguous prose tokens, and how many the logistic models get right
+cs = CM["soliloquies"]  # its length errors on ambiguous prose tokens, and how many the seed-1 logistic models get right
 num["CharsiuSolLexWrong"] = f"{cs['wrong_length_on_ambiguous']:,}"
 num["CharsiuSolLexWordFix"], num["CharsiuSolLexBilFix"] = (f"{cs[k]:,}" for k in (
     "of_those_word_model_right", "of_those_bilateral_model_right"))
@@ -244,6 +274,7 @@ if missing:
 
 
 def counts(js):
+    """Turn a per-word CSV cell, JSON {pattern: count} of a one-vowel word, into "short/long" from patterns "0", "1"."""
     c = json.loads(js)
     return f"{c.get('0', 0)}/{c.get('1', 0)}"
 
@@ -254,6 +285,7 @@ ZUP = collections.Counter((r["key"], r["gold_pattern"]) for r in E.tokens(E.load
 
 
 def zup(w):
+    """Counts of skeleton w with pattern "0" and "1" in the whole Zupitza file, as "short/long" (one-vowel words)."""
     return f"{ZUP[w, '0']}/{ZUP[w, '1']}"
 
 
@@ -292,7 +324,8 @@ for tag, toks in found.items():
     if any(rel[a] != "0" for a in arms):
         sys.exit(f"{tag}: relative 'þe' claim no longer holds: {rel}")
 
-# ---------------------------------------------------------------- coverage and þe facts recomputed from the data
+# ---------------------------------------------------------------- coverage from data/, þe facts from predictions
+# Beowulf coverage by the training forms alone (D3 training, no dictionary), and the rows of Tauber's file
 train_toks, _, _, _ = E.build_data(str(ROOT / "data"), E.EXCLUDE_D3)
 lex_t, _ = E.lexicon(train_toks)
 beo = E.heldout(ROOT / "data", "tauber_beowulf")
@@ -314,7 +347,8 @@ for toks in bysent.values():
             after_to.append(t)
 num["ToTheN"] = str(len(after_to))
 num["ToTheMissed"] = str(sum(t["left_seed1_prediction"] == "0" and t["sentence_seed1_prediction"] == "0" for t in after_to))
-# the same tokens in the ByT5 runs (results/encoder): fewest and most long þē after tō per arm, over its runs
+# the same tokens in the ByT5 runs (results/encoder): fewest and most long þē after tō per arm, over its runs at
+# every cap (128, 256 and full)
 import gzip  # noqa: E402
 head, *enc_rows = gzip.decompress((ROOT / "results/encoder/soliloquies_predictions.tsv.gz").read_bytes()).decode(
     "utf8").split("\n")[:-1]
@@ -334,7 +368,8 @@ for c in enc_runs:
         sys.exit(f"ex1: the local2 claim no longer holds for {c}")
     if arm == "word" and (ENC_SOL[the_long["id"]][c], ENC_SOL[the_rel["id"]][c]) != ("0", "0"):
         sys.exit(f"ex1: the word-arm claim no longer holds for {c}")
-# Beowulf 2796 "þē ic hēr on starie": gold and Harrison and Sharp long, Wyatt short, every full-cap ByT5 run short
+# Beowulf 2796 "þē ic hēr on starie": gold and Harrison and Sharp long, Wyatt short, every full-cap ByT5 run short,
+# and the error label is gold_in_doubt
 head, *rows = gzip.decompress((ROOT / "results/encoder/tauber_beowulf_predictions.tsv.gz").read_bytes()).decode(
     "utf8").split("\n")[:-1]
 b2796 = next(dict(zip(head.split("\t"), r.split("\t"))) for r in rows if r.startswith("tauber:685:44\t"))
@@ -430,8 +465,9 @@ for t, tname in TESTS:
     cls.append("\\addlinespace" if t == "soliloquies" else "")
 (OUT / "tab_classes.tex").write_text("\n".join(cls) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf8")
 
-# Paired sentence bootstrap (oevl.stats) of the logistic models, + WikiPron run: each arm's per-token correctness is
-# its mean over seeds 1-3; differences in points with a 95% interval
+# Paired sentence bootstrap (oevl.stats.bootstrap_diff) of the prior and the logistic models of the + WikiPron run
+# (results/wikipron): each arm's per-token correctness is its mean over seeds 1-3. Differences in points with a 95%
+# interval. Class B means lexicon-ambiguous tokens whose skeleton is class B, as in metrics.json
 from oevl.stats import bootstrap_diff  # noqa: E402
 CLASSES = E.load_classes(ROOT / "data" / "ambiguity_classes.csv")
 PAIRS = (("word", "frequency"), ("left", "frequency"), ("sentence", "frequency"), ("left", "word"),
@@ -478,7 +514,7 @@ with open(OUT / "numbers.tex", "w", encoding="utf8") as f:
         f.write(f"\\newcommand{{\\{name}}}{{{v}}}\n")
 
 
-# ---------------------------------------------------------------- figure (drawn at its printed size: 15 cm wide)
+# ---------------------------------------------------------------- figure (drawn 15 cm wide, its intended printed size)
 # Dot plot (not bars): the left panel needs a zoomed axis, and bars must start at zero.
 plt.rcParams.update({"font.family": "serif", "font.serif": ["Liberation Serif", "Nimbus Roman", "Times New Roman",
                      "DejaVu Serif"], "font.size": 11, "axes.titlesize": 11, "axes.labelsize": 11,
@@ -520,7 +556,7 @@ print("worked examples verified against results/wikipron/soliloquies_predictions
 
 # ---------------------------------------------------------------- compile
 if shutil.which("pdflatex"):
-    for cmd in (["pdflatex"], ["bibtex"], ["pdflatex"], ["pdflatex"]):  # bibtex reads references.bib after the first pass
+    for cmd in (["pdflatex"], ["bibtex"], ["pdflatex"], ["pdflatex"]):  # bibtex reads references.bib after pass one
         args = cmd + (["-interaction=nonstopmode", "-halt-on-error", "main.tex"] if cmd[0] == "pdflatex" else ["main"])
         r = subprocess.run(args, cwd=ROOT / "report", capture_output=True, text=True,
                            errors="replace",  # pdflatex echoes T1 bytes (þ, ý) that are not UTF-8

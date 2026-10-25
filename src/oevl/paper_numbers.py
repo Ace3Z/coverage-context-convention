@@ -3,13 +3,17 @@
 Writes report/generated/numbers_paper.tex (one \\newcommand per number, all named \\NP...) and Figure 1,
 report/generated/fig_coverage.pdf: the frequency prior and the achievable ceiling for the four candidate sources, with
 ByT5 local2 at + WikiPron. It asserts the worked examples the paper quotes (soliloquies:00026, Gēata, the Beowulf
-article se, Beowulf line 2796), so a change in the data stops the run here. run_all.sh runs it before build_report.
+article se, Beowulf line 2796) and the other facts its numbers rest on before it writes anything, so a change in the
+data stops the run here. run_all.sh runs it before build_report.
 
 The word-conjoined logistic model (experiment.features, arm "conjoined") is a post hoc diagnostic: it was designed
-after the ByT5 results, has no tuning, and runs only here. Every ByT5 mean and contrast is at the full cap over three
-seeds, local2 and local5 included. The exceptions range over the whole grid: EncCtxGainMin over all 12 arm and cap
-combinations, and counts of single runs (the best run, MostLongMax, the runs that mark a token long, the runs with an
-identical twin) over all 39 runs.
+after the ByT5 results, has no tuning, and runs only here. Every ByT5 mean and contrast from the test grid (the
+encoder tables and summary.json) is at the full cap over three seeds, local2 and local5 included. The exceptions
+range over the whole grid: EncCtxGainMin over all 12 context arm and cap combinations, PriorCopyRuns over the 36
+context runs, counts of single runs (the best run, MostLongMax, the runs that mark a token long) over all 39 runs,
+and the runs with an identical twin over the nine local2 and the nine local5 runs. The word arm runs only at the full
+cap. The selection numbers (SelDev..., DThreeEnc..., EncSolAll..., EncDThreeSolCost) come from the selection runs in
+results/encoder/selection.json instead: sentence arm, full cap, seeds 1 and 2.
 Usage: python -m oevl.paper_numbers
 """
 import collections
@@ -53,32 +57,38 @@ TWO_LEVEL_DRAWS = 40000  # with 4,000 draws an endpoint moved by up to 0.5 point
 
 
 class Numbers(dict):
-    """Macro name after \\NP -> value as printed."""
+    """Macro name after \\NP -> value as printed. The sections call an instance as put(name, value)."""
 
     def __call__(self, name, value):
+        """Store str(value) under name. Exits when name is not all ASCII letters or is already taken."""
         if not (name.isascii() and name.isalpha()) or name in self:
             raise SystemExit(f"paper_numbers: bad or repeated macro name {name!r}")
         self[name] = str(value)
 
 
 def need(ok, what):
+    """Stop the run with SystemExit ("paper_numbers: <what> no longer holds") unless ok is true."""
     if not ok:
         raise SystemExit(f"paper_numbers: {what} no longer holds")
 
 
 def pct(x, digits=2):
+    """A share in [0, 1] as a percentage with digits decimals: 0.9 -> "90.00"."""
     return f"{100 * x:.{digits}f}"
 
 
 def pts(x, digits=2):
+    """A difference of shares as signed percentage points with digits decimals: 0.0123 -> "+1.23"."""
     return f"{100 * x:+.{digits}f}"
 
 
 def num(x):
+    """An integer with thousands commas: 12345 -> "12,345"."""
     return f"{x:,}"
 
 
 def share(flags):
+    """The share of true values in flags, any iterable of booleans (ZeroDivisionError when it is empty)."""
     flags = list(flags)
     return sum(flags) / len(flags)
 
@@ -95,14 +105,17 @@ def reachable(r, lex):
 
 
 def wilson(k, n, z=1.959964):
-    """The 95% Wilson score interval of k successes in n trials."""
+    """The 95% Wilson score interval (lo, hi) of k successes in n trials, as shares."""
     p, d = k / n, 1 + z * z / n
     c, h = (p + z * z / (2 * n)) / d, z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / d
     return c - h, c + h
 
 
 def loose(k):
-    """A spelling-tolerant key: æa, æo, ie, y, io and the diphthongs folded, double letters written once."""
+    """A spelling-tolerant key: æa, æo, io, æ, ea and eo become e, ie and y become i, a doubled letter is written once.
+
+    k: an experiment.key. The replacements run in the order æa, æo, ie, y, io, æ, ea, eo, and the letter pairs are
+    halved left to right, so a run of three equal letters keeps two."""
     for a, b in (("æa", "ea"), ("æo", "eo"), ("ie", "i"), ("y", "i"), ("io", "eo"), ("æ", "e"), ("ea", "e"),
                  ("eo", "e")):
         k = k.replace(a, b)
@@ -110,7 +123,10 @@ def loose(k):
 
 
 def longest_run(sentences, stream):
-    """(n, words) of the longest run of n consecutive keys that a sentence shares with stream, a key sequence."""
+    """(n, words) of the longest run of n consecutive keys that a sentence shares with stream, a key sequence.
+
+    sentences: one key list per sentence, a run never crosses their ends; stream: one flat key list, so a run in it
+    may cross sentence ends. words is the first such run in sentence order. Returns (0, ()) when no key is shared."""
     best, n = (0, ()), 1
     while True:
         have = {tuple(stream[i:i + n]) for i in range(len(stream) - n + 1)}
@@ -122,7 +138,10 @@ def longest_run(sentences, stream):
 
 
 def counts_from_pcts(values, n):
-    """The token counts behind percentages of n tokens rounded to two decimals (unique while n < 10,000)."""
+    """The token counts behind percentages of n tokens rounded to two decimals (unique while n < 10,000).
+
+    values: percentages from 0 to 100. Returns one integer count per value. Exits when n is 10,000 or more or when a
+    value is not 100 * count / n rounded to two decimals."""
     out = [round(v * n / 100) for v in values]
     need(n < 10000 and all(round(100 * c / n, 2) == v for c, v in zip(out, values)), f"exact counts of {values}")
     return out
@@ -130,8 +149,12 @@ def counts_from_pcts(values, n):
 
 def fixed_rule(r):
     """The error type that follows from the item sheet alone: gold not a candidate, then another edition with the
-    system's pattern (Beowulf only), then the class of the word. None when no rule applies."""
+    system's pattern (Beowulf only), then the class of the word. None when no rule applies.
+
+    r: a row of results/error_typing/labels.tsv. Returns ceiling, gold_in_doubt, homograph, grammatical, editorial or
+    None."""
     def same(form):
+        """Whether form, another edition's spelling of the token, is aligned and has the system's pattern."""
         return bool(form) and form != "not_aligned" and E.pattern(form) == E.pattern(r["system_form"])
     if r["gold_in_candidates"] == "no":
         return "ceiling"
@@ -141,7 +164,13 @@ def fixed_rule(r):
 
 
 def tauber_columns(path):
-    """Tauber's line number and gloss of every token, in the order of experiment.load_tauber."""
+    """Tauber's line number and gloss of every token, in the order of experiment.load_tauber.
+
+    path: Tauber's pipe-separated file (data/brunetti-length.txt). Returns one (line, gloss) pair of strings, columns 4
+    and 16 counted from zero, per word of column 9, so the words of one row share them. The line number is zero-padded
+    to four digits ("0084", "2587"). No sentence is left out, so the list lines up with
+    experiment.heldout(..., "tauber_beowulf") only while the leakage audit excludes no Beowulf sentence (Context checks
+    the lengths)."""
     out = []
     for line in Path(path).read_text(encoding="utf8").splitlines():
         if line.strip():
@@ -151,18 +180,23 @@ def tauber_columns(path):
 
 
 def jsonl(path):
+    """The JSON value on each line of a JSON Lines file, in order (the file must have no blank lines)."""
     with open(path, encoding="utf8") as f:
         return [json.loads(line) for line in f]
 
 
 def runs_of(row, arm=None, cap=None):
-    """The ByT5 run columns of an encoder table row, optionally of one arm and one config."""
+    """The ByT5 run columns of an encoder table row, optionally of one arm and one config.
+
+    Run columns are named <config>/<arm>_s<seed>, such as capfull/local2_s1. arm: word, left, sentence, local2 or
+    local5, and cap: cap128, cap256 or capfull. With neither, all 39 runs (the word arm runs only at capfull). Every
+    row has the same columns, so any row will do."""
     return [c for c in row if "/" in c and (arm is None or c.split("/")[1].rsplit("_", 1)[0] == arm)
             and (cap is None or c.startswith(cap + "/"))]
 
 
 def correct(row, cols):
-    """Share of the columns that give the gold pattern on this encoder table row."""
+    """Share of the columns that give the gold pattern on this encoder table row (cols must not be empty)."""
     return sum(row[c] == row["gold"] for c in cols) / len(cols)
 
 
@@ -170,7 +204,10 @@ def correct(row, cols):
 def example_soliloquies_00026(preds, enc):
     """In 'Ic clypie tō þē, Drihten, þū þe æall geworhtest' the first þē is the pronoun and the second þe the relative
     particle. The prior, every word, left and bilateral logistic run and every ByT5 word run mark both short, and every
-    local2 run gets both right (and every conjoined run, asserted in conjoined)."""
+    local2 run gets both right (and every conjoined run, asserted in conjoined).
+
+    preds: the WikiPron prediction rows of the Soliloquies; enc: its encoder table by token id. The local2 check covers
+    all three caps, the word arm runs only at the full cap. Returns None. Exits when any of this no longer holds."""
     toks = [p for p in preds if p["sentence_id"] == "soliloquies:00026"]
     need(" ".join(t["gold"] for t in toks).startswith("Ic clypie tō þē Drihten þū þe æall geworhtest"),
          "the text of soliloquies:00026")
@@ -187,7 +224,11 @@ def example_soliloquies_00026(preds, enc):
 
 def example_geata(preds, enc, lex, counts):
     """Gēata: 39 Beowulf tokens, all long and unseen in training. WikiPron lists gēata and geata 'gates', so the prior
-    falls back to fewer long vowels. Returns the tokens."""
+    falls back to fewer long vowels. Returns the tokens.
+
+    It also asserts that every ByT5 word run (full cap) writes gēata on every token and no full-cap sentence run writes
+    it on any. preds: the WikiPron prediction rows of Beowulf; enc: its encoder table by token id; lex, counts: the
+    WikiPron lexicon and training counts from experiment.lexicon. The tokens come back as prediction rows."""
     g = [p for p in preds if p["key"] == "geata"]
     need(len(g) == 39 and {p["gold_pattern"] for p in g} == {"100"}, "Gēata: 39 tokens, all long in the gold")
     need(not counts.get("geata") and set(lex["geata"]) == {"000", "100"},
@@ -202,7 +243,11 @@ def example_geata(preds, enc, lex, counts):
 
 def example_se(tb, cols, preds, enc):
     """In Beowulf line 2587, þæt se mǣra maga Ecgðēowes, Klaeber writes the article se short, and the prior and every
-    ByT5 run mark it long. Returns every se token of Tauber's Beowulf with its gloss."""
+    ByT5 run mark it long. Returns every se token of Tauber's Beowulf with its gloss.
+
+    tb: Tauber's token rows; cols: tauber_columns of the same file, aligned with tb; preds: the WikiPron prediction rows
+    of Beowulf; enc: its encoder table by token id. "Every ByT5 run" covers all caps. The code checks one short se on
+    line 2587, not its gloss. Returns (token row, gloss) pairs."""
     se = [(t, gloss) for t, (_, gloss) in zip(tb, cols) if t["key"] == "se"]
     line = [t for t, (ln, _) in zip(tb, cols) if t["key"] == "se" and ln == "2587"]
     need(len(line) == 1 and line[0]["gold_pattern"] == "0", "Beowulf 2587: one short se")
@@ -213,7 +258,11 @@ def example_se(tb, cols, preds, enc):
 
 def example_2796(enc, labels):
     """Beowulf 2796, ēcum dryhtne þē ic hēr on starie: Tauber and Harrison and Sharp print þē, Wyatt þe, and every
-    full-cap ByT5 run writes þe. Returns the number of runs over all caps that write þē."""
+    full-cap ByT5 run writes þe. Returns the number of runs over all caps that write þē.
+
+    The token is tauber:685:44 (line 2796 in Tauber's columns, which the code does not check). It also asserts that the
+    error typing labels it gold_in_doubt. enc: the Beowulf encoder table by token id; labels: the rows of
+    results/error_typing/labels.tsv, which must hold this token (StopIteration otherwise, not a clean exit)."""
     b, lab = enc["tauber:685:44"], next(r for r in labels if r["id"] == "tauber:685:44")
     need((b["gold"], lab["hs_form"], lab["wyatt_form"], lab["final"]) == ("1", "þē", "þe", "gold_in_doubt") and all(
         b[c] == "0" for c in runs_of(b, cap="capfull")), "Beowulf 2796")
@@ -225,6 +274,17 @@ class Context:
     """Everything the sections share, loaded once."""
 
     def __init__(self):
+        """Load the data, predictions and results the sections read, and check that they line up.
+
+        train: the training token rows without Zupitza (decision D3); hs, wy: every Harrison and Sharp and Wyatt
+        Beowulf token; lex: tag (T, W, P, A of SETTINGS) -> (lexicon, training counts) from experiment.lexicon;
+        held: set name -> scored token rows (experiment.heldout); tb: the scored Tauber rows; tb_cols: tauber_columns,
+        aligned with tb (only the lengths are checked); preds: (tag, set) -> rows of
+        results/<folder>/<set>_predictions.jsonl, checked to cover the held tokens in order; metrics: tag ->
+        results/<folder>/metrics.json; enc: set -> {token id: row of results/encoder/<set>_predictions.tsv.gz, every
+        cell a string}; summary: results/encoder/summary.json; cls: skeleton -> class letter of
+        data/ambiguity_classes.csv (experiment.load_classes); labels: the rows of results/error_typing/labels.tsv.
+        Exits when a check fails. experiment.load_tauber prints one validation line."""
         self.train, _, self.hs, self.wy = E.build_data(DATA, E.EXCLUDE_D3)
         self.lex = {tag: E.lexicon(self.train, str(DATA / f) if f else None) for tag, _, f in SETTINGS}
         self.held = {s: E.heldout(DATA, s) for _, s in SETS}
@@ -244,12 +304,27 @@ class Context:
 
 
 def corpus(put, ctx):
+    """The corpus and its splits: sizes and long-vowel shares per edition and genre (Corpus..., Ed..., Reader...,
+    VerseLong..., ProseLong..., Finnsburh...), the training set without and with Zupitza (Train..., ZupTrain...), the
+    tokens of the two agreement editions (AgreementTokens), the scored sentences and unseen tokens of each set
+    (ScoredSentences..., Unseen...), the leakage figures (LeakFormula, LongestRun), the release (Release...), the
+    corpus tokens per Tauber token (CorpusOverTauber), apparent slips in Bright's Reader (Slip...), the scored
+    Soliloquies sentences that are only the token A (SpeakerA), and Harrison and Sharp against Wyatt without
+    Finnsburh (FinnsburhAligned, NoFinnsburh...).
+
+    The edition counts cover every sentence, the scored ones and the leakage-excluded alike. Tauber's (EdTauber...)
+    come from ctx.tb, the scored rows, which Context's length check makes all of Tauber's. LongestRun compares loose
+    keys of all five experiment.TRAIN works, Zupitza included. Reads data/by_source, data/manifest.json,
+    data/leakage_excluded.json, data/lex_wikipron.csv and data/ambiguity_classes.csv. Exits when the manifest token
+    counts, the four verse sections of the Reader, the training set size or the longest run (feor oþþe nēah) no
+    longer hold."""
     rows = {w: E.load(DATA / "by_source" / f"{w}.jsonl") for _, w in EDITIONS}
     toks = {w: list(E.tokens(r)) for w, r in rows.items()}
     manifest = json.loads((DATA / "manifest.json").read_text(encoding="utf8"))["sources"]
     need(all(len(toks[w]) == manifest[w]["tokens"] for w in toks), "the manifest token counts")
 
     def long(ts):
+        """Share of the vowel letters of tokens ts that are marked long."""
         return sum(t["gold_pattern"].count("1") for t in ts) / sum(len(t["gold_pattern"]) for t in ts)
 
     corpus_toks = [t for ts in toks.values() for t in ts]
@@ -275,7 +350,7 @@ def corpus(put, ctx):
     put("ReaderVerseTokens", num(len(rv)))
     put("ReaderVerseLong", pct(long(rv)))
     put("ReaderProseLong", pct(long(rp)))
-    # ranges over texts, not editions: the Reader's verse and prose parts each count as one text
+    # ranges over parts, not editions: the Reader's verse and prose parts count separately, each Beowulf edition once
     verse = [long(rv), long(toks["physiologus"]), long(toks["hs_beowulf"]), long(toks["wyatt_beowulf"]), long(ctx.tb)]
     prose = [long(rp)] + [long(toks[w]) for w in ("zupitza_grammar", "matthew_ws", "sweet_primer", "john_ws",
                                                   "soliloquies")]
@@ -341,6 +416,14 @@ def corpus(put, ctx):
 
 
 def candidates(put, ctx):
+    """The candidate lists and the labels: rows per list (LexForms...), WikiPron forms also in the Wiktionary list
+    (WikiInWiktionary...), the lexicon-ambiguous share of each test set and its split by class (LexShare..., ClsB...,
+    ClsShare...), the dev minority-reading count (MinDevN), the blind review (Review...), the two labelling runs of the
+    classes and the error types (ClassLabels..., ErrLabels...), the distinct patterns among the logistic training
+    examples (LogitClasses) and the optimiser steps of a full-cap ByT5 run, epochs times batches (EncSteps).
+
+    Reads data/lex_*.csv, results/label_review/expert_review.json, data/ambiguity_classes.csv and
+    results/error_typing/labels.tsv. Exits unless the logistic models and ByT5 train on the same number of examples."""
     rows = {n: [r["marked_form"] for r in csv.DictReader(open(DATA / f"lex_{n}.csv", encoding="utf8"))]
             for n in ("clarkhall", "wiktionary", "bt", "proposal", "all", "wikipron")}
     for name, n in (("ClarkHall", "clarkhall"), ("Wiktionary", "wiktionary"), ("BT", "bt"), ("Proposal", "proposal"),
@@ -381,6 +464,15 @@ def candidates(put, ctx):
 
 
 def coverage(put, ctx):
+    """Coverage: the all-short baseline (AllShort..., NoCandShort...), per candidate source the test tokens with no
+    candidate and the share of the prior's errors that no chooser could fix (NoCand..., OutOfReach...Share), for
+    WikiPron alone the dev ceiling and those errors in counts (CeilDev, PriorErr..., OutOfReach..., Headroom...), the
+    prior's back-off on unseen words (Backoff...), the prior on seen and unseen words (SeenPrior..., UnseenPrior...,
+    DictWikiExtra..., AvsP...) and the net Beowulf gain of all four sources over training forms and over WikiPron,
+    with its part on words found in no other text (BeoGain..., BeoOnly...).
+
+    Reads data/by_source for the words of the other texts. Exits when reachable() and the experiment's oracle disagree
+    on a count, or when a dictionary changes the prior on a word seen in training."""
     for st, s in SETS:  # the all-short baseline
         p = ctx.preds["W", s]
         put(f"AllShort{st}", pct(share("1" not in r["gold_pattern"] for r in p)))
@@ -448,6 +540,16 @@ def coverage(put, ctx):
 
 
 def context(put, ctx):
+    """Context: the logistic bilateral row (Bil...), ByT5 all-token gains over the WikiPron prior (EncGain...,
+    EncCtxGainMin...), intervals that resample runs as well as sentences (TwoLevel...), token-equivalents of local2 over
+    the word arm (Te...), prose class B per word (PwSol..., SolClsBNoTheGain), ge after ǣgðer (GeShort, GeAegther),
+    verse class B without þe (BeoClsBNoTheGain...), Gēata (Geata..., BeoLexNoGeata...), runs with an identical twin
+    (Identical...), the highest share of ambiguous prose tokens on which a run picks a candidate with the most long
+    vowels (MostLongMax) and the context runs that copy the prior on every prose class B token (PriorCopyRuns).
+
+    ByT5 numbers use the full-cap runs, except EncCtxGainMin, Identical..., MostLongMax and PriorCopyRuns, which range
+    over all caps. Asserts the worked examples soliloquies:00026 and Gēata, the twelve context arm and cap
+    combinations, and that the word arm equals the prior on þe, ne and ge in prose class B."""
     sol, beo = ctx.enc["soliloquies"], ctx.enc["tauber_beowulf"]
     full = configs(ctx.summary)["capfull"]
     for st, s in TESTS:  # the logistic bilateral row
@@ -477,7 +579,8 @@ def context(put, ctx):
                     put(f"TwoLevel{st}{name}{arm}VsWord{k}", pts(b[k.lower()]))
     l2, word = runs_of(next(iter(sol.values())), "local2", "capfull"), runs_of(next(iter(sol.values())), "word", "capfull")
 
-    def te(rows):  # token-equivalents: local2 minus the word arm, summed over tokens
+    def te(rows):
+        """Token-equivalents: local2 minus the word arm (full cap, share of runs right), summed over encoder rows."""
         return sum(correct(t, l2) - correct(t, word) for t in rows)
 
     amb = {st: [t for t in table.values() if t["capfull:lexicon_ambiguous"] == "1"]
@@ -538,13 +641,26 @@ def context(put, ctx):
 
 
 def selection(put, ctx):
+    """The ByT5 setting and decision D3: exact dev counts behind the chosen setting (SelDev...), the logistic word means
+    with and without Zupitza (DevWord...), the ByT5 change from dropping Zupitza per setting (DThreeEnc...), what
+    Zupitza's Grammar changes in the prior (ZupShort..., DevGain..., ZupWord..., ZupOnly..., DThreeSolNet), and the
+    prose cost at the chosen setting (EncSolAll..., EncDThreeSolCost).
+
+    The ByT5 numbers come from the selection runs in results/encoder/selection.json (sentence arm, full cap, seeds 1
+    and 2), the prior's from results/wikipron, wikipron_with_zupitza and proposal. DThreeEnc leaves out every learning
+    rate and epoch setting with a collapsed run, with or without Zupitza. Exits unless every percentage gives an exact
+    count, the exact counts pick the chosen setting, Zupitza marks þes, gyt and lytel short, and forþam, swaswa and
+    forþi are unknown without Zupitza."""
     sel = json.loads((RES / "encoder" / "selection.json").read_text(encoding="utf8"))
     n = sel["d3_logistic_john_ws"]["without_zupitza"]["lexicon_ambiguous"]["n"]
     by = collections.defaultdict(list)
     for r in sel["runs"]:
         by[r["zupitza"], r["lr"], r["epochs"]].append(r)
 
-    def exact(rs, key):  # the share of token-runs right on the dev tokens both settings share
+    def exact(rs, key):
+        """The share of token-runs right over runs rs on the n dev tokens both settings share, from exact counts.
+
+        key: the run field holding a two-decimal percentage on those tokens (dev_lexamb or dev_lexamb_shared)."""
         return sum(counts_from_pcts([r[key] for r in rs], n)) / (n * len(rs))
 
     nozup = {k: exact(rs, "dev_lexamb") for k, rs in by.items() if not k[0]}
@@ -578,6 +694,7 @@ def selection(put, ctx):
     W, Z = ctx.preds["W", "john_ws"], jsonl(RES / "wikipron_with_zupitza" / "john_ws_predictions.jsonl")
 
     def right(p):
+        """Whether the prior's pattern on prediction row p is the gold."""
         return p["frequency_prediction"] == p["gold_pattern"]
 
     for k in ("þes", "gyt", "lytel"):
@@ -611,7 +728,13 @@ def selection(put, ctx):
 
 
 def conjoined(put, ctx):
-    """The bilateral logistic model plus the four target-word-by-neighbour features, seeds 1 to 3."""
+    """The bilateral logistic model plus the four target-word-by-neighbour features, seeds 1 to 3.
+
+    Trains it with the WikiPron lexicon on ctx.train once per set and seed (experiment.predict, arm "conjoined") and
+    records its mean and sample SD per population (Conj..., dev: Lex and ClsB only), full-cap local2 minus conjoined
+    on the lexicon-ambiguous and class B test tokens (LocalTwoVsConj...), and conjoined minus the prior on the
+    ambiguous dev tokens (ConjDevLexVsFreq...). Each contrast is a sentence bootstrap of correctness averaged over runs.
+    Asserts that every conjoined run gets both þe of soliloquies:00026 right."""
     lex, counts = ctx.lex["W"]
     out = {}
     for st, s in SETS:
@@ -644,6 +767,16 @@ def conjoined(put, ctx):
 
 
 def editors(put, ctx):
+    """Editorial convention in Beowulf: the Wilson interval of Wyatt's agreement with Klaeber (Tauber) on class B
+    (PairWTClsBWilson...), the range of alignment rates (Align...), the disagreement counts (PairHWDis, WTClsBDis...),
+    the gold swap, which scores full-cap local2 and the word arm against each of Wyatt and Klaeber on their shared class
+    B tokens (Swap...), and the article se (Se...). SwapRatio is the prior's swing between the two golds over the
+    local2 gain against Klaeber.
+
+    Reads results/agreement/metrics.json and disagreements.tsv and data/ambiguity_classes.csv. Exits when
+    disagreements.tsv no longer matches the metrics, the class B pairs no longer match their count, Wyatt or Klaeber
+    marks fewer than 95% of the pronouns þē and gē long (found by Tauber's glosses that start with you), or the
+    example_se line no longer holds."""
     ag = json.loads((RES / "agreement" / "metrics.json").read_text(encoding="utf8"))
     wt = ag["pairs"]["wyatt-tauber"]["class_B"]
     k = round(wt["agreement"] * wt["n"])
@@ -677,7 +810,8 @@ def editors(put, ctx):
     beo = ctx.enc["tauber_beowulf"]
     l2, word = runs_of(next(iter(beo.values())), "local2", "capfull"), runs_of(next(iter(beo.values())), "word", "capfull")
 
-    def agree(cols, pair, gi):  # share of the runs that give edition gi's pattern for the Tauber token of the pair
+    def agree(cols, pair, gi):
+        """Share of the runs cols that give edition gi's pattern (0 Wyatt, 1 Tauber) for the Tauber token of pair."""
         return sum(beo[pair[1]["id"]][c] == pair[gi]["gold_pattern"] for c in cols) / len(cols)
 
     gain = {}
@@ -712,10 +846,20 @@ def editors(put, ctx):
     prior = {p["id"]: p["frequency_prediction"] for p in ctx.preds["W", "tauber_beowulf"]}
     put("SeArticlePrior", sum(prior[t["id"]] == "0" for t in short))
     put("SeArticleBestRun", max(sum(beo[t["id"]][c] == "0" for t in short) for c in runs_of(beo[short[0]["id"]])))
-    put("SeLineLongRuns", len(runs_of(beo[short[0]["id"]])))  # example_se: every run marks it long
+    put("SeLineLongRuns", len(runs_of(beo[short[0]["id"]])))  # all runs: example_se asserts each marks line 2587 long
 
 
 def errors(put, ctx):
+    """The sampled error types of ByT5 (encoder_sentence, the full-cap sentence arm, seed 1) and CharsiuG2P: kappa and
+    counts per system, set and type (ErrKappa..., Err...), the homograph share (ErrShare...), two-sided Fisher tests
+    per type of class A, B and C (homograph, grammatical, editorial) and a chi-squared test over the three
+    (ErrFisher..., ErrChi...), the fixed rule (ErrRule...), label agreement with and without a class (ErrItems...,
+    ErrKappa..., ErrAgree...), the words behind some types, the short prose to (ToTokens, ShortTo, ClsCPriorErr...,
+    ToSeventyRuns, ErrEncSolEdToHe) and Beowulf line 2796 (LineRelativeLongRuns).
+
+    Reads results/error_typing/summary.json besides ctx.labels. Exits when an error has none of the six types, an se
+    error no longer writes sē, the prior or a local2 run (any cap) no longer writes tō on every short prose to,
+    soliloquies:00070 no longer has one short to, or example_2796 no longer holds."""
     L = ctx.labels
     systems = (("Enc", "encoder_sentence"), ("Charsiu", "charsiug2p"))
     types = (("Ceiling", "ceiling"), ("GoldInDoubt", "gold_in_doubt"), ("Homograph", "homograph"),
@@ -732,6 +876,7 @@ def errors(put, ctx):
                 put(f"Err{sn}{st}{name}", c[t])
     for st, s in (("All", None),) + TESTS:  # ByT5 against CharsiuG2P, Fisher's exact test per type
         def tab(t):
+            """The 2x2 table, ByT5 and CharsiuG2P by errors of type t and of any other type, in set s (None: all)."""
             return [[sum(r["system"] == sysname and s in (None, r["set"]) and r["final"] == t for r in L),
                      sum(r["system"] == sysname and s in (None, r["set"]) and r["final"] != t for r in L)]
                     for _, sysname in systems]
@@ -753,6 +898,7 @@ def errors(put, ctx):
         put(f"ErrAgree{name}", pct(rate([r["label_a"] for r in sub], [r["label_b"] for r in sub]), 1))
 
     def items(system, s, final):
+        """The label rows of one system and set whose adjudicated type is final."""
         return [r for r in L if r["system"] == system and r["set"] == s and r["final"] == final]
 
     gram = collections.Counter(E.key(r["gold"]) for r in items("encoder_sentence", "soliloquies", "grammatical"))
@@ -789,6 +935,15 @@ def errors(put, ctx):
 
 
 def charsiu(put, ctx):
+    """CharsiuG2P: the word types it was run on and its dictionary size (CharsiuTypes, CharsiuDictWords), its length
+    errors on lexicon-ambiguous test tokens and how many of them the WikiPron prior and the seed 1 logistic word and
+    bilateral models get right (CharsiuLexWrong..., CharsiuFix...), its five commonest prose error words
+    (CharsiuErr...), and its prose wrong-length slots and accuracy in and out of its dictionary (CharsiuTooLong,
+    CharsiuTooShort, CharsiuInDict..., CharsiuNotInDict...).
+
+    Its forms come from results/charsiu/ipa.tsv through wikipron_to_marked.mark, keyed by the lower-cased bare word. A
+    token with no IPA or one mark cannot align is skipped. The dictionary size counts the words of
+    data/charsiu_ang_dict_words.txt. Exits unless its error counts match results/charsiu/metrics.json."""
     with open(RES / "charsiu" / "ipa.tsv", encoding="utf8") as f:
         ipa = {r["word"]: r["ipa"] for r in csv.DictReader(f, delimiter="\t")}
     put("CharsiuTypes", num(len(ipa)))
@@ -827,7 +982,11 @@ def charsiu(put, ctx):
 
 
 def figure(ctx):
-    """Figure 1: the prior and the achievable ceiling per candidate source, and ByT5 local2 at + WikiPron."""
+    """Figure 1: the prior and the achievable ceiling per candidate source, and ByT5 local2 at + WikiPron.
+
+    All-token accuracy on the Soliloquies and Beowulf from each source's metrics.json, and the full-cap local2 mean
+    over three seeds from summary.json. Sets matplotlib's global rcParams and writes report/generated/fig_coverage.pdf
+    without a timestamp. The folder must exist (main makes it)."""
     plt.rcParams.update({"font.family": "serif", "font.serif": ["Liberation Serif", "Nimbus Roman", "Times New Roman",
                          "DejaVu Serif"], "font.size": 11, "axes.titlesize": 11, "axes.labelsize": 11,
                          "xtick.labelsize": 10, "ytick.labelsize": 11, "legend.fontsize": 11, "pdf.fonttype": 42})
@@ -861,6 +1020,9 @@ def figure(ctx):
 
 
 def main():
+    """Run every section, then write report/generated/numbers_paper.tex (macros sorted by name) and Figure 1.
+
+    A failed check exits before anything is written. Prints one summary line at the end."""
     ctx = Context()
     put = Numbers()
     for section in (corpus, candidates, coverage, context, selection, conjoined, editors, errors, charsiu):

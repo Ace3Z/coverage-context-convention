@@ -5,18 +5,21 @@ Part 1 (needs torch + transformers; a few minutes on a recent laptop CPU):
 It runs the published checkpoint on the repository's 500 Old English test words with the repository's evaluation
 settings (prefix "<ang>:", one word per call, 5 beams, the default max_length of 20), then again with max_length=50,
 and types every word error: length only (equal once "ː" is removed from both sides), else truncation (decoding hit
-max_length before the end-of-sequence byte), else segment.
+max_length before the end-of-sequence token), else segment. max_length counts the decoder start token, so 20 leaves
+at most 19 output bytes.
 
 Part 2, step 1 (needs torch + transformers; a few minutes on a GPU, done once):
-  python -m oevl.charsiu_g2p predict      -> results/charsiu/ipa.tsv (one IPA string per test word type)
+  python -m oevl.charsiu_g2p predict      -> results/charsiu/ipa.tsv (one IPA string per held-out word type)
   python -m oevl.charsiu_g2p predict --tiny   (smoke test, tiny random model, writes ipa_tiny.tsv)
   Both steps cover the experiment's dev set (john_ws) and two test sets, minus the leakage audit's exclusions.
 Part 2, step 2 (no neural libraries needed; run_all.sh runs this):
   python -m oevl.charsiu_g2p analyse      -> results/charsiu/metrics.json
 
 The IPA output is turned into a vowel-length pattern with the same aligner we use for WikiPron
-(wikipron_to_marked.mark). Each token is then: correct length, wrong length, or not alignable
-(a vowel was added, dropped or changed, so the length cannot be read off).
+(wikipron_to_marked.mark). Each token with a vowel is then: correct length, wrong length, or not alignable
+(the number of vowel nuclei in the IPA differs from the number of vowel units in the word, so the length cannot be
+read off. Vowels joined by a tie bar count as one nucleus, and ea, eo, ie and io as one unit). A vowel of a different
+quality still aligns, as only the counts are compared.
 """
 import collections
 import csv
@@ -38,11 +41,20 @@ PUBLISHED = {"per": 0.04102693178957966, "wer": 0.208}  # REPO + multilingual_re
 
 
 def tests():
-    """The experiment's dev and test sets, without the sentences the leakage audit excludes."""
+    """The experiment's dev and test sets, without the sentences the leakage audit excludes.
+
+    Returns {set name: token rows} for john_ws, soliloquies and tauber_beowulf, read from data/ by experiment.heldout
+    (Beowulf from data/brunetti-length.txt, which prints a validation line). Each row has id, bare, key, gold_pattern
+    and the other fields of experiment.tokens."""
     return {t: heldout(ROOT / "data", t) for t in TESTS}
 
 
 def load_model(tiny=False):
+    """Load a ByT5 tokenizer and the CharsiuG2P model (or a tiny stand-in) in eval mode, on the GPU if CUDA is there.
+
+    tiny=False loads the pinned checkpoint (MODEL at REVISION) and the unpinned google/byt5-small tokenizer from the
+    Hugging Face Hub or its local cache. tiny=True builds a randomly initialised one-layer T5 with a ByT5 tokenizer
+    and downloads nothing, for smoke tests. Its weights depend on the torch seed. Returns (tokenizer, model)."""
     import torch
     from transformers import AutoTokenizer, T5Config, T5ForConditionalGeneration
     if tiny:  # smoke test: random tiny model, no download
@@ -57,6 +69,7 @@ def load_model(tiny=False):
 
 
 def lev(a, b):
+    """Levenshtein distance between two sequences (strings or token lists), every edit costing 1."""
     row = list(range(len(b) + 1))
     for i, x in enumerate(a, 1):
         prev, row[0] = row[0], i
@@ -66,6 +79,11 @@ def lev(a, b):
 
 
 def error_type(ref, hyp, truncated):
+    """Type one benchmark word: "correct", "length_only", "truncation" or "segment".
+
+    ref, hyp: reference and predicted IPA. truncated: True when the output has no end-of-sequence token.
+    Length only means equal once every "ː" is removed. Of the rest, a truncated output is "truncation" (also a complete
+    one that exactly fills max_length) and anything else is "segment"."""
     if ref == hyp:
         return "correct"
     if ref.replace("ː", "") == hyp.replace("ː", ""):  # before truncation: a complete output can fill max_length exactly
@@ -74,6 +92,13 @@ def error_type(ref, hyp, truncated):
 
 
 def score(refs, hyps, types):
+    """Corpus scores for the benchmark: PER, WER and the counts of each error type.
+
+    refs, hyps: reference and predicted IPA per word. types: error_type of each word.
+    PER is the summed character (code point, not byte) edit distance over the summed reference length. WER does the
+    same on whitespace tokens. With one-word references and outputs, as in the committed benchmark, that is the share
+    of words with any error. Returns n, per, wer, word_errors, the counts of length_only, segment and truncation, and
+    length_only_share (of the word errors, 4 decimals, None if there are none)."""
     c = collections.Counter(types)
     errors = len(refs) - c["correct"]
     return {"n": len(refs),
@@ -84,6 +109,14 @@ def score(refs, hyps, types):
 
 
 def benchmark():
+    """Part 1: rerun CharsiuG2P's own Old English evaluation and type its word errors.
+
+    Reads the 500 word and IPA pairs of data/charsiu_ang_test.tsv, downloading it from the pinned repository first if it
+    is missing, and takes the first comma-separated reference variant. Decodes each word on its own (PREFIX + word, no
+    special tokens, no padding) with 5 beams, once with max_length=20 and once with 50, and scores both. Needs the
+    real checkpoint (no tiny option). Writes results/charsiu/benchmark.tsv (word, reference, then prediction and type
+    per max_length) and benchmark.json (settings, the published scores and score() per max_length), and prints the
+    summary."""
     import torch
     if not BENCH.exists():
         urllib.request.urlretrieve(REPO + "data/test/ang.tsv", BENCH)
@@ -114,6 +147,12 @@ def benchmark():
 
 
 def predict(batch_size=64, tiny=False):
+    """Part 2, step 1: write CharsiuG2P's IPA for every word type of the held-out sets.
+
+    The words are the sorted, lower-cased bare forms of the tokens with a vowel in the three sets of tests(). They are
+    decoded greedily in padded batches of batch_size with max_length=50. Writes results/charsiu/ipa.tsv (columns
+    word, ipa). tiny=True uses load_model's random model on the first 200 words only and writes ipa_tiny.tsv instead,
+    so a smoke test never replaces the committed output. Seeds torch with 0 first."""
     import torch
     torch.manual_seed(0)
     words = sorted({r["bare"].lower() for rows in tests().values() for r in rows if r["gold_pattern"]})
@@ -137,6 +176,18 @@ def predict(batch_size=64, tiny=False):
 
 
 def analyse():
+    """Part 2, step 2: score CharsiuG2P's vowel length on the held-out tokens and write results/charsiu/metrics.json.
+
+    Reads results/charsiu/ipa.tsv, the WikiPron run's per-token predictions (results/wikipron/<set>_predictions.jsonl,
+    which must exist) and, when present, data/charsiu_ang_dict_words.txt. The lexicon is the D3 training set (without
+    Zupitza) plus data/lex_wikipron.csv, as in results/wikipron, and a token is lexicon-ambiguous when its skeleton has
+    two or more candidate patterns. Per set, over the tokens with a vowel, it counts correct, wrong_length and
+    not_alignable (overall, on ambiguous tokens and split by CharsiuG2P dictionary membership, a split left empty
+    without the dictionary file), the vowel slots marked too long or too short in wrong_length tokens, and how many
+    ambiguous wrong_length tokens the seed 1 logistic word and sentence (bilateral) models get right. A word missing
+    from ipa.tsv is read as empty IPA, so it is not alignable. experiment_populations scores all tokens with
+    experiment.evaluate, so a not alignable token counts as wrong and a token without a vowel as right. Prints the
+    summary too."""
     with open(OUT / "ipa.tsv", encoding="utf8") as f:
         ipa = {r["word"]: r["ipa"] for r in csv.DictReader(f, delimiter="\t")}
     charsiu_dict = set()

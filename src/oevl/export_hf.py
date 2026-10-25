@@ -3,14 +3,19 @@
 One JSONL file per split, one sentence per line, all with the same fields:
   train       the five training works (experiment.TRAIN)   dev         Gospel of John
   test_prose  Alfred's Soliloquies                         test_verse  Tauber's Beowulf, in the corpus schema
-  agreement   the Harrison & Sharp and Wyatt Beowulf, used only for editor agreement
+  agreement   the Harrison & Sharp and Wyatt Beowulf, used only for editor agreement and to score the prior on them
 Every sentence is written. The dev and test sentences that the 6-gram audit leaves out of evaluation
 (data/leakage_excluded.json) are kept with leakage_excluded true. There is no split field: the file is the split.
 Tauber's file has no running text, so a test_verse sentence's text is its tokens joined by spaces.
-README.md is the card release/hf_card.md with the split table counted from the written files.
-Copied unchanged next to them: the dictionaries (lexicons/lex_*.csv, lexicons/lexicons_provenance.json, lexicons/wikipron_provenance.json), the
-ambiguity classes (ambiguity_classes.csv and .json) and release/hf_license.md as LICENSE.md.
+README.md is the card release/hf_card.md with the split table and the total sentence and token counts read back from
+the written files.
+Copied unchanged next to them: the dictionaries (lexicons/lex_*.csv, lexicons/lexicons_provenance.json,
+lexicons/wikipron_provenance.json), the ambiguity classes (ambiguity_classes.csv and .json) and release/hf_license.md
+as LICENSE.md.
 Usage: python -m oevl.export_hf [--data data] [--tauber data/brunetti-length.txt] [--out release/hf]
+The command line paths are relative to the working directory. release/hf_card.md and release/hf_license.md are read
+from the repository root (ROOT, two folders above this file), so the export needs a source checkout or an editable
+install.
 """
 import argparse
 import itertools
@@ -31,7 +36,14 @@ LEXICONS = ("wikipron", "clarkhall", "wiktionary", "bt", "proposal", "all")
 
 
 def tauber(path):
-    """Tauber's Beowulf as sentence records, with the sentences and tokens of experiment.load_tauber."""
+    """Tauber's Beowulf as sentence records, with the sentences and tokens of experiment.load_tauber.
+
+    path: Tauber's pipe-separated file (data/brunetti-length.txt). load_tauber validates it, raises on a malformed row
+    and prints a "Tauber validated" line. Its tokens are clean_tauber's forms (dots above and ogoneks dropped,
+    circumflex written as macron), and a sentence ends after a row whose punctuation column holds . ! or ?.
+    The token rows are grouped by sentence_id, in file order, and n counts the sentences from 0.
+    Returns one dict per sentence with the fields of a corpus record: id (tauber:<n>), the TAUBER metadata, tokens and
+    tokens_bare, and text and text_bare as those tokens joined by spaces, because the file has no running text."""
     out = []
     for sid, rows in itertools.groupby(load_tauber(path), key=lambda r: r["sentence_id"]):
         rows = list(rows)
@@ -42,14 +54,32 @@ def tauber(path):
 
 
 def record(r, excluded):
-    """The released fields only, so no stale field (such as an old split) can leak into the files."""
+    """The released fields only, so no stale field (such as an old split) can leak into the files.
+
+    r: a sentence record from data/by_source or tauber(), which must have id, the META fields, text, text_bare, tokens
+    and tokens_bare (a missing one raises KeyError). excluded: the set of sentence ids the leakage audit flags.
+    Adds length_patterns (experiment.pattern of each marked token: one digit per vowel, 1 long and 0 short) and
+    leakage_excluded (whether the id is in excluded). Returns a new dict with the fields in this order.
+    """
     return {"id": r["id"], **{k: r[k] for k in META}, "text": r["text"], "text_bare": r["text_bare"],
             "tokens": r["tokens"], "tokens_bare": r["tokens_bare"],
             "length_patterns": [pattern(t) for t in r["tokens"]], "leakage_excluded": r["id"] in excluded}
 
 
 def export(data, tauber_path, out):
-    """Write <out>/<split>.jsonl, the copied files and <out>/README.md; return the counts read back from the files."""
+    """Write <out>/<split>.jsonl, <out>/README.md and the copied files, and return the counts read back from the files.
+
+    data: the data folder with by_source/<source>.jsonl for every source in SPLITS but tauber_beowulf,
+    leakage_excluded.json, the lex_*.csv files of LEXICONS, the two provenance files and the ambiguity class files.
+    tauber_path: Tauber's file. out: the output folder, created if missing. Existing files of the same name are
+    overwritten and other files in out are left as they are.
+    A sentence is flagged if its id is in any of the audit's excluded lists. The card and the licence come from release/
+    under the repository root. The card's $table, $sentences and $tokens are filled, and any other $ placeholder raises.
+    Only leakage_excluded.json is read before anything is written, so another missing input raises after earlier files
+    are already written.
+    Returns {split: {"sources", "sentences", "tokens", "flagged_sentences", "flagged_tokens"}} in the order of SPLITS,
+    where sources is the split's list of source names and the rest are counts.
+    """
     data, out = Path(data), Path(out)
     audit = json.loads((data / "leakage_excluded.json").read_text(encoding="utf8"))["excluded"]
     excluded = {s for ids in audit.values() for s in ids}
@@ -86,6 +116,9 @@ def export(data, tauber_path, out):
 
 
 def main():
+    """Command line entry: run export with --data, --tauber and --out, print the counts of each split and the folder.
+
+    Exits with a message if the Tauber file is missing, before anything is written."""
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", default="data")
     ap.add_argument("--tauber", default="data/brunetti-length.txt")

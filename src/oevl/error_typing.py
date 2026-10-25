@@ -1,4 +1,4 @@
-"""Error typing for the ByT5 sentence arm and CharsiuG2P : agreement, kappa and type counts.
+"""Error typing for the ByT5 sentence arm and CharsiuG2P: agreement, kappa and type counts.
 
 results/error_typing/labels.tsv holds 200 sampled errors per system. label_a and label_b come from two separate runs
 of one LLM, Claude Opus 5.5 (model id claude-opus-5-5), with the same written guidelines
@@ -7,6 +7,9 @@ A blind review by further runs of the same model (2026-10-19) changed five final
 column. The labels were then manually checked, and none was changed.
 
   python -m oevl.error_typing   -> results/error_typing/summary.json and report/generated/tab_errors.tex
+
+oevl.build_report and oevl.paper_numbers read summary.json. report/main.tex does not include tab_errors.tex. The
+paper's error table (tab:errors, split into prose and verse) is built by oevl.paper_numbers from labels.tsv.
 """
 import collections
 import csv
@@ -40,6 +43,20 @@ SAMPLING = ("An error is a lexicon-ambiguous token (two or more length patterns 
 
 
 def main():
+    """Check the labels in labels.tsv, then write summary.json and tab_errors.tex.
+
+    Reads results/error_typing/labels.tsv (tab-separated, one row per sampled error) and uses its item, system, set,
+    gold_in_candidates, label_a, label_b, final and note columns. Asserts, naming the item on failure, that label_a,
+    label_b and final are each one of TYPES, that a row whose three labels are not all equal has a note, that final is
+    ceiling exactly when gold_in_candidates is no, that a final of gold_in_doubt occurs only on tauber_beowulf and a
+    final of segment or truncation only on charsiug2p, and that each system has 200 rows.
+    The groups are the two SYSTEMS and overall (every row). results/error_typing/summary.json holds provenance,
+    sampling_rule and types (the type order), and per group agreement (n, the raw agreement of label_a with label_b
+    as a share, cohen_kappa and the number of disagreements), counts (rows per type in final) and sample_by_set (rows
+    per test set). report/generated/tab_errors.tex is a tabular with the final counts per type (n/a for segment and
+    truncation under ByT5), then items, raw agreement in % and kappa, one column per group. Both files are
+    overwritten, one line per group is printed, then the two paths. When a group's label_a and label_b hold one type
+    only, kappa is None, summary.json gets null and formatting the table then raises TypeError."""
     with open(DIR / "labels.tsv", encoding="utf8") as f:
         rows = list(csv.DictReader(f, delimiter="\t"))
     names = {t for t, _ in TYPES}

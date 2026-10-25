@@ -18,12 +18,16 @@ data/raw/corpus/<source>/ (gitignored) and goes through the same steps:
 The two Beowulf editions skip the filters of steps 2 and 6, as the committed files show.
 
 The original extraction scripts are not in the repository. These rules were inferred from the committed files
-and their cleaning counts in data/manifest.json. With them matthew_ws, bright_reader, physiologus, hs_beowulf and
-john_ws rebuild byte for byte. The other four differ where the original language filter dropped lines these rules keep
-(and the reverse), and in the 12 Sweet sentences the original removed as overlapping Matthew.
+and their cleaning counts in data/manifest.json. With them, after clean_corpus, matthew_ws, bright_reader,
+physiologus, hs_beowulf and john_ws rebuild byte for byte. The other four (soliloquies, sweet_primer, zupitza_grammar
+and wyatt_beowulf) differ. In the first three this is mostly where the original language filter dropped lines these
+rules keep (and the reverse), and in sweet_primer also in the 12 sentences the original removed as overlapping
+Matthew. wyatt_beowulf skips the filters, so its differences have other causes.
 
 Usage: python -m oevl.build_corpus --source john_ws --out data/by_source [--raw data/raw/corpus]
 then python -m oevl.clean_corpus, which removes the old sentence-level split field and applies the character fixes.
+clean_corpus reads only the repository's data/by_source and data/manifest.json, so it sees the new file only when
+--out is that data/by_source.
 The manifest next to --out (<out>/../manifest.json) gets the source's entry, with URL, retrieval date and
 SHA-256 of every input.
 """
@@ -93,10 +97,12 @@ LONG, SHORT = "āēīōūȳǣĀĒĪŌŪȲǢ", "aeiouyæAEIOUYÆ"
 BARE = str.maketrans(LONG, SHORT)
 OE = set(LONG + "þðæÞÐÆĐđ")
 WORD = re.compile(r"[^\W\d_]+(?:[-'][^\W\d_]+)*")
-ROMAN = re.compile(r"\b(?:(?!i\b)[ivx]+|[IVXLC]{2,})\b")  # lone i and capitals stay: 'ān i oððe', 'I.'
-# English function words; not be, for, in, is, on, to, was: Old English spellings too ('And on hiera dagum')
+ROMAN = re.compile(r"\b(?:(?!i\b)[ivx]+|[IVXLC]{2,})\b")  # lone i and lone capitals stay: 'ān i oððe', 'I.'
+# English function words. Not be, for, in, is, on, to, was: Old English spellings too ('And on hiera dagum')
+# and, of and an stay although Old English writes them too
 EN = set("the of and are were been from with by at as that this which it its an a or not but".split())
-# Latin function words, plus the incipit/explicit of headings; not ac, in, me, se, sit, te: Old English words too
+# Latin function words, plus forms of deus and the incipit/explicit of headings
+# not ac, in, me, se, sit, te: Old English words too
 LA = set("et est sunt non ad cum de quod qui quae quam ut sed erat apud ex ab per nec neque enim autem ergo igitur si "
          "nisi tamen vel aut quid quia quo sic ita iam jam nunc hoc haec id ego tu mihi tibi sibi nos vos esse deus "
          "deum dei deo atque etiam incipit explicit".split())
@@ -107,7 +113,9 @@ WS_SKIP = ("style", "script", "sup", ".ws-noexport", ".wst-pline", ".references"
 
 
 def match(specs, tag, cls, id_):
-    """True if the element fits one of the specs: 'tag', '.class', 'tag.class' or 'tag#id'."""
+    """True if the element fits one of the specs: 'tag', '.class', 'tag.class' or 'tag#id'.
+
+    cls is the list of the element's classes and id_ its id or None."""
     for spec in specs:
         t, c, i = re.fullmatch(r"(\w*)(?:\.([\w-]+))?(?:#([\w-]+))?", spec).groups()
         if t in ("", tag) and (not c or c in cls) and (not i or i == id_):
@@ -116,27 +124,47 @@ def match(specs, tag, cls, id_):
 
 
 class Blocks(HTMLParser):
-    """Paragraphs in document order as (kind, text): kind is 'p', 'center' (a centred paragraph, which is a
-    heading on Wikisource) or 'head' (an element named in heads). A paragraph is an element matching units
-    (by default a <p> or a verse stanza). A <br> or the end of a block inside it ends a line. Elements matching
-    skip (by default footnote calls, footnotes and margin line numbers) are left out.
+    """HTML parser that collects paragraphs in document order as (kind, text) in self.out.
 
-    Text left outside any <p> directly in the page body is a paragraph too: ProofreadPage leaves the last
-    paragraph of a scan page unwrapped when the next page starts with a centred heading. Of a two-column table
-    (the Soliloquies print Augustine's Latin beside Alfred's text) only the first column is read.
+    kind is 'p', 'center' (a paragraph inside a wst-center element, which is a heading on Wikisource) or 'head'
+    (an element whose tag is in heads, its text nodes stripped and joined by a space). A paragraph is the outermost
+    element matching units (by default a <p> or a verse stanza). units and skip are specs for match(). A <br> or
+    the end of a block inside a paragraph ends a line, and a wst-gap element (the caesura) adds a space. Elements
+    matching skip (by default styles, scripts, footnote calls, footnotes, margin line numbers and ws-noexport
+    elements) are left out with everything inside them.
+
+    Text left outside any <p> directly in the page body (an element of class prp-pages-output or mw-parser-output)
+    is a paragraph too: ProofreadPage leaves the last paragraph of a scan page unwrapped when the next page starts
+    with a centred heading. Of a two-column table (the Soliloquies print Augustine's Latin beside Alfred's text)
+    only the first column is read: every <td> after the first in its row is skipped.
     """
 
     def __init__(self, units=WS_UNITS, skip=WS_SKIP, heads=()):
+        """Start an empty parse. units and skip are specs for match(), heads are bare tag names.
+
+        State: out (the result), cur (text pieces of the open paragraph or None), head (text nodes of the open
+        heading or None), stack (open elements as (tag, skipped, has class wst-center, is the page body, opened a
+        paragraph, opened a heading)), loose (text pieces directly in the page body) and cell (the number of <td>
+        opened so far in the current row)."""
         super().__init__(convert_charrefs=True)
         self.units, self.skip, self.heads = units, skip, heads
         self.out, self.cur, self.head, self.stack, self.loose, self.cell = [], None, None, [], [], 0
 
     def flush(self):
+        """Append the loose body text gathered so far to out as a 'p' paragraph, unless it is blank, and reset it."""
         if "".join(self.loose).strip():
             self.out.append(("p", "".join(self.loose)))
         self.loose = []
 
     def handle_starttag(self, tag, attrs):
+        """Open an element. A <br> adds a line break to the open paragraph, else to the loose text, even inside a
+        skipped element. Void elements stop there. Any other element first flushes the loose text when it is a
+        block and is pushed on the stack.
+
+        An element is skipped when it matches skip, sits inside a skipped element or is a <td> after the first in
+        its row. It opens a paragraph when it matches units outside any skipped element and open paragraph, and a
+        heading whenever its tag is in heads (inside a skipped element that heading comes out empty). A wst-gap
+        element adds a space to the open paragraph."""
         if tag == "br":
             (self.cur if self.cur is not None else self.loose).append("\n")
         if tag in VOID:
@@ -158,6 +186,10 @@ class Blocks(HTMLParser):
             self.cur.append(" ")
 
     def handle_endtag(self, tag):
+        """Close an element. End tags of void elements and of elements that are not open are ignored. A block
+        element first flushes the loose text. The stack is popped down to the innermost open element with this tag,
+        so unclosed children close with it: a closed heading or paragraph is appended to out, and a block element
+        closed inside a paragraph ends a line."""
         if tag in VOID or all(s[0] != tag for s in self.stack):
             return
         if tag in BLOCK:
@@ -176,6 +208,8 @@ class Blocks(HTMLParser):
                 break
 
     def handle_data(self, data):
+        """Send a text node to the open heading, else the open paragraph, else the loose text when the nearest
+        enclosing block element is the page body. Text inside a skipped element and any other text is dropped."""
         if any(s[1] for s in self.stack):
             return
         if self.head is not None:
@@ -187,6 +221,10 @@ class Blocks(HTMLParser):
 
 
 def blocks(html, **kw):
+    """Paragraphs of html as a list of (kind, text) pairs from Blocks, which takes the keyword arguments.
+
+    Loose body text left at the end is flushed, and a paragraph still open at the end (cut off by a Gutenberg end
+    marker) is kept as a 'p'. A heading still open at the end is lost."""
     parser = Blocks(**kw)
     parser.feed(html)
     parser.close()
@@ -196,7 +234,11 @@ def blocks(html, **kw):
 
 def line_lang(line):
     """'eng' or 'lat' for a line of 4+ words with no length mark and no thorn or eth that reads as English or
-    Latin, else None. Ash is no evidence: the English notes spell Cædmon and Ælfric."""
+    Latin, else None. Ash is no evidence: the English notes spell Cædmon and Ælfric.
+
+    The four-word minimum counts letter runs (WORD). The shares are over the words split at white space, punctuation
+    included, so 'et,' is no Latin word. The line is Latin when at least 15% are Latin function words (LA) and no
+    fewer than the English ones, else English when at least 30% are English function words (EN)."""
     if set(line) & set(LONG + "þðÞÐĐđ") or len(WORD.findall(line)) < 4:
         return None
     words = line.split()
@@ -214,9 +256,15 @@ def editorial(text):
 
 
 def clean(text, log):
-    """NFC, then drop combining marks except a macron on a vowel and a ring (clean_corpus maps it), and Roman
-    numerals. Runs after the split, so a stray mark after a full stop (a caron in Wyatt's 'geweorces.') keeps two
-    sentences together, as in the files."""
+    """Drop combining marks except a macron NFC joins to its letter (a vowel, æ or g) and any ring, then Roman
+    numerals (ROMAN), and return the text in NFC. Runs after the split, so a stray mark after a full stop (a caron in
+    Wyatt's 'geweorces.') keeps two sentences together, as in the files.
+
+    The text is decomposed, every combining mark other than the macron and the ring is dropped, and the rest is
+    recomposed. A macron NFC cannot join (as on n) is dropped too. A ring stays even where it does not join, and
+    clean_corpus repairs John's þå to þā but refuses any other ring. Each dropped mark is counted in log, a Counter,
+    under dropped_mark_U+XXXX or dropped_mark_stray_macron. White space is collapsed to single spaces and the ends
+    stripped, so a removed numeral can leave a space before punctuation ('Engliscra ,')."""
     out = []
     for ch in unicodedata.normalize("NFD", text):
         if unicodedata.combining(ch) and ch not in "\u0304\u030a":
@@ -232,7 +280,17 @@ def clean(text, log):
 
 def sentences(par, log, speaker=None, filters=True):
     """The kept sentences of one paragraph, after the language filters (unless filters is False) and cleaning.
-    speaker is a regex for the speaker label that starts a line of dialogue."""
+    speaker is a regex for the speaker label that starts a line of dialogue.
+
+    The paragraph is NFC-normalised, zero-width spaces are removed and the speaker label is cut from the start of
+    each line. A line that line_lang reads as English or Latin is dropped, and so is every line of a paragraph that
+    is one bracketed note with no length mark. Blank lines are skipped. The kept lines are joined by spaces, passed
+    through editorial, split after . ? or ! followed by white space and cleaned, and a piece with no letter is no
+    sentence. In a paragraph where some sentence has an Old English letter (OE), a sentence of three or more words
+    with none and two or more capitalised words is dropped. In any paragraph a sentence with four or more Latin
+    function words (WORD letter runs) is dropped. With filters False none of the line or sentence drops apply.
+    Drops are counted in log: dropped_line_eng/lat and dropped_words_eng/lat (words split at white space),
+    dropped_sentence_mixed and dropped_sentence_latin_words, next to the dropped_mark counts of clean."""
     par = unicodedata.normalize("NFC", par).replace("\u200b", "")
     if speaker:
         par = re.sub(speaker, "", par, flags=re.M)
@@ -266,16 +324,22 @@ def tokens(text):
 
 
 def section(title):
+    """Section id of a Wikisource title: Æ, æ and œ written AE, ae and oe, then every character other than an ASCII
+    letter, digit or full stop replaced by an underscore."""
     return re.sub(r"[^A-Za-z0-9.]", "_", title.replace("Æ", "AE").replace("æ", "ae").replace("œ", "oe"))
 
 
 def roman(s):
+    """Value of a Roman numeral written with I, V, X and L, subtractive pairs such as IV included."""
     v = [{"I": 1, "V": 5, "X": 10, "L": 50}[c] for c in s]
     return sum(-a if a < b else a for a, b in zip(v, v[1:] + [0]))
 
 
 def gospel(html, title, log):
-    """(section, sentence) pairs. Chapters start at the centred 'CAPUT n' headings."""
+    """(section, sentence) pairs of a gospel, as a generator. Chapters start at the centred 'CAPUT n' headings.
+
+    Other centred paragraphs are headings and are left out, as is all text before the first CAPUT. The section is
+    section('<title>/Chapter <n>') with n in Arabic numerals."""
     chapter = None
     for kind, par in blocks(html):
         m = re.fullmatch(r"\s*CAPUT ([IVXL]+)\s*", par)
@@ -286,7 +350,12 @@ def gospel(html, title, log):
 
 
 def fetch(url, path, data=None):
-    """Download url (POST data if given) to path once and return the provenance record."""
+    """Download url (POST data if given) to path once and return the provenance record.
+
+    The download also writes <path without suffix>.meta.json with the URL (with data appended as a query string)
+    and the retrieval date. Later calls only read the cache, whatever url and data they pass, so the record keeps
+    the first retrieval date, and a cached file without that sidecar raises FileNotFoundError. Returns {url,
+    retrieved, file (the file name), sha256 (of the cached bytes)}."""
     if not path.exists():
         path.parent.mkdir(parents=True, exist_ok=True)
         req = urllib.request.Request(url, data=data and urllib.parse.urlencode(data).encode(), headers=UA)
@@ -300,7 +369,11 @@ def fetch(url, path, data=None):
 
 
 def ws_index(name, src, raw, log):
-    """A book from its Wikisource scan pages, rendered as one transclusion."""
+    """A book from its Wikisource scan pages, rendered as one transclusion.
+
+    The MediaWiki parse API renders <pages index=... from=a to=b /> for src["pages"] = (a, b), both included, and
+    the response is cached as <raw>/<name>/pages.json. Returns the gospel() pairs and a one-item input list whose
+    record also counts the scan pages by ProofreadPage quality level (page_quality)."""
     a, b = src["pages"]
     path = raw / name / "pages.json"
     inp = fetch(API, path, dict(action="parse", format="json", formatversion=2, prop="text", contentmodel="wikitext",
@@ -312,7 +385,12 @@ def ws_index(name, src, raw, log):
 
 
 def ws_main(name, src, raw, log):
-    """A work from its Wikisource subpages, each subpage a section."""
+    """A work from its Wikisource subpages, each subpage a section.
+
+    Subpage i (<root>/<sub>) is fetched with the MediaWiki parse API and cached as <raw>/<name>/<ii>.json. Only
+    'p' paragraphs go to sentences(), with the source's speaker and filters settings, so centred headings are not
+    text. The section is section('<root>/<sub>'). Returns (section, sentence) pairs and one input record per
+    subpage, with its revision id (revid)."""
     pairs, inputs = [], []
     for i, sub in enumerate(src["subpages"]):
         title = f'{src["root"]}/{sub}'
@@ -326,7 +404,15 @@ def ws_main(name, src, raw, log):
 
 
 def gutenberg(name, src, raw, log):
-    """A book from its Project Gutenberg HTML edition. The elements named in heads give the sections."""
+    """A book from its Project Gutenberg HTML edition. The elements named in heads give the sections.
+
+    The HTML is cached as <raw>/<name>/pg<n>-images.html and cut from src["start"] (included) to the first
+    src["end"] after it (excluded), when given. Paragraphs come from blocks() with the source's units and heads,
+    skipping style, script, sup and .pagenum elements and the source's skip specs. A paragraph's section is the
+    text of the last heading before it with macrons removed (not passed through section()), or None before the
+    first heading. With join, consecutive paragraphs with the same section become one, joined by a line break. With
+    circumflex, circumflexes become macrons and j becomes i before sentences(), which gets the source's filters
+    setting. Returns (section, sentence) pairs and a one-item input list."""
     n = src["ebook"]
     path = raw / name / f"pg{n}-images.html"
     inp = fetch(f"https://www.gutenberg.org/cache/epub/{n}/pg{n}-images.html", path)
@@ -352,6 +438,14 @@ def gutenberg(name, src, raw, log):
 
 
 def build(name, raw):
+    """Rows, cleaning counts and input records for one source, with raw as the download cache.
+
+    Each row is a dict with id '<name>:<NNNNN>', source, work, editor, year, genre, section, split, text, text_bare,
+    tokens and tokens_bare, the bare forms with macrons removed (BARE). NNNNN is the sentence's position in the
+    source. work is 'Finnsburh Fragment' when the section contains src["fragment"]. split is the source's split,
+    except that 'blocks' gives the stale sentence-level split of the original files (of every 500 sentences 400
+    train, 50 dev and 50 test). clean_corpus removes the split field from every row, whatever its value. Returns
+    (rows, cleaning counts as a dict, input records)."""
     src = SOURCES[name]
     log = collections.Counter()
     pairs, inputs = (ws_index if "index" in src else gutenberg if "ebook" in src else ws_main)(name, src, raw, log)
@@ -370,6 +464,12 @@ def build(name, raw):
 
 
 def main():
+    """Command line: build one source, write <out>/<source>.jsonl and update its entry in <out>/../manifest.json.
+
+    The manifest is created when missing. work, editor, year, genre, units, tokens, long_vowel_marks, sha256,
+    cleaning, role and inputs are overwritten, length_convention_in_source, licence and origin are set only when
+    missing, and other fields are kept. units, tokens, long_vowel_marks and sha256 are of the file before
+    clean_corpus, which refreshes them and adds its own counts to cleaning. Prints a one-line summary."""
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--source", required=True, choices=sorted(SOURCES))
     ap.add_argument("--out", required=True,

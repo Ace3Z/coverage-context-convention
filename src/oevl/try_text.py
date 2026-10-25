@@ -5,10 +5,13 @@ Usage (from the repository root, with the venv active and src on PYTHONPATH):
   python -m oevl.try_text my_sentences.txt --gold my_sentences_marked.txt --tsv words.tsv
 
 my_sentences.txt: one sentence per line. Any macrons in it are removed first.
---gold: the same lines with correct macrons; then accuracy is printed.
+--gold: the same lines with correct macrons, to print the accuracy as well. A line whose words differ is not scored.
 --tsv:  writes one row per word (useful for counting wrong changes).
-Trains the same system as the report (default: bilateral, seed 1, training texts + WikiPron).
-Changes no existing file.
+--model: frequency, word, left or bilateral. --lexicon: the candidate list (default data/lex_wikipron.csv), or none
+for training texts only.
+Trains the same system as the report (default: bilateral, seed 1, the training texts without Zupitza's Grammar plus
+WikiPron) on the repository's data/ folder. A word without candidates stays unchanged.
+Prints the result. Writes no file except the --tsv table, which replaces any file at that path.
 """
 import argparse
 import csv
@@ -21,25 +24,31 @@ from oevl.experiment import EXCLUDE_D3, LONG, SHORT, bare, build_data, key, lexi
 
 ROOT = Path(__file__).resolve().parents[2]
 
-TOKEN = re.compile(r"[^\W\d_]+(?:[-'’][^\W\d_]+)*")  # same word pattern used to build the corpus
+TOKEN = re.compile(r"[^\W\d_]+(?:[-'’][^\W\d_]+)*")  # build_corpus.WORD, plus ’ as an apostrophe
+# --model name -> arm of experiment.predict: bilateral is its 'sentence' arm (two words on each side)
 ARMS = {"frequency": "frequency", "word": "word", "left": "left", "bilateral": "sentence"}
 TO_LONG = dict(zip(SHORT, LONG)) | dict(zip(SHORT.upper(), "ĀĒĪŌŪȲǢ"))
 
 
 def words(line):
+    """The words of `line` after NFC: letter runs, joined over an inner hyphen or apostrophe (' or ’)."""
     return TOKEN.findall(unicodedata.normalize("NFC", line))
 
 
 def clean(w):  # how the corpus stores a word: no hyphens or apostrophes
+    """Return `w` without hyphens and apostrophes (' and ’), for example Gār-Dena -> GārDena."""
     return w.replace("-", "").replace("'", "").replace("’", "")
 
 
 def strip_marks(text):
+    """Replace every macron vowel in `text` (ā ē ī ō ū ȳ ǣ, either case) with the plain vowel of the same case.
+
+    Only precomposed letters are mapped, so `text` should be NFC: a separate combining macron (U+0304) is kept."""
     return "".join(c if c.lower() not in LONG else (SHORT[LONG.index(c.lower())].upper() if c.isupper() else SHORT[LONG.index(c)]) for c in text)
 
 
 def apply(word, pat):
-    """Put macrons on the vowel letters of `word` where `pat` has a 1."""
+    """Return `word` with a macron on its i-th vowel letter (a e i o u y æ, either case) wherever pat[i] is '1'."""
     out, i = [], 0
     for c in word:
         if c.lower() in SHORT:
@@ -51,6 +60,18 @@ def apply(word, pat):
 
 
 def main():
+    """Restore macrons in the input file and print each line before and after, then a summary.
+
+    Exits with a message when --gold has a different number of lines from the input or the --lexicon file is missing.
+    Trains on data/by_source without Zupitza's Grammar (EXCLUDE_D3), with candidates from training plus --lexicon
+    (training only with --lexicon none), and predicts with the --model arm at seed 1, each input line being one
+    sentence of context. build_data also loads the held-out and Beowulf sets from data/, which are not used.
+    A gold line is used only when its words, ignoring macrons, case, hyphens and apostrophes, equal the input line's,
+    else the line is listed as not scored. Accuracy counts every word of the scored lines, a word being correct when
+    its whole pattern equals the gold one, so a word without vowels is always correct (as in experiment.evaluate).
+    The --tsv file is tab-separated with a header row: line (from 1), word (without hyphens and apostrophes), output,
+    known (1 if the word has candidates), changed (1 if it got a macron), gold and correct, the last two empty for a
+    line that is not scored, which is every line without --gold."""
     p = argparse.ArgumentParser(description="Add Old English macrons to your own sentences.")
     p.add_argument("input", help="text file, one sentence per line")
     p.add_argument("--gold", help="same lines with correct macrons (optional)")
@@ -93,6 +114,7 @@ def main():
 
     for n, line in enumerate(lines):
         rs = iter(by_line.get(n, []))
+        # the matches are this line's words in order, and apply gives hyphens and apostrophes no digit of the pattern
         out = TOKEN.sub(lambda m: apply(m.group(0), next(rs)["pred"]), line)
         print(f"{n + 1:>3}  {line}\n     {out}")
 

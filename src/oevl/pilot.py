@@ -1,17 +1,18 @@
 """Exploratory GPU pilot: the ByT5 encoder's context arms on a fixed training subset.
 
 This is the logic that used to live in the four Kaggle/Colab notebooks. The notebooks in notebooks/ now only put
-the project on the machine and call:
+the project on the machine and call the line below, adding --max-hours with the hours left of their 9-hour budget:
 
   python -m oevl.pilot --max-bytes 128 --out /kaggle/working/encoder_pilot_128_results [--restore OLD.zip ...]
 
 Steps: check the GPU and the pinned transformers version, load the checkpoint, run a tiny CPU-sized smoke test,
-then train and evaluate each arm in its own process. A finished arm is validated, marked COMPLETE.json and packed
-into <out>.zip, so a later session resumes with --restore <zip or folder> and skips it. There is no checkpoint inside
-an arm: an arm that is interrupted starts again from the beginning.
+copy in the finished arms of any --restore, then train and evaluate each arm in its own process. A finished arm is
+validated, marked COMPLETE.json and packed into <out>.zip, so a later session resumes with --restore <zip or folder>
+and skips it. There is no checkpoint inside an arm: an arm that is interrupted starts again from the beginning.
 
 Defaults are the agreed pilot: arms sentence, word, left, local2, local5 (P1-P5), 10,000 training examples,
-1 epoch, batch 32, microbatch 8, learning rate 3e-4, seed 1. Only --max-bytes differs between the 128 and 256
+1 epoch, batch 32, microbatch 8, learning rate 3e-4, seed 1. Every arm trains on all five training works, because
+the pilots ran before decision D3 left Zupitza's Grammar out. Only --max-bytes differs between the 128 and 256
 pilots. CPU dry run of the whole loop: --tiny --allow-cpu --skip-model-check.
 """
 import argparse
@@ -26,11 +27,17 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+# pilot arm name to experiment id (P1 to P5), which also names the arm's folder under --out
 ARMS = {"sentence": "P1", "word": "P2", "left": "P3", "local2": "P4", "local5": "P5"}
+# the test sets every arm is checked and summarised on (encoder_experiment also scores the dev set john_ws)
 TESTS = ("soliloquies", "tauber_beowulf")
 
 
 def env():
+    """The environment for the child processes: a copy of os.environ with one OpenBLAS, OpenMP and MKL thread.
+
+    It also turns tokenizer parallelism off and puts <repo>/src first on PYTHONPATH, keeping an existing PYTHONPATH
+    after it."""
     e = dict(os.environ, OPENBLAS_NUM_THREADS="1", OMP_NUM_THREADS="1", MKL_NUM_THREADS="1",
              TOKENIZERS_PARALLELISM="false")
     e["PYTHONPATH"] = os.pathsep.join(x for x in (str(ROOT / "src"), e.get("PYTHONPATH")) if x)
@@ -38,11 +45,20 @@ def env():
 
 
 def required_transformers():
+    """The transformers version pinned by a transformers==X line in requirements.txt, or None if there is none."""
     m = re.search(r"^transformers==(\S+)", (ROOT / "requirements.txt").read_text(), re.M)
     return m.group(1) if m else None
 
 
 def preflight(a):
+    """Stop before any training if this machine cannot run the pilot.
+
+    a: the parsed arguments of main(). Prints the Python, torch and transformers versions, and on a CUDA machine the
+    GPU name and the first 1,500 characters of the nvidia-smi output. Exits with a STOP message when there is no CUDA
+    GPU (unless a.allow_cpu) or when the installed transformers differs from the transformers==X pin in
+    requirements.txt (without a pin there is no check). Unless a.skip_model_check, it also loads the tokenizer and
+    checkpoint a.model (downloading them if they are not cached, and raising transformers' own error if that fails)
+    and prints the model's size in millions of parameters. torch and transformers are imported in every case."""
     import torch
     import transformers
     print("Python:", sys.version.split()[0], "torch:", torch.__version__, "transformers:", transformers.__version__)
@@ -65,7 +81,14 @@ def preflight(a):
 
 
 def smoke_test(out):
-    """Tiny random model, word arm only: checks training and prediction end to end. Not a GPU memory test."""
+    """Tiny random model, word arm only: checks training and prediction end to end. Not a GPU memory test.
+
+    Runs oevl.encoder_experiment --tiny --epochs 1 --arms word in a child process that writes into out (main() passes
+    the sibling folder <out>_smoke, which is never packed or removed). Every other setting is encoder_experiment's
+    default, so unlike the pilot arms this run uses --max-bytes 256 and leaves Zupitza's Grammar out (decision D3).
+    The output is captured, and its last 3,000 characters are printed when the run ends. Exits with a STOP message if
+    the run fails or does not write metrics.json and the predictions of both TESTS. A run longer than 15 minutes
+    raises subprocess.TimeoutExpired."""
     cmd = [sys.executable, "-m", "oevl.encoder_experiment", "--tiny", "--epochs", "1", "--arms", "word",
            "--out", str(out)]
     p = subprocess.run(cmd, cwd=ROOT, env=env(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
@@ -80,7 +103,11 @@ def smoke_test(out):
 
 
 def pack(base):
-    """Zip everything under base into <base>.zip; written to a temp file first so a crash never leaves half a zip."""
+    """Zip every file under base into <base>.zip next to it and return the archive's path.
+
+    Members are stored relative to base.parent, so their names start with base's folder name, which restore() relies
+    on. The zip is written to <base>.zip.tmp and then renamed over <base>.zip, so a crash leaves the previous archive
+    in place and never half a zip. Empty folders are not stored. Prints the archive's path and size in MB."""
     archive = base.with_name(base.name + ".zip")
     temp = archive.with_name(archive.name + ".tmp")
     with zipfile.ZipFile(temp, "w", zipfile.ZIP_DEFLATED, compresslevel=4) as z:
@@ -93,8 +120,15 @@ def pack(base):
 
 
 def restore(src, base):
-    """Copy finished arms (folders with COMPLETE.json) from an earlier <out>.zip or extracted <out>/ folder into
-    base. Arms already finished in base are kept, and nothing is written outside base. Returns the arms copied."""
+    """Copy finished arms (folders with COMPLETE.json) from an earlier <out>.zip or extracted <out>/ folder into base.
+
+    src: a folder with the arm folders (P1 to P5) directly inside it, or a zip as pack() writes it. Any src that is
+    not a folder is opened as a zip. A folder is read whatever its name, but a zip only under a top folder named
+    exactly like base, so a zip made for another --out name restores nothing. Zip members with ".." or an absolute
+    path are skipped, so nothing is written outside base. An arm already finished in base is kept, an unfinished copy
+    in base is deleted and replaced, and an arm without COMPLETE.json in src is never copied. Nothing is validated
+    here: main() validates each requested arm when it skips it. Prints what was restored and returns the copied arm
+    folder names, sorted."""
     copied = []
     if src.is_dir():
         for arm in sorted(p.parent for p in src.glob("*/COMPLETE.json")):
@@ -119,7 +153,15 @@ def restore(src, base):
 
 
 def validate(out, arm, a):
-    """The checks the notebooks made after every arm, plus one subset checksum shared by all arms."""
+    """Check one arm's outputs in out against the run's settings and results/wikipron, and return its subset checksum.
+
+    These are the checks the notebooks made after every arm. metrics.json must record the same epochs, max_bytes,
+    seed, batch, lr and train_limit as a, exactly train_limit training examples (not checked with --tiny, whose
+    subset is smaller) and results for arm. For each of TESTS, the predictions file must have no token id twice and
+    an encoder_<arm> prediction on every line, its ids must equal those of results/wikipron (a subset with --tiny),
+    and metrics.json's accuracy n must equal the number of lines. micro, model and exclude_train are not checked.
+    Raises AssertionError on a failed check, and KeyError or FileNotFoundError when a key or file is missing.
+    Returns metrics.json's train_subset_sha256, which main() requires to be the same for every arm."""
     d = json.loads((out / "metrics.json").read_text(encoding="utf8"))
     want = {"epochs": a.epochs, "max_bytes": a.max_bytes, "seed": a.seed, "batch": a.batch, "lr": a.lr,
             "train_limit": a.train_limit}
@@ -148,6 +190,11 @@ def validate(out, arm, a):
 
 
 def run_arm(out, arm, a):
+    """Train and score one arm with oevl.encoder_experiment in a child process that writes its outputs into out.
+
+    Passes the pilot settings from a, --exclude-train "" so the arm trains on all five works, and --tiny when set.
+    The child's stdout and stderr are echoed live and written to out/train.log, which is overwritten. Returns the
+    child's exit code."""
     cmd = [sys.executable, "-m", "oevl.encoder_experiment", "--model", a.model, "--arms", arm,
            "--train-limit", str(a.train_limit), "--epochs", str(a.epochs), "--max-bytes", str(a.max_bytes),
            "--batch", str(a.batch), "--micro", str(a.micro), "--lr", str(a.lr), "--seed", str(a.seed),
@@ -164,6 +211,16 @@ def run_arm(out, arm, a):
 
 
 def main():
+    """Run the pilot from the command line: preflight, smoke test, restore, then each requested arm in order.
+
+    An arm whose folder already holds COMPLETE.json (from an earlier run into this --out or from --restore) is
+    validated and skipped. Every other arm is run, validated, marked COMPLETE.json and packed. When a new arm fails,
+    fails a check in validate() (AssertionError) or trained on a different subset from the other arms, the results
+    folder is packed and the run stops with an error. Any other error, including a skipped arm that fails validation,
+    stops the run without packing. Arms run in --arms order with duplicates dropped. No new arm starts once
+    --max-hours have passed since the arguments were parsed, a clock that includes preflight, the smoke test and the
+    restore: the folder is then packed and the run ends normally (the notebooks pass the hours left of their 9-hour
+    budget). Ends by printing each requested arm's accuracy on TESTS, or NOT COMPLETED."""
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--out", required=True, help="results folder; <out>.zip is written next to it")
     ap.add_argument("--max-bytes", type=int, required=True, help="input cap in bytes: 128 or 256")

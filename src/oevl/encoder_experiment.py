@@ -3,7 +3,9 @@ seeing only the word, the word with its left context, the whole sentence, or K w
 
 Like the logistic models, it is candidate-constrained: the dictionary (training forms + WikiPron) proposes
 the length patterns, the fine-tuned model scores each one (sum of log-probabilities of the pattern string,
-e.g. "01"), and the best-scoring pattern wins. Words with one candidate take it; unknown words stay short.
+e.g. "01", and of its end-of-sequence token), and the best-scoring pattern wins. Only candidates with one digit
+per vowel of the word count. A word with one such candidate takes it, and a word with none (an unknown word)
+stays all short.
 
 Run on a GPU, and write new runs outside results/encoder/ (scripts/encoder_grid.sh has the report's exact commands):
   python -m oevl.encoder_experiment --out my_runs/encoder   -> my_runs/encoder/metrics.json + predictions
@@ -29,8 +31,17 @@ MARK_L, MARK_R = "[[", "]]"
 
 
 def make_input(r, arm, max_bytes):
-    """Text the encoder sees for token r. The target word is wrapped in [[ ]] when context is shown.
-    localK shows at most K whole words on each side of the target."""
+    """Text the encoder sees for token r, lower-cased: the bare word alone, or in context with the target in [[ ]].
+
+    r needs "sentence" (the bare tokens) and "index" (the target's position). arm is "word" (the target alone, no
+    markers, max_bytes ignored), "left" (all preceding words), "sentence" (all words) or "localK" (at most K words on
+    each side). Context is cut to fit max_bytes UTF-8 bytes in all, each side keeping the words nearest the target.
+    The room is max_bytes less the marked target and two spaces. The left side may use half of it (rounded down), or
+    more when the right side needs less, and all of it for "left". The right side gets what the left leaves. A side
+    that was cut is trimmed back to whole words: a word split by the cut is dropped, and so is a whole word whose
+    outer edge (its start on the left, its end on the right) falls exactly on the cut. The result exceeds max_bytes
+    only when the marked target alone does.
+    """
     words, i = [w.lower() for w in r["sentence"]], r["index"]
     target = words[i]
     if arm == "word":
@@ -45,15 +56,16 @@ def make_input(r, arm, max_bytes):
     keep_r = min(len(rb), room - keep_l)  # unused space on one side goes to the other
     l_txt, r_txt = lb[len(lb) - keep_l:].decode(errors="ignore"), rb[:keep_r].decode(errors="ignore")
     if keep_l < len(lb):
-        l_txt = l_txt.partition(" ")[2]  # drop the word that was cut in half
+        l_txt = l_txt.partition(" ")[2]  # drop the outermost word, which the cut may have split
     if keep_r < len(rb):
         r_txt = r_txt.rpartition(" ")[0]
     return " ".join(x for x in (l_txt, core, r_txt) if x)
 
 
 def limit(examples, n):
-    """A fixed subset of n examples, kept in corpus order. It depends only on n, never on --seed, --arms or
-    --max-bytes, so every arm of a pilot trains on the same examples."""
+    """A fixed subset of n examples, kept in their order in examples. It depends only on n and the examples list,
+    never on --seed, --arms or --max-bytes, so every arm of a pilot trains on the same examples. With n None or at
+    least len(examples) the list itself is returned."""
     if n is None or n >= len(examples):
         return examples
     keep = sorted(random.Random(0).sample(range(len(examples)), n))
@@ -61,6 +73,11 @@ def limit(examples, n):
 
 
 def candidates(r, lex):
+    """The sorted lexicon patterns of r's key with one digit per vowel of the word, and the all-short fallback.
+
+    Returns (candidates, fallback). Only the vowel count of r["gold"] is read, never its macrons, and it equals the bare
+    word's. A key keeps every vowel letter, so all its lexicon patterns already have that length and the filter is a
+    safeguard that removes nothing."""
     fallback = zeros(r["gold"])
     return sorted(p for p in lex.get(r["key"], set()) if len(p) == len(fallback)), fallback
 
@@ -68,7 +85,14 @@ def candidates(r, lex):
 def score(rows, preds, prior, lex, counts, cls):
     """Accuracy per population (the classes split the lexicon-ambiguous tokens, as in experiment.evaluate), plus two
     checks for a collapsed run on the lexicon-ambiguous tokens: the share whose pick has the most long marks among
-    its candidates, and the share whose pick equals the frequency prior."""
+    its candidates, and the share whose pick equals the frequency prior.
+
+    rows, preds and prior run in parallel (one predicted and one prior pattern per token), lex and counts come from
+    experiment.lexicon, and cls maps a key to its class. Returns {population: {"n", "accuracy"}} for accuracy (all
+    tokens), lexicon_ambiguous, attested_ambiguous, minority_reading and class_A, class_B, class_C and class_unlisted,
+    each accuracy a fraction rounded to six places or None for an empty population, plus most_long_share and
+    prior_agreement (None without lexicon-ambiguous tokens). A pick tied for the most long marks counts as most long,
+    and a token without candidates of the right length has its pick compared with itself, so it counts too."""
     pops = {k: [] for k in ("accuracy", "lexicon_ambiguous", "attested_ambiguous", "minority_reading",
                             "class_A", "class_B", "class_C", "class_unlisted")}
     most_long, same = [], []
@@ -91,6 +115,21 @@ def score(rows, preds, prior, lex, counts, cls):
 
 
 def main():
+    """Fine-tune and score a fresh model for each arm, then write metrics.json and one predictions file per test set.
+
+    Reads the training works under data/by_source minus --exclude-train (build_data also loads the soliloquies and
+    the two Beowulf editions, unused here), the --tests sets without their leaked sentences (experiment.heldout),
+    data/lex_wikipron.csv and data/ambiguity_classes.csv. The training examples are the training tokens with at least
+    one vowel and at least two lexicon patterns (with --tiny, 256 of them after a Random(0) shuffle, and the first 300
+    rows of each test set), cut by --train-limit and visited in one --seed order that is the same for every arm and
+    every epoch. Each arm starts from the --model checkpoint (or a tiny random T5) under torch.manual_seed(--seed) and
+    trains with AdamW, a linear schedule with 5% warm-up and gradient clipping at 1.0, one step per --batch examples
+    fed --micro at a time. A test token with two or more candidates of the right length gets the best-scoring one (an
+    exact tie goes to the larger pattern string), any other its one candidate or all short.
+    --out/metrics.json (settings, losses, score() per test set and the collapse flag of each arm) is rewritten after
+    every arm. --out/<test>_predictions.jsonl (gold, frequency prior, flags, class and an encoder_<arm> pattern per
+    arm) is written only after the last arm.
+    """
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="google/byt5-small")
     ap.add_argument("--out", default=str(ROOT / "results" / "encoder"))
@@ -151,6 +190,7 @@ def main():
     print(f"device={device} model={'tiny-random' if a.tiny else a.model} train_examples={len(examples)}", flush=True)
 
     def enc(texts, n):
+        """Tokenise texts as one padded batch on the device, each at most n tokens (ByT5: one per byte, plus EOS)."""
         return tok(texts, padding=True, truncation=True, max_length=n, return_tensors="pt").to(device)
 
     summary = {"model": "tiny-random" if a.tiny else a.model, "lexicon": "training + WikiPron", "seed": a.seed,
@@ -173,7 +213,7 @@ def main():
             for b in range(0, len(order), a.batch):
                 batch = [examples[j] for j in order[b:b + a.batch]]
                 loss_sum = 0.0
-                for m in range(0, len(batch), a.micro):  # gradient accumulation: same step as one batch of a.batch
+                for m in range(0, len(batch), a.micro):  # gradient accumulation: one optimizer step per batch
                     part = batch[m:m + a.micro]
                     x = enc([make_input(r, arm, a.max_bytes) for r in part], a.max_bytes + 8)
                     y = enc([r["gold_pattern"] for r in part], 32).input_ids
@@ -225,7 +265,8 @@ def main():
             arm_summary[test] = score(rows, preds, prior[test], lex, counts, cls)
             print(f"[{arm}] {test}: " + ", ".join(f"{n}={d['accuracy'] if isinstance(d, dict) else d}"
                                                    for n, d in arm_summary[test].items()), flush=True)
-        # A run that collapsed to "most long marks" (seen at 1 epoch, lr 3e-4) is flagged on the prose test set
+        # A run that collapsed to "most long marks" (seen at 1 epoch, lr 3e-4) is flagged on the prose test set:
+        # most_long_share of at least 0.9 on soliloquies, None when --tests leaves soliloquies out
         sol = arm_summary.get("soliloquies", {}).get("most_long_share")
         arm_summary["collapsed"] = None if sol is None else sol >= 0.9
         summary["arms"][arm] = arm_summary

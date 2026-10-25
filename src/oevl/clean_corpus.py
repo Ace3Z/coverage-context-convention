@@ -1,10 +1,13 @@
 """Clean the corpus files in data/by_source in place and refresh their entries in data/manifest.json.
 
-Every change is one of the explicit mappings below, and each is counted in the file's manifest "cleaning" record.
-It also removes the sentence-level "split" field of an earlier build: the split is by work (experiment.build_data).
+Every change to a record is one of the explicit mappings below (CHARS for characters, WORDS for whole words), and
+each is counted over the marked tokens and added to the counts already in the file's manifest "cleaning" record.
+It also removes the sentence-level "split" field of an earlier build, and the manifest's "splits" block with it:
+the split is by work (experiment.build_data).
 Running it again on clean files changes nothing, and a new file such as john_ws.jsonl is cleaned the same way.
-It writes nothing if any character outside the canonical inventory would remain, or if a bare token would no
-longer equal its marked token with the length marks removed.
+It writes nothing if a token would keep a character outside the canonical inventory or a text field a letter or
+mark outside it, if a sentence's marked and bare token lists would differ in length, or if a bare token would no
+longer equal its marked token with the length marks removed (compared in lower case).
 Usage: python -m oevl.clean_corpus
 """
 import collections
@@ -20,6 +23,9 @@ ROOT = Path(__file__).resolve().parents[2]
 # Canonical inventory: Latin letters, þ ð æ, and length shown only by ā ē ī ō ū ȳ ǣ.
 LETTERS = set("abcdefghijklmnopqrstuvwxyzþðæāēīōūȳǣ")
 INVENTORY = LETTERS | {c.upper() for c in LETTERS}
+# Character mappings. The committed files hold none of ċ ġ ę ǫ ḥ, whose marks build_corpus drops first (the
+# "dropped_mark_" counts), so only Đ and the two Cyrillic letters have fired (the "mapped_" counts in
+# data/manifest.json).
 CHARS = {
     "Đ": "Ð", "đ": "ð",                      # D with stroke typed for eth (Matthew, Soliloquies, John)
     "о": "o", "с": "c",                      # Cyrillic o and es inside Latin words (Soliloquies weоrlde, сlēne)
@@ -40,7 +46,11 @@ TABLE = str.maketrans(CHARS)
 
 
 def sub(tokens, old, new):
-    """Replace each run of tokens equal to old by the one token new; return the list and the number of runs."""
+    """Replace each run of tokens equal to old by the one token new, and return the new list and the number of runs.
+
+    old is a non-empty tuple of tokens (an empty one would never end the loop, a list would never match). Runs are
+    matched left to right without overlap, and the tokens list passed in is not modified.
+    """
     out, i, n = [], 0, 0
     while i < len(tokens):
         if tuple(tokens[i:i + len(old)]) == old:
@@ -53,7 +63,14 @@ def sub(tokens, old, new):
 
 
 def clean_record(r, log):
-    """Apply every mapping to one record in place, counting the changes in log, and return it."""
+    """Apply every mapping to one record in place, counting the changes in log, and return it.
+
+    r is one corpus row with "text", "text_bare", "tokens" and "tokens_bare", and an old "split" field is dropped.
+    log is a collections.Counter. It gains "removed_field_split", "mapped_U+XXXX_to_U+YYYY" with the occurrences of
+    each CHARS character in the marked tokens, and "repaired_word_<spelling>" per WORDS run replaced in the marked
+    tokens. The text fields get the same mappings by plain substring replacement, so a WORDS spelling inside a longer
+    word would change the text but not the tokens. A clean record comes back unchanged with nothing logged.
+    """
     if r.pop("split", None) is not None:
         log["removed_field_split"] += 1
     for ch, to in CHARS.items():
@@ -74,7 +91,16 @@ def clean_record(r, log):
 
 
 def check(rows):
-    """Problems that must not survive cleaning: characters outside the inventory, bare forms that do not match."""
+    """Problems that must not survive cleaning: characters outside the inventory, bare forms that do not match.
+
+    rows are corpus records with "id", "text", "text_bare", "tokens" and "tokens_bare". It returns one message per
+    problem, starting with the record id, or an empty list when the rows are clean. A record is flagged when its two
+    token lists differ in length (pairs are then checked up to the shorter list), when a token pair has a character
+    outside INVENTORY (so tokens hold only inventory letters, precomposed), or else when bare(marked) != norm(bare),
+    a comparison in lower case after NFC. Each pair gives at most one message. In the text fields only letters,
+    combining marks and modifier symbols such as ¯ are checked, so punctuation, digits and spaces pass. The text is
+    never compared with the tokens.
+    """
     bad = []
     for r in rows:
         if len(r["tokens"]) != len(r["tokens_bare"]):
@@ -92,6 +118,16 @@ def check(rows):
 
 
 def main():
+    """Clean every data/by_source/*.jsonl, rewrite the files and update their entries in data/manifest.json.
+
+    Both paths are under the repository root found from this file, whatever the working directory, and blank input
+    lines are dropped. All files are cleaned and checked in memory first. If any problem is found it exits with
+    status 1, the problems on stderr, and writes nothing. Otherwise every file is rewritten, even when nothing changed
+    (UTF-8, one JSON object per line, non-ASCII kept), and manifest["sources"][<file stem>] (created if missing) gets
+    units (sentences), tokens, long_vowel_marks (long vowels of either case in the marked tokens) and the SHA-256 of
+    the written bytes, with this run's counts added to its "cleaning" record. The top-level "splits" block is
+    removed, the manifest is written with indent 2, and one line per file is printed.
+    """
     mpath = ROOT / "data" / "manifest.json"
     manifest = json.loads(mpath.read_text(encoding="utf8"))
     manifest.pop("splits", None)  # sentence-level split counts of the same earlier build
