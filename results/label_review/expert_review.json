@@ -1,6 +1,6 @@
 {
  "date": "2026-10-19",
- "provenance": "Runs of the LLM that made the labels, Claude Opus 5.5 (model id claude-opus-5-5), not people. Each reviewing run was told to act as a senior Old English philologist and labelled its items blind, without the existing labels. Wherever its label differed from the existing one, a further run of the model re-examined the item and decided. Mahbod Tajdini later checked all 560 labels by hand and changed none (reported 2026-10-20).",
+ "provenance": "Runs of the LLM that made the labels, Claude Opus 5.5 (model id claude-opus-5-5), not people. Each reviewing run was told to act as a senior Old English philologist and labelled its items blind, without the existing labels. Wherever its label differed from the existing one, a further run of the model re-examined the item and decided. The labels were then manually checked, and none was changed (reported 2026-10-20).",
  "evidence_used": "Tauber's lemma, part of speech and gloss (data/brunetti-length.txt), the corpus (data/by_source), the dictionaries (data/lex_*.csv), Clark Hall, Bosworth-Toller, Wiktionary, and the editions' own glossaries and notes.",
  "areas": {
   "classes": {

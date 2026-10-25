@@ -4,7 +4,7 @@ results/error_typing/labels.tsv holds 200 sampled errors per system. label_a and
 of one LLM, Claude Opus 5.5 (model id claude-opus-5-5), with the same written guidelines
 (results/label_review/materials/error_types), and final and note from a third run that settled their disagreements.
 A blind review by further runs of the same model (2026-10-19) changed five finals and explained them in the note
-column. Mahbod Tajdini then checked all 400 by hand and changed none.
+column. The labels were then manually checked, and none was changed.
 
   python -m oevl.error_typing   -> results/error_typing/summary.json and report/generated/tab_errors.tex
 """
@@ -25,7 +25,7 @@ TYPES = (("ceiling", "Ceiling"), ("segment", "Segment"), ("truncation", "Truncat
 PROVENANCE = ("label_a and label_b come from two separate runs of one LLM, Claude Opus 5.5 (model id claude-opus-5-5), "
               "with the same written guidelines, and final and note from a third run that settled every disagreement. "
               "A blind review by further runs of the same model (2026-10-19) then changed five final labels, noted in "
-              "the note column. Mahbod Tajdini later checked all 400 labels by hand and changed none (reported "
+              "the note column. The labels were then manually checked, and none was changed (reported "
               "2026-10-20).")
 SAMPLING = ("An error is a lexicon-ambiguous token (two or more length patterns for its skeleton in the system's own "
             "lexicon) of the soliloquies and tauber_beowulf test sets, pooled, whose predicted length pattern differs "

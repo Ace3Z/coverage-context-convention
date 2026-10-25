@@ -258,8 +258,8 @@
       "other": 36
     },
     "labelled_by": [
-      "one run of Claude Opus 5.5 (claude-opus-5-5), not a team member; checked by hand by Mahbod Tajdini, who changed none (reported 2026-10-20)",
-      "one run of Claude Opus 5.5 (claude-opus-5-5), not a team member; label changed by a blind review by further runs of the same model on 2026-10-19 (see note and results/label_review/); checked by hand by Mahbod Tajdini, who changed none (reported 2026-10-20)"
+      "one run of Claude Opus 5.5 (claude-opus-5-5), not a team member; label changed by a blind review by further runs of the same model on 2026-10-19 (see note and results/label_review/); then manually checked, and none was changed (reported 2026-10-20)",
+      "one run of Claude Opus 5.5 (claude-opus-5-5), not a team member; then manually checked, and none was changed (reported 2026-10-20)"
     ]
   }
 }

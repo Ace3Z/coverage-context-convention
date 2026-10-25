@@ -12,7 +12,7 @@ If data/ambiguity_classes.csv exists (columns skeleton and a final A/B/C label),
 If results/agreement/disagreements_checked.tsv exists (the seed-1 sample of 100 Harrison and Sharp vs Wyatt
 disagreements), its label counts are added to metrics.json. One run of an LLM, Claude Opus 5.5 (model id
 claude-opus-5-5), labelled the sample. A blind review by further runs of the same model on 2026-10-19 changed four
-labels (see the labelled_by column), and Mahbod Tajdini then checked all 100 by hand and changed none.
+labels (see the labelled_by column). The labels were then manually checked, and none was changed.
 """
 import collections
 import csv
@@ -50,7 +50,7 @@ def kappa(x, y):
 
 
 def classes(path):
-    """skeleton -> A, B or C from the class file (LLM labels, checked by hand); empty when the file is absent."""
+    """skeleton -> A, B or C from the class file (LLM labels, manually checked); empty when the file is absent."""
     if not Path(path).exists():
         return {}
     with open(path, encoding="utf8") as f:
@@ -156,7 +156,7 @@ def main():
                 print(f"  {p:12} {k:34} n {s['n']:5}  ceiling {100 * s['ceiling']:.2f}  floor {100 * s['floor']:.2f}  "
                       f"gap {s['gap_points']:5.2f}  {'clears' if s['clears_bar'] else 'below'} the bar")
     if "hand_check_hs_wyatt" in metrics:
-        print("hand check:", metrics["hand_check_hs_wyatt"])
+        print("manual check:", metrics["hand_check_hs_wyatt"])
 
 
 if __name__ == "__main__":
