@@ -79,183 +79,182 @@
       "length_convention_in_source": "macron",
       "licence": "CC BY-SA 4.0 (Wikisource transcription of a public-domain edition)",
       "origin": "https://en.wikisource.org/wiki/Bright%27s_Anglo-Saxon_Reader",
-      "units": 1186,
-      "tokens": 38495,
-      "long_vowel_marks": 16863,
-      "sha256": "46e7ec5c90655b6b77a7aff1ee75dd6912b86c49e0211d5727ff6b1420896a17",
+      "units": 1179,
+      "tokens": 38484,
+      "long_vowel_marks": 16862,
+      "sha256": "db3b130cfc17229354c31b8d0992c0fa9f8dd6f4288f6bf2d0a0c00f391f2704",
       "cleaning": {
-        "dropped_line_eng": 26,
-        "dropped_words_eng": 541,
+        "dropped_line_eng": 27,
+        "dropped_words_eng": 581,
         "dropped_mark_U+0301": 1,
         "dropped_mark_U+0300": 1,
         "dropped_sentence_latin_words": 1,
         "dropped_line_lat": 2,
         "dropped_words_lat": 10,
-        "dropped_sentence_mixed": 4,
         "dropped_mark_U+0328": 63,
-        "removed_field_split": 1186
+        "removed_field_split": 1179
       },
       "role": "train",
       "inputs": [
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FFrom+the+Gospels%3A+St.+Mark%2C+Chap.+IV",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "00.json",
-          "sha256": "e7ca81c04e90641d98074f64a3f7454b3a8de04d8d6337767db0b276169ccb65",
+          "sha256": "a44d0d281feeb82782df8b09e8ffe9d725dbd979753228cd60464620371d31d9",
           "revid": 11958844
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FOrpheus+and+Eurydice",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "01.json",
-          "sha256": "9c4756b0fe4776caf1a38adb27c7f012b57c64b412910fd46d835ba1ee3eedff",
+          "sha256": "c9a60c78cf5eaf1f5c6f880652a8547a3393761925b25599d4cd8a7cc65ea763",
           "revid": 11958849
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FAccount+of+the+Poet+C%C3%A6dmon",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "02.json",
-          "sha256": "f6d4b1854415bb5f8329c3f0a79219760065b7d5520b960101707a20f6d0a15b",
+          "sha256": "6dd250c83ca7a689053b7ffad2a628ce9ab24c42be79f419de3a14488fad59ee",
           "revid": 11958843
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FCynewulf+and+Cyneheard",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "03.json",
-          "sha256": "206031e74d62f05f6e740aeee92a6d0d77561839fe10df09bf55cdedcf357caf",
+          "sha256": "c682ef6576ca6bf0d8db162fcdcaf80697219e3a43cb36d503300dff0ff3ce26",
           "revid": 11958841
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FWars+of+Alfred+the+Great",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "04.json",
-          "sha256": "94bb1ae5bb6283d037e2999715724f8538d14b52e14dd0fb9c628eadc9680d9a",
+          "sha256": "b97ff8e940d44d1ffdceb9ba86e535634c998ed2b2bceb0c69b9d1455e5e2556",
           "revid": 11958866
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FAlfred%27s+Preface+to+the+Pastoral+Care",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "05.json",
-          "sha256": "65b12a50bd3c243f11578f80ddcf0111c105570aa4d81dbc3f6420b3c7280580",
+          "sha256": "5f54e1fdef2c5a80d615632e2312b18975afcf1c2ff2b0f176cb76066017cc1c",
           "revid": 11958838
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FFrom+the+Pastoral+Care",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "06.json",
-          "sha256": "e5e8551c3619d45ba6188e9a99182f26a5347372295440cc02258c6d1154e520",
+          "sha256": "2e1f1984f4ac0c7305298276e9d2e1ee0dbe11b9c7008aca72de0bd9acd2021d",
           "revid": 11958873
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FThe+Voyages+of+Ohthere+and+Wulfstan",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "07.json",
-          "sha256": "a7baf65f752b01fdec9e49ae43a7d0b2bc61710ba7eacb5884a7c1f08ecf16d8",
+          "sha256": "8e4495df4a3d08c4ebe48b2923cdde3eef662d5cffe43819da13aed4cc7aeaaa",
           "revid": 13475135
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FIt+is+better+to+suffer+an+Injury+than+to+inflict+one",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "08.json",
-          "sha256": "75bb5efbeea5b601b63e7cd119f84e52c371d85ffebaa07c82fce186bf6be6f9",
+          "sha256": "cc5df300354946339acc71235f2878c1670fe5e6f3b0a51bbe41c2290ebf9ab0",
           "revid": 11958846
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FProvidence+and+Fate",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "09.json",
-          "sha256": "93b3339f1f4fdbf640771dcc3e3730430afae8dd7a48ccece671a405c0bad786",
+          "sha256": "655d6b30117f0a247f64d639086362a7d2293f71fcbe38e5c85ae138c30e12fb",
           "revid": 11958851
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FThe+Nature+of+God",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "10.json",
-          "sha256": "75a820815f5cb0bdffba7f31ef66e2fba4f68b1268e8d6b5b67c3127eb36652e",
+          "sha256": "f31afc04f62bd94b0cf07ad8a8565d554db0662936d10775d049c48acb9cb625",
           "revid": 11958860
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FThe+Conversion+of+Edwin",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "11.json",
-          "sha256": "309281e7a7850af487c2db5e319b1da93f482461b3ecfbe74985ebbe15609aae",
+          "sha256": "d58a0072f85cc658e12c4730531a23536013ab96d309adb80f098327ed4931a5",
           "revid": 11958854
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FA+Blickling+Homily",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "12.json",
-          "sha256": "65b49b9ac6d6a277c0635809a01710f5f5b755a9cec6ca4f6c5ba150d36c7799",
+          "sha256": "df36257c216c6ae6a44702be5261a41c5015441161561aca08fbff2a33ba4a34",
           "revid": 11958837
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2F%C3%86lfric%27s+Homily+on+the+Assumption+of+St.+John+the+Apostle",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "13.json",
-          "sha256": "dc075e87d49661163d84db56cfb793ed641e7cd5ba4ff180574b632ab2ff6410",
+          "sha256": "0e2fe8e6ba49d3ef98916c17775efd53a82408c18a46a9dfa602aa6e04ee6bd9",
           "revid": 11958868
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2F%C3%86lfric%27s+Homily+on+St.+Gregory+the+Great",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "14.json",
-          "sha256": "93000093d89814ededda759348d78fbdc2596d4688080517c5af842eb9213b92",
+          "sha256": "ffa9c4a3c54be3d02a0e29ee8f8863f7713d7f6a30894f5f68b2b9e8576edb90",
           "revid": 11958867
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2F%C3%86lfric%27s+Life+of+King+Oswald",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "15.json",
-          "sha256": "2f3a695d4d10b579fb5feaf88bf7aba2f28d18e50721084952cd0bc1080de873",
+          "sha256": "7723647d420abec693a989d2c2cf7fe984dfe6f7fa59d1c65c456bea38a81f38",
           "revid": 11958869
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2F%C3%86lfric%27s+Preface+to+Genesis",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "16.json",
-          "sha256": "29b3c90abc77fb782744931f95d6376d4927252f9d3467086327442bb23cf093",
+          "sha256": "a62d08437d8e4ca36db5063b4dda7673e9822e77704ad87f4fbe3dfe6a9fe39f",
           "revid": 15019123
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FThe+Legend+of+St.+Andrew",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "17.json",
-          "sha256": "39b94051f9c5538c6ee09b66260ecc9a989d21c266e511c212b7d283c99cbfb0",
+          "sha256": "bc84086e697ca991c03a72d1cc69b9aea0287875768f64b9bfe1f33b492d5d92",
           "revid": 11958859
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FThe+Harrowing+of+Hell",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "18.json",
-          "sha256": "e22281a3fc085c67458231edfd77dce27930ca6646e30e4c3c141db26bcec1e1",
+          "sha256": "3e7dc1eabc7329885ac1c225521fa618ebe5984d15bb3a8b3fa1a4d7d333fe18",
           "revid": 11958858
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FC%C3%A6dmon%27s+Genesis%3A+The+Offering+of+Isaac",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "19.json",
-          "sha256": "0636ebf4240d824a356e1d9d85bf0cf3a44a34445706f58f6bbdb04881f058d5",
+          "sha256": "7f3b9be85e7f20922cac5ee063c1a437be31082ddcd6d65ca940aeb1ac245a82",
           "revid": 14883945
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FThe+Battle+of+Brunanburh",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "20.json",
           "sha256": "d57dea30bcb9c262befd1bef9464d85041d13430b978fb05de1c017c9aaf51b7",
           "revid": 14883894
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FThe+Wanderer",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "21.json",
           "sha256": "fe97633267f3bd8f508833f990e948bf2d02ef20d671e3f1037b908c218036c5",
           "revid": 15736565
         },
         {
           "url": "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text%7Crevid&page=Bright%27s+Anglo-Saxon+Reader%2FThe+Ph%C5%93nix",
-          "retrieved": "2026-10-18",
+          "retrieved": "2026-10-26",
           "file": "22.json",
-          "sha256": "ba3823915c0cf8b80218e9202e70bee3e5dac8dc56319ff7d43c027419dafce3",
+          "sha256": "15e3cc8cb48e3799b174d49f40f3a25c9c421612841dfd61d0e189d7a060c4e4",
           "revid": 13090960
         }
       ]
@@ -303,10 +302,10 @@
       "length_convention_in_source": "macron",
       "licence": "CC BY-SA 4.0 (Wikisource transcription of a public-domain edition)",
       "origin": "https://en.wikisource.org/wiki/King_Alfred%27s_Old_English_Version_of_St._Augustine%27s_Soliloquies",
-      "units": 711,
-      "tokens": 15480,
+      "units": 706,
+      "tokens": 15475,
       "long_vowel_marks": 6740,
-      "sha256": "5dd6df877fee410d58c5b9005f33f6caf64f068c586ce1babf551d3db968419e",
+      "sha256": "0ae443163da4e36200340d3dc8e391defc2142287ccffeb30f7c795fde2240ce",
       "cleaning": {
         "dropped_line_lat": 474,
         "dropped_words_lat": 6809,

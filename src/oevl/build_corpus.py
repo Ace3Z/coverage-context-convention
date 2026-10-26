@@ -71,7 +71,7 @@ SOURCES = {
     "soliloquies": dict(root="King Alfred's Old English Version of St. Augustine's Soliloquies",
                         subpages=["King Alfred's Preface", "Book 1", "Book 2", "Book 3"],
                         work="Alfred's Soliloquies", editor="Hargrove", year=1902, genre="prose", split="blocks",
-                        role="test", speaker=r"^\s*[AGR]\.\s+"),
+                        role="test", speaker=r"(?:^\s*|(?<=[.?!]\s))\[?[AGR]\.\]?\s+"),
     "wyatt_beowulf": dict(root="Beowulf (Wyatt)",
                           subpages=[f"Beowulf {i:02d}" for i in range(44) if i != 30] + ["The Fight at Finnsburg"],
                           work="Beowulf", editor="Wyatt", year=1894, genre="verse", split="beowulf_wyatt",
@@ -247,6 +247,11 @@ def line_lang(line):
     return "lat" if la >= 0.15 and la >= en else "eng" if en >= 0.3 else None
 
 
+def unmarked(text):
+    """text with the macron of every long vowel removed (NFD, drop U+0304, NFC), so line_lang can read it."""
+    return unicodedata.normalize("NFC", unicodedata.normalize("NFD", text).replace("\u0304", ""))
+
+
 def editorial(text):
     """Drop digits, brackets, daggers, asterisks, underscores and Sweet's hyphen dots, before the sentence split.
 
@@ -280,11 +285,11 @@ def clean(text, log):
 
 def sentences(par, log, speaker=None, filters=True):
     """The kept sentences of one paragraph, after the language filters (unless filters is False) and cleaning.
-    speaker is a regex for the speaker label that starts a line of dialogue.
+    speaker is a regex for the speaker label of a line of dialogue (A. or [G.]), at a line start or after a sentence end.
 
-    The paragraph is NFC-normalised, zero-width spaces are removed and the speaker label is cut from the start of
-    each line. A line that line_lang reads as English or Latin is dropped, and so is every line of a paragraph that
-    is one bracketed note with no length mark. Blank lines are skipped. The kept lines are joined by spaces, passed
+    The paragraph is NFC-normalised, zero-width spaces are removed and every speaker label is cut. A line
+    that line_lang reads as English or Latin is dropped, and so is every line of a paragraph that is one bracketed
+    note with no length mark, or one that line_lang reads as English once its macrons are removed (unmarked). Blank lines are skipped. The kept lines are joined by spaces, passed
     through editorial, split after . ? or ! followed by white space and cleaned, and a piece with no letter is no
     sentence. In a paragraph where some sentence has an Old English letter (OE), a sentence of three or more words
     with none and two or more capitalised words is dropped. In any paragraph a sentence with four or more Latin
@@ -294,7 +299,8 @@ def sentences(par, log, speaker=None, filters=True):
     par = unicodedata.normalize("NFC", par).replace("\u200b", "")
     if speaker:
         par = re.sub(speaker, "", par, flags=re.M)
-    note = re.fullmatch(r"\s*\[[^\]]*\]\s*", par) and not set(par) & set(LONG)  # editor's note, e.g. [From the MS.]
+    # editor's note, e.g. [From the MS.]; one that names a marked word (the Bēowulf MS.) counts if it reads as English
+    note = re.fullmatch(r"\s*\[[^\]]*\]\s*", par) and (not set(par) & set(LONG) or line_lang(unmarked(par)) == "eng")
     lines = []
     for line in (x for x in par.split("\n") if x.strip()):
         lang = filters and ("eng" if note else line_lang(line))

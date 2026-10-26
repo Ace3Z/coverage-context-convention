@@ -22,8 +22,8 @@ def bare(s):
  """s normalised by norm, with every macron vowel of LONG written as its short letter."""
  return norm(s).translate(TRANS)
 def key(s):
- """A word's lookup key, or skeleton: its bare form with ð written þ and hyphens dropped."""
- return bare(s).replace('ð','þ').replace('-','')
+ """A word's lookup key, or skeleton: its bare form with ð written þ and hyphens and apostrophes (' and ’) dropped."""
+ return bare(s).replace('ð','þ').replace('-','').replace('’','').replace("'",'')
 def pattern(s):
  """The length pattern of s: one digit per vowel letter (a e i o u y æ), 1 if it bears a macron, else 0.
 

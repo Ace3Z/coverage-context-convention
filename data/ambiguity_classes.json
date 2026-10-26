@@ -40,8 +40,8 @@
   },
   "adjudication_rule": "Both labelling runs drew the A/B line the same way: B when both readings are closed-class words, A when at least one reading is a content word. The settling run applied that rule to the attested tokens of each disputed skeleton.",
   "counting_rule": "The lexicon is experiment.lexicon(train, \"data/lex_wikipron.csv\"): every training gold pattern plus every WikiPron marked form, keyed by key(). Training is all 5 training sources, Zupitza included, as build_data() returns them. A skeleton is lexicon-ambiguous when the lexicon holds 2 or more patterns for it, the same test as flags(). Counted tokens are train plus soliloquies plus tauber_beowulf (load_tauber). hs_beowulf and wyatt_beowulf are agreement sets and are left out. Skeletons are ranked by their ambiguous token count, highest first, ties broken by skeleton in alphabetical order, and the first 60 are kept.",
-  "tokens_counted": 125879,
-  "ambiguous_tokens_counted": 44078,
+  "tokens_counted": 125863,
+  "ambiguous_tokens_counted": 44076,
   "rank_60": {
     "skeleton": "eom",
     "tokens": 111
@@ -57,13 +57,13 @@
   ],
   "d3": {
     "rule": "Decision D3 (DATA.md): the final systems train without zupitza_grammar. The 60 skeletons and their labels are kept. Counted as in counting_rule with zupitza_grammar left out of training, so out of the lexicon's training forms and out of the counted tokens. Two lexicons: the counting rule's (training forms + data/lex_wikipron.csv, as results/wikipron) and training forms only (as results/training_only).",
-    "tokens_counted": 101939,
+    "tokens_counted": 101923,
     "training_and_wikipron": {
       "listed_not_ambiguous": [
         "hi"
       ],
-      "ambiguous_tokens": 36203,
-      "ambiguous_tokens_outside_list": 6759
+      "ambiguous_tokens": 36201,
+      "ambiguous_tokens_outside_list": 6757
     },
     "training_only": {
       "listed_not_ambiguous": [
@@ -75,8 +75,8 @@
         "hyt",
         "man"
       ],
-      "ambiguous_tokens": 32428,
-      "ambiguous_tokens_outside_list": 4927
+      "ambiguous_tokens": 32426,
+      "ambiguous_tokens_outside_list": 4925
     }
   },
   "expert_review": "2026-10-19: in a blind review, two further runs of the same model relabelled all 60 skeletons and agreed with the final label on 58. Another run upheld the final label for the other two (þis and gyt, both B), so no label changed. The labels of the review runs and the adjudication are in results/label_review/expert_review.json. The labels were then manually checked, and none was changed."
