@@ -13,10 +13,12 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-`requirements.txt` holds every direct dependency. The CPU pipeline uses scikit-learn 1.8.0, scipy 1.16.3, numpy 2.3.5 and
-matplotlib 3.10.8. ByT5 and CharsiuG2P use torch 2.2 or later and transformers 4.57.6. Training needs a GPU, and the
-committed ByT5 runs used torch 2.11.0 with CUDA 12.8. `pdflatex` and `bibtex` are optional and compile `REPORT.pdf`. The `hf`
-command for uploading the dataset comes with `huggingface_hub`, which transformers already installs.
+`requirements.txt` pins every package to the tested version, including the ones the direct dependencies pull in. The CPU
+pipeline uses scikit-learn 1.8.0, scipy 1.16.3, numpy 2.3.5 and matplotlib 3.10.8. ByT5 and CharsiuG2P use torch 2.14.1
+and transformers 4.57.6. Training needs a GPU. The committed ByT5 runs were trained with torch 2.11.0 and CUDA 12.8, and
+CharsiuG2P's predictions come out byte-identical with torch 2.11.0 and 2.14.1. `pdflatex` and `bibtex` are optional and
+compile `REPORT.pdf`. The `hf` command for uploading the dataset comes with `huggingface_hub`, which transformers
+already installs.
 
 `run_all.sh` puts `src` on `PYTHONPATH`, so the `oevl` package itself does not have to be installed. To run modules by
 hand, prefix commands with `PYTHONPATH=src`, or install the package once with `pip install -e .`. The install must be
@@ -61,12 +63,12 @@ contrasts `oevl.paper_numbers` also gives intervals that resample the runs as we
 tests are stored as well (per seed for ByT5, seed 1 for the logistic models).
 
 `run_all.sh` runs four candidate settings: training forms only, training forms plus WikiPron (the main setting), the
-three proposal dictionaries, and all four sources together. `check_expected` freezes 660 values from these settings,
-the Zupitza ablation and the editor agreement. It passes on macOS with Python 3.11 and 3.14 and on Linux with
-Python 3.14. On Linux a few McNemar p-values differ from the committed ones in the 15th significant digit, which the
-check tolerates. The committed figures embed Times New Roman, the third serif font they ask for. Where matplotlib
-finds Liberation Serif or Nimbus Roman first, or none of the three and falls back to DejaVu Serif, the figure PDFs
-differ in their bytes.
+three proposal dictionaries, and all four sources together. `check_expected` freezes 660 values from these settings, the
+Zupitza ablation and the editor agreement. It passes on macOS with Python 3.11, 3.12, 3.13 and 3.14 and on Linux with
+Python 3.14. On Linux some McNemar p-values differ from the committed ones in the 15th significant digit, which the
+check tolerates. The committed figures embed Times New Roman, the third serif font they ask for. Where matplotlib finds
+Liberation Serif or Nimbus Roman first, or none of the three and falls back to DejaVu Serif, the figure PDFs differ in
+their bytes.
 
 ## 1. Reproduce everything
 

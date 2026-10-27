@@ -220,7 +220,7 @@ coverage-context-convention/
 ├── notebooks/               Kaggle and Colab launchers for the ByT5 pilot
 ├── release/                 dataset card and licence file for the Hugging Face copy
 ├── media/figures/logos/     logos
-└── requirements.txt         every direct dependency, pinned (torch has a lower bound)
+└── requirements.txt         every package, pinned to the tested versions
 ```
 
 ---
@@ -229,8 +229,8 @@ coverage-context-convention/
 
 - `bash run_all.sh` takes about two minutes on an Apple M-series laptop, including 90 unit tests (one is skipped unless
   the Wikisource download is cached), 660 frozen checks and the report.
-- `requirements.txt` installs and passes those checks on macOS with Python 3.11 and 3.14, and on Linux with Python 3.14
-  and a CUDA GPU.
+- `requirements.txt` pins every package to the tested version. It installs and passes those checks on macOS with
+  Python 3.11, 3.12, 3.13 and 3.14, and on Linux with Python 3.14 and a CUDA GPU.
 - A ByT5-small dev selection run took 12 to 180 minutes on a shared lab GPU (`results/encoder/selection.json` records
   each run's time).
 - CharsiuG2P's own 500-word benchmark takes a few minutes on a recent laptop CPU. Its predictions on our test sets were
