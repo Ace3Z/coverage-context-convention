@@ -17,7 +17,7 @@
   <a href="https://huggingface.co/datasets/Ace3Z/old-english-vowel-length">
     <img src="https://img.shields.io/badge/Hugging%20Face-Dataset-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black" alt="Dataset"/>
   </a>
-  <a href="report/main.tex"><img src="https://img.shields.io/badge/Report-LaTeX%20source-b31b1b?style=for-the-badge" alt="Report: LaTeX source"/></a>
+  <a href="report/essentials_final_report.pdf"><img src="https://img.shields.io/badge/Report-PDF-b31b1b?style=for-the-badge" alt="Report: PDF"/></a>
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/Licence-MIT-2ea44f?style=for-the-badge" alt="Licence"/>
   </a>
@@ -111,8 +111,8 @@ manually checked, and none was changed. The guidelines, the item sheets and the 
 `results/label_review/expert_review.json`. The settled labels are in `data/ambiguity_classes.csv` and
 `results/error_typing/labels.tsv`, and the single run's labels of the disagreements in
 `results/agreement/disagreements_checked.tsv`.
-The report ([report/main.tex](report/main.tex), compiled by `bash run_all.sh`) has the full tables, the caveats and the
-run-to-run variance.
+The [report](report/essentials_final_report.pdf) (source: [report/main.tex](report/main.tex)) has the full tables, the
+caveats and the run-to-run variance.
 
 ---
 
@@ -195,7 +195,7 @@ the leakage audit, decision D3 and the licences.
 | [REPRODUCE.md](REPRODUCE.md) | installation, the systems and their evaluation, and every command |
 | [DATA.md](DATA.md) | corpus, splits, dev set, leakage audit, decision D3, data layout and licences |
 | [notebooks/README.md](notebooks/README.md) | Kaggle and Colab launchers for the ByT5 pilot |
-| Report | The LaTeX source is [report/main.tex](report/main.tex), and `bash run_all.sh` compiles it to `REPORT.pdf` when `pdflatex` is installed. |
+| Report | The submitted PDF is [report/essentials_final_report.pdf](report/essentials_final_report.pdf). Its LaTeX source is [report/main.tex](report/main.tex), and `bash run_all.sh` compiles it to `REPORT.pdf` when `pdflatex` is installed. |
 | [LICENSE](LICENSE), [data/LICENSE.md](data/LICENSE.md) | code licence (MIT) and the licence of every data file |
 
 ---
@@ -215,8 +215,8 @@ coverage-context-convention/
 ├── tests/                   unit tests, run by run_all.sh
 ├── data/                    corpus (by_source/), Tauber and WikiPron inputs, dictionaries, class files
 ├── results/                 one folder per experiment: metrics, predictions, logs, labels
-├── report/                  main.tex, references.bib, abbrvurl.bst, the UZH logo and generated/ tables, numbers
-│                            and figures
+├── report/                  the submitted PDF, main.tex, references.bib, abbrvurl.bst, the UZH logo and generated/
+│                            tables, numbers and figures
 ├── notebooks/               Kaggle and Colab launchers for the ByT5 pilot
 ├── release/                 dataset card and licence file for the Hugging Face copy
 ├── media/figures/logos/     logos

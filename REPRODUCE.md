@@ -261,6 +261,7 @@ report/
 ├── main.tex
 ├── references.bib
 ├── abbrvurl.bst
+├── essentials_final_report.pdf
 ├── logo_uzh.pdf
 └── generated/                  tables, numbers and figures (build_report, encoder_summary, error_typing,
                                 paper_numbers)
