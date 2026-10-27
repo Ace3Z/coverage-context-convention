@@ -19,6 +19,7 @@ import re
 import sys
 import unicodedata
 from pathlib import Path
+from typing import Any
 
 from oevl.experiment import EXCLUDE_D3, LONG, SHORT, bare, build_data, key, lexicon, norm, pattern, predict
 
@@ -30,24 +31,24 @@ ARMS = {"frequency": "frequency", "word": "word", "left": "left", "bilateral": "
 TO_LONG = dict(zip(SHORT, LONG)) | dict(zip(SHORT.upper(), "ĀĒĪŌŪȲǢ"))
 
 
-def words(line):
+def words(line: str) -> list[str]:
     """The words of `line` after NFC: letter runs, joined over an inner hyphen or apostrophe (' or ’)."""
     return TOKEN.findall(unicodedata.normalize("NFC", line))
 
 
-def clean(w):  # how the corpus stores a word: no hyphens or apostrophes
+def clean(w: str) -> str:  # how the corpus stores a word: no hyphens or apostrophes
     """Return `w` without hyphens and apostrophes (' and ’), for example Gār-Dena -> GārDena."""
     return w.replace("-", "").replace("'", "").replace("’", "")
 
 
-def strip_marks(text):
+def strip_marks(text: str) -> str:
     """Replace every macron vowel in `text` (ā ē ī ō ū ȳ ǣ, either case) with the plain vowel of the same case.
 
     Only precomposed letters are mapped, so `text` should be NFC: a separate combining macron (U+0304) is kept."""
     return "".join(c if c.lower() not in LONG else (SHORT[LONG.index(c.lower())].upper() if c.isupper() else SHORT[LONG.index(c)]) for c in text)
 
 
-def apply(word, pat):
+def apply(word: str, pat: str) -> str:
     """Return `word` with a macron on its i-th vowel letter (a e i o u y æ, either case) wherever pat[i] is '1'."""
     out, i = [], 0
     for c in word:
@@ -59,7 +60,7 @@ def apply(word, pat):
     return "".join(out)
 
 
-def main():
+def main() -> None:
     """Restore macrons in the input file and print each line before and after, then a summary.
 
     Exits with a message when --gold has a different number of lines from the input or the --lexicon file is missing.
@@ -93,6 +94,7 @@ def main():
     train, _, _, _ = build_data(ROOT / "data", EXCLUDE_D3)
     lex, counts = lexicon(train, ext)
 
+    test: list[dict[str, Any]]  # token rows mix int, str, list[str] and bool values
     test, skipped = [], []
     for n, line in enumerate(lines):
         ws = [clean(w) for w in words(line)]
@@ -105,7 +107,7 @@ def main():
                          "gold_pattern": pattern(g), "scored": gold_lines is not None and n + 1 not in skipped})
     preds = predict(train, test, lex, counts, ARMS[a.model], seed=1) if test else []
 
-    by_line = {}
+    by_line: dict[int, list[dict[str, Any]]] = {}
     for r, pr in zip(test, preds):
         r["pred"] = pr
         r["known"] = bool(lex.get(r["key"]))

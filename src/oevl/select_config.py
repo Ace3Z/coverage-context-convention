@@ -10,7 +10,9 @@ Usage: python -m oevl.select_config [--runs DIR]
 import argparse
 import json
 import statistics
+from collections.abc import Iterable, Mapping
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "results" / "encoder" / "selection.json"
@@ -18,18 +20,18 @@ RULE = ("Highest mean dev lexicon-ambiguous accuracy over seeds 1-2. Configurati
         "count as tied; among them prefer fewer epochs, then keeping Zupitza, then the lower learning rate.")
 
 
-def pct(x):
+def pct(x: float | None) -> float | None:
     """A fraction as a percent rounded to two decimals, None stays None."""
     return round(100 * x, 2) if x is not None else None
 
 
-def jsonl(p):
+def jsonl(p: Path) -> list[dict[str, Any]]:
     """All records of the JSON-lines file at path p, as a list of dicts."""
     with open(p, encoding="utf8") as f:
         return [json.loads(line) for line in f]
 
 
-def read_runs(runs, shared):
+def read_runs(runs: str | Path, shared: set[str]) -> list[dict[str, Any]]:
     """One row per selection run folder, in the form of the committed "runs" list (scores in percent, two decimals).
 
     runs: the folder holding <z|noz>_lr<LR>_ep<N>/sentence_s<seed>/, each with the metrics.json and
@@ -69,7 +71,7 @@ def read_runs(runs, shared):
     return rows
 
 
-def select(rows):
+def select(rows: Iterable[Mapping[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
     """Apply RULE to the run rows: every configuration scored best first, those tied with the best, and the choice.
 
     rows: run dicts as read_runs returns them (only zupitza, lr, epochs, seed, dev_lexamb, dev_lexamb_n,
@@ -81,7 +83,7 @@ def select(rows):
     collapses (the number of runs flagged collapsed) are reported but do not enter the rule.
     Returns (scored, tied, choice), where choice is one of the dicts in tied and scored.
     """
-    configs = {}
+    configs: dict[tuple[bool, float, int], list[Mapping[str, Any]]] = {}
     for r in rows:
         configs.setdefault((r["zupitza"], r["lr"], r["epochs"]), []).append(r)
     scored = [{"zupitza": z, "lr": lr, "epochs": ep, "seeds": [x["seed"] for x in rs],
@@ -95,7 +97,7 @@ def select(rows):
     return scored, tied, choice
 
 
-def logistic(folder, shared=None):
+def logistic(folder: str, shared: set[str] | None = None) -> dict[str, dict[str, Any]]:
     """Accuracy of the logistic baselines on john_ws from results/<folder>/metrics.json, in percent.
 
     Returns a dict keyed by population: "lexicon_ambiguous", "accuracy" (all john_ws tokens) and "class_B". Each holds
@@ -107,9 +109,9 @@ def logistic(folder, shared=None):
     per arm the mean and sd over seeds 1 to 3, without per-seed values). The key names 7639 whatever n is.
     """
     m = json.loads((ROOT / "results" / folder / "metrics.json").read_text(encoding="utf8"))["john_ws"]
-    res = {}
+    res: dict[str, dict[str, Any]] = {}
     for pop in ("lexicon_ambiguous", "accuracy", "class_B"):
-        def get(k):
+        def get(k: str) -> dict[str, Any]:
             """The metrics entry k for this population ("accuracy" is the entry's top level, over all tokens)."""
             return m[k] if pop == "accuracy" else m[k][pop]
         res[pop] = {"n": get("frequency")["n"], "frequency": pct(get("frequency")["accuracy"]),
@@ -122,7 +124,7 @@ def logistic(folder, shared=None):
         ps = [d for d in jsonl(ROOT / "results" / folder / "john_ws_predictions.jsonl") if d["id"] in shared]
         assert len(ps) == len(shared)
 
-        def a(k):
+        def a(k: str) -> float:
             """Percent of the shared tokens whose prediction column k equals the gold pattern."""
             return 100 * sum(d[k] == d["gold_pattern"] for d in ps) / len(ps)
         res["lexicon_ambiguous_shared_7639"] = {
@@ -133,7 +135,7 @@ def logistic(folder, shared=None):
     return res
 
 
-def main():
+def main() -> None:
     """Write results/encoder/selection.json from the selection runs and the logistic D3 comparison, print the choice.
 
     Reads the lexicon-ambiguous john_ws ids of results/wikipron and results/wikipron_with_zupitza and asserts that the

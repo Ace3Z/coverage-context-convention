@@ -31,7 +31,9 @@ import gzip
 import json
 import re
 import statistics
+from collections.abc import Collection
 from pathlib import Path
+from typing import Any
 
 from oevl.experiment import TESTS, build_data, flags, heldout, lexicon, mcnemar
 from oevl.stats import bootstrap_diff
@@ -54,17 +56,17 @@ REPLICATE_NOTE = ("local2 and local5 inputs never exceed 103 bytes (local2 57), 
 BLOCKS = ("local_replicates", "replicate_spread", "identical_runs")  # summary.json keys that are not configs
 
 
-def configs(summary):
+def configs(summary: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
     """The per-config entries of a summary, leaving out the BLOCKS keys."""
     return {k: v for k, v in summary.items() if k not in BLOCKS}
 
 
-def arm_order(arm):
+def arm_order(arm: str) -> int:
     """Sort key for an arm name: word, left, sentence, then localK in order of K."""
     return ("word", "left", "sentence").index(arm) if arm in ("word", "left", "sentence") else 3 + int(arm[5:])
 
 
-def in_pop(t, cfg, pop):
+def in_pop(t: dict[str, str], cfg: str, pop: str) -> bool:
     """Whether table row t belongs to population pop under config cfg.
 
     accuracy takes every token, class_X the tokens whose <cfg>:class cell is X (empty for tokens that are not
@@ -74,12 +76,13 @@ def in_pop(t, cfg, pop):
     return t[f"{cfg}:class"] == pop[6:] if pop.startswith("class_") else t[f"{cfg}:{pop}"] == "1"
 
 
-def acc(table, ix, col):
+def acc(table: list[dict[str, str]], ix: list[int], col: str) -> float | None:
     """Share of the rows ix of table whose column col equals the gold pattern, or None when ix is empty."""
     return sum(table[i][col] == table[i]["gold"] for i in ix) / len(ix) if ix else None
 
 
-def collect(runs):
+def collect(runs: str | Path) -> tuple[dict[str, list[dict[str, str]]],
+                                       dict[str, dict[tuple[str, int], dict[str, Any]]]]:
     """Read every run under the folder runs into per-token tables and run records.
 
     runs holds one folder per config with <arm>_s<seed> run folders inside (other names are skipped). Returns
@@ -90,6 +93,8 @@ def collect(runs):
     set. metrics maps each config to {(arm, seed): parsed metrics.json}. Exits with an error if a run has no
     metrics.json (an unfinished run) or one for another arm or seed, if its tokens or a config's prior, flags or
     classes differ from the other runs, or if the runs of a config differ in SETTINGS."""
+    tables: dict[str, list[dict[str, str]]]
+    metrics: dict[str, dict[tuple[str, int], dict[str, Any]]]
     tables, metrics = {}, {}
     for cfg in sorted(p for p in Path(runs).iterdir() if p.is_dir()):
         for folder in sorted(cfg.iterdir(), key=lambda p: p.name):
@@ -125,11 +130,11 @@ def collect(runs):
     return tables, metrics
 
 
-def read_tables(out):
+def read_tables(out: str | Path) -> dict[str, list[dict[str, str]]]:
     """The <set>_predictions.tsv.gz tables main() wrote to folder out, back as collect() built them.
 
     Returns {set: rows} with every cell a string, leaving out a set with no table file."""
-    tables = {}
+    tables: dict[str, list[dict[str, str]]] = {}
     for s in TESTS:
         p = Path(out) / f"{s}_predictions.tsv.gz"
         if p.exists():
@@ -139,14 +144,14 @@ def read_tables(out):
     return tables
 
 
-def runs_from_summary(summary):
+def runs_from_summary(summary: dict[str, dict[str, Any]]) -> dict[str, dict[tuple[str, int], dict[str, Any]]]:
     """Rebuild each run's record from summary.json in the shape collect() reads from metrics.json.
 
     Returns {config: {(arm, seed): record}}. Only the fields minority() and summarise() read are rebuilt: the
     settings (minority() needs exclude_train), the seed, the collapse flag, the losses and, per set,
     most_long_share, prior_agreement and each population's accuracy.
     The per-seed accuracies come along, so summarise() still checks the tables against them."""
-    metrics = {}
+    metrics: dict[str, dict[tuple[str, int], dict[str, Any]]] = {}
     for cfg, C in configs(summary).items():
         for a, A in C["arms"].items():
             for i, sd in enumerate(A["seeds"]):
@@ -157,7 +162,8 @@ def runs_from_summary(summary):
     return metrics
 
 
-def minority(tables, metrics):
+def minority(tables: dict[str, list[dict[str, str]]],
+             metrics: dict[str, dict[tuple[str, int], dict[str, Any]]]) -> set[str]:
     """Recompute each config's minority_reading column with experiment.flags on the data, in the tables in memory.
 
     The training counts come from build_data(ROOT / "data") without the config's exclude_train works, and each
@@ -180,7 +186,8 @@ def minority(tables, metrics):
     return stale
 
 
-def summarise(tables, metrics, stale=()):
+def summarise(tables: dict[str, list[dict[str, str]]], metrics: dict[str, dict[tuple[str, int], dict[str, Any]]],
+              stale: Collection[str] = ()) -> dict[str, dict[str, Any]]:
     """Pool every config's runs over seeds and pair the systems, from the token tables.
 
     tables: {set: rows} as collect() builds them. metrics: {config: {(arm, seed): record}}. stale: configs whose
@@ -193,7 +200,8 @@ def summarise(tables, metrics, stale=()):
     (diff, lo, hi), McNemar on each seed both systems ran, and how many of those seeds give p < 0.05. Sets without
     the config's columns are skipped. Exits with an error if an accuracy from the tables differs from the run's own
     by more than 1e-6."""
-    out = {}
+    out: dict[str, dict[str, Any]] = {}
+    res: Any  # reused below for two JSON blocks of different shape
     for cfg, runs in metrics.items():
         arms = sorted({a for a, _ in runs}, key=arm_order)
         seeds = {a: sorted(s for b, s in runs if b == a) for a in arms}
@@ -230,11 +238,11 @@ def summarise(tables, metrics, stale=()):
                 ix = idx[p]
                 gold = [table[i]["gold"] for i in ix]
 
-                def col(system, sd):
+                def col(system: str, sd: int | None) -> list[str]:
                     """The patterns of the population's tokens in run (system, sd), or in the prior for frequency."""
                     return [table[i][f"{cfg}:frequency" if system == "frequency" else f"{cfg}/{system}_s{sd}"] for i in ix]
 
-                def correct(system):
+                def correct(system: str) -> list[float]:
                     """Each population token's correctness, averaged over the system's seeds (the prior is one run)."""
                     cols = [col(system, sd) for sd in seeds.get(system, [None])]
                     return [sum(c[j] == g for c in cols) / len(cols) for j, g in enumerate(gold)]
@@ -251,7 +259,7 @@ def summarise(tables, metrics, stale=()):
     return out
 
 
-def replicates(tables, summary):
+def replicates(tables: dict[str, list[dict[str, str]]], summary: dict[str, dict[str, Any]]) -> None:
     """Label, pool and spread the REPLICATES arms over configs that differ only in max_bytes, adding to summary.
 
     summary is summarise()'s output. Configs are grouped by their settings without max_bytes, and an arm of
@@ -265,7 +273,7 @@ def replicates(tables, summary):
     replicates in different groups, or if the group's configs differ in the prior or the populations. An arm with
     replicates in more than one group is pooled over the last of them only, and the caps are not checked against
     the arm's longest input (see REPLICATES)."""
-    groups = {}
+    groups: dict[str, list[str]] = {}
     for cfg, C in summary.items():
         groups.setdefault(json.dumps({k: v for k, v in C["settings"].items() if k != "max_bytes"}), []).append(cfg)
     found = {a: g for g in groups.values() for a in REPLICATES if sum(a in summary[c]["arms"] for c in g) > 1}
@@ -274,8 +282,10 @@ def replicates(tables, summary):
     group = next(iter(found.values()))
     if any(g != group for g in found.values()):  # ponytail: the grid has one group. Key the blocks by group if more
         raise SystemExit("replicate arms in more than one group of configs")
+    pooled: dict[str, Any]
+    spread: dict[str, Any]
     pooled, spread = {"note": REPLICATE_NOTE, "arms": {}, "paired": {}}, {}
-    cols = {}
+    cols: dict[str, list[str]] = {}
     for a in sorted(found, key=arm_order):
         cfgs = [c for c in group if a in summary[c]["arms"]]
         for c in cfgs:
@@ -312,7 +322,7 @@ def replicates(tables, summary):
         for p in PAIRED_POPS:
             ix = [i for i, t in enumerate(table) if in_pop(t, c0, p)]
 
-            def correct(cs):
+            def correct(cs: list[str]) -> list[float]:
                 """Each population token's correctness, averaged over the table columns cs (runs or the prior)."""
                 return [sum(table[i][c] == table[i]["gold"] for c in cs) / len(cs) for i in ix]
 
@@ -326,20 +336,20 @@ def replicates(tables, summary):
     summary["local_replicates"], summary["replicate_spread"] = pooled, spread
 
 
-def identical_runs(tables, summary):
+def identical_runs(tables: dict[str, list[dict[str, str]]], summary: dict[str, dict[str, Any]]) -> None:
     """Group the runs whose predictions agree on every token of every set, adding summary["identical_runs"].
 
     The runs are the <config>/<arm>_s<seed> columns of the first table. The entry gives their number ("runs"), the
     number of distinct prediction sets ("distinct") and the groups of two or more identical runs ("groups")."""
     runs = [k for k in next(iter(tables.values()))[0] if "/" in k]
-    groups = {}
+    groups: dict[tuple[str | None, ...], list[str]] = {}
     for k in runs:
         groups.setdefault(tuple(t.get(k) for table in tables.values() for t in table), []).append(k)
     summary["identical_runs"] = {"runs": len(runs), "distinct": len(groups),
                                  "groups": [g for g in groups.values() if len(g) > 1]}
 
 
-def pct(x, signed=False):
+def pct(x: float | None, signed: bool = False) -> str:
     """A fraction as a percentage with two decimals, with a sign when signed, or "" for None."""
     return "" if x is None else f"{100 * x:+.2f}" if signed else f"{100 * x:.2f}"
 
@@ -351,7 +361,7 @@ POP_TAG = {"accuracy": "All", "lexicon_ambiguous": "Lex", "attested_ambiguous": 
 NAMES = {"frequency": "Frequency", "word": "Word", "left": "Left", "sentence": "Bilateral"}
 
 
-def tag(name):
+def tag(name: str) -> str:
     """A config or system name as letters for a LaTeX macro name: cap128 -> CapOneTwoEight, local2 -> LocalTwo.
 
     sentence becomes Bil and frequency Freq, as in numbers.tex. Any other name is title-cased, its digits are spelt
@@ -360,7 +370,7 @@ def tag(name):
                                                                         if c.isalnum())
 
 
-def full_caps(summary):
+def full_caps(summary: dict[str, dict[str, Any]]) -> dict[str, str]:
     """Map each replicate arm to its full cap, the config of identical_inputs_at with the largest max_bytes.
 
     That is the only config whose table rows and per-config numbers show the arm."""
@@ -368,7 +378,7 @@ def full_caps(summary):
             for C in configs(summary).values() for a, A in C["arms"].items() if "identical_inputs_at" in A}
 
 
-def numbers(summary):
+def numbers(summary: dict[str, dict[str, Any]]) -> str:
     """The text of numbers_encoder.tex: a do-not-edit comment, then one LaTeX macro N<key> per reported number, sorted.
 
     Per config (Enc<Config>...): the seeds and collapsed runs of each arm, then per set and population the n, the
@@ -380,9 +390,9 @@ def numbers(summary):
     cap, and EncRunsDistinct the number of distinct prediction sets. Values are percentages with two decimals
     (signed for differences), empty for None, n has thousands separators and counts are plain integers. Exits with
     an error if a macro would be defined twice."""
-    num = {}
+    num: dict[str, str] = {}
 
-    def put(k, v):
+    def put(k: str, v: str) -> None:
         """Record macro k with value v, exiting with an error if k is already set."""
         if k in num:
             raise SystemExit(f"macro {k} defined twice")
@@ -448,7 +458,7 @@ def numbers(summary):
            "do not edit\n" + "".join(f"\\newcommand{{\\N{k}}}{{{v}}}\n" for k, v in sorted(num.items()))
 
 
-def table_tex(summary):
+def table_tex(summary: dict[str, dict[str, Any]]) -> str:
     """The LaTeX tabular of tab_encoder.tex: per config the prior and each arm on the two test sets.
 
     Columns: cap (the config name without "cap"), system, runs, collapsed runs, then for the Soliloquies and Beowulf
@@ -463,7 +473,7 @@ def table_tex(summary):
              "Cap & System & Runs & Collapsed & " + " & ".join(lab for _ in sets for _, lab in pops) + " \\\\",
              "\\midrule"]
 
-    def row(a, A):
+    def row(a: str, A: dict[str, Any]) -> str:
         """The row of arm a (its summary entry A), with an empty cap cell."""
         cells = []
         for s, _ in sets:
@@ -484,7 +494,7 @@ def table_tex(summary):
     return "\n".join(lines + ["\\bottomrule", "\\end{tabular}"]) + "\n"
 
 
-def main():
+def main() -> None:
     """Command line entry point: summarise the runs or the committed tables and write the outputs.
 
     Exactly one of --runs and --from-tsv must be given. With --runs it reads the runs with collect() and writes the

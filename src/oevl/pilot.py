@@ -33,7 +33,7 @@ ARMS = {"sentence": "P1", "word": "P2", "left": "P3", "local2": "P4", "local5": 
 TESTS = ("soliloquies", "tauber_beowulf")
 
 
-def env():
+def env() -> dict[str, str]:
     """The environment for the child processes: a copy of os.environ with one OpenBLAS, OpenMP and MKL thread.
 
     It also turns tokenizer parallelism off and puts <repo>/src first on PYTHONPATH, keeping an existing PYTHONPATH
@@ -44,13 +44,13 @@ def env():
     return e
 
 
-def required_transformers():
+def required_transformers() -> str | None:
     """The transformers version pinned by a transformers==X line in requirements.txt, or None if there is none."""
     m = re.search(r"^transformers==(\S+)", (ROOT / "requirements.txt").read_text(), re.M)
     return m.group(1) if m else None
 
 
-def preflight(a):
+def preflight(a: argparse.Namespace) -> None:
     """Stop before any training if this machine cannot run the pilot.
 
     a: the parsed arguments of main(). Prints the Python, torch and transformers versions, and on a CUDA machine the
@@ -80,7 +80,7 @@ def preflight(a):
         del m
 
 
-def smoke_test(out):
+def smoke_test(out: Path) -> None:
     """Tiny random model, word arm only: checks training and prediction end to end. Not a GPU memory test.
 
     Runs oevl.encoder_experiment --tiny --epochs 1 --arms word in a child process that writes into out (main() passes
@@ -102,7 +102,7 @@ def smoke_test(out):
     print("SMOKE TEST PASS", flush=True)
 
 
-def pack(base):
+def pack(base: Path) -> Path:
     """Zip every file under base into <base>.zip next to it and return the archive's path.
 
     Members are stored relative to base.parent, so their names start with base's folder name, which restore() relies
@@ -119,7 +119,7 @@ def pack(base):
     return archive
 
 
-def restore(src, base):
+def restore(src: Path, base: Path) -> list[str]:
     """Copy finished arms (folders with COMPLETE.json) from an earlier <out>.zip or extracted <out>/ folder into base.
 
     src: a folder with the arm folders (P1 to P5) directly inside it, or a zip as pack() writes it. Any src that is
@@ -152,7 +152,7 @@ def restore(src, base):
     return copied
 
 
-def validate(out, arm, a):
+def validate(out: Path, arm: str, a: argparse.Namespace) -> str:
     """Check one arm's outputs in out against the run's settings and results/wikipron, and return its subset checksum.
 
     These are the checks the notebooks made after every arm. metrics.json must record the same epochs, max_bytes,
@@ -189,7 +189,7 @@ def validate(out, arm, a):
     return d["train_subset_sha256"]
 
 
-def run_arm(out, arm, a):
+def run_arm(out: Path, arm: str, a: argparse.Namespace) -> int:
     """Train and score one arm with oevl.encoder_experiment in a child process that writes its outputs into out.
 
     Passes the pilot settings from a, --exclude-train "" so the arm trains on all five works, and --tiny when set.
@@ -210,7 +210,7 @@ def run_arm(out, arm, a):
         return p.wait()
 
 
-def main():
+def main() -> None:
     """Run the pilot from the command line: preflight, smoke test, restore, then each requested arm in order.
 
     An arm whose folder already holds COMPLETE.json (from an earlier run into this --out or from --restore) is

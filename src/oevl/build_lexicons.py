@@ -19,6 +19,7 @@ import json
 import re
 import unicodedata
 import urllib.request
+from collections.abc import Container, Iterable, Mapping
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -37,7 +38,7 @@ TEACHING_MARKS = str.maketrans("ċġęǫ", "cgeo")  # palatal dots and hooks, on
 SKIP_TAGS = {"table-tags", "inflection-template", "class"}  # kaikki table metadata, not word forms
 
 
-def clean(form, acute=False):
+def clean(form: str, acute: bool = False) -> str | None:
     """Return a dictionary form lower-cased and normalised like the corpus, or None unless it is one Old English word.
 
     The form is NFC-normalised, lower-cased and stripped. A form that starts or ends with a hyphen (an affix or a
@@ -57,7 +58,7 @@ def clean(form, acute=False):
     return s if WORD.fullmatch(s) else None
 
 
-def clarkhall(path):
+def clarkhall(path: Path) -> set[str]:
     """Return the set of cleaned forms in every <tei:orth> of the Clark Hall TEI file at path (a Path).
 
     These are the headwords, their full variant spellings and the words of collocations, each on its own (tō and ǣfenes
@@ -72,7 +73,7 @@ def clarkhall(path):
     return {w for w in (clean(m) for m in orths) if w}
 
 
-def wiktionary(path):
+def wiktionary(path: str | Path) -> set[str]:
     """Return the set of cleaned forms of the Old English entries in the kaikki.org JSONL file at path.
 
     Each line is one entry. An entry whose lang_code is set and is not "ang" is skipped. Every item of the entry's
@@ -93,7 +94,7 @@ def wiktionary(path):
     return out
 
 
-def bosworth_toller(path):
+def bosworth_toller(path: str | Path) -> set[str]:
     """Return the set of cleaned headwords of the Bosworth-Toller CSV dump at path, with acute accents read as length.
 
     The file is semicolon-separated, with a header row and the columns id, headword and body (the entry's XML).
@@ -113,7 +114,7 @@ def bosworth_toller(path):
     return out
 
 
-def write(path, forms, lists=None):
+def write(path: str | Path, forms: Iterable[str], lists: Mapping[str, Container[str]] | None = None) -> None:
     """Write forms, sorted by code point, to the CSV at path under a marked_form header, replacing the file.
 
     lists: optional dict mapping each source name to its set of forms. When it is given and not empty, a sources
@@ -125,13 +126,13 @@ def write(path, forms, lists=None):
         w.writerows([x] + ([" ".join(n for n in lists if x in lists[n])] if lists else []) for x in sorted(forms))
 
 
-def read(path):
+def read(path: str | Path) -> set[str]:
     """Return the set of values in the marked_form column of the CSV at path."""
     with open(path, encoding="utf8") as f:
         return {r["marked_form"] for r in csv.DictReader(f)}
 
 
-def main():
+def main() -> None:
     """Build the three dictionaries from their sources and write them, the unions and the provenance file.
 
     With --unions-only, read data/lex_clarkhall.csv, data/lex_wiktionary.csv and data/lex_bt.csv and only rewrite
@@ -148,6 +149,7 @@ def main():
         return
     raw = Path(a.raw)
     raw.mkdir(parents=True, exist_ok=True)
+    provenance: dict[str, dict[str, str | int]]
     provenance, lists = {}, {}
     for name, (url, fname, licence) in SOURCES.items():
         path = raw / fname
@@ -167,7 +169,7 @@ def main():
     (ROOT / "data/lexicons_provenance.json").write_text(json.dumps(provenance, indent=2), encoding="utf8")
 
 
-def write_unions(lists):
+def write_unions(lists: Mapping[str, set[str]]) -> None:
     """Write the union of the three dictionaries to data/lex_proposal.csv, and with WikiPron to data/lex_all.csv.
 
     lists: dict mapping source name to set of forms, with at least the keys clarkhall, wiktionary and bt. Each key

@@ -9,7 +9,9 @@ Usage: python -m oevl.check_expected
 """
 import json
 import sys
+from collections.abc import Mapping
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 PROP_TOL, P_TOL = 0.00005, 0.0005
@@ -252,7 +254,7 @@ AGREEMENT_PAIRS = {
 }
 
 
-def acc(d, pop):
+def acc(d: Mapping[str, Any], pop: str) -> float | None:
     """Return an arm's accuracy on a population: overall for "accuracy", else d[pop]["accuracy"] (None if empty).
 
     d is one arm's entry for a test in metrics.json, as experiment.evaluate writes it.
@@ -270,14 +272,14 @@ def main() -> int:
     """
     errors, checked = [], 0
 
-    def close(label, got, want, tol):
+    def close(label: str, got: float | None, want: float, tol: float) -> None:
         """Count one check and record an error if got is None or differs from want by more than tol."""
         nonlocal checked
         checked += 1
         if got is None or abs(got - want) > tol:
             errors.append(f"{label}: got {got}, expected {want}")
 
-    def equal(label, got, want):
+    def equal(label: str, got: int, want: int) -> None:
         """Count one check and record an error unless got equals want."""
         nonlocal checked
         checked += 1
@@ -306,6 +308,7 @@ def main() -> int:
             for arm, want in (("word", wo), ("left", le), ("sentence", bi)):
                 close(f"{tag}/{arm}_mean", d["seed_summary"][arm][pop]["mean"], want, PROP_TOL)
 
+    pairs: dict[str, Any]  # MCNEMAR pairs here, the agreement file's pairs below
     for (folder, test), pairs in MCNEMAR.items():
         d = metrics.get(folder, {}).get(test, {}).get("mcnemar_seed1", {})
         for pair, (b01, b10, p) in pairs.items():

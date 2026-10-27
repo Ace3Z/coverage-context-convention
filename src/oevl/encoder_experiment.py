@@ -20,9 +20,16 @@ import os
 import random
 import re
 import time
+from collections.abc import Collection, Iterable, Mapping
 from pathlib import Path
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from oevl.experiment import EXCLUDE_D3, TESTS, TRAIN, build_data, flags, heldout, lexicon, load_classes, predict, zeros
+
+if TYPE_CHECKING:
+    from transformers import BatchEncoding
+
+    T = TypeVar("T")
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -30,7 +37,7 @@ ARMS = ("word", "left", "sentence")
 MARK_L, MARK_R = "[[", "]]"
 
 
-def make_input(r, arm, max_bytes):
+def make_input(r: Mapping[str, Any], arm: str, max_bytes: int) -> str:
     """Text the encoder sees for token r, lower-cased: the bare word alone, or in context with the target in [[ ]].
 
     r needs "sentence" (the bare tokens) and "index" (the target's position). arm is "word" (the target alone, no
@@ -62,7 +69,7 @@ def make_input(r, arm, max_bytes):
     return " ".join(x for x in (l_txt, core, r_txt) if x)
 
 
-def limit(examples, n):
+def limit(examples: "list[T]", n: int | None) -> "list[T]":
     """A fixed subset of n examples, kept in their order in examples. It depends only on n and the examples list,
     never on --seed, --arms or --max-bytes, so every arm of a pilot trains on the same examples. With n None or at
     least len(examples) the list itself is returned."""
@@ -72,7 +79,7 @@ def limit(examples, n):
     return [examples[j] for j in keep]
 
 
-def candidates(r, lex):
+def candidates(r: Mapping[str, Any], lex: Mapping[str, Collection[str]]) -> tuple[list[str], str]:
     """The sorted lexicon patterns of r's key with one digit per vowel of the word, and the all-short fallback.
 
     Returns (candidates, fallback). Only the vowel count of r["gold"] is read, never its macrons, and it equals the bare
@@ -82,7 +89,9 @@ def candidates(r, lex):
     return sorted(p for p in lex.get(r["key"], set()) if len(p) == len(fallback)), fallback
 
 
-def score(rows, preds, prior, lex, counts, cls):
+def score(rows: Iterable[Mapping[str, Any]], preds: Iterable[str], prior: Iterable[str],
+          lex: Mapping[str, Collection[str]], counts: Mapping[str, Mapping[str, int]],
+          cls: Mapping[str, str]) -> dict[str, dict[str, int | float | None] | float | None]:
     """Accuracy per population (the classes split the lexicon-ambiguous tokens, as in experiment.evaluate), plus two
     checks for a collapsed run on the lexicon-ambiguous tokens: the share whose pick has the most long marks among
     its candidates, and the share whose pick equals the frequency prior.
@@ -93,6 +102,7 @@ def score(rows, preds, prior, lex, counts, cls):
     each accuracy a fraction rounded to six places or None for an empty population, plus most_long_share and
     prior_agreement (None without lexicon-ambiguous tokens). A pick tied for the most long marks counts as most long,
     and a token without candidates of the right length has its pick compared with itself, so it counts too."""
+    pops: dict[str, list[bool]]
     pops = {k: [] for k in ("accuracy", "lexicon_ambiguous", "attested_ambiguous", "minority_reading",
                             "class_A", "class_B", "class_C", "class_unlisted")}
     most_long, same = [], []
@@ -108,13 +118,14 @@ def score(rows, preds, prior, lex, counts, cls):
             opts = candidates(r, lex)[0] or [p]
             most_long.append(p.count("1") == max(o.count("1") for o in opts))
             same.append(p == f)
+    out: dict[str, dict[str, int | float | None] | float | None]
     out = {k: {"n": len(v), "accuracy": round(sum(v) / len(v), 6) if v else None} for k, v in pops.items()}
     out["most_long_share"] = round(sum(most_long) / len(most_long), 6) if most_long else None
     out["prior_agreement"] = round(sum(same) / len(same), 6) if same else None
     return out
 
 
-def main():
+def main() -> None:
     """Fine-tune and score a fresh model for each arm, then write metrics.json and one predictions file per test set.
 
     Reads the training works under data/by_source minus --exclude-train (build_data also loads the soliloquies and
@@ -189,7 +200,7 @@ def main():
         tok = AutoTokenizer.from_pretrained(a.model)
     print(f"device={device} model={'tiny-random' if a.tiny else a.model} train_examples={len(examples)}", flush=True)
 
-    def enc(texts, n):
+    def enc(texts: list[str], n: int) -> "BatchEncoding":
         """Tokenise texts as one padded batch on the device, each at most n tokens (ByT5: one per byte, plus EOS)."""
         return tok(texts, padding=True, truncation=True, max_length=n, return_tensors="pt").to(device)
 
@@ -199,7 +210,7 @@ def main():
                "train_examples": len(examples), "train_limit": a.train_limit,
                "train_subset_sha256": hashlib.sha256("\n".join(r["id"] for r in examples).encode()).hexdigest(),
                "arms": {}}
-    all_preds = {t: {r["id"]: {} for r in rows} for t, rows in tests.items()}
+    all_preds: dict[str, dict[str, dict[str, str]]] = {t: {r["id"]: {} for r in rows} for t, rows in tests.items()}
     for arm in a.arms.split(","):
         torch.manual_seed(a.seed)
         model = (T5ForConditionalGeneration(cfg) if a.tiny else T5ForConditionalGeneration.from_pretrained(a.model)).to(device)
@@ -239,7 +250,7 @@ def main():
                        "final_train_loss": epoch_losses[-1]}
         for test, rows in tests.items():
             pairs = []  # (row index, candidate) for tokens the model must decide
-            preds = []
+            preds: list[str | None] = []
             for k, r in enumerate(rows):
                 opts, fallback = candidates(r, lex)
                 if len(opts) >= 2:
@@ -247,7 +258,7 @@ def main():
                     preds.append(None)
                 else:
                     preds.append(opts[0] if opts else fallback)
-            scores = {}
+            scores: dict[int, list[tuple[float, str]]] = {}
             with torch.no_grad():
                 for b in range(0, len(pairs), 4 * a.micro):
                     chunk = pairs[b:b + 4 * a.micro]

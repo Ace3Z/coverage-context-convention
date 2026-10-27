@@ -22,7 +22,9 @@ import csv
 import difflib
 import json
 import random
+from collections.abc import Callable, Iterable, Mapping, Sequence
 from pathlib import Path
+from typing import Any
 
 from oevl.experiment import EXCLUDE_D3, build_data, flags, key, lexicon, load_tauber, predict
 
@@ -37,7 +39,7 @@ GATE_NOTE = ("Applied after the fact: the rule was not written down before the a
              "These fields say which side of the bar each pair lands on. They do not decide the outcome.")
 
 
-def align(a, b):
+def align(a: Sequence[dict[str, Any]], b: Sequence[dict[str, Any]]) -> list[tuple[dict[str, Any], dict[str, Any]]]:
     """Token pairs (row of a, row of b) from the equal runs of the two key sequences.
 
     a, b: token rows of two editions in text order (dicts with a key field, as made by experiment.tokens).
@@ -47,18 +49,18 @@ def align(a, b):
     return [p for op, i, j, k, m in sm.get_opcodes() if op == "equal" for p in zip(a[i:j], b[k:m])]
 
 
-def rate(x, y):
+def rate(x: Sequence[str], y: Sequence[str]) -> float | None:
     """Share of positions where the two equal-length lists hold the same value, or None when x is empty."""
     return sum(p == q for p, q in zip(x, y)) / len(x) if x else None
 
 
-def kappa(x, y):
+def kappa(x: list[str], y: list[str]) -> float | None:
     """Cohen's kappa of two equal-length label lists, or None when they are empty or hold only one label in all."""
     from sklearn.metrics import cohen_kappa_score
     return float(cohen_kappa_score(x, y)) if x and len(set(x + y)) > 1 else None
 
 
-def classes(path):
+def classes(path: str | Path) -> dict[str, str]:
     """skeleton -> A, B or C from the class file (LLM labels, manually checked), or empty when the file is absent.
 
     Skeletons are normalised with experiment.key. The first letter of the label, upper-cased, is the class, and rows
@@ -76,7 +78,9 @@ def classes(path):
     return {key(r["skeleton"]): r[col].strip()[:1].upper() for r in rows if r[col].strip()[:1].upper() in ("A", "B", "C")}
 
 
-def compare(a, b, na, nb, lex, counts, cls):
+def compare(a: Sequence[dict[str, Any]], b: Sequence[dict[str, Any]], na: str, nb: str,
+            lex: Mapping[str, Mapping[str, set[str]]], counts: collections.defaultdict[str, collections.Counter[str]],
+            cls: Mapping[str, str]) -> tuple[list[tuple[dict[str, Any], dict[str, Any]]], dict[str, Any]]:
     """Aligned pairs and, per population, n, raw agreement, kappa and the prior's accuracy against each side.
 
     a, b: token rows of two editions. na, nb: their short names, used in the result keys. lex, counts: the lexicon and
@@ -92,10 +96,12 @@ def compare(a, b, na, nb, lex, counts, cls):
     empty population, and cohen_kappa also when the population holds a single pattern."""
     pairs = align(a, b)
     prior = dict(zip((x["id"] for x, _ in pairs), predict([], [x for x, _ in pairs], lex, counts, "frequency")))
+    pops: dict[str, Callable[..., bool]]  # called with one token row; the class_ lambdas also take a defaulted c
     pops = {"all": lambda r: True,
             "lexicon_ambiguous": lambda r: flags(r, lex, counts)["lexicon_ambiguous"],
             "attested_ambiguous": lambda r: flags(r, lex, counts)["attested_ambiguous"]}
     pops.update({"class_" + c: (lambda r, c=c: cls.get(r["key"]) == c) for c in ("ABC" if cls else "")})
+    res: dict[str, Any]  # JSON: counts, rates and one dict per population
     res = {"aligned": len(pairs), f"{na}_total": len(a), f"{nb}_total": len(b),
            f"alignment_rate_{na}": len(pairs) / len(a), f"alignment_rate_{nb}": len(pairs) / len(b)}
     for pop, keep in pops.items():
@@ -106,7 +112,7 @@ def compare(a, b, na, nb, lex, counts, cls):
     return pairs, res
 
 
-def gate(res, na, nb):
+def gate(res: Mapping[str, Any], na: str, nb: str) -> dict[str, dict[str, int | float | bool]]:
     """Ceiling, floor and gap of one editor pair on the two ambiguous populations, the floor taken against each editor.
 
     res is the result dict of compare() and na, nb are the pair's names. The populations are lexicon_ambiguous and
@@ -125,7 +131,7 @@ def gate(res, na, nb):
     return out
 
 
-def context(rows, i, w=4):
+def context(rows: Sequence[dict[str, Any]], i: int, w: int = 4) -> str:
     """The marked forms of rows i - w to i + w joined by spaces, row i in square brackets.
 
     rows: one edition's token rows in text order, i: the index of the focal row in rows, w: tokens on each side.
@@ -133,7 +139,9 @@ def context(rows, i, w=4):
     return " ".join(f"[{r['gold']}]" if j == i else r["gold"] for j, r in enumerate(rows[max(0, i - w):i + w + 1], max(0, i - w)))
 
 
-def disagreements(pairs, a, b, na, nb, lex, counts):
+def disagreements(pairs: Iterable[tuple[dict[str, Any], dict[str, Any]]], a: Sequence[dict[str, Any]],
+                  b: Sequence[dict[str, Any]], na: str, nb: str, lex: Mapping[str, Mapping[str, set[str]]],
+                  counts: Mapping[str, collections.Counter[str]]) -> list[dict[str, str | int]]:
     """One row for disagreements.tsv per aligned pair whose patterns differ, in alignment order.
 
     pairs: aligned pairs from compare(). a, b: the full editions, for each token's context. na, nb: names for the pair
@@ -148,12 +156,12 @@ def disagreements(pairs, a, b, na, nb, lex, counts):
             for x, y in pairs if x["gold_pattern"] != y["gold_pattern"]]
 
 
-def sample(rows, n=100, seed=1):
+def sample(rows: Sequence[Mapping[str, str | int]], n: int = 100, seed: int = 1) -> list[Mapping[str, str | int]]:
     """A seeded random sample of n rows (all of them, shuffled, when fewer), which also depends on the row order."""
     return random.Random(seed).sample(rows, min(n, len(rows)))
 
 
-def hand_check(path, rows):
+def hand_check(path: Path, rows: Sequence[Mapping[str, str | int]]) -> dict[str, Any]:
     """Label counts of the labelled sample, or a stale note when it no longer matches the current disagreements.
 
     path: a Path to the labelled TSV, which needs at least the columns a_id, b_id, label and labelled_by. rows: the
@@ -169,7 +177,7 @@ def hand_check(path, rows):
             "labelled_by": sorted({r["labelled_by"] for r in done})}
 
 
-def main():
+def main() -> None:
     """Score the three editor pairs, write results/agreement/metrics.json and disagreements.tsv, and print a summary.
 
     Loads the training set and the Harrison and Sharp and Wyatt editions with experiment.build_data on data/ without
@@ -183,6 +191,7 @@ def main():
     lex, counts = lexicon(train, str(ROOT / "data/lex_wikipron.csv"))
     eds = {"hs": hs, "wyatt": wy, "tauber": load_tauber(ROOT / "data/brunetti-length.txt")}
     cls = classes(ROOT / "data/ambiguity_classes.csv")
+    metrics: dict[str, Any]  # JSON: strings and nested dicts
     metrics = {"editions": {"hs": "Harrison and Sharp 1883", "wyatt": "Wyatt 1894", "tauber": "Tauber gold (Klaeber 1922 via Perseus)"},
                "lexicon": "training forms without zupitza_grammar (decision D3) + data/lex_wikipron.csv, as results/wikipron",
                "classes": "data/ambiguity_classes.csv" if cls else "skipped: data/ambiguity_classes.csv not found",

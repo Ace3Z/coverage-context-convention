@@ -21,12 +21,17 @@ import gzip
 import json
 import random
 import sys
+from collections.abc import Collection, Iterable, Mapping, Sequence
 from pathlib import Path
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from oevl.agreement import align, classes, kappa, rate
 from oevl.experiment import EXCLUDE_D3, build_data, heldout, lexicon, load_tauber, pattern
 from oevl.try_text import apply
 from oevl.wikipron_to_marked import mark
+
+if TYPE_CHECKING:
+    T = TypeVar("T")
 
 ROOT = Path(__file__).resolve().parents[2]
 DIR = ROOT / "results" / "error_typing"
@@ -53,7 +58,7 @@ SAMPLING = ("An error is a lexicon-ambiguous token (two or more length patterns 
             "tokens appear in both samples and were typed separately.")
 
 
-def main():
+def main() -> None:
     """Check the labels in labels.tsv, then write summary.json and tab_errors.tex.
 
     Reads results/error_typing/labels.tsv (tab-separated, one row per sampled error) and uses its item, system, set,
@@ -79,6 +84,7 @@ def main():
         assert r["final"] not in ("segment", "truncation") or r["system"] == "charsiug2p", r["item"]
     groups = {s: [r for r in rows if r["system"] == s] for s, _ in SYSTEMS} | {"overall": rows}
     assert [len(groups[s]) for s, _ in SYSTEMS] == [200, 200], "expected 200 items per system"
+    summary: dict[str, Any]  # JSON: strings, a list and nested dicts
     summary = {"provenance": PROVENANCE, "sampling_rule": SAMPLING, "types": [t for t, _ in TYPES],
                "agreement": {}, "counts": {}, "sample_by_set": {}}
     for g, sub in groups.items():
@@ -112,7 +118,8 @@ def main():
     print(f"wrote {DIR / 'summary.json'} and {out}")
 
 
-def errors(system, tests, lex):
+def errors(system: str, tests: Mapping[str, Sequence[Mapping[str, Any]]],
+           lex: Mapping[str, Mapping[str, set[str]]]) -> dict[str, list[tuple[Mapping[str, Any], str, str]]]:
     """The errors of one system, as {set: [(token row, system_form, charsiug2p_ipa), ...]} in test set order.
 
     tests: SETS -> token rows from experiment.heldout. lex: the system's lexicon from experiment.lexicon. An error is a
@@ -124,7 +131,8 @@ def errors(system, tests, lex):
     if system == "charsiug2p":
         with open(ROOT / "results" / "charsiu" / "ipa.tsv", encoding="utf8") as f:
             ipa = {r["word"]: r["ipa"] for r in csv.DictReader(f, delimiter="\t")}
-    out = {}
+    out: dict[str, list[tuple[Mapping[str, Any], str, str]]] = {}
+    form: str | None  # mark gives None when the IPA does not align
     for s in SETS:
         if system == "encoder_sentence":
             with gzip.open(ROOT / "results" / "encoder" / f"{s}_predictions.tsv.gz", "rt", encoding="utf8") as f:
@@ -146,12 +154,12 @@ def errors(system, tests, lex):
     return out
 
 
-def draw(pool, n=200):
+def draw(pool: "Mapping[str, Iterable[T]]", n: int = 200) -> "list[T]":
     """random.Random(1).sample of n errors from pool (SETS -> errors), the sets pooled in SETS order."""
     return random.Random(1).sample([e for s in SETS for e in pool[s]], n)
 
 
-def items(systems):
+def items(systems: Collection[str]) -> list[dict[str, int | str]]:
     """The item sheet as row dicts: 200 sampled errors per system named in systems, in SYSTEMS order.
 
     Items are numbered 1 to 200 for encoder_sentence and 201 to 400 for charsiug2p, whichever are built. The lexicon is

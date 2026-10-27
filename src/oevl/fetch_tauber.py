@@ -10,7 +10,7 @@ from urllib.request import urlopen
 from oevl.experiment import load_tauber
 URL='https://raw.githubusercontent.com/old-english-learner-texts/old-english-texts/master/beowulf/raw-data/brunetti-length.txt'
 path=Path(__file__).resolve().parents[2]/'data/brunetti-length.txt'
-def main():
+def main() -> None:
  """Download the gold, validate a temporary copy and only then overwrite data/brunetti-length.txt.
 
  Exits with the usage message if given any argument. The download (90 s socket timeout, not a cap on the whole

@@ -12,7 +12,9 @@ Usage: python -m oevl.audit_splits [--data data] [--tauber data/brunetti-length.
 import argparse
 import collections
 import json
+from collections.abc import Collection, Iterable, Mapping
 from pathlib import Path
+from typing import Any
 
 from oevl.experiment import TESTS, TRAIN, load, load_tauber, tokens
 
@@ -20,19 +22,20 @@ N = 6
 AGREEMENT = ("hs_beowulf", "wyatt_beowulf")
 
 
-def grams(rows):
+def grams(rows: Iterable[Mapping[str, Any]]) -> dict[str, set[tuple[str, ...]]]:
     """Map each sentence id to the set of word 6-grams in that sentence, each a tuple of six experiment.key strings.
 
     rows: an iterable of token dicts as experiment.tokens yields them or load_tauber returns them. Only "sentence_id"
     and "key" are read, and each sentence's tokens are taken in the order they come. A sentence with fewer than six
     tokens gets an empty set, so it can never share a 6-gram."""
-    keys = collections.defaultdict(list)
+    keys: collections.defaultdict[str, list[str]] = collections.defaultdict(list)
     for r in rows:
         keys[r["sentence_id"]].append(r["key"])
     return {s: {tuple(k[i:i + N]) for i in range(len(k) - N + 1)} for s, k in keys.items()}
 
 
-def matrix(held, train):
+def matrix(held: Mapping[str, Mapping[str, set[tuple[str, ...]]]],
+           train: Mapping[str, Mapping[str, set[tuple[str, ...]]]]) -> dict[str, dict[str, int]]:
     """Count the distinct 6-grams that each held-out set shares with each training work.
 
     held, train: set or work name -> grams() output. The 6-grams of all sentences on each side are pooled before
@@ -41,7 +44,7 @@ def matrix(held, train):
             for h, g in held.items()}
 
 
-def show(title, m, train):
+def show(title: str, m: Mapping[str, Mapping[str, int]], train: Collection[str]) -> None:
     """Print a matrix() result under a title, one row per held-out set and one column per training work.
 
     Only the keys of train are used, for the column order. Column headers are cut to 12 characters."""
@@ -50,7 +53,7 @@ def show(title, m, train):
         print(f"{h:16}" + "".join(f"{row[t]:>13}" for t in train))
 
 
-def main():
+def main() -> None:
     """Run the audit, print the overlap matrices before and after exclusion and write leakage_excluded.json.
 
     Reads <data>/by_source/<work>.jsonl for the training works, john_ws, soliloquies and the two agreement editions,
@@ -80,6 +83,7 @@ def main():
         held[name] = grams(rows[name])
     show("Distinct 6-grams shared with each training work", matrix(held, train), train)
 
+    out: dict[str, Any]
     out = {"ngram": N, "text": "bare tokens, lower-cased, ð folded to þ, 6-grams within a sentence",
            "train": TRAIN, "excluded": {}, "counts": {}}
     for name in held:

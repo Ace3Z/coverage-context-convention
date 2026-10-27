@@ -26,6 +26,7 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from typing import Any
 
 import matplotlib
 
@@ -38,7 +39,7 @@ SYSTEMS = (("frequency", "Frequency"), ("word", "Word"), ("left", "Left"), ("sen
 TESTS = (("soliloquies", "Soliloquies"), ("tauber_beowulf", "Beowulf"))
 
 
-def load(folder):
+def load(folder: str) -> dict[str, Any]:
     """Return results/<folder>/metrics.json, one logistic setting's metrics from oevl.experiment, as a dict."""
     return json.loads((ROOT / "results" / folder / "metrics.json").read_text(encoding="utf8"))
 
@@ -47,19 +48,19 @@ W, T = load("wikipron"), load("training_only")
 P, A, Z = load("proposal"), load("all"), load("wikipron_with_zupitza")  # proposal dictionaries, all four, D3 ablation
 
 
-def pct(x):
+def pct(x: float) -> str:
     """Format a fraction as a percentage with two decimals and no % sign, e.g. 0.87836 gives "87.84"."""
     return f"{100 * x:.2f}"
 
 
-def acc(d, pop):
+def acc(d: dict[str, Any], pop: str) -> float | None:
     """Accuracy (a fraction) of one system entry of metrics.json, such as frequency or oracle, on a population.
 
     pop "accuracy" (all scored tokens) reads d["accuracy"], any other population name reads d[pop]["accuracy"]."""
     return d["accuracy"] if pop == "accuracy" else d[pop]["accuracy"]
 
 
-def val(m, test, system, pop, sd=False):
+def val(m: dict[str, Any], test: str, system: str, pop: str, sd: bool = False) -> str:
     """Accuracy of one system on one population of a held-out set, as a percentage string (see pct).
 
     m: a metrics.json dict, test: a held-out set key such as "soliloquies", pop: "accuracy" (all tokens) or a population
@@ -73,12 +74,12 @@ def val(m, test, system, pop, sd=False):
     return f"{pct(s['mean'])}$\\pm${100 * s['sd']:.2f}" if sd else pct(s["mean"])
 
 
-def n(m, test, pop):
+def n(m: dict[str, Any], test: str, pop: str) -> int:
     """Number of scored tokens of a population of one held-out set, read from the frequency entry ("accuracy" = all)."""
     return m[test]["frequency"]["n"] if pop == "accuracy" else m[test]["frequency"][pop]["n"]
 
 
-def p_fmt(p):
+def p_fmt(p: float) -> str:
     """Format a p-value as plain text.
 
     Four decimals from 0.001 up, four decimals with trailing zeros stripped from 0.0001 up (0.000999 gives "0.001"),
@@ -136,7 +137,7 @@ for c in "ABC":
 num["DThreeSolAllCost"] = f"{100 * (Z['soliloquies']['frequency']['accuracy'] - W['soliloquies']['frequency']['accuracy']):.2f}"
 
 
-def rjson(path):
+def rjson(path: str) -> dict[str, Any]:
     """Read a JSON file given by its path relative to the repository root."""
     return json.loads((ROOT / path).read_text(encoding="utf8"))
 
@@ -272,7 +273,7 @@ if missing:
     sys.exit(f"per-word table: words missing from CSV: {missing}")
 
 
-def counts(js):
+def counts(js: str) -> str:
     """Turn a per-word CSV cell, JSON {pattern: count} of a one-vowel word, into "short/long" from patterns "0", "1"."""
     c = json.loads(js)
     return f"{c.get('0', 0)}/{c.get('1', 0)}"
@@ -283,7 +284,7 @@ from oevl import experiment as E  # noqa: E402
 ZUP = collections.Counter((r["key"], r["gold_pattern"]) for r in E.tokens(E.load(ROOT / "data/by_source/zupitza_grammar.jsonl")))
 
 
-def zup(w):
+def zup(w: str) -> str:
     """Counts of skeleton w with pattern "0" and "1" in the whole Zupitza file, as "short/long" (one-vowel words)."""
     return f"{ZUP[w, '0']}/{ZUP[w, '1']}"
 
@@ -299,7 +300,7 @@ num["GeSol"] = counts(ge["test_pattern_counts"])
 # ---------------------------------------------------------------- worked examples: verify the claims
 preds = [json.loads(line) for line in open(ROOT / "results" / "wikipron" / "soliloquies_predictions.jsonl",
                                            encoding="utf8")]
-bysent = {}
+bysent: dict[str, list[dict[str, Any]]] = {}
 for p in preds:
     bysent.setdefault(p["sentence_id"], []).append(p)
 EXAMPLES = {
@@ -480,7 +481,7 @@ for t, _ in TESTS:
         sub = [r for r in rows if r["lexicon_ambiguous"] and (pop == "lexicon_ambiguous" or
                                                               CLASSES.get(r["key"], "unlisted") == "B")]
         bn[t, pop] = len(sub)
-        ok = {"frequency": [r["frequency_prediction"] == r["gold_pattern"] for r in sub]}
+        ok: dict[str, list[float]] = {"frequency": [r["frequency_prediction"] == r["gold_pattern"] for r in sub]}
         for a in ("word", "left", "sentence"):
             ok[a] = [sum(r[f"{a}_seed{k}_prediction"] == r["gold_pattern"] for k in (1, 2, 3)) / 3 for r in sub]
         for x, y in PAIRS:

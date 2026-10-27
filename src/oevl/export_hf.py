@@ -21,8 +21,10 @@ import argparse
 import itertools
 import json
 import shutil
+from collections.abc import Iterable, Mapping
 from pathlib import Path
 from string import Template
+from typing import Any
 
 from oevl.experiment import TRAIN, load, load_tauber, pattern
 
@@ -35,7 +37,7 @@ TAUBER = {"source": "tauber_beowulf", "work": "Beowulf", "editor": "Tauber (Klae
 LEXICONS = ("wikipron", "clarkhall", "wiktionary", "bt", "proposal", "all")
 
 
-def tauber(path):
+def tauber(path: str | Path) -> list[dict[str, Any]]:
     """Tauber's Beowulf as sentence records, with the sentences and tokens of experiment.load_tauber.
 
     path: Tauber's pipe-separated file (data/brunetti-length.txt). load_tauber validates it, raises on a malformed row
@@ -44,7 +46,8 @@ def tauber(path):
     The token rows are grouped by sentence_id, in file order, and n counts the sentences from 0.
     Returns one dict per sentence with the fields of a corpus record: id (tauber:<n>), the TAUBER metadata, tokens and
     tokens_bare, and text and text_bare as those tokens joined by spaces, because the file has no running text."""
-    out = []
+    out: list[dict[str, Any]] = []
+    rows: Iterable[dict[str, Any]]
     for sid, rows in itertools.groupby(load_tauber(path), key=lambda r: r["sentence_id"]):
         rows = list(rows)
         out.append({"id": sid, **TAUBER, "text": " ".join(r["gold"] for r in rows),
@@ -53,7 +56,7 @@ def tauber(path):
     return out
 
 
-def record(r, excluded):
+def record(r: Mapping[str, Any], excluded: set[str]) -> dict[str, Any]:
     """The released fields only, so no stale field (such as an old split) can leak into the files.
 
     r: a sentence record from data/by_source or tauber(), which must have id, the META fields, text, text_bare, tokens
@@ -66,7 +69,7 @@ def record(r, excluded):
             "length_patterns": [pattern(t) for t in r["tokens"]], "leakage_excluded": r["id"] in excluded}
 
 
-def export(data, tauber_path, out):
+def export(data: str | Path, tauber_path: str | Path, out: str | Path) -> dict[str, dict[str, Any]]:
     """Write <out>/<split>.jsonl, <out>/README.md and the copied files, and return the counts read back from the files.
 
     data: the data folder with by_source/<source>.jsonl for every source in SPLITS but tauber_beowulf,
@@ -84,7 +87,7 @@ def export(data, tauber_path, out):
     audit = json.loads((data / "leakage_excluded.json").read_text(encoding="utf8"))["excluded"]
     excluded = {s for ids in audit.values() for s in ids}
     out.mkdir(parents=True, exist_ok=True)
-    counts = {}
+    counts: dict[str, dict[str, Any]] = {}
     for split, sources in SPLITS.items():
         rows = [r for s in sources
                 for r in (tauber(tauber_path) if s == "tauber_beowulf" else load(data / "by_source" / f"{s}.jsonl"))]
@@ -115,7 +118,7 @@ def export(data, tauber_path, out):
     return counts
 
 
-def main():
+def main() -> None:
     """Command line entry: run export with --data, --tauber and --out, print the counts of each split and the folder.
 
     Exits with a message if the Tauber file is missing, before anything is written."""

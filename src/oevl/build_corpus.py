@@ -41,14 +41,16 @@ import re
 import unicodedata
 import urllib.parse
 import urllib.request
+from collections.abc import Iterable, Iterator, Mapping, Sequence
 from html.parser import HTMLParser
 from pathlib import Path
+from typing import Any, Literal
 
 ROOT = Path(__file__).resolve().parents[2]
 API = "https://en.wikisource.org/w/api.php"
 UA = {"User-Agent": "oevl-corpus/1.0 (UZH course project; mahbodtajdini@gmail.com)"}
 WS_LICENCE = "CC BY-SA 4.0 (Wikisource transcription of a public-domain edition)"
-SOURCES = {
+SOURCES: dict[str, dict[str, Any]] = {
     "matthew_ws": dict(index="Gospel of Saint Matthew in West-Saxon.djvu", pages=(14, 160),
                        title="Evangelium Secundum Mattheum: the Gospel of Saint Matthew in West-Saxon",
                        work="Gospel of Matthew (West Saxon)", editor="Bright", year=1904, genre="prose",
@@ -113,7 +115,7 @@ WS_UNITS = ("p", "div.ws-poem-stanza")
 WS_SKIP = ("style", "script", "sup", ".ws-noexport", ".wst-pline", ".references")
 
 
-def match(specs, tag, cls, id_):
+def match(specs: Iterable[str], tag: str, cls: list[str], id_: str | None) -> bool:
     """True if the element fits one of the specs: 'tag', '.class', 'tag.class' or 'tag#id'.
 
     cls is the list of the element's classes and id_ its id or None."""
@@ -139,8 +141,15 @@ class Blocks(HTMLParser):
     with a centred heading. Of a two-column table (the Soliloquies print Augustine's Latin beside Alfred's text)
     only the first column is read: every <td> after the first in its row is skipped.
     """
+    out: list[tuple[str, str]]
+    cur: list[str] | None
+    head: list[str] | None
+    stack: list[tuple[str, bool, bool, bool, bool, bool]]
+    loose: list[str]
+    cell: int
 
-    def __init__(self, units=WS_UNITS, skip=WS_SKIP, heads=()):
+    def __init__(self, units: Sequence[str] = WS_UNITS, skip: Sequence[str] = WS_SKIP,
+                 heads: Sequence[str] = ()) -> None:
         """Start an empty parse. units and skip are specs for match(), heads are bare tag names.
 
         State: out (the result), cur (text pieces of the open paragraph or None), head (text nodes of the open
@@ -151,13 +160,13 @@ class Blocks(HTMLParser):
         self.units, self.skip, self.heads = units, skip, heads
         self.out, self.cur, self.head, self.stack, self.loose, self.cell = [], None, None, [], [], 0
 
-    def flush(self):
+    def flush(self) -> None:
         """Append the loose body text gathered so far to out as a 'p' paragraph, unless it is blank, and reset it."""
         if "".join(self.loose).strip():
             self.out.append(("p", "".join(self.loose)))
         self.loose = []
 
-    def handle_starttag(self, tag, attrs):
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         """Open an element. A <br> adds a line break to the open paragraph, else to the loose text, even inside a
         skipped element. Void elements stop there. Any other element first flushes the loose text when it is a
         block and is pushed on the stack.
@@ -186,7 +195,7 @@ class Blocks(HTMLParser):
         if "wst-gap" in cls and self.cur is not None:  # the caesura of a verse line
             self.cur.append(" ")
 
-    def handle_endtag(self, tag):
+    def handle_endtag(self, tag: str) -> None:
         """Close an element. End tags of void elements and of elements that are not open are ignored. A block
         element first flushes the loose text. The stack is popped down to the innermost open element with this tag,
         so unclosed children close with it: a closed heading or paragraph is appended to out, and a block element
@@ -208,7 +217,7 @@ class Blocks(HTMLParser):
             if t == tag:
                 break
 
-    def handle_data(self, data):
+    def handle_data(self, data: str) -> None:
         """Send a text node to the open heading, else the open paragraph, else the loose text when the nearest
         enclosing block element is the page body. Text inside a skipped element and any other text is dropped."""
         if any(s[1] for s in self.stack):
@@ -221,7 +230,7 @@ class Blocks(HTMLParser):
             self.loose.append(data)
 
 
-def blocks(html, **kw):
+def blocks(html: str, **kw: Sequence[str]) -> list[tuple[str, str]]:
     """Paragraphs of html as a list of (kind, text) pairs from Blocks, which takes the keyword arguments.
 
     Loose body text left at the end is flushed, and a paragraph still open at the end (cut off by a Gutenberg end
@@ -233,7 +242,7 @@ def blocks(html, **kw):
     return parser.out + ([("p", "".join(parser.cur))] if parser.cur else [])  # a paragraph cut off by an end marker
 
 
-def line_lang(line):
+def line_lang(line: str) -> Literal["eng", "lat"] | None:
     """'eng' or 'lat' for a line of 4+ words with no length mark and no thorn or eth that reads as English or
     Latin, else None. Ash is no evidence: the English notes spell Cædmon and Ælfric.
 
@@ -248,12 +257,12 @@ def line_lang(line):
     return "lat" if la >= 0.15 and la >= en else "eng" if en >= 0.3 else None
 
 
-def unmarked(text):
+def unmarked(text: str) -> str:
     """text with the macron of every long vowel removed (NFD, drop U+0304, NFC), so line_lang can read it."""
     return unicodedata.normalize("NFC", unicodedata.normalize("NFD", text).replace("\u0304", ""))
 
 
-def editorial(text):
+def editorial(text: str) -> str:
     """Drop digits, brackets, daggers, asterisks, underscores and Sweet's hyphen dots, before the sentence split.
 
     Square brackets go without a trace ('fugla [wynn],' -> 'fugla wynn,'), round ones and digits leave a space
@@ -261,7 +270,7 @@ def editorial(text):
     return re.sub(r"[\[\]†_*·]", "", re.sub(r"[\d()]", " ", text))
 
 
-def clean(text, log):
+def clean(text: str, log: collections.Counter[str]) -> str:
     """Drop combining marks except a macron NFC joins to its letter (a vowel, æ or g) and any ring, then Roman
     numerals (ROMAN), and return the text in NFC. Runs after the split, so a stray mark after a full stop (a caron in
     Wyatt's 'geweorces.') keeps two sentences together, as in the files.
@@ -284,7 +293,7 @@ def clean(text, log):
     return re.sub(r"\s+", " ", ROMAN.sub("", text)).strip()
 
 
-def sentences(par, log, speaker=None, filters=True):
+def sentences(par: str, log: collections.Counter[str], speaker: str | None = None, filters: bool = True) -> list[str]:
     """The kept sentences of one paragraph, after the language filters (unless filters is False) and cleaning.
     speaker is a regex for the speaker label of a line of dialogue (A. or [G.]) at a line start or after a sentence end.
 
@@ -325,24 +334,24 @@ def sentences(par, log, speaker=None, filters=True):
     return kept
 
 
-def tokens(text):
+def tokens(text: str) -> list[str]:
     """Letter runs, joined over inner hyphens and apostrophes, which are then removed: Gār-Dena -> GārDena."""
     return [re.sub(r"[-']", "", w) for w in WORD.findall(text)]
 
 
-def section(title):
+def section(title: str) -> str:
     """Section id of a Wikisource title: Æ, æ and œ written AE, ae and oe, then every character other than an ASCII
     letter, digit or full stop replaced by an underscore."""
     return re.sub(r"[^A-Za-z0-9.]", "_", title.replace("Æ", "AE").replace("æ", "ae").replace("œ", "oe"))
 
 
-def roman(s):
+def roman(s: str) -> int:
     """Value of a Roman numeral written with I, V, X and L, subtractive pairs such as IV included."""
     v = [{"I": 1, "V": 5, "X": 10, "L": 50}[c] for c in s]
     return sum(-a if a < b else a for a, b in zip(v, v[1:] + [0]))
 
 
-def gospel(html, title, log):
+def gospel(html: str, title: str, log: collections.Counter[str]) -> Iterator[tuple[str, str]]:
     """(section, sentence) pairs of a gospel, as a generator. Chapters start at the centred 'CAPUT n' headings.
 
     Other centred paragraphs are headings and are left out, as is all text before the first CAPUT. The section is
@@ -356,7 +365,7 @@ def gospel(html, title, log):
             yield from ((section(f"{title}/Chapter {chapter}"), s) for s in sentences(par, log))
 
 
-def fetch(url, path, data=None):
+def fetch(url: str, path: Path, data: Mapping[str, str | int] | None = None) -> dict[str, Any]:
     """Download url (POST data if given) to path once and return the provenance record.
 
     The download also writes <path without suffix>.meta.json with the URL (with data appended as a query string)
@@ -375,7 +384,8 @@ def fetch(url, path, data=None):
     return dict(meta, file=path.name, sha256=hashlib.sha256(path.read_bytes()).hexdigest())
 
 
-def ws_index(name, src, raw, log):
+def ws_index(name: str, src: Mapping[str, Any], raw: Path,
+             log: collections.Counter[str]) -> tuple[list[tuple[str, str]], list[dict[str, Any]]]:
     """A book from its Wikisource scan pages, rendered as one transclusion.
 
     The MediaWiki parse API renders <pages index=... from=a to=b /> for src["pages"] = (a, b), both included, and
@@ -391,7 +401,8 @@ def ws_index(name, src, raw, log):
     return list(gospel(html, src["title"], log)), [inp]
 
 
-def ws_main(name, src, raw, log):
+def ws_main(name: str, src: Mapping[str, Any], raw: Path,
+            log: collections.Counter[str]) -> tuple[list[tuple[str, str]], list[dict[str, Any]]]:
     """A work from its Wikisource subpages, each subpage a section.
 
     Subpage i (<root>/<sub>) is fetched with the MediaWiki parse API and cached as <raw>/<name>/<ii>.json. Only
@@ -410,7 +421,8 @@ def ws_main(name, src, raw, log):
     return pairs, inputs
 
 
-def gutenberg(name, src, raw, log):
+def gutenberg(name: str, src: Mapping[str, Any], raw: Path,
+              log: collections.Counter[str]) -> tuple[list[tuple[str | None, str]], list[dict[str, Any]]]:
     """A book from its Project Gutenberg HTML edition. The elements named in heads give the sections.
 
     The HTML is cached as <raw>/<name>/pg<n>-images.html and cut from src["start"] (included) to the first
@@ -426,6 +438,7 @@ def gutenberg(name, src, raw, log):
     html = path.read_text(encoding="utf8")
     a = html.index(src["start"]) if "start" in src else 0
     html = html[a:html.index(src["end"], a)] if "end" in src else html[a:]
+    pars: list[tuple[str | None, str]]
     pars, sec = [], None
     for kind, par in blocks(html, units=src["units"], skip=WS_SKIP[:3] + (".pagenum",) + src.get("skip", ()),
                             heads=src["heads"]):
@@ -444,7 +457,7 @@ def gutenberg(name, src, raw, log):
     return pairs, [inp]
 
 
-def build(name, raw):
+def build(name: str, raw: Path) -> tuple[list[dict[str, Any]], dict[str, int], list[dict[str, Any]]]:
     """Rows, cleaning counts and input records for one source, with raw as the download cache.
 
     Each row is a dict with id '<name>:<NNNNN>', source, work, editor, year, genre, section, split, text, text_bare,
@@ -454,7 +467,7 @@ def build(name, raw):
     train, 50 dev and 50 test). clean_corpus removes the split field from every row, whatever its value. Returns
     (rows, cleaning counts as a dict, input records)."""
     src = SOURCES[name]
-    log = collections.Counter()
+    log: collections.Counter[str] = collections.Counter()
     pairs, inputs = (ws_index if "index" in src else gutenberg if "ebook" in src else ws_main)(name, src, raw, log)
     rows = []
     for i, (sec, text) in enumerate(pairs):
@@ -470,7 +483,7 @@ def build(name, raw):
     return rows, dict(log), inputs
 
 
-def main():
+def main() -> None:
     """Command line: build one source, write <out>/<source>.jsonl and update its entry in <out>/../manifest.json.
 
     The manifest is created when missing. work, editor, year, genre, units, tokens, long_vowel_marks, sha256,

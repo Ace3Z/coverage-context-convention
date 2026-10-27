@@ -15,7 +15,9 @@ import hashlib
 import json
 import sys
 import unicodedata
+from collections.abc import Iterable, Mapping, Sequence
 from pathlib import Path
+from typing import Any
 
 from oevl.experiment import bare, norm, pattern
 
@@ -45,7 +47,7 @@ WORDS = {
 TABLE = str.maketrans(CHARS)
 
 
-def sub(tokens, old, new):
+def sub(tokens: Sequence[str], old: tuple[str, ...], new: str) -> tuple[list[str], int]:
     """Replace each run of tokens equal to old by the one token new, and return the new list and the number of runs.
 
     old is a non-empty tuple of tokens (an empty one would never end the loop, a list would never match). Runs are
@@ -62,7 +64,7 @@ def sub(tokens, old, new):
     return out, n
 
 
-def clean_record(r, log):
+def clean_record(r: dict[str, Any], log: collections.Counter[str]) -> dict[str, Any]:
     """Apply every mapping to one record in place, counting the changes in log, and return it.
 
     r is one corpus row with "text", "text_bare", "tokens" and "tokens_bare", and an old "split" field is dropped.
@@ -90,7 +92,7 @@ def clean_record(r, log):
     return r
 
 
-def check(rows):
+def check(rows: Iterable[Mapping[str, Any]]) -> list[str]:
     """Problems that must not survive cleaning: characters outside the inventory, bare forms that do not match.
 
     rows are corpus records with "id", "text", "text_bare", "tokens" and "tokens_bare". It returns one message per
@@ -117,7 +119,7 @@ def check(rows):
     return bad
 
 
-def main():
+def main() -> None:
     """Clean every data/by_source/*.jsonl, rewrite the files and update their entries in data/manifest.json.
 
     Both paths are under the repository root found from this file, whatever the working directory, and blank input
@@ -133,7 +135,7 @@ def main():
     manifest.pop("splits", None)  # sentence-level split counts of the same earlier build
     done, problems = [], []
     for path in sorted((ROOT / "data" / "by_source").glob("*.jsonl")):
-        log = collections.Counter()
+        log: collections.Counter[str] = collections.Counter()
         rows = [clean_record(json.loads(x), log) for x in path.read_text(encoding="utf8").splitlines() if x.strip()]
         problems += [f"{path.name} {p}" for p in check(rows)]
         done.append((path, rows, log))

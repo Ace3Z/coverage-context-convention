@@ -26,10 +26,15 @@ import csv
 import json
 import sys
 import urllib.request
+from collections.abc import Iterable, Sequence
 from pathlib import Path
+from typing import TYPE_CHECKING, Any, Literal
 
 from oevl.experiment import EXCLUDE_D3, TESTS, build_data, evaluate, heldout, lexicon, pattern
 from oevl.wikipron_to_marked import mark
+
+if TYPE_CHECKING:
+    from transformers import PreTrainedTokenizerBase, T5ForConditionalGeneration
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "results" / "charsiu"
@@ -40,7 +45,7 @@ BENCH = ROOT / "data/charsiu_ang_test.tsv"  # REPO + data/test/ang.tsv
 PUBLISHED = {"per": 0.04102693178957966, "wer": 0.208}  # REPO + multilingual_results/multilingual/byt5_small_100, ang
 
 
-def tests():
+def tests() -> dict[str, list[dict[str, Any]]]:
     """The experiment's dev and test sets, without the sentences the leakage audit excludes.
 
     Returns {set name: token rows} for john_ws, soliloquies and tauber_beowulf, read from data/ by experiment.heldout
@@ -49,7 +54,7 @@ def tests():
     return {t: heldout(ROOT / "data", t) for t in TESTS}
 
 
-def load_model(tiny=False):
+def load_model(tiny: bool = False) -> "tuple[PreTrainedTokenizerBase, T5ForConditionalGeneration]":
     """Load a ByT5 tokenizer and the CharsiuG2P model (or a tiny stand-in) in eval mode, on the GPU if CUDA is there.
 
     tiny=False loads the pinned checkpoint (MODEL at REVISION) and the unpinned google/byt5-small tokenizer from the
@@ -68,7 +73,7 @@ def load_model(tiny=False):
     return tok, model.cuda() if torch.cuda.is_available() else model
 
 
-def lev(a, b):
+def lev(a: Sequence[str], b: Sequence[str]) -> int:
     """Levenshtein distance between two sequences (strings or token lists), every edit costing 1."""
     row = list(range(len(b) + 1))
     for i, x in enumerate(a, 1):
@@ -78,7 +83,7 @@ def lev(a, b):
     return row[-1]
 
 
-def error_type(ref, hyp, truncated):
+def error_type(ref: str, hyp: str, truncated: bool) -> Literal["correct", "length_only", "truncation", "segment"]:
     """Type one benchmark word: "correct", "length_only", "truncation" or "segment".
 
     ref, hyp: reference and predicted IPA. truncated: True when the output has no end-of-sequence token.
@@ -91,7 +96,7 @@ def error_type(ref, hyp, truncated):
     return "truncation" if truncated else "segment"
 
 
-def score(refs, hyps, types):
+def score(refs: Sequence[str], hyps: Sequence[str], types: Iterable[str]) -> dict[str, int | float | None]:
     """Corpus scores for the benchmark: PER, WER and the counts of each error type.
 
     refs, hyps: reference and predicted IPA per word. types: error_type of each word.
@@ -108,7 +113,7 @@ def score(refs, hyps, types):
             "length_only_share": round(c["length_only"] / errors, 4) if errors else None}
 
 
-def benchmark():
+def benchmark() -> None:
     """Part 1: rerun CharsiuG2P's own Old English evaluation and type its word errors.
 
     Reads the 500 word and IPA pairs of data/charsiu_ang_test.tsv, downloading it from the pinned repository first if it
@@ -125,7 +130,7 @@ def benchmark():
     tok, model = load_model()
     summary = {"model": MODEL, "revision": REVISION, "tokenizer": TOKENIZER, "repository": REPO, "prefix": PREFIX,
                "num_beams": 5, "published": PUBLISHED}
-    cols = {}
+    cols: dict[str, Sequence[str]] = {}
     for max_length in (20, 50):  # 20 is the transformers default that evaluate.py runs with
         hyps, types = [], []
         for i, word in enumerate(words):  # one word per call, no padding, as evaluate.py
@@ -146,7 +151,7 @@ def benchmark():
     print("\n" + json.dumps(summary, ensure_ascii=False, indent=2))
 
 
-def predict(batch_size=64, tiny=False):
+def predict(batch_size: int = 64, tiny: bool = False) -> None:
     """Part 2, step 1: write CharsiuG2P's IPA for every word type of the held-out sets.
 
     The words are the sorted, lower-cased bare forms of the tokens with a vowel in the three sets of tests(). They are
@@ -175,7 +180,7 @@ def predict(batch_size=64, tiny=False):
     print(f"\nwrote {len(words)} predictions to {path}")
 
 
-def analyse():
+def analyse() -> None:
     """Part 2, step 2: score CharsiuG2P's vowel length on the held-out tokens and write results/charsiu/metrics.json.
 
     Reads results/charsiu/ipa.tsv, the WikiPron run's per-token predictions (results/wikipron/<set>_predictions.jsonl,
@@ -196,7 +201,7 @@ def analyse():
         charsiu_dict = set(dict_path.read_text(encoding="utf8").split())
     train, _, _, _ = build_data(ROOT / "data", EXCLUDE_D3)  # populations as in results/wikipron
     lex, counts = lexicon(train, str(ROOT / "data/lex_wikipron.csv"))
-    summary = {"model": MODEL, "prefix": PREFIX}
+    summary: dict[str, object] = {"model": MODEL, "prefix": PREFIX}
     for test, rows in tests().items():
         preds = {}
         p = ROOT / "results" / "wikipron" / f"{test}_predictions.jsonl"
@@ -204,9 +209,12 @@ def analyse():
             for line in f:
                 d = json.loads(line)
                 preds[d["id"]] = d
+        cats: collections.Counter[str]
+        amb_cats: collections.Counter[str]
+        seen_cats: collections.Counter[tuple[str, str]]
         cats, amb_cats, seen_cats = collections.Counter(), collections.Counter(), collections.Counter()
         wrong_len_amb = fixed_by_word = fixed_by_bilateral = 0
-        direction = collections.Counter()
+        direction: collections.Counter[str] = collections.Counter()
         pats = []  # predicted length pattern per token, None when not alignable
         for r in rows:
             m = mark(r["bare"].lower(), ipa.get(r["bare"].lower(), ""))

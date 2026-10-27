@@ -31,7 +31,7 @@ def ipa_nuclei(ipa:str)->list[bool]:
    long_=j<len(s) and s[j]=='ː';out.append(long_);i=j+(1 if long_ else 0)
   else:i+=1
  return out
-def mark(bare:str,ipa:str):
+def mark(bare:str,ipa:str)->str|None:
  """Spell bare with a macron on each vowel unit whose IPA nucleus is long, or return None if the vowel counts differ.
 
  bare is lowercased and NFC-normalised. Its vowel units are the letters in OV, read left to right, with the digraphs
@@ -52,7 +52,7 @@ def mark(bare:str,ipa:str):
  for start,long_ in zip(units,nuc):
   if long_:chars[start]=MAC[chars[start]]
  return ''.join(chars)
-def convert(src,out):
+def convert(src:str,out:str)->tuple[collections.Counter[str],int]:
  """Convert the WikiPron TSV at src into a marked-form CSV at out and return (stats, number of distinct forms).
 
  Each line is word, tab, IPA, and further columns are ignored. A line with fewer than two columns, a blank line
@@ -61,7 +61,7 @@ def convert(src,out):
  row counts. out is overwritten as UTF-8 with a header and the single column marked_form, holding the distinct marked
  forms in sorted order, so a word whose rows mark differently contributes each version. Prints the counts and the
  number of forms to stdout."""
- stats=collections.Counter();forms=set()
+ stats:collections.Counter[str]=collections.Counter();forms=set()
  with open(src,encoding='utf-8') as f:
   for line in f:
    fields=line.rstrip('\n').split('\t')

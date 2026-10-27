@@ -1,8 +1,11 @@
 """Paired comparison of two systems on the same tokens that does not rest on one seed."""
+from collections.abc import Sequence
+
 import numpy as np
 
 
-def bootstrap_diff(sentences, a, b, n=1000, seed=0):
+def bootstrap_diff(sentences: Sequence[str], a: Sequence[float], b: Sequence[float], n: int = 1000,
+                   seed: int = 0) -> dict[str, float] | None:
     """Accuracy of a minus accuracy of b, with a 95% percentile interval from resampling whole sentences.
 
     sentences: a list with the sentence id of each token. a, b: one score per token in the same order, each in [0, 1],
@@ -24,7 +27,8 @@ def bootstrap_diff(sentences, a, b, n=1000, seed=0):
     return {"diff": float(diff.sum() / size.sum()), "lo": float(lo), "hi": float(hi)}
 
 
-def bootstrap_diff_runs(sentences, a, b, n=4000, seed=0):
+def bootstrap_diff_runs(sentences: Sequence[str], a: Sequence[Sequence[float]], b: Sequence[Sequence[float]],
+                        n: int = 4000, seed: int = 0) -> dict[str, float] | None:
     """As bootstrap_diff, but every draw also resamples each system's runs with replacement.
 
     The interval then includes the variance between training runs, not only between sentences.
