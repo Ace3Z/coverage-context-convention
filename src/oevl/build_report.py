@@ -385,9 +385,11 @@ TITLES = {"zupitza_grammar": "Ælfric's \\textit{Grammar}", "bright_reader": "\\
           "physiologus": "\\textit{Physiologus}", "john_ws": "Gospel of John",
           "soliloquies": "Alfred's \\textit{Soliloquies}",
           "hs_beowulf": "\\textit{Beowulf}", "wyatt_beowulf": "\\textit{Beowulf}", "tauber_beowulf": "\\textit{Beowulf}"}
-# shown as printed, not as the manifest has it: Matthew was transcribed from the 1910 printing, and every text taken
-# from Sweet's Primer is prose
-EDITOR = {"matthew_ws": "Bright, 1910 printing", "hs_beowulf": "Harrison \\& Sharp 1883$^a$",
+# shown as printed, not as the manifest has it: Matthew was transcribed from the 1910 printing, the Harrison and Sharp
+# text is the 1894 printing of the 4th edition, Cook edited the Physiologus text (Pitman wrote the verse translation),
+# Bright edited John (Harris wrote the glossary), and every text taken from Sweet's Primer is prose
+EDITOR = {"matthew_ws": "Bright, 1910 printing", "hs_beowulf": "Harrison \\& Sharp 1894$^a$",
+          "physiologus": "Cook 1921", "john_ws": "Bright 1904",
           "wyatt_beowulf": "Wyatt 1894$^b$", "tauber_beowulf": "Klaeber 1922"}
 GENRE = {"sweet_primer": "prose"}
 ROLE = {"zupitza_grammar": "ablation", "john_ws": "dev", "soliloquies": "prose test", "tauber_beowulf": "verse test",
@@ -409,8 +411,9 @@ for k in ORDER:
     editor = EDITOR.get(k) or s["editor"].replace("&", r"\&") + f" {s['year']}"
     rows.append(f"{TITLES[k]} & {editor} & {src} & {GENRE.get(k, s['genre'])} & {len(toks):,} & {long:.2f} & {role} \\\\")
 release = sum(s["tokens"] for s in manifest.values()) + len(beo)
-notes = (f"$^a$Project Gutenberg revision of the 4th edition (copyright 1883). $^b$Its \\textit{{Finnsburh Fragment}} is "
-         f"incomplete ({fin[0]} of {fin[1]} tokens). Scored tokens: dev {W['john_ws']['frequency']['n']:,}, prose "
+notes = (f"$^a$Project Gutenberg revision of the 4th edition (first edition 1883). $^b$Its \\textit{{Finnsburh Fragment}} "
+         f"lacks lines 1 to 18 in our file ({fin[0]} of {fin[1]} tokens). "
+         f"Scored tokens: dev {W['john_ws']['frequency']['n']:,}, prose "
          f"{n(W, 'soliloquies', 'accuracy'):,}, verse {n(W, 'tauber_beowulf', 'accuracy'):,}. Training without Zupitza: "
          f"{W['dataset']['train']:,} tokens. Hugging Face release: {sentences:,} sentences, {release:,} tokens.")
 (OUT / "tab_data.tex").write_text(

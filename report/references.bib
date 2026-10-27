@@ -5,7 +5,7 @@
   title        = {{Claude Opus 5.5} (model id \texttt{claude-opus-5-5}), used through {Claude Code}},
   year         = {2026},
   note         = {Used from 18 to 27 October 2026},
-  url          = {https://docs.anthropic.com/en/docs/about-claude/models/overview}
+  url          = {https://platform.claude.com/docs/en/models/opus-5-5/overview}
 }
 
 @article{cohen1960,
@@ -37,19 +37,21 @@
 }
 
 @book{harrison1883,
-  author       = {J. A. Harrison and R. Sharp},
-  title        = {B{\=e}owulf: An Anglo-Saxon Poem, and The Fight at Finnsburh},
+  editor       = {J. A. Harrison and R. Sharp},
+  title        = {I. B{\=e}owulf: An Anglo-Saxon Poem. II. The Fight at Finnsburh: A Fragment},
   edition      = {Fourth, revised},
   publisher    = {Ginn and Company},
   address      = {Boston},
-  year         = {1883},
-  note         = {Copyright 1883. Project Gutenberg ebook 9701, in its revised version},
+  year         = {1894},
+  note         = {First edition 1883. Project Gutenberg ebook 9701, in its revised version},
   url          = {https://www.gutenberg.org/ebooks/9701}
 }
 
 @book{zupitza1880,
-  author       = {J. Zupitza},
-  title        = {{\AE}lfrics Grammatik und Glossar},
+  editor       = {J. Zupitza},
+  title        = {{\AE}lfrics Grammatik und Glossar. Erste Abteilung: Text und Varianten},
+  series       = {Sammlung englischer Denkm{\"a}ler in kritischen Ausgaben},
+  volume       = {1},
   publisher    = {Weidmann},
   address      = {Berlin},
   year         = {1880},
@@ -71,16 +73,20 @@
 @book{cook1921,
   author       = {A. S. Cook and J. H. Pitman},
   title        = {The Old English Physiologus},
+  series       = {Yale Studies in English},
+  volume       = {LXIII},
   publisher    = {Yale University Press},
+  address      = {New Haven},
   year         = {1921},
   note         = {Project Gutenberg ebook 14529},
   url          = {https://www.gutenberg.org/ebooks/14529}
 }
 
 @book{wyatt1894,
-  author       = {A. J. Wyatt},
+  editor       = {A. J. Wyatt},
   title        = {Beowulf},
   publisher    = {Cambridge University Press},
+  address      = {Cambridge},
   year         = {1894},
   note         = {Wikisource transcription},
   url          = {https://en.wikisource.org/wiki/Beowulf_(Wyatt)}
@@ -94,11 +100,11 @@
   address      = {New York},
   year         = {1913},
   note         = {Wikisource transcription},
-  url          = {https://en.wikisource.org/wiki/Bright's_Anglo-Saxon_Reader}
+  url          = {https://en.wikisource.org/wiki/Bright\%27s_Anglo-Saxon_Reader}
 }
 
 @book{bright1910,
-  author       = {J. W. Bright},
+  editor       = {J. W. Bright},
   title        = {The Gospel of Saint Matthew in West-Saxon},
   publisher    = {D. C. Heath},
   address      = {Boston},
@@ -108,23 +114,25 @@
 }
 
 @book{bright1904,
-  author       = {J. W. Bright and L. M. Harris},
+  author       = {J. W. Bright},
   title        = {The Gospel of Saint John in West-Saxon},
   publisher    = {D. C. Heath},
   address      = {Boston},
   year         = {1904},
-  note         = {Wikisource transcription},
+  note         = {With a glossary by L. M. Harris. Wikisource transcription},
   url          = {https://en.wikisource.org/wiki/Index:Gospel_of_Saint_John_in_West-Saxon.djvu}
 }
 
 @book{hargrove1902,
-  author       = {H. L. Hargrove},
+  editor       = {H. L. Hargrove},
   title        = {King Alfred's Old English Version of St.\ Augustine's Soliloquies},
+  series       = {Yale Studies in English},
+  volume       = {XIII},
   publisher    = {Henry Holt},
   address      = {New York},
   year         = {1902},
   note         = {Wikisource transcription},
-  url          = {https://en.wikisource.org/wiki/King_Alfred's_Old_English_Version_of_St._Augustine's_Soliloquies}
+  url          = {https://en.wikisource.org/wiki/King_Alfred\%27s_Old_English_Version_of_St._Augustine\%27s_Soliloquies}
 }
 
 @book{efron1993,
@@ -179,10 +187,11 @@
 @inproceedings{lee2020,
   author       = {J. L. Lee and L. F. E. Ashby and M. E. Garza and Y. Lee-Sikka and S. Miller and A. Wong and
                   A. D. McCarthy and K. Gorman},
-  title        = {Massively multilingual pronunciation modeling with {WikiPron}},
+  title        = {Massively multilingual pronunciation mining with {WikiPron}},
   booktitle    = {Proceedings of LREC 2020},
   pages        = {4223--4228},
   year         = {2020},
+  note         = {Data: \texttt{ang\_latn\_broad.tsv}, retrieved 16 October 2026},
   url          = {https://aclanthology.org/2020.lrec-1.521/}
 }
 
@@ -209,6 +218,7 @@
   author       = {A. Paszke and others},
   title        = {{PyTorch}: An imperative style, high-performance deep learning library},
   booktitle    = {Advances in Neural Information Processing Systems 32 (NeurIPS 2019)},
+  pages        = {8026--8037},
   year         = {2019},
   url          = {https://proceedings.neurips.cc/paper/2019/hash/bdbca288fee7f92f2bfa9f7012727740-Abstract.html}
 }
@@ -218,6 +228,7 @@
   title        = {Scikit-learn: Machine learning in {Python}},
   journal      = {Journal of Machine Learning Research},
   volume       = {12},
+  number       = {85},
   pages        = {2825--2830},
   year         = {2011},
   url          = {https://jmlr.org/papers/v12/pedregosa11a.html}
@@ -225,7 +236,7 @@
 
 @inproceedings{plank2022,
   author       = {B. Plank},
-  title        = {The `problem' of human label variation: On ground truth in data, modeling and evaluation},
+  title        = {The ``problem'' of human label variation: On ground truth in data, modeling and evaluation},
   booktitle    = {Proceedings of EMNLP 2022},
   pages        = {10671--10682},
   year         = {2022},
@@ -319,7 +330,7 @@
   author       = {L. Xue and A. Barua and N. Constant and R. Al-Rfou and S. Narang and M. Kale and A. Roberts and
                   C. Raffel},
   title        = {{ByT5}: Towards a token-free future with pre-trained byte-to-byte models},
-  journal      = {Transactions of the ACL},
+  journal      = {Transactions of the Association for Computational Linguistics},
   volume       = {10},
   pages        = {291--306},
   year         = {2022},
@@ -343,7 +354,7 @@
   booktitle    = {Proceedings of LREC 2022},
   pages        = {1317--1325},
   year         = {2022},
-  note         = {Data: \url{https://kaikki.org/dictionary/Old\%20English/}},
+  note         = {Data: \url{https://kaikki.org/dictionary/Old\%20English/}, downloaded in October 2026},
   url          = {https://aclanthology.org/2022.lrec-1.140/}
 }
 

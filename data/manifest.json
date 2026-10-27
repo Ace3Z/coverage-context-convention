@@ -353,7 +353,7 @@
     },
     "physiologus": {
       "work": "Old English Physiologus",
-      "editor": "Cook & Pitman",
+      "editor": "Cook",
       "year": 1921,
       "genre": "verse",
       "length_convention_in_source": "macron",
@@ -362,7 +362,7 @@
       "units": 47,
       "tokens": 952,
       "long_vowel_marks": 394,
-      "sha256": "e0efa4a5f07e9391ef3d1b642a76940193691e43b36d228741b6cc2708e7f242",
+      "sha256": "cc15d1dc4ff55f3c17065491e009b83bf0951a2b53bdabe5de4d30cbca18b125",
       "cleaning": {
         "removed_field_split": 47
       },
@@ -378,7 +378,7 @@
     },
     "john_ws": {
       "work": "Gospel of John (West Saxon)",
-      "editor": "Bright & Harris",
+      "editor": "Bright",
       "year": 1904,
       "genre": "prose",
       "length_convention_in_source": "macron",
@@ -387,7 +387,7 @@
       "units": 1057,
       "tokens": 17310,
       "long_vowel_marks": 7316,
-      "sha256": "17f52223701a7ef05cb29a46bb188550b107bd59bd64ae98c0ba0da7f00da798",
+      "sha256": "4af781ba89615374dbb4e55df053701a5553ab2a6270e60a2e64c92e2438508f",
       "cleaning": {
         "dropped_mark_U+0323": 1,
         "dropped_mark_U+0328": 3,

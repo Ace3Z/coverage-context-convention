@@ -114,7 +114,7 @@ an evaluation that separates the three limits, a reanalysis of CharsiuG2P \cite{
 and tested code whose one script recomputes every result here from the released data and model predictions (MIT licence).
 
 \paragraph{Related work.} Yarowsky \cite{yarowsky1994} restored Spanish and French accents with decision lists over
-word-specific collocations, taking accented text as a fully objective standard, which Old English editions are not.
+collocations, taking accented text as a fully objective standard, which Old English editions are not.
 Latin \cite{winge2015} and Ancient Greek \cite{cleland2026} macronisers use taggers, lemmatisers and morphological
 analysers or large pretraining \cite{cullhed2026}. Winge \cite{winge2015} already bounded his Latin system with a lexicon oracle and
 traced the largest group of its disagreements with a hand-marked text to marking conventions. Gershuni and Pinter
@@ -366,7 +366,7 @@ Wyatt. The prior's swing is thus \NPSwapRatio{} times the larger context gain, a
 (\NPSwapLocalTwoWyatt\% against Wyatt, \NPSwapLocalTwoTauber\% against Klaeber).\looseness=-1
 
 The article \emph{se} shows convention most clearly. Klaeber writes it short in \NPSeArticleShort{} of \NPSeArticle{}
-article tokens and long in all \NPSeOtherLong{} pronoun and relative tokens (by Tauber's glosses), while
+article tokens and long in all \NPSeOtherLong{} pronoun and relative tokens (by Brunetti's glosses), while
 our training editions write \emph{sē} \NPSeTrainLong{} times against \NPSeTrainShort{} \emph{se}. The prior gets \NPSeArticlePrior{} of the short
 articles right and no ByT5 run more than \NPSeArticleBestRun, and in line 2587, \emph{þæt se mǣra maga Ecgðēowes}, the
 prior and all \NPSeLineLongRuns{} ByT5 runs mark it long. Klaeber's choice follows syntax and could be learned from
@@ -405,8 +405,8 @@ was measured.
 If convention explains most \textit{Beowulf} class~B and \emph{se} errors, training and testing in one editorial
 tradition should reduce them, and scoring against several editions would show what remains. The main caveats
 call for proofread test texts, ByT5 with all four sources, a dictionary-free tagger \cite{gershuni2022} for
-unlisted patterns (weaker than dictionary-based systems on unseen words), deterministic training with five or more seeds
-\cite{summers2021}, more verse and independent human labels for a sample.
+unlisted patterns (weaker than the best dictionary-based systems on unseen words), deterministic training
+\cite{summers2021} with five or more seeds, more verse and independent human labels for a sample.
 
 {\small\raggedright
 \bibliographystyle{abbrvurl}

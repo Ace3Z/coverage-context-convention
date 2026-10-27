@@ -19,13 +19,13 @@ date and SHA-256 of each input.
 |---|---|---|---|---|
 | `bright_reader.jsonl` | *Anglo-Saxon Reader* (selections), Bright, 1913 | https://en.wikisource.org/wiki/Bright%27s_Anglo-Saxon_Reader | Wikisource transcription, CC BY-SA 4.0. The edition is public domain in the United States | page footer and the page's public-domain notice |
 | `matthew_ws.jsonl` | Gospel of Matthew (West Saxon), Bright, 1904 (corrected impression of 1910) | https://en.wikisource.org/wiki/Evangelium_Secundum_Mattheum:_the_Gospel_of_Saint_Matthew_in_West-Saxon | Wikisource transcription, CC BY-SA 4.0. The scan is tagged PD-scan on Wikimedia Commons | page footer, Commons file page |
-| `john_ws.jsonl` | Gospel of John (West Saxon), Bright & Harris, 1904 | https://en.wikisource.org/wiki/Index:Gospel_of_Saint_John_in_West-Saxon.djvu | Wikisource transcription, CC BY-SA 4.0. The scan is tagged PD-scan on Wikimedia Commons | page footer, Commons file page |
+| `john_ws.jsonl` | Gospel of John (West Saxon), Bright, 1904 | https://en.wikisource.org/wiki/Index:Gospel_of_Saint_John_in_West-Saxon.djvu | Wikisource transcription, CC BY-SA 4.0. The scan is tagged PD-scan on Wikimedia Commons | page footer, Commons file page |
 | `soliloquies.jsonl` | Alfred's *Soliloquies*, Hargrove, 1902 | https://en.wikisource.org/wiki/King_Alfred%27s_Old_English_Version_of_St._Augustine%27s_Soliloquies | Wikisource transcription, CC BY-SA 4.0. The edition is public domain in the United States | page footer and the page's public-domain notice |
 | `wyatt_beowulf.jsonl` | *Beowulf*, Wyatt, 1894 | https://en.wikisource.org/wiki/Beowulf_(Wyatt) | Wikisource transcription, CC BY-SA 4.0. The edition is public domain in the United States | page footer and the page's public-domain notice |
 | `hs_beowulf.jsonl` | *Beowulf*, Harrison & Sharp, 4th revised edition (first 1883), in the Project Gutenberg revision whose producer modernised some quantities | https://www.gutenberg.org/ebooks/9701 | Project Gutenberg: "Public domain in the USA." | ebook page |
 | `zupitza_grammar.jsonl` | Ælfric's *Grammar*, Zupitza, 1880 | https://www.gutenberg.org/ebooks/45861 | Project Gutenberg: "Public domain in the USA." | ebook page |
 | `sweet_primer.jsonl` | *Anglo-Saxon Primer* (texts), Sweet, 1905 | https://www.gutenberg.org/ebooks/34316 | Project Gutenberg: "Public domain in the USA." | ebook page |
-| `physiologus.jsonl` | *Old English Physiologus*, Cook & Pitman, 1921 | https://www.gutenberg.org/ebooks/14529 | Project Gutenberg: "Public domain in the USA." | ebook page |
+| `physiologus.jsonl` | *Old English Physiologus*, Cook, 1921 | https://www.gutenberg.org/ebooks/14529 | Project Gutenberg: "Public domain in the USA." | ebook page |
 
 The Project Gutenberg header and licence are not part of the extracted text. Attribution for the Wikisource works:
 the Wikisource contributors of each page, at the URLs above.

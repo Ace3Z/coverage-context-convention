@@ -56,7 +56,7 @@ SOURCES = {
     # pages 158-161 are the editor's notes, so the text stops at 157
     "john_ws": dict(index="Gospel of Saint John in West-Saxon.djvu", pages=(45, 157),
                     title="The Gospel of Saint John in West-Saxon",
-                    work="Gospel of John (West Saxon)", editor="Bright & Harris", year=1904, genre="prose",
+                    work="Gospel of John (West Saxon)", editor="Bright", year=1904, genre="prose",
                     split="dev", role="dev"),
     "bright_reader": dict(root="Bright's Anglo-Saxon Reader", subpages=[
         "From the Gospels: St. Mark, Chap. IV", "Orpheus and Eurydice", "Account of the Poet Cædmon",
@@ -87,7 +87,7 @@ SOURCES = {
                          start="<h2>TEXTS.</h2>", end="<h2>NOTES.</h2>", work="Anglo-Saxon Primer (texts)",
                          editor="Sweet", year=1905, genre="mixed", split="train", role="train"),
     "physiologus": dict(ebook=14529, units=("td.left",), heads=("h1",),
-                        work="Old English Physiologus", editor="Cook & Pitman", year=1921, genre="verse",
+                        work="Old English Physiologus", editor="Cook", year=1921, genre="verse",
                         split="train", role="train"),
     "hs_beowulf": dict(ebook=9701, units=("div.fitt", "div#back"), heads=("h1", "h2"), filters=False,
                        fragment="FINNSBURG", end="<h2>LIST OF NAMES; NOTES; AND GLOSSARY.</h2>",
