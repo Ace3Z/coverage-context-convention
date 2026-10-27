@@ -102,8 +102,8 @@ on it. The project's final systems leave `zupitza_grammar` out of training and s
 Each edition's Old English text was extracted, normalised to Unicode NFC with length marked only by macrons
 (Zupitza's circumflexes and those of 12 words in Tauber's file were converted, and other marks such as the dots of
 ċ and ġ were dropped), and split into sentences and tokens. Notes, translations and Latin and
-English lines were removed, but a few short English, Latin and markup fragments remain, for example in
-`bright_reader:00937` to `00943`. In `sweet_primer:00236` the extraction split a þā into `þ` and a short `a`.
+English lines were removed, but a few short Latin and markup fragments remain, for example a stray `nop` token in
+`matthew_ws:00907`. In `sweet_primer:00236` the extraction split a þā into `þ` and a short `a`.
 
 ## Uses
 

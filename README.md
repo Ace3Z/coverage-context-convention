@@ -96,17 +96,17 @@ in function.
 
 | Finding | Tokens | Result |
 |---|---|---|
-| Coverage matters most on verse | *Beowulf*, all tokens, frequency prior | 82.40% with training forms, 92.38% with all four dictionaries |
-| Context helps five closed-class words (class B) | *Soliloquies*, class B (mostly *þe/þē*), ByT5 | 62.66% from the word alone, 76.47% with two words each side (+13.82, 11.39 to 16.18) |
-| Context helps prose overall | *Soliloquies*, lexicon-ambiguous tokens, ByT5 | 88.91% from the word alone, 91.31% with two words each side (+2.40, 1.92 to 2.89) |
-| On verse the word alone is enough | *Beowulf*, lexicon-ambiguous tokens, ByT5 | 90.04% from the word alone, 89.83% with two words each side (−0.20, −0.62 to +0.21), and one unseen name, *Gēata* (39 tokens), decides the sign |
+| Coverage matters most on verse | *Beowulf*, all tokens, frequency prior | 82.26% with training forms, 92.39% with all four dictionaries |
+| Context helps five closed-class words (class B) | *Soliloquies*, class B (mostly *þe/þē*), ByT5 | 62.66% from the word alone, 75.40% with two words each side (+12.74, 10.37 to 15.03) |
+| Context helps prose overall | *Soliloquies*, lexicon-ambiguous tokens, ByT5 | 88.88% from the word alone, 91.27% with two words each side (+2.39, 1.96 to 2.88) |
+| On verse the word alone is enough | *Beowulf*, lexicon-ambiguous tokens, ByT5 | 89.97% from the word alone, 90.26% with two words each side (+0.29, −0.11 to +0.64), and +0.78 (0.43 to 1.12) without one unseen name, *Gēata* (39 tokens), both under one point |
 | Editors differ most on whether to mark the class B words long | Wyatt against Klaeber (Tauber), lexicon-ambiguous / class B | 96.08% / 78.07% agreement |
 | CharsiuG2P's errors are mostly about length | its own 500-word Old English test set | word error rate 0.208 as published and 0.188 with 50 decoding steps, where 75.5% of the word errors differ only in vowel length |
 
 An LLM, Claude Opus 5.5 (model id `claude-opus-5-5`), made the 560 labels. Two separate runs of it labelled the
 ambiguity classes and the error types with the same written guidelines, and a third run settled their disagreements.
 A single run labelled a sample of 100 editor disagreements. A blind review by further runs of the same model agreed
-with 538 of the 560 labels, and of the 22 it disputed another run kept 13 and corrected nine. The labels were then
+with 535 of the 560 labels, and of the 25 it disputed another run kept 18 and corrected seven. The labels were then
 manually checked, and none was changed. The guidelines, the item sheets and the labels of the two runs
 (`labels_a.tsv`, `labels_b.tsv`) are in `results/label_review/materials/`, and the blind review is in
 `results/label_review/expert_review.json`. The settled labels are in `data/ambiguity_classes.csv` and
@@ -226,11 +226,11 @@ coverage-context-convention/
 
 ## 🖥️ Compute
 
-- `bash run_all.sh` takes about two minutes on an Apple M-series laptop, including 89 unit tests (one is skipped unless
+- `bash run_all.sh` takes about two minutes on an Apple M-series laptop, including 90 unit tests (one is skipped unless
   the Wikisource download is cached), 660 frozen checks and the report.
 - `requirements.txt` installs and passes those checks on macOS with Python 3.11 and 3.14, and on Linux with Python 3.14
   and a CUDA GPU.
-- A ByT5-small dev selection run took 12 to 70 minutes on a shared lab GPU (`results/encoder/selection.json` records
+- A ByT5-small dev selection run took 12 to 180 minutes on a shared lab GPU (`results/encoder/selection.json` records
   each run's time).
 - CharsiuG2P's own 500-word benchmark takes a few minutes on a recent laptop CPU. Its predictions on our test sets were
   made on a GPU.

@@ -52,7 +52,7 @@ with 58 of the 60, and another run kept the other two (`results/label_review/`).
 checked, and none was changed.
 The 60 skeletons were picked by their frequency in the training works (Zupitza included) and both test sets, and they are kept under
 decision D3. With training forms plus WikiPron, the `d3` block of `data/ambiguity_classes.json` records that `hi`
-is no longer lexicon-ambiguous without Zupitza, and that 6,759 of the 36,203 lexicon-ambiguous tokens counted there
+is no longer lexicon-ambiguous without Zupitza, and that 6,757 of the 36,201 lexicon-ambiguous tokens counted there
 fall outside the list.
 
 Results are the mean and sample standard deviation over seeds. A difference between two systems gets a 95%
@@ -79,7 +79,7 @@ It takes about two minutes and has six steps:
 1. Inputs. It uses `data/brunetti-length.txt` (Tauber's *Beowulf* gold) and `data/ang_latn_broad.tsv` (WikiPron Old
    English) if they are present and downloads them otherwise, then prints their SHA-256. `oevl.audit_splits` prints
    the word 6-gram overlap of each held-out set with each training work and writes `data/leakage_excluded.json`.
-2. The 89 unit tests in `tests/` (one is skipped unless Matthew's Wikisource download from section 3 is cached).
+2. The 90 unit tests in `tests/` (one is skipped unless Matthew's Wikisource download from section 3 is cached).
 3. Dictionaries. `oevl.wikipron_to_marked` writes `data/lex_wikipron.csv`. The three proposal dictionaries ship in
    `data/`, so `oevl.build_lexicons --unions-only` only rebuilds the unions. Without them it downloads and converts
    the original sources.
@@ -119,7 +119,7 @@ PYTHONPATH=src python -m oevl.build_lexicons
 retrieval date and SHA-256 of each input, and the work's `role` (train, dev, test or agreement). The original extraction
 script is not part of this repository, so the rules were worked out from the files. After `clean_corpus`, `matthew_ws`, `bright_reader`,
 `physiologus`, `hs_beowulf` and `john_ws` rebuild byte for byte. The other four rebuilds contain all but four of their
-65,991 committed tokens in order, but some sentences differ, mostly where the original language filter dropped short
+65,986 committed tokens in order, but some sentences differ, mostly where the original language filter dropped short
 lines (the module docstring has the details). Those four committed files were kept as they are. `john_ws.jsonl`
 (Gospel of John, the dev set) is built the same way as Matthew. The builder still writes an old sentence-level `split`
 field, which `clean_corpus` removes, because the split is by work as the manifest `role` says. `oevl.build_lexicons`
@@ -163,9 +163,8 @@ PYTHONPATH=src python -m oevl.select_config
 ```
 
 `run_all.sh` runs both. They rebuild the ByT5 table and numbers and `results/encoder/selection.json` from the
-committed prediction tables and run records. The `minority_reading` columns of the committed tables keep the flag the
-runs recorded, which also counted ties with the most frequent training pattern. `encoder_summary` recomputes the flag
-from the data, so `summary.json` and the numbers count only strict minority readings.
+committed prediction tables and run records. The `minority_reading` columns of the committed tables count only strict
+minority readings, and `encoder_summary` recomputes the same flag from the data.
 
 ## 6. CharsiuG2P error analysis
 

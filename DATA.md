@@ -10,10 +10,10 @@ The corpus, the dictionaries and the class labels are also on Hugging Face as
 
 | Role | Works | Tokens |
 |---|---|---|
-| Train | Bright's *Reader*, Matthew (West Saxon), Sweet's *Primer*, *Physiologus* | 69,098 |
+| Train | Bright's *Reader*, Matthew (West Saxon), Sweet's *Primer*, *Physiologus* | 69,087 |
 | Train, ablation only | Zupitza's edition of Ælfric's *Grammar* (left out under D3, see below) | 23,940 |
 | Dev | Gospel of John (`john_ws`) | 16,649 of 17,310 scored |
-| Prose test | Alfred's *Soliloquies* | 15,431 of 15,480 scored |
+| Prose test | Alfred's *Soliloquies* | 15,426 of 15,475 scored |
 | Verse test | Tauber's *Beowulf* | 17,361 (some of the 17,244 rows in Tauber's file hold two or three words) |
 | Evaluation only: editor agreement and the prior's score against each edition | Harrison & Sharp and Wyatt *Beowulf*, each with the *Finnsburh Fragment* (Wyatt's file lacks the first 18 lines of the fragment) | 35,250 (17,682 and 17,568) |
 
@@ -22,19 +22,18 @@ The split is by work, and no *Beowulf* text is used for training. A dev or test 
 (661 tokens, shared with Matthew and Sweet), one *Soliloquies* sentence (49 tokens) and nothing from *Beowulf*.
 `PYTHONPATH=src python -m oevl.audit_splits` repeats the check.
 
-A few short English, Latin and markup fragments survived the extraction, for example English notes in
-`bright_reader:00937` to `00943` and a stray `nop` token in `matthew_ws:00907`. In `sweet_primer:00236` the
-extraction split a þā into `þ` and a short `a`, which gives one wrong training label. They are part of the training data
-the results used.
+A few short Latin and markup fragments survived the extraction, for example a stray `nop` token in `matthew_ws:00907`.
+In `sweet_primer:00236` the extraction split a þā into `þ` and a short `a`, which gives one wrong training label. They
+are part of the training data the results used.
 
 ## Decision D3: Zupitza
 
 Zupitza's *Grammar* is a Latin grammar written in Old English. It was kept out of dev and test, and whether to train
 on it was left open. We decided on the John dev set, on the 7,639 lexicon-ambiguous tokens (training forms plus
 WikiPron) that both settings share. Dropping Zupitza raised the prior from 95.12% to 95.60% and the bilateral
-logistic model from 94.72% to 95.23% (seeds 1 to 3). The best ByT5 sentence-arm setting without Zupitza also beats the
-best one with it (95.99% against 95.28%, seeds 1 and 2), but at the five matched settings without a collapsed run the
-change ranges from -0.34 to +0.99 points, so ByT5 is consistent with the decision rather than evidence for it.
+logistic model from 94.70% to 95.31% (seeds 1 to 3). The best ByT5 sentence-arm setting without Zupitza also beats the
+best one with it (95.70% against 95.21%, seeds 1 and 2), but at the five matched settings without a collapsed run the
+change ranges from -7.40 to +0.49 points, so ByT5 gains from the decision in all but its least trained setting (1 epoch at learning rate 1e-4).
 
 So every system in `results/<setting>/` trains without Zupitza. So do `oevl.try_text`, the ByT5 default, the coverage
 numbers in the report, the CharsiuG2P populations, and the prior that `oevl.agreement` compares the editors with.
