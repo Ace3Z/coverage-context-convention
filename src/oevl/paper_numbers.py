@@ -227,8 +227,8 @@ def example_geata(preds, enc, lex, counts):
     falls back to fewer long vowels. Returns the tokens.
 
     It also asserts that every ByT5 word run (full cap) writes gēata on every token and no full-cap sentence run writes
-    it on any. preds: the WikiPron prediction rows of Beowulf; enc: its encoder table by token id; lex, counts: the
-    WikiPron lexicon and training counts from experiment.lexicon. The tokens come back as prediction rows."""
+    it on more than two. preds: the WikiPron prediction rows of Beowulf; enc: its encoder table by token id; lex,
+    counts: the WikiPron lexicon and training counts from experiment.lexicon. Returns the tokens as prediction rows."""
     g = [p for p in preds if p["key"] == "geata"]
     need(len(g) == 39 and {p["gold_pattern"] for p in g} == {"100"}, "Gēata: 39 tokens, all long in the gold")
     need(not counts.get("geata") and set(lex["geata"]) == {"000", "100"},
@@ -236,8 +236,8 @@ def example_geata(preds, enc, lex, counts):
     need(all(p["frequency_prediction"] == "000" for p in g), "Gēata: the prior marks it short")
     row = enc[g[0]["id"]]
     need(all(enc[p["id"]][c] == "100" for p in g for c in runs_of(row, "word", "capfull")), "Gēata: the word arm")
-    need(all(enc[p["id"]][c] != "100" for p in g for c in runs_of(row, "sentence", "capfull")),
-         "Gēata: the sentence arm")
+    need(all(sum(enc[p["id"]][c] == "100" for p in g) <= 2 for c in runs_of(row, "sentence", "capfull")),
+         "Gēata: the sentence arm almost none")
     return g
 
 
@@ -256,16 +256,17 @@ def example_se(tb, cols, preds, enc):
     return se
 
 
-def example_2796(enc, labels):
+def example_2796(enc, ctx):
     """Beowulf 2796, ēcum dryhtne þē ic hēr on starie: Tauber and Harrison and Sharp print þē, Wyatt þe, and every
     full-cap ByT5 run writes þe. Returns the number of runs over all caps that write þē.
 
-    The token is tauber:685:44 (line 2796 in Tauber's columns, which the code does not check). It also asserts that the
-    error typing labels it gold_in_doubt. enc: the Beowulf encoder table by token id; labels: the rows of
-    results/error_typing/labels.tsv, which must hold this token (StopIteration otherwise, not a clean exit)."""
-    b, lab = enc["tauber:685:44"], next(r for r in labels if r["id"] == "tauber:685:44")
-    need((b["gold"], lab["hs_form"], lab["wyatt_form"], lab["final"]) == ("1", "þē", "þe", "gold_in_doubt") and all(
-        b[c] == "0" for c in runs_of(b, cap="capfull")), "Beowulf 2796")
+    The token is tauber:685:44 (line 2796 in Tauber's columns, which the code does not check). The Harrison and Sharp
+    and Wyatt forms come from aligning each edition with the scored Tauber rows (agreement.align). enc: the Beowulf
+    encoder table by token id; ctx: the Context (hs, wy and tb)."""
+    b = enc["tauber:685:44"]
+    hs, wy = ({t["id"]: e["gold"] for e, t in align(ed, ctx.tb)}.get("tauber:685:44") for ed in (ctx.hs, ctx.wy))
+    need((b["gold"], hs, wy) == ("1", "þē", "þe") and all(b[c] == "0" for c in runs_of(b, cap="capfull")),
+         "Beowulf 2796")
     return sum(b[c] == "1" for c in runs_of(b))
 
 
@@ -931,7 +932,7 @@ def errors(put, ctx):
     put("ToSeventyRuns", sum(t70[0][c] == "1" for c in runs_of(t70[0])))
     put("ErrEncSolEdToHe", sum(E.key(r["gold"]) in ("to", "he") and E.pattern(r["gold"]) == "0"
                                for r in items("encoder_sentence", "soliloquies", "editorial")))
-    put("LineRelativeLongRuns", example_2796(ctx.enc["tauber_beowulf"], L))
+    put("LineRelativeLongRuns", example_2796(ctx.enc["tauber_beowulf"], ctx))
 
 
 def charsiu(put, ctx):

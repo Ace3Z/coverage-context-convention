@@ -142,7 +142,7 @@ def main():
     if the configuration with the highest mean_on_shared_7639 (the first one on equal values) is not the rule's
     choice, since population_note says both scorings give the same choice. That check does not rerun the tie rule on
     the shared means. Nothing is written when a check fails. The descriptive fields (what, code_commit, command,
-    grid, rule, population_note and their D3 counterparts) are fixed text, so the commit fc8a0b2 and the token
+    grid, rule, population_note and their D3 counterparts) are fixed text, so the commit bad3695 and the token
     counts 7,782 and 7,639 in population_note are not checked here. The numbers come from the runs and from
     results/wikipron and results/wikipron_with_zupitza (metrics.json and john_ws_predictions.jsonl).
     """
@@ -161,7 +161,7 @@ def main():
     rec = {
         "what": "Model selection for the ByT5 encoder (the selection search and decision D3): sentence arm only, seeds 1 and 2, scored "
                 "on the john_ws dev set. The test sets played no part in the choice.",
-        "code_commit": "fc8a0b2",
+        "code_commit": "bad3695",
         "command": "python -m oevl.encoder_experiment --arms sentence --seed SEED --max-bytes 2560 --batch 32 --micro 8 "
                    "--lr LR --epochs EPOCHS [--exclude-train zupitza_grammar] --out "
                    "select/<z|noz>_lr<LR>_ep<EPOCHS>/sentence_s<SEED>",
@@ -180,7 +180,7 @@ def main():
                     "1-3, trained with and without Zupitza. Percent.",
             "command": "python -m oevl.experiment --lexicon data/lex_wikipron.csv --tests john_ws "
                        "[--exclude-train zupitza_grammar]",
-            "code_commit": "fc8a0b2",
+            "code_commit": "bad3695",
             "with_zupitza": {"train_tokens": json.loads((ROOT / "results/wikipron_with_zupitza/metrics.json").read_text(
                 encoding="utf8"))["dataset"]["train"], **logistic("wikipron_with_zupitza", shared)},
             "without_zupitza": {"train_tokens": json.loads((ROOT / "results/wikipron/metrics.json").read_text(

@@ -11,8 +11,8 @@ that differs (cap128, cap256, capfull). Writes to --out:
     (<config>:frequency), population flags and class, followed by one column per run of that config
     (<config>/<arm>_s<seed>) with its pattern. Read the patterns as strings.
 Every accuracy and paired statistic in summary.json is computed from these tables alone, except that minority_reading
-is recomputed from the data with experiment.flags (see minority()): the committed tables keep the flag the runs
-recorded, which also counted ties with the most frequent training pattern.
+is recomputed from the data with experiment.flags (see minority()). The tables keep the flag the runs recorded,
+which for the committed runs is the same.
 local2 and local5 never reach a cap of the grid (see REPLICATES), so their runs at the caps of one config group (the
 configs that differ only in max_bytes) are replicates: summary.json labels them (identical_inputs_at), pools them
 under local_replicates and lists their spread per seed under replicate_spread. The table and the numbers give them,
@@ -163,8 +163,7 @@ def minority(tables, metrics):
     The training counts come from build_data(ROOT / "data") without the config's exclude_train works, and each
     token's flag is looked up by id among the held-out sets in data/, so a table id that is not there raises
     KeyError. main() calls this after writing the tables, so the files keep the recorded flag. Returns the set of
-    configs whose recorded column differed: the committed runs recorded the flag before it left out training-count
-    ties."""
+    configs whose recorded column differed, which is empty for the committed runs."""
     by_ex, stale = {}, set()
     for cfg, runs in metrics.items():
         ex = tuple(next(iter(runs.values())).get("exclude_train") or ())

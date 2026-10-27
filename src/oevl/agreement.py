@@ -3,8 +3,8 @@
 Three length-marked editions of the poem: Harrison and Sharp (1883), Wyatt (1894) and the Tauber gold (marks
 from the Perseus text of Klaeber 1922, the set the models are scored against). The Harrison and Sharp and Wyatt files
 also hold the Finnsburh Fragment. Each pair is aligned token by token on keys (lower-cased forms without macrons,
-with ð written þ and hyphens dropped), as in experiment.agreement, and aligned tokens are compared on their
-vowel-length patterns. Ambiguity and the floor (the prior) use the headline training set and lexicon, as
+with ð written þ and hyphens and apostrophes dropped), as in experiment.agreement, and aligned tokens are compared on
+their vowel-length patterns. Ambiguity and the floor (the prior) use the headline training set and lexicon, as
 results/wikipron: training forms without Zupitza (decision D3) + WikiPron.
 
   python -m oevl.agreement   -> results/agreement/metrics.json and disagreements.tsv (run_all.sh saves the printout

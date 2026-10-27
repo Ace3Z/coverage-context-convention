@@ -265,7 +265,7 @@ def main():
             arm_summary[test] = score(rows, preds, prior[test], lex, counts, cls)
             print(f"[{arm}] {test}: " + ", ".join(f"{n}={d['accuracy'] if isinstance(d, dict) else d}"
                                                    for n, d in arm_summary[test].items()), flush=True)
-        # A run that collapsed to "most long marks" (seen at 1 epoch, lr 3e-4) is flagged on the prose test set:
+        # A run that collapsed to "most long marks" (seen at lr 3e-4) is flagged on the prose test set:
         # most_long_share of at least 0.9 on soliloquies, None when --tests leaves soliloquies out
         sol = arm_summary.get("soliloquies", {}).get("most_long_share")
         arm_summary["collapsed"] = None if sol is None else sol >= 0.9

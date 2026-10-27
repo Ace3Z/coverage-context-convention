@@ -193,14 +193,14 @@ The input is the bare word, alone or in context with the target marked
 free of length bias since candidates are equally long. Arms differ only in the input: \emph{word}, \emph{left} (all
 preceding words), \emph{sentence}, \emph{local2} and \emph{local5} (two or five words on each side), all trained on the
 same \NEncTrainExamples{} ambiguous training tokens as the logistic models. We report the
-full input cap (\NEncFullCap{} bytes), as caps of 128 and 256 bytes move mean ambiguous-token accuracy by under a
-point.
+full input cap (\NEncFullCap{} bytes), as 128- and 256-byte caps move mean ambiguous-token accuracy by under two
+points.
 
 \paragraph{Protocol.} We chose the setting (learning rate $3\cdot10^{-4}$, \NSelEpochs{} epochs, no Zupitza) from
 \NSelRuns{} sentence-arm runs on development data and reused it for every arm. Dropping Zupitza's \textit{Grammar},
 which marks \emph{þes}, \emph{gyt} and \emph{lytel} short, lifts the prior on ambiguous development tokens from
 \NDevFreqZupShared\% to \NDevFreqNoZup\% and the bilateral model from \NDevBilZupShared\% to \NDevBilNoZup\%. ByT5
-neither supports nor contradicts this: over the \NPDThreeEncSettings{} settings run both ways, the change spans
+gains too in all but the least trained of the \NPDThreeEncSettings{} settings run both ways: the change spans
 $\NPDThreeEncMin$ to $\NPDThreeEncMax$ points (we leave out a sixth, where one run chose the candidate with most long
 vowels for \NCollapseDevMostLong\% of ambiguous development tokens). The price, measured afterwards, is coverage: only Zupitza writes
 \emph{forþām}, \emph{swāswā} and \emph{forþī} as one word, so \NPZupWords{} prose test tokens become unknown and the
@@ -270,7 +270,7 @@ Frequency prior & \NEncCapfullSolLexFreq\phantom{$\pm$0.00} & \NEncCapfullSolCls
 
 \subsection{Context}\label{sec:context}
 Context helps class~B and barely moves classes A and C. On prose, local2 (chosen after the test results) beats the word arm by
-\dci{NEncCapfullSolLexLocalTwoVsWord} points on ambiguous tokens (Table~\ref{tab:context}), all of it from class~B.
+\dci{NEncCapfullSolLexLocalTwoVsWord} points on ambiguous tokens (Table~\ref{tab:context}), almost all in class~B.
 There it lifts accuracy from \NEncCapfullSolClsBWord\%, where the word arm equals the prior, to
 \NEncCapfullSolClsBLocalTwo\% (\dci{NEncCapfullSolClsBLocalTwoVsWord}, or
 \iv{\NPTwoLevelSolClsBLocalTwoVsWordLo}{\NPTwoLevelSolClsBLocalTwoVsWordHi} with runs resampled). Every context arm
@@ -280,11 +280,11 @@ relative \emph{þe} from the pronoun \emph{þē} `thee' (\NPPwSolThePrior\% to \
 madest all', the prior, the ByT5 word runs and the logistic word, left and bilateral runs mark both \emph{þe} short,
 while every local2 run and every conjoined run gets the pronoun long and the relative short.
 
-On verse, one name outweighs the context gain: local2 gains \dci{NEncCapfullBeoClsBLocalTwoVsWord} points on class~B,
-almost all from \emph{þe}, yet on all ambiguous verse tokens no context arm beats the word arm (local2
+On verse, one name masks the context gain: local2 gains \dci{NEncCapfullBeoClsBLocalTwoVsWord} points on class~B,
+mostly from \emph{þe}, yet on ambiguous verse tokens no context arm clearly beats the word arm (local2
 \dci{NEncCapfullBeoLexLocalTwoVsWord}). \emph{Gēata} `of the Geats' (\NPGeataN{} tokens, all long) is unseen in training, and WikiPron
 also lists \emph{geata} `gates'. The prior falls back to fewer long vowels and misses every token, the word arm gets
-all of them in every seed, and the sentence arm none. Without \emph{Gēata} (post hoc), local2 minus word
+all in every seed, and the sentence arm almost none. Without \emph{Gēata} (post hoc), local2 minus word
 is \dci{NPBeoLexNoGeataLocalTwoVsWord} and sentence minus word \dci{NPBeoLexNoGeataBilVsWord}, both below our
 one-point margin. On all prose tokens local2 adds \NPEncGainLocalTwoSol{} points to the WikiPron prior
 (sentence arm \NPEncGainBilSol) out of the \NPHeadroomSolPts{} a better chooser could add. The three other
@@ -294,7 +294,7 @@ dictionaries add more (\NSolGainDictWiki). On all verse tokens the word arm alon
 The bilateral logistic model gains less over its word model (prose class~B \dci{NBootSolClsBBilVsWord}), as its
 features cannot express that `previous word \emph{tō}' matters for \emph{þe} alone. The post hoc conjoined variant can,
 and on prose we cannot tell it from local2 (local2 minus conjoined on class~B: \dci{NPLocalTwoVsConjSolClsB}), while
-on ambiguous verse tokens local2 leads by less than a point (\dci{NPLocalTwoVsConjBeoLex}).
+on ambiguous verse tokens local2 leads by about a point (\dci{NPLocalTwoVsConjBeoLex}).
 Training variance limits the table: over the sentence arm's nine runs at the three caps, prose class~B spans
 \NEncRunsSolClsBBilMin\% to \NEncRunsSolClsBBilMax\%. Local inputs never reach a cap, so local
 runs of one seed repeat the same training at each cap, yet local5 replicates differ by up to
@@ -377,9 +377,9 @@ ByT5's prose errors are most often grammatical
 (\NPErrEncSolGrammatical{} of \NPErrEncSolN, \emph{þe} \NPErrEncSolGramThe{} times) and its verse errors most often
 homographs (\NPErrEncBeoHomograph{} of \NPErrEncBeoN, \emph{Gēata} \NPErrEncBeoHomGeata{} times).
 Table~\ref{tab:errors} classifies \NErrItems{} random ambiguous errors of the ByT5 sentence arm (seed~1, full cap) and
-\NErrItems{} of CharsiuG2P (sampled before we dropped Zupitza). The two systems'
+\NErrItems{} of CharsiuG2P (with Zupitza in the lexicon). The two systems'
 profiles over A, B and C differ within verse ($\chi^2$ test in SciPy \cite{virtanen2020}, $p = \NPErrChiBeo$) and
-less clearly within prose ($p = \NPErrChiSol$), in opposite directions, but not when pooled (\mbox{$p = \NPErrChiAll$}). A fixed rule decides \NPErrRuleDecided{} of the \NPErrLabels{} items, so label
+within prose ($p = \NPErrChiSol$), in opposite directions, but not when pooled (\mbox{$p = \NPErrChiAll$}). A fixed rule decides \NPErrRuleDecided{} of the \NPErrLabels{} items, so label
 agreement is high partly by construction ($\kappa$ \NPErrKappaNoClass{} on the \NPErrItemsNoClass{} items without a
 class). In line 2796, \emph{ēcum dryhtne þē ic hēr on starie}, every full-cap ByT5 run writes Wyatt's \emph{þe} and
 is scored wrong against Klaeber's \emph{þē}.

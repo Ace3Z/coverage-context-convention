@@ -1,8 +1,8 @@
 """Leakage audit: word 6-grams shared by the training works and each held-out set.
 
-Tokens are compared as experiment.key gives them (bare, lower-cased, ð folded to þ, hyphens dropped), and 6-grams
-stay inside a sentence. Train is all five works in experiment.TRAIN, Zupitza included although decision D3 leaves it
-out of the final training. It prints the overlap matrix (distinct shared 6-grams per training work), writes
+Tokens are compared as experiment.key gives them (bare, lower-cased, ð folded to þ, hyphens and apostrophes dropped),
+and 6-grams stay inside a sentence. Train is all five works in experiment.TRAIN, Zupitza included although decision D3
+leaves it out of the final training. It prints the overlap matrix (distinct shared 6-grams per training work), writes
 leakage_excluded.json in the --data folder with the dev and test sentences that share a 6-gram with train, and
 asserts that what remains shares none. experiment.heldout reads that file and leaves those sentences out of the dev
 and test sets it loads for scoring. The two Beowulf agreement editions are audited but not excluded, because they

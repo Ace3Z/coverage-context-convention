@@ -1,401 +1,401 @@
 system	set	id	type	confidence	reason
-encoder_sentence	soliloquies	soliloquies:00128:29	homograph	medium	geara 'readily, well' (gearo/geare) vs gēara 'formerly'
-encoder_sentence	tauber_beowulf	tauber:220:11	gold_in_doubt	high	Wyatt þe matches system; relative particle
-encoder_sentence	tauber_beowulf	tauber:685:44	gold_in_doubt	high	Wyatt þe matches system; relative particle
-encoder_sentence	tauber_beowulf	tauber:623:10	homograph	high	sēl 'better' vs sel 'hall'
-encoder_sentence	tauber_beowulf	tauber:566:9	homograph	high	sæl 'hall' vs sǣl 'time, joy'
-encoder_sentence	soliloquies	soliloquies:00044:12	editorial	medium	compound relative 'sē þe hæfð'; Hargrove marks þē here by habit (cf. 00044); class B
-encoder_sentence	soliloquies	soliloquies:00348:14	ceiling	high	gold not in candidates
-encoder_sentence	soliloquies	soliloquies:00103:4	grammatical	high	'ofer þe' pronoun þē 'thee' vs relative þe
-encoder_sentence	tauber_beowulf	tauber:79:3	homograph	high	hof 'court' vs hōf 'raised' (hebban)
-encoder_sentence	tauber_beowulf	tauber:564:1	editorial	high	article se/sē
-encoder_sentence	soliloquies	soliloquies:00699:52	editorial	high	pronoun he/hē
-encoder_sentence	tauber_beowulf	tauber:40:2	homograph	high	fyrena 'crimes' vs fȳrena 'fiery/fire'
-encoder_sentence	tauber_beowulf	tauber:401:5	editorial	high	article se/sē
-encoder_sentence	soliloquies	soliloquies:00597:8	grammatical	high	'hweðer þe ðince' dative pronoun þē vs relative þe
-encoder_sentence	tauber_beowulf	tauber:597:7	homograph	medium	Gēata 'Geats' vs geata 'of gates'
-encoder_sentence	soliloquies	soliloquies:00246:7	editorial	high	eom/ēom same verb form
-encoder_sentence	soliloquies	soliloquies:00081:4	ceiling	high	gold not in candidates
-encoder_sentence	tauber_beowulf	tauber:64:7	grammatical	high	'ær ge fyr' pronoun gē 'ye' vs conj ge
-encoder_sentence	soliloquies	soliloquies:00031:30	editorial	high	'to þam' adverb tō, marking only
-encoder_sentence	tauber_beowulf	tauber:658:5	homograph	high	gēoc 'help' vs geoc 'yoke'
-encoder_sentence	soliloquies	soliloquies:00617:12	homograph	medium	geara 'readily' vs gēara 'formerly'
-encoder_sentence	soliloquies	soliloquies:00686:4	editorial	high	Crist/Crīst same name
-encoder_sentence	tauber_beowulf	tauber:308:21	homograph	medium	Gēata 'Geats' vs geata 'of gates'
-encoder_sentence	tauber_beowulf	tauber:566:5	gold_in_doubt	high	Wyatt ne matches system
-encoder_sentence	tauber_beowulf	tauber:571:1	editorial	high	article se/sē
-encoder_sentence	soliloquies	soliloquies:00003:44	editorial	high	suffix -lic/-līc, same word
-encoder_sentence	tauber_beowulf	tauber:474:35	grammatical	high	'þær ðe bið' dative pronoun ðē vs particle ðe
-encoder_sentence	soliloquies	soliloquies:00696:24	grammatical	high	'ge ... ge' both/and vs gē 'ye'
-encoder_sentence	soliloquies	soliloquies:00356:9	editorial	high	to before inflected infinitive
-encoder_sentence	tauber_beowulf	tauber:504:4	editorial	high	article se/sē
-encoder_sentence	tauber_beowulf	tauber:751:36	homograph	high	wēg 'wave' vs weg 'way'
-encoder_sentence	soliloquies	soliloquies:00284:18	grammatical	medium	ðes = gen. þæs 'of that' vs ðēs 'this' (Bright/WS marking); class C
-encoder_sentence	tauber_beowulf	tauber:260:18	editorial	high	article se/sē
-encoder_sentence	soliloquies	soliloquies:00089:28	editorial	high	suffix -lice/-līce, same word
-encoder_sentence	soliloquies	soliloquies:00449:7	homograph	medium	lāðian 'loathe' vs laðian 'invite'
-encoder_sentence	soliloquies	soliloquies:00032:5	grammatical	high	'þu þe lufað' relative þe vs pronoun þē
-encoder_sentence	soliloquies	soliloquies:00023:22	grammatical	high	reflexive pronoun ðē vs particle ðe
-encoder_sentence	soliloquies	soliloquies:00029:1	grammatical	high	'To þe' pronoun þē vs particle þe
-encoder_sentence	tauber_beowulf	tauber:400:2	editorial	high	article se/sē
-encoder_sentence	tauber_beowulf	tauber:165:7	homograph	medium	Gēates 'Geat's' vs geates 'gate's'
-encoder_sentence	soliloquies	soliloquies:00007:9	grammatical	high	'ge ... ge' both/and vs gē 'ye'
-encoder_sentence	soliloquies	soliloquies:00599:1	editorial	high	pronoun me/mē
-encoder_sentence	tauber_beowulf	tauber:466:9	homograph	high	gæst 'guest' vs gǣst 'spirit'
-encoder_sentence	soliloquies	soliloquies:00255:32	editorial	high	pronoun he/hē
-encoder_sentence	soliloquies	soliloquies:00671:35	grammatical	high	'beon ne mæg' negative ne vs nē 'nor'
-encoder_sentence	tauber_beowulf	tauber:512:11	editorial	high	article se/sē
-encoder_sentence	tauber_beowulf	tauber:730:17	editorial	high	article se/sē
-encoder_sentence	tauber_beowulf	tauber:133:0	grammatical	medium	dual pronoun git 'you two' vs gīt 'yet' (class B like gyt); class empty
-encoder_sentence	soliloquies	soliloquies:00263:0	grammatical	medium	conjunction ge vs pronoun gē 'ye'
-encoder_sentence	tauber_beowulf	tauber:750:29	homograph	high	gēong 'went' vs geong 'young'
-encoder_sentence	soliloquies	soliloquies:00688:12	grammatical	medium	gold reads nē 'neither'; ne 'not' also fits
-encoder_sentence	tauber_beowulf	tauber:742:7	homograph	high	hyrde 'guardian' vs hȳrde 'heard'
-encoder_sentence	tauber_beowulf	tauber:196:3	homograph	high	fyrena 'crimes' vs fȳrena 'fiery'
-encoder_sentence	soliloquies	soliloquies:00290:12	editorial	high	preposition to/tō
-encoder_sentence	soliloquies	soliloquies:00514:3	grammatical	high	object pronoun þē vs particle þe
-encoder_sentence	soliloquies	soliloquies:00285:12	homograph	high	gōd 'good' vs god 'God'
-encoder_sentence	tauber_beowulf	tauber:452:64	homograph	high	fyrenum 'wickedly' vs fȳrenum 'fiery'
-encoder_sentence	soliloquies	soliloquies:00258:6	grammatical	high	'ic þe nu wiðsprece' relative þe vs pronoun þē
-encoder_sentence	tauber_beowulf	tauber:742:6	gold_in_doubt	high	HS and Wyatt rīces match system; gold short looks wrong
-encoder_sentence	tauber_beowulf	tauber:10:0	homograph	high	wine 'friend' vs wīne 'wine'
-encoder_sentence	soliloquies	soliloquies:00405:17	grammatical	medium	þes = gen. þæs 'of that' vs þēs 'this'; class C
-encoder_sentence	tauber_beowulf	tauber:714:20	homograph	medium	gētan 'destroy' vs getan (gietan 'get')
-encoder_sentence	soliloquies	soliloquies:00659:16	grammatical	high	nē 'nor' vs negative ne
-encoder_sentence	tauber_beowulf	tauber:199:4	homograph	high	mǣg 'kinsman' vs mæg 'can'
-encoder_sentence	tauber_beowulf	tauber:390:8	homograph	high	maga 'son' vs māga gen. pl. of mǣg
-encoder_sentence	soliloquies	soliloquies:00087:7	grammatical	high	'fram ðe' pronoun ðē vs particle ðe
-encoder_sentence	soliloquies	soliloquies:00214:10	editorial	low	'to ðe cymð' is pronoun; gold leaves unstressed ðe unmarked (habit/slip), system right
-encoder_sentence	tauber_beowulf	tauber:371:2	grammatical	high	object pronoun þē vs particle þe
-encoder_sentence	tauber_beowulf	tauber:505:10	homograph	high	mǣge 'kinsman' vs mæge 'may'
-encoder_sentence	soliloquies	soliloquies:00414:39	editorial	high	pronoun he/hē
-encoder_sentence	soliloquies	soliloquies:00105:1	editorial	high	article se/sē
-encoder_sentence	tauber_beowulf	tauber:541:49	homograph	high	maga 'son' vs māga 'of kinsmen'
-encoder_sentence	soliloquies	soliloquies:00484:7	editorial	medium	ongitst/ongītst same verb, Bright marks long
-encoder_sentence	tauber_beowulf	tauber:723:22	homograph	high	hyrde 'guardian' vs hȳrde 'heard'
-encoder_sentence	tauber_beowulf	tauber:493:31	homograph	medium	Gēata 'Geats' vs geata 'of gates'
-encoder_sentence	tauber_beowulf	tauber:91:34	grammatical	high	dative pronoun þē vs particle þe
-encoder_sentence	tauber_beowulf	tauber:700:27	gold_in_doubt	high	Wyatt þe matches system
-encoder_sentence	tauber_beowulf	tauber:97:18	homograph	medium	Gēata 'Geats' vs geata 'of gates'
-encoder_sentence	tauber_beowulf	tauber:442:26	editorial	high	demonstrative ðes 'this', marking only
-encoder_sentence	soliloquies	soliloquies:00219:20	grammatical	high	'ge ... ge' both/and vs gē 'ye'
-encoder_sentence	soliloquies	soliloquies:00431:1	editorial	high	pronoun he/hē
-encoder_sentence	soliloquies	soliloquies:00395:13	editorial	high	article se/sē
-encoder_sentence	tauber_beowulf	tauber:255:29	homograph	high	maga 'kinsman' vs māga 'of kinsmen'
-encoder_sentence	tauber_beowulf	tauber:91:16	homograph	high	wine 'friend' vs wīne 'wine'
-encoder_sentence	tauber_beowulf	tauber:94:8	grammatical	high	'wið þe' pronoun þē vs particle þe
-encoder_sentence	soliloquies	soliloquies:00624:16	grammatical	high	'ne cume' negative ne vs nē 'nor'
+encoder_sentence	soliloquies	soliloquies:00103:19	ceiling	high	gold_in_candidates is no: gold ungemetlice (unmarked) is not among the candidates ungemetlīce and ūngemetlīce, so no lexicon-constrained system could get it right.
+encoder_sentence	tauber_beowulf	tauber:96:8	editorial	high	hs and wyatt both have se, so not gold_in_doubt. Tauber has nsm se, d., 'the': article in 'huru se aldor deah'. Both readings are the same article, se vs sē is only editorial habit (class C).
+encoder_sentence	tauber_beowulf	tauber:579:2	homograph	medium	hs and wyatt both have short gæst, so not gold_in_doubt. Short gæst (= giest 'guest, stranger') and long gǣst (= gāst 'spirit') are separate headwords in Clark Hall and BT, and both are content nouns. Note: Brunetti's lemma is gast 'being', which fits the long reading, so the gold mark may clash with its own lemma (a known crux for the dragon at 2312). Class column is empty.
+encoder_sentence	tauber_beowulf	tauber:521:9	homograph	high	hs and wyatt both have flet, so not gold_in_doubt. Tauber has flet n. 'hall' (as). flēt is a separate headword ('cream') in Clark Hall and BT, so these are two content words. Class column is empty.
+encoder_sentence	tauber_beowulf	tauber:468:12	editorial	high	hs and wyatt have lēoflīc like the gold, not like the system, so not gold_in_doubt. Both readings are the same adjective 'precious' (Tauber asn leoflic). Only the suffix -lic/-līc differs, and the dictionaries disagree on it: Clark Hall has lēoflic, BT has lēoflīc. Class column is empty.
+encoder_sentence	soliloquies	soliloquies:00037:7	grammatical	high	In 'for þe sint geselige', þe is the pronoun 'thee' (gold þē). The system's short þe is the relative particle reading. This is the class B þe/þē function split.
+encoder_sentence	soliloquies	soliloquies:00285:16	grammatical	high	In 'ne nane don ne mæge', the target is the verbal negator ne 'not' before mæge (gold ne). The system chose nē 'nor'. This is the class B ne/nē function split.
+encoder_sentence	soliloquies	soliloquies:00089:15	grammatical	high	In '...næbbe ne ic nanwiht betere nat', the word joins clauses as nē 'nor' (gold). The system chose ne 'not'. This is the class B ne/nē function split.
+encoder_sentence	soliloquies	soliloquies:00687:2	editorial	high	Both readings are the same proper name Abraham in the same function. The candidates (abraham, abrahām, ābrahām) show that sources mark this foreign name differently by habit. Class column is empty.
+encoder_sentence	tauber_beowulf	tauber:465:0	homograph	high	hs and wyatt have Gēat like the gold, so not gold_in_doubt. Tauber has Geat np 'the Geat' (Beowulf). The system's geat is 'gate', a different headword (BT has both geat and gēat). Both are content words. Class column is empty.
+encoder_sentence	soliloquies	soliloquies:00635:26	grammatical	high	In 'sawle þe ðe ealne weig segð', the first þe is the relative and the target ðe is the pronoun 'to thee' (gold ðē). The system's short ðe is the particle reading. This is the class B function split.
+encoder_sentence	soliloquies	soliloquies:00664:22	editorial	high	In 'seo sawl and se lichama', se is the article 'the' in both readings. se vs sē is only editorial habit (class C).
 encoder_sentence	tauber_beowulf	tauber:260:5	gold_in_doubt	high	HS and Wyatt swīðe match system
-encoder_sentence	soliloquies	soliloquies:00033:51	editorial	high	gen. article þæs/þǣs
-encoder_sentence	tauber_beowulf	tauber:47:3	homograph	high	maga 'son' vs māga 'of kinsmen'
-encoder_sentence	soliloquies	soliloquies:00314:7	homograph	medium	hēle (=hǣle 'health') vs hele 'hell/cover'
-encoder_sentence	tauber_beowulf	tauber:542:1	editorial	high	article se/sē
-encoder_sentence	tauber_beowulf	tauber:615:5	homograph	high	mǣg 'kinsman' vs mæg 'can'
-encoder_sentence	soliloquies	soliloquies:00640:4	editorial	high	possessive min/mīn
-encoder_sentence	soliloquies	soliloquies:00657:5	editorial	high	article se/sē
-encoder_sentence	tauber_beowulf	tauber:430:5	homograph	high	flet 'floor, hall' vs flēt 'cream'
-encoder_sentence	soliloquies	soliloquies:00189:38	homograph	high	wite 'know' (subj.) vs wīte 'punishment'
-encoder_sentence	soliloquies	soliloquies:00574:6	editorial	low	'power'; editors differ ān-/an- (Hargrove ānweald, WS Gospels anweald); could be homograph
-encoder_sentence	tauber_beowulf	tauber:185:15	gold_in_doubt	high	Wyatt ne matches system
-encoder_sentence	tauber_beowulf	tauber:480:7	homograph	medium	Gēata 'Geats' vs geata 'of gates'
-encoder_sentence	tauber_beowulf	tauber:580:14	homograph	medium	Gēata 'Geats' vs geata 'of gates'
-encoder_sentence	tauber_beowulf	tauber:452:45	editorial	high	article se/sē
-encoder_sentence	tauber_beowulf	tauber:533:3	homograph	high	wine 'friend' vs wīne 'wine'
-encoder_sentence	soliloquies	soliloquies:00590:2	grammatical	high	dative pronoun þē vs particle þe
-encoder_sentence	soliloquies	soliloquies:00070:12	editorial	high	to before inflected infinitive
-encoder_sentence	soliloquies	soliloquies:00692:14	grammatical	high	instrumental ðē in 'ðe ma' vs particle ðe
-encoder_sentence	tauber_beowulf	tauber:429:10	homograph	high	hæle 'hero' vs hǣle 'health'
-encoder_sentence	tauber_beowulf	tauber:97:30	homograph	high	wine 'friend' vs wīne 'wine'
-encoder_sentence	soliloquies	soliloquies:00094:7	grammatical	high	'þa ðe þe findon' pronoun þē vs particle
-encoder_sentence	tauber_beowulf	tauber:583:10	editorial	high	article se/sē
-encoder_sentence	soliloquies	soliloquies:00173:9	grammatical	medium	nē 'nor' vs negative ne
-encoder_sentence	tauber_beowulf	tauber:123:24	grammatical	medium	'þy læs ... þe' causal/instrumental þē (all editions long) vs relative þe
-encoder_sentence	tauber_beowulf	tauber:638:4	homograph	medium	Gēata 'Geats' vs geata 'of gates'
-encoder_sentence	soliloquies	soliloquies:00585:5	homograph	medium	mēst (=mǣst 'most') vs mest 'mast'
-encoder_sentence	tauber_beowulf	tauber:66:1	editorial	high	article se/sē
-encoder_sentence	tauber_beowulf	tauber:522:13	editorial	high	article se/sē
-encoder_sentence	soliloquies	soliloquies:00032:1	grammatical	high	'To ðe' pronoun ðē vs particle ðe
-encoder_sentence	tauber_beowulf	tauber:38:9	homograph	high	wine 'friend' vs wīne 'wine'
-encoder_sentence	soliloquies	soliloquies:00040:29	grammatical	high	'ne ... ne' nē 'nor' vs ne 'not'
-encoder_sentence	soliloquies	soliloquies:00435:8	grammatical	medium	dative pronoun/instrumental þē vs relative þe
-encoder_sentence	tauber_beowulf	tauber:480:17	gold_in_doubt	high	Wyatt þe matches system
-encoder_sentence	tauber_beowulf	tauber:320:1	grammatical	high	'Ic þe an' pronoun þē vs particle þe
-encoder_sentence	tauber_beowulf	tauber:271:8	homograph	high	flet 'floor' vs flēt 'cream'
-encoder_sentence	tauber_beowulf	tauber:242:15	homograph	high	hyrde 'guardian' vs hȳrde 'heard'
-encoder_sentence	soliloquies	soliloquies:00624:21	grammatical	high	'ne forwyrð' negative ne vs nē 'nor'
-encoder_sentence	tauber_beowulf	tauber:399:15	grammatical	high	'ne sceþede' negative ne vs nē 'nor'
-encoder_sentence	soliloquies	soliloquies:00185:2	homograph	medium	geare 'well' vs gēare 'formerly'
-encoder_sentence	soliloquies	soliloquies:00182:13	ceiling	high	gold not in candidates
-encoder_sentence	tauber_beowulf	tauber:91:41	editorial	high	article se/sē
-encoder_sentence	soliloquies	soliloquies:00277:23	grammatical	high	'ne byð' negative ne vs nē 'nor'
-encoder_sentence	soliloquies	soliloquies:00011:65	editorial	high	to before inflected infinitive
-encoder_sentence	soliloquies	soliloquies:00230:10	editorial	high	eac/ēac same adverb
-encoder_sentence	tauber_beowulf	tauber:161:34	editorial	high	article se/sē
-encoder_sentence	tauber_beowulf	tauber:618:10	homograph	high	wīgan 'fight' vs wigan 'warrior'
-encoder_sentence	soliloquies	soliloquies:00286:35	editorial	high	pronoun he/hē
-encoder_sentence	soliloquies	soliloquies:00641:6	homograph	high	gewit 'mind' vs gewīt 'departs'
-encoder_sentence	tauber_beowulf	tauber:109:14	grammatical	high	object pronoun þē vs particle þe
-encoder_sentence	soliloquies	soliloquies:00513:5	editorial	low	reflexive pronoun 'befeste þe'; gold leaves it unmarked (habit/slip)
-encoder_sentence	tauber_beowulf	tauber:241:5	homograph	high	gēong 'went' vs geong 'young'
-encoder_sentence	soliloquies	soliloquies:00531:13	homograph	medium	mēst (=mǣst 'most') vs mest 'mast'
-encoder_sentence	tauber_beowulf	tauber:660:37	grammatical	high	instrumental ðē 'ðe sel' vs particle ðe
-encoder_sentence	soliloquies	soliloquies:00362:3	grammatical	high	dative pronoun ðē vs particle ðe
-encoder_sentence	tauber_beowulf	tauber:412:1	editorial	high	article se/sē
-encoder_sentence	tauber_beowulf	tauber:570:18	homograph	high	sēl 'better' vs sel 'hall'
-encoder_sentence	tauber_beowulf	tauber:309:11	editorial	medium	ēstum 'favour'; Bright leaves it unmarked, no other word
-encoder_sentence	tauber_beowulf	tauber:516:11	homograph	high	wine 'friend' vs wīne 'wine'
+encoder_sentence	soliloquies	soliloquies:00489:39	grammatical	high	In 'hwæðer hi lichamlice sien þe gastlice', þe is the correlative conjunction 'or' (gold short þe). The system's þē is the pronoun or instrumental reading, a different function. Class B.
+encoder_sentence	tauber_beowulf	tauber:499:4	homograph	high	hs and wyatt have mǣg like the gold, so not gold_in_doubt. Tauber has ns mæg m. 'kinsman' (Hemminges mæg). The system's mæg is the verb 'may' (magan), a different headword in BT. Class A.
+encoder_sentence	soliloquies	soliloquies:00217:2	homograph	medium	In 'Gyf ic donne leoga þonne wot God', donne is a spelling of þonne 'then', short (gold). The system's dōnne is the inflected infinitive of the full verb dōn 'do', a different headword. Neither form is in Clark Hall or BT. Class column is empty. It is close to grammatical because one reading is an inflected form.
+encoder_sentence	soliloquies	soliloquies:00066:6	editorial	high	In 'and se Halgan Gast', se is the article in both readings. se vs sē is only editorial habit (class C).
+encoder_sentence	soliloquies	soliloquies:00679:11	grammatical	high	In '...to witanne ge æac þæt...', ge is the conjunction 'and' (gold ge). The system chose gē 'ye', the pronoun. This is the class B ge/gē function split.
+encoder_sentence	soliloquies	soliloquies:00023:30	editorial	medium	In 'þi læs þu hit forgyte' ('lest'), both readings are the same adverb 'less' in the same function, and læs and lǣs both occur in Clark Hall and BT. Note: dictionaries usually mark the adverb lǣs long, so the short prose gold may be wrong. Class column is empty.
+encoder_sentence	tauber_beowulf	tauber:644:9	homograph	high	hs and wyatt have mǣg like the gold, so not gold_in_doubt. Tauber has ns mæg m. 'kinsman' (mæg Ælfheres). The system's mæg is the verb 'may', a different headword (BT has both). Class A.
+encoder_sentence	tauber_beowulf	tauber:566:12	editorial	high	hs and wyatt have se like the gold, so not gold_in_doubt. Tauber has nsm se, d., 'the' in 'ne se swifta mearh'. It is the same article in both readings (class C).
+encoder_sentence	soliloquies	soliloquies:00516:18	editorial	high	In 'and þes God', þes is the demonstrative 'this' in both readings, and BT lists only short þes. þes vs þēs is only marking habit (class C).
+encoder_sentence	soliloquies	soliloquies:00601:25	grammatical	high	In 'þone kyng ... þe byð Kyng ealra kynga', þe is the relative particle 'who' (gold short þe). The system's þē is the pronoun 'thee' reading. This is the class B þe/þē function split.
+encoder_sentence	tauber_beowulf	tauber:175:16	grammatical	medium	gold_in_candidates yes; hs/wyatt 'an' agree with gold, not system. Tauber: lemma 'on', pp 'in', so gold = preposition an (=on) and system ān = numeral/indefinite 'one'. Both readings are closed-class and differ in word class. Note: this differs from class A, which class file bases on short an = verb unnan (content word); that is not this token.
+encoder_sentence	tauber_beowulf	tauber:466:9	homograph	high	gæst 'guest' vs gǣst 'spirit'
+encoder_sentence	tauber_beowulf	tauber:469:17	homograph	high	hs/wyatt 'hæle' match gold. Tauber: lemma hæle m 'man' (ns). System hǣle is a different headword (hǣl/hǣle 'health, salvation'). CH and BT list both hæle and hǣle. Two content words with different meanings. Class column is empty.
+encoder_sentence	soliloquies	soliloquies:00001:0	grammatical	medium	Gold Nē. Elsewhere in the Soliloquies gold, nē marks 'nor' ('ne min ne nanes mannes'), so the editor reads this sentence-initial Ne as the conjunction 'nor'. System ne is the negative particle 'not'. Same spelling with different function, class B.
+encoder_sentence	tauber_beowulf	tauber:371:2	grammatical	high	object pronoun þē vs particle þe
+encoder_sentence	soliloquies	soliloquies:00629:11	editorial	high	'and þu meaht gearu witan': both readings are the pronoun 'thou' in the same function. Only the length marking (þu vs þū) differs. Class C.
+encoder_sentence	soliloquies	soliloquies:00306:18	editorial	high	'gyf he wilnað': personal pronoun 'he' in both readings. Only the habitual marking (he vs hē) differs. Class C.
+encoder_sentence	tauber_beowulf	tauber:401:5	editorial	high	article se/sē
+encoder_sentence	tauber_beowulf	tauber:751:41	homograph	high	hs/wyatt 'hyrde' match gold. Tauber: lemma hyrde m 'guardian' (as), 'frætwa hyrde'. System hȳrde = preterite of hȳran 'hear'. Different headwords (BT hyrde/hirde vs hȳran), both content words. Class column is empty.
+encoder_sentence	soliloquies	soliloquies:00232:7	grammatical	high	'ge ðin ge þæs hlafordes' is correlative ge...ge 'both...and', so gold is short ge. System gē = pronoun 'ye'. Conjunction vs pronoun, class B.
+encoder_sentence	tauber_beowulf	tauber:137:19	gold_in_doubt	high	Tauber gold siðe (lemma sið 'exploit', ds) is short, but both hs_form and wyatt_form are 'sīðe', the same as system_form. The aligned token is the same word in place ('from his siðe'). CH lists sīð long.
+encoder_sentence	soliloquies	soliloquies:00069:21	editorial	medium	'swa swa hy er weron': pronoun 'they' in both readings. Note: the gold looks like a slip. The same sentence has 'ðær hy er weron' marked hȳ, and the Soliloquies gold has hȳ 53 times against short hy 2 times. Typed by steps 4-6 as the prose rule says. Class column is empty.
+encoder_sentence	tauber_beowulf	tauber:650:2	editorial	high	hs/wyatt 'ūsic' match gold. Tauber: lemma we, ap 'us', so both readings are the accusative of wē in the same function. CH/BT have ūsic and the short usic comes from another lexicon source, so only the marking habit differs. Class column is empty.
+encoder_sentence	soliloquies	soliloquies:00398:27	editorial	medium	'þonne þer þær claðas beotweona beoð': adverb/conjunction 'there/where' in both readings. Only the marking differs (class C). Note: the Soliloquies gold marks þǣr 31 times and short þær only here, so the gold may be a slip.
+encoder_sentence	soliloquies	soliloquies:00023:43	grammatical	high	'gebyde þe feawum wordum': gebiddan takes a reflexive dative, so gold þē is the pronoun 'thee'. System þe is the particle. Pronoun vs particle, class B.
+encoder_sentence	soliloquies	soliloquies:00012:23	grammatical	high	'hwæðer hit wæs innan me ðe utan': ðe = 'or' in hwæðer...þe 'whether...or', so gold is short. System ðē is the pronoun 'thee'. Class B.
+encoder_sentence	soliloquies	soliloquies:00020:42	grammatical	high	'creftige mid þe ðe nanwiht ne amyrdan': mid takes the dative pronoun, so gold þē means 'with thee'. System þe is the relative particle. Class B.
+encoder_sentence	tauber_beowulf	tauber:255:29	homograph	high	maga 'kinsman' vs māga 'of kinsmen'
+encoder_sentence	tauber_beowulf	tauber:44:11	homograph	high	hs/wyatt 'gēoce' match gold. Tauber: lemma geoc f 'help' (as), i.e. gēoc. The system's short geoce is geoc n 'yoke'. CH and BT list both gēoc and geoc, two content words with different meanings. Class column is empty.
 encoder_sentence	soliloquies	soliloquies:00004:49	ceiling	high	gold not in candidates
-encoder_sentence	soliloquies	soliloquies:00601:9	grammatical	medium	'þe oðre' late article þe vs pronoun þē
-encoder_sentence	tauber_beowulf	tauber:540:1	editorial	high	article se/sē
-encoder_sentence	tauber_beowulf	tauber:104:18	editorial	high	article se/sē
-encoder_sentence	soliloquies	soliloquies:00123:0	grammatical	low	clause-initial Ne: gold nē 'nor' vs negative ne
-encoder_sentence	tauber_beowulf	tauber:116:12	editorial	high	usic/ūsic same pronoun form
-encoder_sentence	tauber_beowulf	tauber:209:10	gold_in_doubt	high	HS þǣm matches system
-encoder_sentence	soliloquies	soliloquies:00238:0	other	high	'A' is the speaker label (Augustinus), not a word
-encoder_sentence	soliloquies	soliloquies:00674:7	grammatical	medium	'naðer ne' correlative nē vs adverb ne
-encoder_sentence	soliloquies	soliloquies:00042:15	grammatical	medium	'ne þe nan ... gemet' pronoun þē vs particle þe
-encoder_sentence	tauber_beowulf	tauber:47:21	gold_in_doubt	high	Wyatt þe matches system
-encoder_sentence	soliloquies	soliloquies:00573:9	editorial	high	pronoun he/hē
-encoder_sentence	tauber_beowulf	tauber:227:10	gold_in_doubt	high	Wyatt ne matches system
-encoder_sentence	tauber_beowulf	tauber:196:4	homograph	high	hyrde 'guardian' vs hȳrde 'heard'
-encoder_sentence	tauber_beowulf	tauber:573:1	editorial	high	article se/sē
-encoder_sentence	tauber_beowulf	tauber:93:13	homograph	medium	Gēata 'Geats' vs geata 'of gates'
-encoder_sentence	soliloquies	soliloquies:00656:13	grammatical	high	instrumental þē 'þe mare' vs particle þe
-encoder_sentence	tauber_beowulf	tauber:60:21	gold_in_doubt	high	Wyatt þe matches system
-encoder_sentence	soliloquies	soliloquies:00535:21	grammatical	high	'þe ne libbe' conj þe 'or' vs pronoun þē
 encoder_sentence	tauber_beowulf	tauber:624:5	homograph	high	gemet 'fitting' vs gemēt 'finds'
-encoder_sentence	soliloquies	soliloquies:00514:13	grammatical	high	dative pronoun þē vs particle þe
-encoder_sentence	soliloquies	soliloquies:00003:6	homograph	high	maga 'able' vs māga 'of kinsmen'
-encoder_sentence	tauber_beowulf	tauber:161:25	homograph	medium	Gēata 'Geats' vs geata 'of gates'
-encoder_sentence	tauber_beowulf	tauber:161:43	homograph	high	fyrena 'crimes' vs fȳrena 'fiery'
-encoder_sentence	tauber_beowulf	tauber:357:7	homograph	high	gewitan 'know' vs gewītan 'depart'
-encoder_sentence	tauber_beowulf	tauber:314:6	homograph	medium	Gēata 'Geats' vs geata 'of gates'
-encoder_sentence	soliloquies	soliloquies:00482:2	grammatical	high	dative pronoun þē vs particle þe
-encoder_sentence	tauber_beowulf	tauber:7:4	homograph	high	gōde 'good' vs gode 'God'
-encoder_sentence	tauber_beowulf	tauber:288:15	gold_in_doubt	high	HS and Wyatt ðe match system
-encoder_sentence	soliloquies	soliloquies:00030:0	editorial	high	preposition To/Tō
-encoder_sentence	soliloquies	soliloquies:00285:10	grammatical	low	'naþer ne' correlative; gold ne vs nē (gold inconsistent with item 154)
-encoder_sentence	tauber_beowulf	tauber:384:1	homograph	medium	Gēata 'Geats' vs geata 'of gates'
-encoder_sentence	soliloquies	soliloquies:00190:44	grammatical	high	relative þe vs pronoun þē
-encoder_sentence	tauber_beowulf	tauber:192:5	editorial	high	article se/sē
-encoder_sentence	tauber_beowulf	tauber:249:6	gold_in_doubt	high	HS and Wyatt þæt match system; gold þǣt looks wrong
-encoder_sentence	soliloquies	soliloquies:00199:38	editorial	high	article se/sē
-encoder_sentence	soliloquies	soliloquies:00077:0	editorial	high	preposition To/Tō
-encoder_sentence	tauber_beowulf	tauber:193:0	gold_in_doubt	high	Wyatt Ne matches system
+encoder_sentence	soliloquies	soliloquies:00490:1	grammatical	medium	'Forðam þes nis nan tweo' is the idiom þæs nis nan twēo 'there is no doubt of this'. The Soliloquies gold writes þes for the genitive þæs every time ('þes monan færeld', 'þes geðafa'). System þēs is the nsm demonstrative 'this' (as marked in Bright and Wiktionary). So the readings are gen. of se vs nom. of þes. Note: this differs from class C.
+encoder_sentence	tauber_beowulf	tauber:348:11	editorial	high	hs/wyatt 'se' match gold. Tauber: lemma se, nsm 'the' ('þær se snotera bad'). The article is the same word in both readings and only the habitual se/sē marking differs. Class C.
+encoder_sentence	soliloquies	soliloquies:00223:14	grammatical	high	'be þam þe þu hæfst': relative particle þe, so gold is short. System þē is the pronoun 'thee'. Class B.
+encoder_sentence	soliloquies	soliloquies:00589:43	grammatical	high	'manige freond þara þe ðu genoh wel truwast': relative particle þe after þara, so gold is short. System þē is the pronoun. Class B.
+encoder_sentence	tauber_beowulf	tauber:410:28	homograph	high	hs/wyatt 'gōd' match gold. Tauber: lemma god, adj nsn 'good' ('god ond geatolic' of the sword). System god = noun 'God'. Class A.
+encoder_sentence	tauber_beowulf	tauber:734:14	editorial	high	hs/wyatt 'se' match gold. Tauber: se nsm 'the' ('wæs se legdraca'). Same article in both readings, and only the marking differs. Class C.
+encoder_sentence	tauber_beowulf	tauber:27:10	editorial	high	hs/wyatt 'se' match gold. Tauber: se nsm 'the' ('cwæð þæt se ælmihtiga'). Same article in both readings, and only the marking differs. Class C.
+encoder_sentence	soliloquies	soliloquies:00229:5	grammatical	high	Gold þē is the pronoun 'thee', governed by the postposed fram ('se ǣca þē nāht fram ne gewyt', the eternal one never departs from thee). The system's þe is the relative particle. Different function, class B.
+encoder_sentence	tauber_beowulf	tauber:751:36	homograph	high	wēg 'wave' vs weg 'way'
+encoder_sentence	soliloquies	soliloquies:00614:56	editorial	high	Both readings are the genitive plural pronoun 'their' ('ymbe hēra þegena sæcgena'). The lexicon has hera short only from Wiktionary (Bright marks 'hera mōd' short) and hēra long from BT and WikiPron, so only the marking habit differs. Class column is empty.
 encoder_sentence	tauber_beowulf	tauber:749:5	homograph	high	hæle 'hero' vs hǣle 'health'
-encoder_sentence	soliloquies	soliloquies:00032:19	grammatical	high	'ge ... ge' both/and vs gē 'ye'
-encoder_sentence	tauber_beowulf	tauber:452:17	gold_in_doubt	high	Wyatt ne matches system
-encoder_sentence	soliloquies	soliloquies:00056:1	grammatical	high	'Ðu þe oferswiðdest' relative þe vs pronoun þē
+encoder_sentence	tauber_beowulf	tauber:64:8	homograph	high	Tauber gives lemma feor, adverb, 'further' (fyr, 'farther'). The system's fȳr is the noun 'fire', a different headword (both fyr and fȳr are in CH and BT). HS and Wyatt fyr agree with the gold, so not gold_in_doubt. Class column is empty.
+encoder_sentence	soliloquies	soliloquies:00244:1	editorial	high	In 'Ac se twēonung' both readings are the article. Same word and function; se against sē is a marking habit (class C).
+encoder_sentence	soliloquies	soliloquies:00435:7	grammatical	high	The target is the particle in 'þæs þe' (gold þe), followed by the pronoun þē ('þæs þe þē māre ðearf sīe'). The system read the particle as the pronoun þē 'thee'. Class B.
+encoder_sentence	soliloquies	soliloquies:00240:3	editorial	medium	This answers 'Hwilce bebodu?' with 'Þā ic þē ar sēde' ('those I told thee before'), so ar is ǣr 'before' and both readings are the same adverb. Hargrove marks ǣr long everywhere else, so the short prose gold is probably a marking fault. Typed by steps 4-6 per the prose rule; 'other' is possible. Class column is empty.
+encoder_sentence	tauber_beowulf	tauber:314:6	homograph	medium	Gēata 'Geats' vs geata 'of gates'
+encoder_sentence	soliloquies	soliloquies:00224:1	homograph	high	'Ne wēnde ic nǣfre þæt hyt ǣce wēre' ('I never thought...'): gold wēnde is the past of wēnan 'expect, think' (CH). The system's wende is the past of wendan 'turn' (Wiktionary, WikiPron). Two different verbs, both content words. Class column is empty.
+encoder_sentence	tauber_beowulf	tauber:746:19	grammatical	high	Tauber gives ge, pronoun, np, 'you' ('bæd þæt gē geworhton'). The system's short ge is the conjunction or particle 'and, also'. HS and Wyatt gē agree with the gold, so not gold_in_doubt. Class B.
+encoder_sentence	soliloquies	soliloquies:00642:30	grammatical	high	In the series 'hweðer ... wēoxe, þe wanede, þe ... stōde, þe hyt swā dyde' the target þe is the conjunction 'or' (gold short). The system's þē reads it as the pronoun or instrumental. Different function, class B.
+encoder_sentence	soliloquies	soliloquies:00351:27	grammatical	high	Gold þē is the object pronoun ('and þē on nānum þingum ne ābysige', parallel to 'nē ðē ne unǣmtige'). The system's þe is the relative particle. Class B.
+encoder_sentence	tauber_beowulf	tauber:714:20	homograph	medium	gētan 'destroy' vs getan (gietan 'get')
+encoder_sentence	soliloquies	soliloquies:00581:20	editorial	high	Both readings are the infinitive marker before 'gelȳfanne'; to and tō is a marking habit (class C). Note that the gold marks 'tō witanne' long a few words earlier in the same sentence, so the short gold is inconsistent.
+encoder_sentence	tauber_beowulf	tauber:570:18	homograph	high	sēl 'better' vs sel 'hall'
+encoder_sentence	tauber_beowulf	tauber:69:4	homograph	high	Tauber gives lemma god, adjective, 'good' ('Wes þu us lārena gōd'). The system's god is the noun 'god'. HS and Wyatt gōd agree with the gold. Class A.
+encoder_sentence	tauber_beowulf	tauber:243:9	homograph	high	Tauber gives lemma wēnan, verb, p1s, 'expect'. The system's wende is the past of wendan 'turn', a different verb. HS and Wyatt wēnde agree with the gold. Class column is empty.
 encoder_sentence	soliloquies	soliloquies:00068:23	editorial	high	ælc/ǣlc same word
-encoder_sentence	soliloquies	soliloquies:00018:3	grammatical	high	'ne min ne' nē 'nor' vs ne
-encoder_sentence	soliloquies	soliloquies:00705:9	grammatical	high	nē 'nor' vs negative ne
-encoder_sentence	soliloquies	soliloquies:00012:15	grammatical	medium	'ne þæt nat' gold nē 'nor' vs ne
-encoder_sentence	soliloquies	soliloquies:00391:4	editorial	high	article se/sē
-encoder_sentence	soliloquies	soliloquies:00329:0	grammatical	low	clause-initial Ne: gold nē 'nor' vs negative ne
-encoder_sentence	tauber_beowulf	tauber:561:19	homograph	high	hyrde 'guardian' vs hȳrde 'heard'
-encoder_sentence	soliloquies	soliloquies:00098:4	grammatical	high	'to þe' pronoun þē vs particle þe
-encoder_sentence	tauber_beowulf	tauber:359:6	editorial	high	article se/sē
-encoder_sentence	soliloquies	soliloquies:00211:14	editorial	high	eom/ēom same verb form
-encoder_sentence	tauber_beowulf	tauber:727:14	grammatical	medium	'þe us seceað' causal þē (both editions long) vs relative þe
-encoder_sentence	soliloquies	soliloquies:00408:0	editorial	high	ælc/ǣlc same word
+encoder_sentence	soliloquies	soliloquies:00189:12	editorial	high	Both readings are 'am' ('ic gȳt wīs ne ēom'). BT and WikiPron have eom short and only Wiktionary has ēom, so only the marking habit differs (class C).
+encoder_sentence	tauber_beowulf	tauber:214:26	editorial	high	Tauber gives se, determiner, nsm, 'the' ('hine se mōdega mǣg Hygelāces'). The system's sē is the same word with the same function. HS and Wyatt se agree with the gold, so not gold_in_doubt. Class C.
+encoder_sentence	tauber_beowulf	tauber:404:24	homograph	medium	Tauber gives flet, neuter noun, 'floor'. The long flēt in CH, BT and WikiPron is, I assume, the separate word for 'cream' (it sits beside flēte and flīete), not a length variant of 'floor'; the data have no glosses to confirm this. HS and Wyatt flet agree with the gold. Class column is empty.
+encoder_sentence	tauber_beowulf	tauber:594:31	homograph	medium	Tauber gives Geatas, proper noun, dp, 'Geats' ('Gēatum wealdan'). The short candidate geatum comes from lowercase Wiktionary and WikiPron forms (ɡ æ͜ɑ t u m, beside geat and geata), which look like the plural of geat 'gate'. HS and Wyatt Gēatum agree with the gold. Class column is empty. If the short form is only a length variant of the ethnic name, this would be editorial.
+encoder_sentence	soliloquies	soliloquies:00356:9	editorial	high	to before inflected infinitive
+encoder_sentence	soliloquies	soliloquies:00092:1	grammatical	high	In 'Gef ðē þurh trēowa findon þā ðe þē findon' ('if those who find thee find thee through faith'), the gold ðē is the object pronoun. The system's ðe is the relative particle, which belongs to the later 'þā ðe'. Class B.
+encoder_sentence	tauber_beowulf	tauber:445:1	grammatical	high	Tauber gives þu, pronoun, ds, 'you' ('Ic þē sceal ... gelǣstan'). The system's þe is the relative particle. HS and Wyatt þē agree with the gold. Class B.
+encoder_sentence	soliloquies	soliloquies:00414:25	grammatical	high	'ne mæg þēah þā sunnan selfe gesēon' ('cannot see the sun itself'): gold ne is the negative adverb. The system's nē is the conjunction 'nor'. Class B.
+encoder_sentence	tauber_beowulf	tauber:646:22	homograph	medium	Tauber gives Geatas, proper noun, dp, 'Geats' ('mid Gēatum'). The short candidate geatum is the lowercase Wiktionary and WikiPron form that looks like the dative plural of geat 'gate'. HS and Wyatt Gēatum agree with the gold. Class column is empty, and the same caveat as item 74 applies.
+encoder_sentence	tauber_beowulf	tauber:724:3	gold_in_doubt	high	Wyatt has þe short, matching the system's þe, while the gold (Tauber) has þē; HS has þē. The alignment is correct: the same relative particle in 'monige þe his mǣg wriðon' (Tauber lemma þe, r, 'who').
+encoder_sentence	tauber_beowulf	tauber:392:6	homograph	high	gold_in_candidates yes. HS and Wyatt both have Gēata, which matches the gold, so not gold_in_doubt. Tauber: gp of Geatas (np) 'Geats', read as 'Geata dryhten'. The system's geata is the gen. pl. of geat 'gate', a different headword (CH/BT gēat/geat). Both are content words. Class column is empty, so decided by the definitions.
+encoder_sentence	soliloquies	soliloquies:00688:12	grammatical	medium	gold reads nē 'neither'; ne 'not' also fits
+encoder_sentence	tauber_beowulf	tauber:700:19	editorial	high	HS and Wyatt both have se, which matches the gold. Tauber: nsm se (d) 'the' in 'se mondryhten'. se and sē are the same demonstrative with the same function and differ only by marking habit. Class C.
+encoder_sentence	soliloquies	soliloquies:00698:17	homograph	high	In 'ægðer ge ðæs godes ge þæs yfeles' ('the good and the evil') the gold gōdes is the noun/adj gōd 'good'. The system's godes is 'of God', a different headword and a content word. Class A.
+encoder_sentence	tauber_beowulf	tauber:562:4	grammatical	high	HS þē and Wyatt ðē both match the gold. Tauber: ds of þu (p) 'you', in 'on ðe gode begeaton' (addressing the earth). The system's ðe is the relative particle, so the question is pronoun versus particle. Class B.
+encoder_sentence	tauber_beowulf	tauber:308:17	editorial	high	HS and Wyatt both have se, which matches the gold. Tauber: nsm se (d) 'the' in 'þær se goda sæt'. Same article, and only the marking habit differs. Class C.
+encoder_sentence	soliloquies	soliloquies:00190:22	grammatical	high	'ymbe þa linan ... þe on þam þoðere atefred wæs' means 'the line that was painted on the ball', so þe is the relative particle (gold). The system's þē is the pronoun 'thee', a different function. Class B.
+encoder_sentence	soliloquies	soliloquies:00370:32	ceiling	high	gold_in_candidates is no. The gold ungemetlice (unmarked) is not among the candidates ungemetlīce | ūngemetlīce.
+encoder_sentence	soliloquies	soliloquies:00342:3	grammatical	high	'Ne gebelg þu þe wið me' means 'do not be angry with me', so þē is the reflexive pronoun (gold). The system's þe is the particle reading. Class B.
+encoder_sentence	tauber_beowulf	tauber:133:0	grammatical	medium	dual pronoun git 'you two' vs gīt 'yet' (class B like gyt); class empty
+encoder_sentence	tauber_beowulf	tauber:627:9	homograph	high	HS and Wyatt both have gōd, which matches the gold. Tauber: god (a) 'good', nsm, in 'gumcystum god'. The system's god is 'God', a different headword and a content word. Class A.
+encoder_sentence	soliloquies	soliloquies:00687:93	editorial	medium	'Ða cwæð Abraham' uses the same proper name in the same function. Abraham, abrahām and ābrahām differ only in how the training editions mark the name's length, and the name is not in CH or BT. Class column is empty, so decided by the definitions.
+encoder_sentence	tauber_beowulf	tauber:579:1	editorial	high	HS and Wyatt both have se, which matches the gold. Tauber: nsm se (d) 'the' in 'Ða se gæst ongan'. Same article, and only the marking habit differs. Class C.
+encoder_sentence	soliloquies	soliloquies:00694:43	grammatical	medium	'ne hi hym þe ma ... ne magon' means 'nor (can they do) them any the more', so þē is the instrumental of the demonstrative with a comparative (gold). The system's short þe is the relative particle reading, a different function. Class B. Medium because some editors write the instrumental in þe mā short.
+encoder_sentence	soliloquies	soliloquies:00527:4	editorial	high	'þæt se geleafa ne si' has the nsm article se 'the'. se and sē are the same word with the same function, and only the marking habit differs. Class C.
+encoder_sentence	tauber_beowulf	tauber:135:3	grammatical	high	HS and Wyatt both have þē, which matches the gold. Tauber: ds of þu (p) 'you', in 'Beot eal wið þe ... gelæste'. The system's þe is the particle reading. Class B.
+encoder_sentence	tauber_beowulf	tauber:585:11	gold_in_doubt	high	Wyatt has wrætlīc (short æ, long ī), the same length marks as the system's wrætlīc, while the gold is Tauber's wrǣtlīċ. The alignment is correct ('wigbord wrætlic', Tauber asn wrætlic (a) 'wondrous'). HS has wrǣtlīc, but one edition agreeing with the system is enough.
+encoder_sentence	soliloquies	soliloquies:00026:10	grammatical	high	'þu þe æall geworhtest þæt þe æalles geweorðan ne mihte ... butan þe' means 'that which could not come into being without thee'. Here þæt þe is the relative, so þe is the particle (gold). The system's þē is the pronoun 'thee'. Class B.
+encoder_sentence	soliloquies	soliloquies:00671:13	grammatical	high	In 'þu hy ne myht ful sweotole geseon' ('you cannot see her clearly') ne is the negative adverb 'not' (gold). The system's nē is the conjunction 'nor'. Class B.
+encoder_sentence	soliloquies	soliloquies:00258:9	editorial	high	In 'ic þe nu wiðsprece eom gesceadwisnes' ('I ... am Reason') eom is the 1sg of beon in both readings. Only the length marking of the diphthong differs: BT has eom, and the training works mark ēom. Class C.
+encoder_sentence	tauber_beowulf	tauber:447:0	grammatical	high	HS and Wyatt both have Ne, which matches the gold. Tauber: ne (av) 'not', in 'Ne wearð Heremod swa eaforum Ecgwelan'. The system's nē is the conjunction 'nor'. Class B.
+encoder_sentence	tauber_beowulf	tauber:512:11	editorial	high	article se/sē
+encoder_sentence	soliloquies	soliloquies:00543:29	homograph	high	'bætre on men þonne he wite and ... wyrse ðonne he nyte' is a know/not-know pair, so the gold wite is the subjunctive of witan 'know' (short i). The system's wīte is the noun 'punishment' (BT) or wītan 'blame', different headwords and content words. Class column is empty, so decided by the definitions.
+encoder_sentence	soliloquies	soliloquies:00580:11	grammatical	high	'me þincð nu þæt to lang æall to rimande and ðe to ælenge to gehyranne' means '(too) tedious for thee to hear', so ðē is the dative pronoun (gold). The system's ðe is the particle reading. Class B.
+encoder_sentence	tauber_beowulf	tauber:294:13	homograph	medium	HS and Wyatt both have gripe, which matches the gold. Tauber: gripe (m) 'attack', as, in 'grimne gripe'. The system's grīpe is the form of the verb grīpan 'seize' (Wiktionary and WikiPron list grīpe next to gripe), a different headword and a content word. Class column is empty. Medium because BT also lists grīpe, which might be a variant marking of the noun and would make this editorial.
+encoder_sentence	soliloquies	soliloquies:00161:3	grammatical	medium	Gold reads nē 'nor' as a conjunction, picking up the nāðer nē ... nē series of sentence 00160 ('Þæt is sōð; nē trūwige ic him nā'). The system reads ne, the negative adverb 'not'. The two readings fill different functions, as the class B label says. Medium because with nā the token can also be taken as the plain verbal negator.
+encoder_sentence	soliloquies	soliloquies:00467:35	editorial	medium	Both readings are the same word, uncūð 'unknown', used the same way in 'tō cuman uncūð'. Clark Hall has uncūð and BT/Wiktionary have uncūþ. The short uncuð candidate comes only from an unmarked token in Bright's reader, so only the marking differs. The class column is empty.
+encoder_sentence	tauber_beowulf	tauber:51:3	homograph	high	Tauber gives lemma Geatas, gp, 'Geats', which is Gēata. The system's geata is the gen. pl. of geat 'gate', a different content word under a different headword. HS and Wyatt both have Gēata like the gold, so this is not gold_in_doubt. The class column is empty.
+encoder_sentence	tauber_beowulf	tauber:384:20	grammatical	high	Tauber gives lemma þæt, isn, '(because of) that', the instrumental þē in 'þē sǣnra' ('the slower'). The system's short þe is the relative particle. HS and Wyatt both have þē, like the gold. Different function, class B.
+encoder_sentence	tauber_beowulf	tauber:478:27	gold_in_doubt	high	Wyatt has 'þet þē Sǣ-Gēatas', with long þē like the system, while the gold has þe (Tauber treats 'þæt þe' as þætte, conj.). I checked that the alignment is right: same word, same line. One edition agreeing with the system is enough.
+encoder_sentence	tauber_beowulf	tauber:311:4	homograph	high	Tauber gives lemma Geatas, gp, 'Geats' (Ġēata) in 'Higelac Gēata'. The system's geata is the gen. pl. of geat 'gate', a different content word. HS and Wyatt both have Gēata like the gold. The class column is empty.
+encoder_sentence	tauber_beowulf	tauber:438:21	gold_in_doubt	high	HS and Wyatt both have 'Denigea frēan', long like the system, while the gold has short frean. Tauber gives lemma frea, ds, 'lord', and Clark Hall has frēan. I checked that both editions align at the same word.
+encoder_sentence	soliloquies	soliloquies:00482:2	grammatical	high	dative pronoun þē vs particle þe
 encoder_sentence	soliloquies	soliloquies:00054:5	editorial	high	pronoun we/wē
-charsiug2p	soliloquies	soliloquies:00258:0	homograph	high	ac 'but' vs āc 'oak'
-charsiug2p	tauber_beowulf	tauber:564:25	homograph	high	bite 'bite, cut' vs bīte (bītan)
+encoder_sentence	soliloquies	soliloquies:00617:12	homograph	medium	geara 'readily' vs gēara 'formerly'
+encoder_sentence	tauber_beowulf	tauber:291:42	grammatical	high	Tauber gives lemma þe, r, 'which': the relative particle in 'þā ðe syngales sele bewitiað'. The system's ðē is a pronoun or instrumental reading. HS þe and Wyatt ðe are short like the gold. Different function, class B.
+encoder_sentence	soliloquies	soliloquies:00699:13	grammatical	medium	In 'habbe ... fram ādrifen' the token is the past participle ādrifen, with short i. The system's ādrīfen (Wiktionary/WikiPron) is a different inflection of ādrīfan, the present subjunctive plural. Same lemma, different inflection. The class column is empty.
+encoder_sentence	soliloquies	soliloquies:00074:5	editorial	high	In 'gegyered se ǣwilm', se is the article in both readings. Only the length marking of se/sē differs, an editor's habit; this edition marks the pronoun 'sē ūs gescylt' long later in the same sentence. Class C.
+encoder_sentence	tauber_beowulf	tauber:483:4	homograph	high	Tauber gives lemma god, adj, nsm, 'good', which is gōd ('cyning æþelum gōd'). The system's god is 'God'. HS and Wyatt have gōd like the gold. Class A.
+encoder_sentence	soliloquies	soliloquies:00153:13	grammatical	high	In 'swā þē is nū þes mōnan færeld' the token is the dative pronoun þē, 'to thee' (it is known to you). The system's þe is the relative particle. Different function, class B.
+encoder_sentence	tauber_beowulf	tauber:7:4	homograph	high	gōde 'good' vs gode 'God'
+encoder_sentence	tauber_beowulf	tauber:575:23	gold_in_doubt	high	Wyatt has 'ūtan-weardne; ne ðǣr', short ne like the system, while the gold has nē (Tauber: ne, c, 'not (=but...not)'). HS has nē. I checked that the Wyatt alignment is the same word in the same place.
+encoder_sentence	tauber_beowulf	tauber:632:3	homograph	high	Tauber gives lemma god, adj, nsm, 'good', which is gōd ('gebræd gōd gūðcyning'). The system's god is 'God'. HS and Wyatt have gōd like the gold. Class A.
+encoder_sentence	soliloquies	soliloquies:00471:15	editorial	high	In 'hyt sī se God þe ðū æfter spurast', se is the determiner in both readings. Only the habitual long/short marking of se/sē differs. Class C.
+encoder_sentence	soliloquies	soliloquies:00680:10	grammatical	high	In 'ge þā þe ... ge þā þe', ge is the correlative conjunction 'both ... and'. The system's gē is the pronoun 'ye'. Different word class, class B.
+encoder_sentence	tauber_beowulf	tauber:430:5	homograph	high	flet 'floor, hall' vs flēt 'cream'
+encoder_sentence	soliloquies	soliloquies:00023:37	grammatical	high	In 'þæt þū sī ðē werðer þīnes creftes' the token is the instrumental ðē, 'the worthier'. The system's ðe is the relative particle. Different function, class B.
+encoder_sentence	soliloquies	soliloquies:00658:17	grammatical	high	In 'heora āgenu ār þē māre' the token is the instrumental þē, 'the more', matching 'þē māre' in 00657. The system's þe is the relative particle. Different function, class B.
+encoder_sentence	soliloquies	soliloquies:00032:5	grammatical	high	'þu þe lufað' relative þe vs pronoun þē
+encoder_sentence	soliloquies	soliloquies:00384:5	grammatical	high	In 'gyf hī ðē myrrað' the token is the accusative pronoun ðē, 'thee' (they hinder you). The system's ðe is the relative particle. Different function, class B.
+encoder_sentence	tauber_beowulf	tauber:384:22	grammatical	medium	Tauber gives lemma þe, c, 'as' in 'sǣnra ðē hyne swylt fornam': the conjunction (instrumental origin, 'because/than'). The system's short ðe is the relative particle. HS þē and Wyatt ðē are long like the gold. Medium because the length of conjunctional þe is partly an editorial habit.
+encoder_sentence	tauber_beowulf	tauber:580:12	editorial	high	Tauber gives lemma se, d, nsm, 'the', the article in 'hū se gūðsceaða'. HS and Wyatt both have se like the gold, so this is not gold_in_doubt. Only the habitual marking of the article differs. Class C.
+encoder_sentence	tauber_beowulf	tauber:193:2	editorial	high	Tauber gives lemma se, d, nsm, 'the', the article in 'Ne þæt se aglǣca'. HS and Wyatt both have se like the gold. Only the habitual marking of se/sē differs. Class C.
+encoder_sentence	tauber_beowulf	tauber:151:18	homograph	medium	Tauber: feng m. 'grip' (as). System fēng is the preterite of the verb fōn 'seize', a different headword, and both are content words. HS and Wyatt have feng, which agrees with gold, so this is not gold_in_doubt. Class is empty. The two words are related by derivation.
+encoder_sentence	tauber_beowulf	tauber:116:6	homograph	high	Tauber: wine m. 'friend' (ns, 'Fore þu wine min'). System wīne is a form of wīn 'wine', a different content word. HS and Wyatt have wine, which agrees with gold. Class is empty.
+encoder_sentence	soliloquies	soliloquies:00527:11	grammatical	medium	In 'þē mēþe' (= þē mā þe, 'any more than'; compare 'ðē mā þe' in 00692) the gold þē is the instrumental demonstrative. The system's þe is the relative particle. Same spelling, different grammatical function. Class B.
+encoder_sentence	tauber_beowulf	tauber:249:6	gold_in_doubt	high	HS and Wyatt þæt match system; gold þǣt looks wrong
+encoder_sentence	soliloquies	soliloquies:00157:21	grammatical	high	'gemyrran ne mahte nē on nanum tweonunga gebringan': the token is the coordinating 'nor'. The system's ne is the negative adverb 'not'. Different function. Class B.
+encoder_sentence	soliloquies	soliloquies:00156:12	homograph	medium	Gold donne is a d-spelling of þonne 'then' ('donne bēo ic āmyrred'). The system's dōnne is the inflected infinitive of the verb dōn 'do', a different headword and a content word. Class is empty. It could also be argued as grammatical.
+encoder_sentence	soliloquies	soliloquies:00692:17	editorial	high	Both readings are the same proper name Abraham with the same function. The lexicon holds abraham, abrahām and ābrahām, so the sources disagree on the length of this name.
+encoder_sentence	soliloquies	soliloquies:00231:19	grammatical	high	'egðer ... ge ... ge his agene': the token is the correlative conjunction ge 'and'. The system's gē is the pronoun 'ye'. Different word class. Class B.
+encoder_sentence	soliloquies	soliloquies:00007:5	editorial	medium	'se ðe egðer wilt': both readings are the same demonstrative se in the compound relative se ðe. Only the editorial length marking differs. Class C.
+encoder_sentence	tauber_beowulf	tauber:475:6	homograph	high	Tauber: Geatas np 'Geats' (gp), 'to hofum Gēata'. The short geata is the gen. pl. of geat 'gate' (WikiPron: Geata jæ͜ɑːtɑ against geata ɡæ͜ɑtɑ), a different content word. HS and Wyatt have Gēata, which agrees with gold. Class is empty.
+encoder_sentence	soliloquies	soliloquies:00200:23	editorial	high	'se oðer ende' is the definite article in both readings. Only the editorial marking differs (se against sē). Class C.
+encoder_sentence	tauber_beowulf	tauber:42:2	editorial	medium	Tauber: wræc n. 'misery' ('Þæt wæs wrǣc micel'). Clark Hall has only wræc, while BT and Wiktionary also have wrǣc, so the dictionaries disagree on the noun's length. HS has wrǣc, which agrees with gold, and Wyatt is not aligned. The system's short form could also be read as the preterite of wrecan (homograph), but the sentence needs the noun. Class is empty.
+encoder_sentence	tauber_beowulf	tauber:613:7	homograph	high	Tauber: Geatas np gp, 'Sweona ond Gēata'. The short geata is the gen. pl. of geat 'gate' (WikiPron ɡæ͜ɑtɑ against Geata jæ͜ɑːtɑ). HS and Wyatt have Gēata, which agrees with gold. Class is empty.
+encoder_sentence	soliloquies	soliloquies:00242:5	grammatical	medium	'nānwiht hefig ðes þe man lufað': this ðes is Hargrove's spelling of genitive þæs (compare 'ðes þe ic nāt', 'ðes gemyndes'). The system's ðēs is nominative masculine 'this'. Different inflection and function, which differs from the skeleton's class C.
+encoder_sentence	soliloquies	soliloquies:00545:15	grammatical	high	'woldest bēon þe þū woldest lybban': þe is the conjunctive or relative particle. The system's þē reads it as the pronoun 'thee' or the instrumental. Different function. Class B.
+encoder_sentence	soliloquies	soliloquies:00705:9	grammatical	high	nē 'nor' vs negative ne
+encoder_sentence	soliloquies	soliloquies:00433:11	grammatical	high	'þæt ðe huru ne ðreote': ne negates the verb ('not'). The system's nē is 'nor'. Different function. Class B.
+encoder_sentence	tauber_beowulf	tauber:111:30	editorial	medium	Tauber: sīd adj. 'broad' (asm). The system's short sidne is the same word. Its short pattern comes from Bright's reader, which leaves 'ofer sidne sǣ' unmarked, while WikiPron has siːdne. HS and Wyatt have sīdne, which agrees with gold. Class is empty.
+encoder_sentence	soliloquies	soliloquies:00439:7	editorial	high	'sēo to dām wel' (tō þām, 'to that degree'): both readings are the same preposition. Only the editorial marking of unstressed to against tō differs. Class C.
+encoder_sentence	tauber_beowulf	tauber:668:4	gold_in_doubt	high	Tauber: relative þe 'which', marked þē. Wyatt reads 'wund ongon, þe him se eorð-draca' with short þe at the same position, which agrees with the system. HS has þē. One edition agreeing with the system is enough.
+encoder_sentence	soliloquies	soliloquies:00309:12	editorial	medium	'þǣt is, þæt þū ongyte': both readings are the same demonstrative pronoun þæt. Hargrove marks þǣt sporadically (4 of about 700), as do Sweet, Wyatt and Bright, so this is an editorial habit. The gold could also be read as a typo (other). Class C.
+encoder_sentence	tauber_beowulf	tauber:282:22	grammatical	high	Tauber: ne av. 'not' ('wære ne bræce' negates the verb, after 'wordum ne worcum'). The system's nē is 'nor'. HS and Wyatt have ne, which agrees with gold. Class B.
+encoder_sentence	tauber_beowulf	tauber:731:1	editorial	high	Tauber: se d. 'the' (nsm, 'se secg hwata'). Same word and function, and only the marking se against sē differs. HS and Wyatt have se, which agrees with gold. Class C.
+encoder_sentence	tauber_beowulf	tauber:176:45	homograph	high	Tauber: gemet adj. 'fitting' ('swa him gemet þince'). The system's gemēt is a form of the verb gemētan 'meet, find', a different headword and a content word. HS and Wyatt have gemet, which agrees with gold. Class is empty.
+encoder_sentence	tauber_beowulf	tauber:420:11	homograph	high	Tauber lemma wenan 'expect', p3p, so gold wēndon. System wendon is the preterite of wendan 'turn'. These are two verbs under different headwords. HS and Wyatt both have wēndon, the same as gold, so this is not gold_in_doubt. Class column is empty.
+encoder_sentence	soliloquies	soliloquies:00003:64	grammatical	high	'ǣgðer ge wintras ge sumeras' is the correlative conjunction ge 'both...and' (CH and BT: ge). System gē is the 2pl pronoun 'ye' (BT gē). Same spelling, function words, different function. Matches class B.
+encoder_sentence	soliloquies	soliloquies:00498:3	editorial	high	'And nū þū cwȳst' is 2sg pres of cweþan 'you say' in both readings, so same word and same function. The dictionaries disagree: Clark Hall has cwyst/cwist short, BT has cwȳst/cwīst long. Gold follows BT; historically the short form is expected. Class column is empty.
+encoder_sentence	tauber_beowulf	tauber:493:31	homograph	medium	Gēata 'Geats' vs geata 'of gates'
+encoder_sentence	tauber_beowulf	tauber:442:26	editorial	high	demonstrative ðes 'this', marking only
+encoder_sentence	soliloquies	soliloquies:00704:7	grammatical	high	'nō ðī ... þe ic self hyt gesāwe' uses þe as the conjunction/particle 'because'. System þē reads it as the pronoun 'thee' (or the instrumental), which is a different function. Matches class B.
+encoder_sentence	tauber_beowulf	tauber:533:3	homograph	high	wine 'friend' vs wīne 'wine'
+encoder_sentence	soliloquies	soliloquies:00101:0	grammatical	medium	Gold reads 'Ðe āna þē āriht sēcð, þe ðū ... lērst'. The opening Ðe is the demonstrative/relative 'those (who)', and the pronoun 'thee' comes next as þē. System ðē makes the first word the pronoun 'thee', so the function differs. Matches class B. The sentence is hard to construe.
+encoder_sentence	soliloquies	soliloquies:00710:12	editorial	high	'þǣre bēc þe we hātað on': both readings are the 1pl pronoun 'we' with the same function. Only the marking differs, and the same gold has 'Wē witon' elsewhere. Matches class C.
+encoder_sentence	tauber_beowulf	tauber:480:17	gold_in_doubt	high	Wyatt þe matches system
+encoder_sentence	tauber_beowulf	tauber:84:14	editorial	high	Tauber has se nsm, determiner 'the' ('wæs se irenþreat'). System sē is the same word with the same function, so only the habitual marking differs. HS and Wyatt have se, the same as gold, so this is not gold_in_doubt. Matches class C.
+encoder_sentence	soliloquies	soliloquies:00214:30	grammatical	high	In 'nē hys willan þǣr on gecnāwan ne mæge' the target is ne, the negative adverb 'not' before the verb. System nē is the conjunction 'nor'. Matches class B.
+encoder_sentence	soliloquies	soliloquies:00591:1	grammatical	high	'Ðincð þē' means 'does it seem to thee', so the token is the dative pronoun þē. System þe is the relative particle. Matches class B.
+encoder_sentence	soliloquies	soliloquies:00035:5	grammatical	high	'þū þe æart se hēhstan wȳsdom' means 'thou who art', so the token is the relative particle þe. System þē is the pronoun 'thee'. Matches class B.
+encoder_sentence	soliloquies	soliloquies:00671:24	grammatical	high	'forðām þū ne eart ðēr' means 'because you are not there', so the token is the negative adverb ne. System nē is 'nor'. Matches class B.
+encoder_sentence	soliloquies	soliloquies:00465:13	homograph	high	'nān gemet mȳnra yrmða' has the noun gemet 'measure, limit' (BT gemet). System gemēt is the verb gemētan 'meets/finds', also attested in the Soliloquies as 'nē þē nān ... ne gemēt'. Two content words under different headwords. Class column is empty.
+encoder_sentence	tauber_beowulf	tauber:97:18	homograph	medium	Gēata 'Geats' vs geata 'of gates'
+encoder_sentence	tauber_beowulf	tauber:66:1	editorial	high	article se/sē
+encoder_sentence	tauber_beowulf	tauber:658:5	homograph	high	gēoc 'help' vs geoc 'yoke'
+encoder_sentence	soliloquies	soliloquies:00694:38	grammatical	high	In 'ne magon heom ... nāne gode ne bēon' the target ne is the negative adverb 'not' before bēon, in negative concord; nē 'nor' comes later. System nē is the conjunction 'nor'. Matches class B.
+encoder_sentence	soliloquies	soliloquies:00576:14	grammatical	high	'hys ǣcnesse; nē ǣac be ūre sāwle līfe' is the conjunction nē 'nor' joining two objects of doubt. System ne is the negative adverb. Matches class B.
+encoder_sentence	soliloquies	soliloquies:00673:7	editorial	high	'brādre ðonne se myddaneard' uses the article se in both readings, with the same function. Only the habitual marking differs (CH/BT se, Wiktionary/WikiPron sē). Matches class C.
+encoder_sentence	soliloquies	soliloquies:00449:4	editorial	high	'to swīðe þē lāðian' is 'too much' in both readings, so same word and same function. The gold edition marks to/tō inconsistently by habit: 'to swīðe' twice and 'tō swīðe' three times in the Soliloquies gold, and the dictionaries have tō. Matches class C.
+encoder_sentence	tauber_beowulf	tauber:617:71	homograph	high	Tauber has hyrde m. 'guardian' ('cumbles hyrde'). System hȳrde is the preterite of hȳran 'heard'. These are different headwords and both are content words. HS and Wyatt have hyrde, the same as gold, so this is not gold_in_doubt. Class column is empty.
+encoder_sentence	soliloquies	soliloquies:00435:12	editorial	high	'sīe to ðām cræfte' is the preposition to/tō in both readings. The gold marks it short here and long elsewhere ('tō ðām' 17 times, 'to ðām' 8 times), so this is habit only. Matches class C.
+encoder_sentence	soliloquies	soliloquies:00000:37	grammatical	high	'be þām dēle ðe ic āberan meihte' has the relative particle ðe 'which'. System ðē is the pronoun 'thee'. Matches class B.
+encoder_sentence	tauber_beowulf	tauber:41:11	homograph	high	Tauber has myne m. 'love' (as). System mȳne is the Late West Saxon spelling of the possessive mīne 'my', attested in Bright ('Æalle mȳne giornesse'). The headwords differ and myne is a content word. HS and Wyatt have myne, the same as gold. Class column is empty.
+encoder_sentence	tauber_beowulf	tauber:42:4	homograph	high	Tauber has wine m. 'friend', ds ('wine Scyldinga'). System wīne is the dative of wīn 'wine'. Two different nouns under different headwords. HS and Wyatt have wine, the same as gold. Class column is empty.
+encoder_sentence	tauber_beowulf	tauber:209:10	gold_in_doubt	high	HS þǣm matches system
+encoder_sentence	tauber_beowulf	tauber:496:32	homograph	high	Tauber has Geatas np, gp 'of the Geats', so gold Gēata. The system's short geata is from the WikiPron/Wiktionary form of geat 'gate' (gp geata), a different noun. HS and Wyatt have Gēata, the same as gold. Class column is empty.
+encoder_sentence	tauber_beowulf	tauber:192:5	editorial	high	article se/sē
+encoder_sentence	soliloquies	soliloquies:00413:33	grammatical	high	Gold in candidates and the item is prose. 'ðu ne meaht ... becuman' needs the negative adverb ne 'not' before the verb. The system's nē is the conjunction 'nor', a different function. Class B, matching the class file.
+encoder_sentence	soliloquies	soliloquies:00642:24	grammatical	medium	Gold in candidates and the item is prose. 'hweðer ... weoxe þe wanede þe ... stode' uses þe as the conjunction 'or' (whether ... or ... or). The system's þē is the pronoun 'thee' or the instrumental, which is a different function. Class B. Medium: þe meaning 'or' is rarer than the relative particle.
+encoder_sentence	tauber_beowulf	tauber:161:25	homograph	medium	Gēata 'Geats' vs geata 'of gates'
+encoder_sentence	soliloquies	soliloquies:00023:13	homograph	medium	Class column is empty. 'þurh ða hēle begitan' means 'obtain through that health/salvation' (hǣl/hǣlu with late ē, the gold reading). The lexicon's short form hele (Clark Hall, BT, Wiktionary) belongs to helan 'to hide', a different headword, and Wiktionary's hēle belongs to hēlan 'heal'. That makes two content words under different headwords.
+encoder_sentence	soliloquies	soliloquies:00234:36	grammatical	medium	Gold in candidates and the item is prose. In 'ofer þæt nē furðum þam gelice' the gold reads the token as the conjunction nē 'nor (even)', and the system's ne is the adverb 'not'. Class B. Medium: 'ne furðum' meaning 'not even' is also possible, so the gold may be an editor's habit.
+encoder_sentence	tauber_beowulf	tauber:228:12	homograph	high	Tauber has lemma god, POS a (adjective), nsm, gloss 'good', so gold gōd. The system's god is the noun 'god'. HS and Wyatt both read gōd, which matches the gold, so this is not gold_in_doubt. Class A.
+encoder_sentence	soliloquies	soliloquies:00174:4	grammatical	high	In 'hweðer þē genoh þince', the token is the dative pronoun þē 'to thee', the experiencer of þince. The system's þe is the particle. Class B.
+encoder_sentence	tauber_beowulf	tauber:61:6	grammatical	medium	Tauber has lemma þæt, isn (instrumental), gloss 'by which', so gold þē. The system's þe is the indeclinable relative particle. Wyatt reads þē, the same as gold, and HS is not_aligned, so this is not gold_in_doubt. The two readings are an inflected instrumental form and a particle. Class B.
+encoder_sentence	tauber_beowulf	tauber:130:44	grammatical	medium	Tauber has lemma git, POS p (pronoun), nd, gloss 'you two', so gold git. The system's gīt (Clark Hall) is the adverb 'yet'. HS and Wyatt both read git, which matches the gold. Class column is empty. This is a pronoun against an adverb, which fits B like ge/gē. Homograph is possible if 'yet' counts as a content word.
+encoder_sentence	soliloquies	soliloquies:00179:12	homograph	high	In 'oðer þæt man wite oðer þæt man soðlicost wenð' ('one thing what one knows, another what one believes'), wite is the subjunctive of witan 'know'. The system's wīte is the noun 'punishment' (or wītan 'blame'), a different headword. Content words. Class column is empty.
+encoder_sentence	soliloquies	soliloquies:00064:17	editorial	high	'and se Haliga Gast': in both readings the token is the definite article se. Only the length habit differs (se against sē). Class C.
+encoder_sentence	tauber_beowulf	tauber:62:6	gold_in_doubt	high	Gold nē (Tauber: conjunction 'nor'). The system has ne. wyatt_form ne carries the same length marks as system_form, and gold does not, so step 3 applies. The token is aligned at the same place ('lindhæbbende ne ge leafnesword'), and HS reads nē.
+charsiug2p	soliloquies	soliloquies:00258:3	homograph	high	IPA wiːtɑn faithful apart from length. 'þu scealt witan ðæt...' = 'you must know that': gold witan 'to know' vs system wītan 'to blame/reproach', different headwords, both content verbs (BT lists both). Class column empty.
+charsiug2p	tauber_beowulf	tauber:565:0	grammatical	high	IPA neː faithful except length. HS 'Ne' and Wyatt 'ne' both short, so not gold_in_doubt. Tauber: ne, adverb, 'not'. System nē is conjunction 'nor'; function-word choice, class B.
 charsiug2p	soliloquies	soliloquies:00098:22	grammatical	high	'þæs ... ðe' conj ðe vs pronoun ðē
-charsiug2p	soliloquies	soliloquies:00466:21	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	soliloquies	soliloquies:00467:0	homograph	high	IPA ɑːk faithful except length. Sentence-initial 'Ac ic þe halsige' = 'But I beseech you': gold ac 'but' vs system āc 'oak' (content word). Class A.
 charsiug2p	soliloquies	soliloquies:00223:8	homograph	high	witan 'know' vs wītan 'blame'
-charsiug2p	tauber_beowulf	tauber:359:6	editorial	high	article se/sē
-charsiug2p	tauber_beowulf	tauber:199:3	homograph	high	gōda 'good' vs goda 'of gods'
-charsiug2p	tauber_beowulf	tauber:274:6	grammatical	high	'þara þe' relative þe vs pronoun þē
-charsiug2p	soliloquies	soliloquies:00694:24	editorial	high	preposition be/bē
-charsiug2p	soliloquies	soliloquies:00393:3	editorial	high	article se/sē
+charsiug2p	tauber_beowulf	tauber:361:9	homograph	high	wite 'know' vs wīte 'punishment'
+charsiug2p	tauber_beowulf	tauber:199:4	homograph	high	IPA mæj faithful (j for palatal g). HS and Wyatt both mǣg, agreeing with gold, so not gold_in_doubt. Tauber: mæg, masculine noun, 'kinsman' ('se goda mæg Higelaces'). System mæg = 'may' (magan). Different headwords, class A.
+charsiug2p	tauber_beowulf	tauber:274:24	grammatical	high	IPA θeː faithful except length. HS þe and Wyatt ðe both short. Tauber: þe, relative particle, 'whom' ('þone ðe Grendel ær mane acwealde'). System ðē = pronoun 'thee'. Function differs, class B.
+charsiug2p	soliloquies	soliloquies:00695:11	grammatical	medium	IPA θeː faithful except length. '...on þære toweardan weorulde þe hy witan þa are' uses þe as a conjunction/relative particle ('because they know'). System þē is the pronoun 'thee' (or instrumental). Function differs, class B.
+charsiug2p	soliloquies	soliloquies:00394:1	grammatical	high	IPA neː faithful except length. 'Hu ne habbe wyt nu genoh sweotole gereaht' is the negative adverb ne 'not'. System nē is 'nor'. Class B.
 charsiug2p	soliloquies	soliloquies:00167:4	editorial	medium	possessive þīnne (like min/mīn); lexicon þinne also 'thin'
-charsiug2p	tauber_beowulf	tauber:336:11	editorial	high	his/hīs same pronoun
+charsiug2p	tauber_beowulf	tauber:336:14	gold_in_doubt	high	IPA jyt faithful (j for palatal g). Wyatt has 'gyt' unmarked at the same position ('his modor þa gyt gifre'), matching system gyt, while gold is gȳt (HS gȳt). One edition agreeing with the system is enough. Alignment is correct.
 charsiug2p	soliloquies	soliloquies:00038:4	homograph	high	gōd 'good' (noun) vs god 'God'
-charsiug2p	soliloquies	soliloquies:00708:12	grammatical	high	relative ðe vs pronoun ðē
-charsiug2p	tauber_beowulf	tauber:139:7	other	medium	IPA puts length on 2nd vowel (begēn), not a lexicon reading; same word bēgen
-charsiug2p	tauber_beowulf	tauber:664:13	editorial	high	his/hīs same pronoun
+charsiug2p	soliloquies	soliloquies:00709:5	homograph	high	IPA mɑːn faithful except length. 'swiðe dysig man and swiðe unlæde þe nele...' = 'a very foolish man'. Gold man 'man/person' vs system mān 'crime, wicked'. Different headwords, class A.
+charsiug2p	tauber_beowulf	tauber:139:9	gold_in_doubt	high	IPA jit faithful. Wyatt has 'git' unmarked at the aligned position ('wæron begen þa git on geogoðfeore'), matching system git, while gold is gīt (Tauber: gyt, adverb, 'still'; HS gīt). Alignment is correct.
+charsiug2p	tauber_beowulf	tauber:665:5	editorial	high	IPA xiːs faithful (x for h). HS and Wyatt both 'his', short. Tauber: his, gen. sg. masc. of he, 'his' ('geweold his gewitte'). System hīs only marks the same possessive long. Same word and function, class C.
 charsiug2p	soliloquies	soliloquies:00003:44	editorial	high	suffix -lic/-līc, IPA faithful
-charsiug2p	tauber_beowulf	tauber:185:0	grammatical	high	'Ne wæs' negative ne vs nē 'nor'
-charsiug2p	soliloquies	soliloquies:00489:39	grammatical	high	'þe gastlice' conj þe 'or' vs pronoun þē
-charsiug2p	soliloquies	soliloquies:00418:23	editorial	high	swiðe/swīðe same adverb
-charsiug2p	tauber_beowulf	tauber:627:36	editorial	medium	hwīle 'while', short form only unmarked spelling
+charsiug2p	tauber_beowulf	tauber:185:4	editorial	medium	sīð 'time', short only unmarked
+charsiug2p	soliloquies	soliloquies:00490:1	editorial	medium	IPA θeːs faithful except length. 'Forðam þes nis nan tweo' is the demonstrative þes (here probably genitive 'of this'). The long þēs is only a marking variant of the same demonstrative. CH and BT give short þes/ðes, and Tauber marks þes short. Class C.
+charsiug2p	soliloquies	soliloquies:00418:30	editorial	high	IPA swiθe faithful (θ for ð). 'swiðe rihtne' = 'very straight': the intensifying adverb swīðe in both readings. Only the length of the same word differs. Class C.
+charsiug2p	tauber_beowulf	tauber:627:41	homograph	medium	IPA leje faithful (j for palatal g). HS and Wyatt both lēge, agreeing with gold. Tauber: lig, masculine noun, dat. sg., 'flame' ('for dracan lege'). Short lege (Clark Hall form) is a different word, most likely imperative of lecgan 'lay'. Different headwords, both content words. Class column empty.
 charsiug2p	soliloquies	soliloquies:00187:7	editorial	high	swiðe/swīðe same adverb
-charsiug2p	soliloquies	soliloquies:00601:21	homograph	high	man 'one' vs mān 'crime'
+charsiug2p	soliloquies	soliloquies:00602:13	editorial	high	IPA krist faithful except length. 'Crist Godes Sunu' = 'Christ' in both readings. Same word, and the dictionaries disagree on its length: BT lists both crist and crīst, CH has crīst. Class column empty.
 charsiug2p	soliloquies	soliloquies:00040:49	homograph	high	gōd 'good' vs god 'God'
 charsiug2p	soliloquies	soliloquies:00032:5	grammatical	high	'þu þe lufað' relative þe vs pronoun þē
 charsiug2p	soliloquies	soliloquies:00033:84	editorial	high	preposition to/tō
-charsiug2p	tauber_beowulf	tauber:498:0	grammatical	high	'Ne bið' negative ne vs nē 'nor'
+charsiug2p	tauber_beowulf	tauber:498:9	grammatical	high	IPA θeː faithful except length. HS þe and Wyatt ðe both short. Tauber: 'þeah ðe', conjunction, 'although', so ðe is the subordinating particle. System ðē = pronoun 'thee'. Class B.
 charsiug2p	soliloquies	soliloquies:00008:1	grammatical	high	'Se ðe' relative ðe vs pronoun ðē
-charsiug2p	soliloquies	soliloquies:00695:42	grammatical	medium	relative þe vs pronoun þē
-charsiug2p	soliloquies	soliloquies:00405:37	grammatical	high	negative ne vs nē 'nor'
-charsiug2p	tauber_beowulf	tauber:96:8	editorial	high	article se/sē
+charsiug2p	soliloquies	soliloquies:00696:18	homograph	high	IPA mɑːn faithful except length. 'swaswa her rice man geseoð' = 'as a powerful man here sees': gold man 'man' vs system mān 'crime'. Class A.
+charsiug2p	soliloquies	soliloquies:00406:5	grammatical	high	IPA neː faithful except length. 'þæt ic ne lufige ðone wisdom' is the negative adverb 'not'. System nē is 'nor'. Class B.
+charsiug2p	tauber_beowulf	tauber:97:21	homograph	high	IPA iːs faithful except length. HS and Wyatt both 'is', short. Tauber: beon, verb, pres. 3 sg., 'is' ('is his eafora nu'). System īs = 'ice', a content noun. Class A.
 charsiug2p	soliloquies	soliloquies:00039:5	editorial	medium	lēoht 'light', short leoht only unmarked spelling
-charsiug2p	tauber_beowulf	tauber:453:12	editorial	low	con 'can'; cōn is a BT/Bright marking, same word
-charsiug2p	soliloquies	soliloquies:00411:18	homograph	high	man 'man' vs mān 'crime'
-charsiug2p	tauber_beowulf	tauber:161:11	editorial	high	oþ/ōþ same conjunction
-charsiug2p	tauber_beowulf	tauber:361:9	homograph	high	wite 'know' vs wīte 'punishment'
-charsiug2p	tauber_beowulf	tauber:521:18	grammatical	high	'þone þe' relative þe vs pronoun þē
-charsiug2p	soliloquies	soliloquies:00422:4	editorial	high	swiðe/swīðe same adverb
-charsiug2p	soliloquies	soliloquies:00648:3	homograph	high	gōdes 'good' vs godes 'God's'
-charsiug2p	soliloquies	soliloquies:00421:6	editorial	high	preposition be/bē
-charsiug2p	soliloquies	soliloquies:00408:17	editorial	high	preposition to/tō
-charsiug2p	tauber_beowulf	tauber:228:12	homograph	high	gōd 'good' vs god 'God'
-charsiug2p	soliloquies	soliloquies:00562:33	homograph	high	witan 'know' vs wītan 'blame'
+charsiug2p	tauber_beowulf	tauber:453:20	editorial	high	IPA lytel faithful except length. HS and Wyatt both lȳtel, agreeing with gold. Tauber: lytel, adjective, 'little', in both readings. Same word, and the dictionaries disagree: CH has lȳtel, BT has lytel. Class column empty.
+charsiug2p	soliloquies	soliloquies:00411:21	grammatical	medium	IPA θiːs faithful except length. 'on þis myddangearde' is the demonstrative þis. The long þīs pattern is the instrumental form (þȳs/þīs) of the same pronoun, so the readings differ in inflection. CH and BT have short ðis/þis only. Matches class B.
+charsiug2p	tauber_beowulf	tauber:161:32	grammatical	high	IPA θeː faithful except length. HS þe and Wyatt ðe both short. Tauber: 'þæs ðe', conjunction, 'because', so ðe is the particle. System ðē = pronoun 'thee'. Class B.
+charsiug2p	tauber_beowulf	tauber:362:1	grammatical	high	Tauber row 'Ðeah þe' c 'although': þe is the particle of the conjunction þeah þe; system þē is the pronoun/instrumental reading. IPA θeː faithful apart from ː; hs/wyatt both 'þe' agree with gold, so not gold_in_doubt. Class B.
+charsiug2p	tauber_beowulf	tauber:522:0	homograph	medium	Tauber: manian v pr3s 'urge', gold Manað. IPA mɑːnɑθ faithful apart from ː; hs/wyatt 'Manað' agree with gold. The only other candidate is mānāð 'perjury' (Clark Hall), a different noun headword, and the system's long first vowel points that way (mān-). Note: system form mānað matches mānāð only on the first vowel. Class empty.
+charsiug2p	soliloquies	soliloquies:00423:11	editorial	high	'swa onliht se wisdom': se is the nsm article in both readings; se/sē is habitual marking of the same word. IPA seː faithful apart from ː. Class C.
+charsiug2p	soliloquies	soliloquies:00648:69	grammatical	high	'on þære bec [[þe]] ic þe ær nemde': target is the relative particle 'which' (the following þe is the pronoun). System þē is the pronoun 'thee'. IPA θeː faithful apart from ː. Class B.
+charsiug2p	soliloquies	soliloquies:00421:34	homograph	medium	'ælces cynges hāma beoð sume on bure sume on healle': gold hāma belongs with hām 'home/household'; short hama is the separate headword 'covering, garment' (Clark Hall and BT list hama and hāma separately). Both are content words. IPA xɑmɑ faithful apart from length. Note: class is empty.
+charsiug2p	soliloquies	soliloquies:00409:10	grammatical	high	'on ðam wisan [[þe]] ic ðonne wisdom lufige': relative particle 'in the way that'. System þē is the pronoun reading. IPA θeː faithful apart from ː. Class B.
+charsiug2p	tauber_beowulf	tauber:230:8	grammatical	high	Tauber: þe r 'who' ('se ðe ... gemunde'). System ðē is the pronoun reading. hs 'þe' and wyatt 'ðe' are both short, so not gold_in_doubt. IPA θeː faithful apart from ː. Class B.
+charsiug2p	soliloquies	soliloquies:00562:47	grammatical	high	'ðe neron' conj 'or' vs pronoun ðē
 charsiug2p	soliloquies	soliloquies:00031:30	editorial	high	'to þam' adverb tō, marking only
-charsiug2p	tauber_beowulf	tauber:76:16	editorial	high	oþ/ōþ same conjunction
-charsiug2p	tauber_beowulf	tauber:535:7	homograph	high	nāman 'took' vs naman 'name'
+charsiug2p	tauber_beowulf	tauber:78:23	editorial	high	Tauber: se d nsm 'the' ('se rica bad'). The same article either way; only se/sē marking differs. hs/wyatt 'se' agree with gold. IPA seː faithful apart from ː. Class C.
+charsiug2p	tauber_beowulf	tauber:537:2	homograph	medium	Tauber: heo p gsf 'her', gold hyre. System hȳre is a different headword, the adjective 'gentle, pleasant' (cf. unhyre in the same line) or the dative of hȳr 'hire' (Clark Hall/BT hȳre). That is a content word, so step 4 comes before grammatical. hs/wyatt 'hyre' agree with gold. IPA xyːre faithful apart from ː. Note: class is empty.
 charsiug2p	soliloquies	soliloquies:00183:14	editorial	low	participle of āwrītan; āwrīten is a dictionary variant, same verb
-charsiug2p	soliloquies	soliloquies:00350:11	editorial	high	swiðe/swīðe same adverb
-charsiug2p	tauber_beowulf	tauber:730:3	editorial	low	wesan 'be'; wēsan treated as dictionary variant
-charsiug2p	soliloquies	soliloquies:00573:9	editorial	high	pronoun he/hē
+charsiug2p	soliloquies	soliloquies:00351:23	editorial	high	'hæbbe [[swiðe]] micle spede': the adverb 'very' in both readings. The lexicon holds both swiðe and swīðe for the same word, so the difference is marking habit. IPA swiθe faithful apart from length. Class C.
+charsiug2p	tauber_beowulf	tauber:730:16	homograph	high	Tauber: ac c 'but'. System āc is 'oak', a different headword. hs/wyatt 'ac' agree with gold. IPA ɑːk faithful apart from ː. Class A.
+charsiug2p	soliloquies	soliloquies:00573:39	editorial	medium	'oðre [[hwile]] eft ongiereð' = 'at another time': gold hwīle is the dat/acc of hwīl. Clark Hall and BT have no separate short headword hwile, so the short candidate is the same word marked short by a source. IPA xwile faithful apart from length. Note: class is empty.
 charsiug2p	soliloquies	soliloquies:00226:10	grammatical	high	negative ne vs nē 'nor'
-charsiug2p	soliloquies	soliloquies:00629:24	editorial	high	preposition be/bē
-charsiug2p	tauber_beowulf	tauber:386:26	grammatical	high	negative ne vs nē 'nor'
-charsiug2p	tauber_beowulf	tauber:399:1	editorial	high	article se/sē
-charsiug2p	soliloquies	soliloquies:00356:11	homograph	high	ac 'but' vs āc 'oak'
-charsiug2p	soliloquies	soliloquies:00582:53	editorial	high	preposition be/bē
-charsiug2p	soliloquies	soliloquies:00543:11	grammatical	high	relative þe vs pronoun þē
-charsiug2p	tauber_beowulf	tauber:619:24	editorial	high	article se/sē
-charsiug2p	tauber_beowulf	tauber:376:11	homograph	high	fōr 'went' vs for 'for'
-charsiug2p	tauber_beowulf	tauber:390:14	editorial	high	eom/ēom same verb form
-charsiug2p	tauber_beowulf	tauber:7:28	homograph	high	man 'man' vs mān 'crime'
-charsiug2p	tauber_beowulf	tauber:623:10	homograph	high	sēl 'better' vs sel 'hall'
+charsiug2p	soliloquies	soliloquies:00630:56	grammatical	high	'þæt [[ðe]] efter us gewurðan sceal' = 'that which shall happen after us': relative particle. System ðē is the pronoun reading. IPA θeː faithful apart from ː. Class B.
+charsiug2p	tauber_beowulf	tauber:386:32	homograph	high	Tauber: ac c 'but'. System āc is 'oak'. hs/wyatt 'ac' agree with gold. IPA ɑːk faithful apart from ː. Class A.
+charsiug2p	tauber_beowulf	tauber:399:15	grammatical	high	Tauber: ne av 'not' ('wihte ne sceþede'). System nē is 'nor'. hs/wyatt 'ne' agree with gold. IPA neː faithful apart from ː. Class B.
+charsiug2p	soliloquies	soliloquies:00356:16	grammatical	high	'hwæðer [[ðe]] þu gyt ænig lufe ... si': gold ðe is the particle (hwæðer þe 'whether'); system ðē is the pronoun 'to thee'. The readings differ in function. IPA θeː faithful apart from ː. Class B. Note: the pronoun reading is also defensible, so the gold is debatable, but this is prose, so gold_in_doubt is not available.
+charsiug2p	soliloquies	soliloquies:00583:17	homograph	high	'æall þæt he [[witan]] wolde' = 'all that he wished to know': witan 'know' (wāt). System wītan is a different verb, 'blame/depart' (BT wītan). Both are content words. IPA wiːtɑn faithful apart from ː. Note: class is empty.
+charsiug2p	soliloquies	soliloquies:00544:8	homograph	high	'an [[is]] þu woldest beon': the verb 'is'. System īs is 'ice'. IPA iːs faithful apart from ː. Class A.
+charsiug2p	tauber_beowulf	tauber:620:7	editorial	high	Tauber: sið m ds 'time' ('hindeman siðe'), gold sīðe. Short siðe is the same word, marked short in some sources (e.g. Bright's 'þȳ siðe'). Clark Hall and BT have no separate short headword. hs/wyatt sīðe agree with gold, not the system. IPA siθe faithful apart from length. Note: class is empty.
+charsiug2p	tauber_beowulf	tauber:376:21	grammatical	high	Tauber: þe r 'who' ('þara þe mid Hroðgare ham eahtode'). System þē is the pronoun reading. hs/wyatt 'þe' agree with gold. IPA θeː faithful apart from ː. Class B.
+charsiug2p	tauber_beowulf	tauber:390:27	editorial	high	Tauber: þin p dsf 'your', gold þīnre. Short þinre is the same possessive with the same function; Clark Hall and BT have no other word þinre, so only the marking differs. hs/wyatt þīnre agree with gold. IPA θinre faithful apart from length. Note: class is empty.
+charsiug2p	tauber_beowulf	tauber:12:0	grammatical	high	Tauber: ne av 'not' ('Ne hyrde ic'). System nē is 'nor'. hs 'ne' and wyatt 'Ne' agree with gold. IPA neː faithful apart from ː. Class B.
+charsiug2p	tauber_beowulf	tauber:624:0	editorial	medium	Gold in candidates; IPA niːs faithful apart from length. HS and Wyatt both have short Nis, so not gold_in_doubt. Tauber says 'ne beon, pr3s, be not'. The long nīs in the lexicon is Bright's marking of the same contraction ('Sōðlīce nīs nān ðing behȳdd'), so it is the same word and function, marked differently. Class column is empty.
 charsiug2p	soliloquies	soliloquies:00042:18	grammatical	high	negative ne vs nē 'nor'
-charsiug2p	tauber_beowulf	tauber:301:3	editorial	low	þyle 'orator'; þȳle only a dictionary variant
-charsiug2p	soliloquies	soliloquies:00435:53	homograph	high	man 'one' vs mān 'crime'
-charsiug2p	tauber_beowulf	tauber:39:65	grammatical	high	negative ne vs nē 'nor'
-charsiug2p	tauber_beowulf	tauber:71:13	homograph	high	is 'is' vs īs 'ice'
-charsiug2p	soliloquies	soliloquies:00317:28	homograph	high	is 'is' vs īs 'ice'
-charsiug2p	soliloquies	soliloquies:00675:28	grammatical	high	relative þe vs pronoun þē
-charsiug2p	tauber_beowulf	tauber:512:18	editorial	medium	possessive mīnne (like min/mīn)
-charsiug2p	soliloquies	soliloquies:00688:9	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	tauber_beowulf	tauber:301:11	editorial	high	IPA xiːs is faithful (x for h). HS and Wyatt have short his. Tauber gives 'he p gsm his', the possessive in both readings. Clark Hall lists both his and hīs, so only the habitual marking differs. Class C.
+charsiug2p	soliloquies	soliloquies:00435:81	editorial	high	IPA beː is faithful. 'ongytst be ðam wisdome' uses the preposition 'about' in both readings, and be versus bē is a marking habit for the same preposition. Class C. Prose, so gold_in_doubt does not apply.
+charsiug2p	tauber_beowulf	tauber:45:3	homograph	medium	IPA xyːrɑ is faithful. HS and Wyatt have short hyra. Tauber gives 'hie p gpm their', the pronoun. Long hȳra is a separate headword in Clark Hall and Bosworth-Toller, a noun meaning 'hireling, servant' (john_ws 'Sē hȳra flȳhþ'). That makes two different words, one a content noun. Class column is empty.
+charsiug2p	tauber_beowulf	tauber:73:13	homograph	high	IPA wiːtɑn is faithful. HS and Wyatt have short witan. Tauber gives 'witan v i, know'. The system's wītan is a different verb, 'blame, reproach' (Bosworth-Toller headword wītan, HS/Wyatt 'mē wītan ne þearf'). Both are content verbs.
+charsiug2p	soliloquies	soliloquies:00318:7	grammatical	high	IPA θeː is faithful. In 'þæs þe me þonne ðincð' the token is the relative or conjunctive particle þe. Long þē would be the pronoun 'thee' or the instrumental. The two readings differ in function, matching class B.
+charsiug2p	soliloquies	soliloquies:00678:4	homograph	medium	IPA xeːlɑn is faithful. 'Nele he us nanwiht helan' needs helan, 'to conceal'. The system's hēlan is the Anglian form of hǣlan 'to heal' (Clark Hall headword hēlan), a different content verb. Class column is empty.
+charsiug2p	tauber_beowulf	tauber:512:21	editorial	high	IPA xiːs is faithful. HS and Wyatt have short his. Tauber gives 'he p gsm', the possessive 'his' in both readings. his versus hīs is a marking habit (Clark Hall lists both). Class C.
+charsiug2p	soliloquies	soliloquies:00689:26	grammatical	high	IPA θeː is faithful. In 'on þa weorulde þe hi on beoð' the token is the relative particle þe. Long þē is the pronoun or instrumental, a different function. Class B.
 charsiug2p	soliloquies	soliloquies:00153:22	editorial	high	pronoun he/hē
-charsiug2p	tauber_beowulf	tauber:164:10	editorial	medium	possessive mīnne (like min/mīn)
-charsiug2p	tauber_beowulf	tauber:400:2	editorial	high	article se/sē
+charsiug2p	tauber_beowulf	tauber:165:1	editorial	high	IPA 'wife' is faithful to the letters. HS and Wyatt have wīfe, agreeing with gold, so not gold_in_doubt. Tauber gives 'wif n ds woman'. The short wife in the lexicon is the same word, left unmarked in matthew_ws ('for þām wife Herodiaden'). Same word and case, so only the marking differs. Class column is empty.
+charsiug2p	tauber_beowulf	tauber:400:3	homograph	high	IPA ɡodɑ is faithful. HS and Wyatt have gōda, as gold does. Tauber gives 'god a nsm good', the adjective gōd. Short goda is the genitive plural of god 'god' (Bright 'ūra goda bīgange'). This is the god/gōd homograph pair of class A.
 charsiug2p	soliloquies	soliloquies:00195:3	editorial	high	gebrōhton same verb, short only unmarked
-charsiug2p	soliloquies	soliloquies:00306:27	grammatical	high	'þa hwile þe' conj þe vs pronoun þē
-charsiug2p	tauber_beowulf	tauber:438:49	grammatical	high	'ðara þe' relative þe vs pronoun þē
-charsiug2p	tauber_beowulf	tauber:7:4	homograph	high	gōde 'good' vs gode 'God'
-charsiug2p	soliloquies	soliloquies:00685:26	grammatical	high	relative þe vs pronoun þē
-charsiug2p	tauber_beowulf	tauber:342:8	editorial	high	preposition be/bē
+charsiug2p	soliloquies	soliloquies:00307:3	editorial	high	IPA swiθe is faithful. Both readings are the adverb swīðe 'very'. Short swiðe is only an unmarked occurrence in Bright ('tō swiðe goodum'). Same word and function. Class C.
+charsiug2p	tauber_beowulf	tauber:439:5	editorial	medium	IPA lɑfe is faithful. HS and Wyatt have lāfe, as gold does. Tauber gives 'laf f as heirloom'. The short lafe in the lexicon is the same noun lāf, left unmarked in Bright ('tō lafe syndon'). WikiPron has only lāfe. Same word, different marking. Class column is empty.
+charsiug2p	tauber_beowulf	tauber:10:26	editorial	high	IPA beː is faithful. HS and Wyatt have short be. Tauber gives 'be pp by'. 'be mæste' is the preposition in both readings, so be versus bē is a marking habit. Class C.
+charsiug2p	soliloquies	soliloquies:00686:25	editorial	high	IPA lytlɑn is faithful. 'myd hys lytlan fingre' means 'little' in both readings. Short lytlan is the same adjective (zupitza 'þās lytlan bōc'). Clark Hall has lȳtel and Bosworth-Toller has lytel, so the dictionaries disagree on length. Class column is empty.
+charsiug2p	tauber_beowulf	tauber:342:14	grammatical	high	IPA θeː is faithful. HS þe and Wyatt ðe are both short, so not gold_in_doubt. Tauber gives 'þe r whom', the relative particle in 'þone ðe heo on ræste abreat'. Long ðē is the pronoun or instrumental, a different function. Class B.
 charsiug2p	soliloquies	soliloquies:00040:5	grammatical	high	relative þe vs pronoun þē
-charsiug2p	tauber_beowulf	tauber:263:0	grammatical	high	'Ne gefrægen' negative ne vs nē
+charsiug2p	tauber_beowulf	tauber:263:4	homograph	medium	IPA mæjθe is faithful (j for palatal g). HS mǣgðe and Wyatt mǣgþe agree with gold. Tauber gives 'mægþ f as nation', which is mǣgþ 'tribe, nation'. Short mægþ is a separate headword, 'maiden' (Bosworth-Toller lists both mægþ and mǣgþ; WikiPron mægþ has both a short and a long entry). Two different content nouns.
 charsiug2p	soliloquies	soliloquies:00064:6	grammatical	high	relative þe vs pronoun þē
-charsiug2p	soliloquies	soliloquies:00586:30	grammatical	high	negative ne vs nē 'nor'
-charsiug2p	tauber_beowulf	tauber:696:21	homograph	medium	pronoun hyra 'their' vs hȳra (hȳr 'hire'); class empty
-charsiug2p	tauber_beowulf	tauber:635:11	editorial	high	his/hīs same pronoun
-charsiug2p	tauber_beowulf	tauber:593:16	grammatical	high	'þara ðe' relative ðe vs pronoun ðē
-charsiug2p	tauber_beowulf	tauber:10:15	homograph	high	fær 'vessel' vs fǣr 'peril'
-charsiug2p	soliloquies	soliloquies:00314:7	homograph	medium	hēle (=hǣle 'health') vs hele 'hell/cover'
-charsiug2p	soliloquies	soliloquies:00313:9	grammatical	high	relative þe vs pronoun þē
-charsiug2p	tauber_beowulf	tauber:387:33	grammatical	high	negative ne vs nē 'nor'
-charsiug2p	soliloquies	soliloquies:00415:10	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	soliloquies	soliloquies:00589:43	grammatical	high	IPA θeː is faithful. In 'manige freond þara þe ðu genoh wel truwast' the token is the relative particle þe. Long þē would be the pronoun or instrumental. Class B.
+charsiug2p	tauber_beowulf	tauber:696:25	homograph	high	IPA ɑːk is faithful. HS and Wyatt have short ac. Tauber gives 'ac c but'. The system's āc is the noun 'oak', the ac/āc pair of class A.
+charsiug2p	tauber_beowulf	tauber:635:25	grammatical	high	IPA neː is faithful. HS and Wyatt have short ne. Tauber gives 'ne av not' in 'swa him wyrd ne gescraf'. The system's nē is the conjunction 'nor', a different function, matching class B.
+charsiug2p	tauber_beowulf	tauber:594:21	homograph	medium	IPA xɑmes is faithful. HS and Wyatt have hāmes, as gold does. Tauber gives 'ham m gs home', which is hām. Short hames is listed by Wiktionary/WikiPron as the genitive of a different noun ham (hamm, with its own headword in Bosworth-Toller), so the two readings are different content words. The class column is empty.
+charsiug2p	tauber_beowulf	tauber:12:1	homograph	high	IPA xyrde is faithful. HS and Wyatt have hȳrde, as gold does. Tauber gives 'hyran v p1s hear', the verb 'heard'. Short hyrde is the noun 'shepherd, guardian' (Bosworth-Toller hyrde, Clark Hall hierde, HS 'folces hyrde'). Two content words under different headwords.
+charsiug2p	soliloquies	soliloquies:00315:14	grammatical	high	IPA θeː is faithful apart from length. In 'þes ðe ic ongyte' the token is the relative/conjunctive particle (þæs þe 'according as'), not the pronoun ðē 'thee'. Class B.
+charsiug2p	soliloquies	soliloquies:00313:17	homograph	high	IPA iːs is faithful apart from length. 'þer is gyt hwethwigu' needs the verb 'is'. The system's īs is 'ice', a different headword (both lexica list is and īs). Class A.
+charsiug2p	tauber_beowulf	tauber:387:38	grammatical	high	Not gold_in_doubt: HS and Wyatt both have short þe. Tauber gives þe, r 'who', the relative particle in 'þara þe hit ... bewand'. The system's þē is the pronoun 'thee'. Class B.
+charsiug2p	soliloquies	soliloquies:00416:5	editorial	high	IPA oθre is faithful apart from length. Both readings are ōðer 'other' in 'oðre bysne'. Same word and function, and only the dictionary length marking differs. Class C.
 charsiug2p	soliloquies	soliloquies:00012:12	grammatical	high	'þe oðer þing' conj þe 'or' vs pronoun þē
-charsiug2p	soliloquies	soliloquies:00377:0	grammatical	high	'Ne talige' negative ne vs nē
-charsiug2p	tauber_beowulf	tauber:493:38	gold_in_doubt	high	HS up matches system; IPA faithful
+charsiug2p	soliloquies	soliloquies:00377:18	homograph	high	IPA ɑːk is faithful apart from length. 'ne underfehst ac for þæs ðinges lufum' needs the conjunction ac 'but'. The system's āc is 'oak', a different content-word headword. Class A.
+charsiug2p	tauber_beowulf	tauber:494:7	grammatical	high	Not gold_in_doubt: HS and Wyatt both have þe. Tauber gives þe, r 'who' in 'se þe ær lange tid'. The system's þē is the pronoun 'thee'. Class B.
+charsiug2p	tauber_beowulf	tauber:512:11	editorial	high	Not gold_in_doubt: HS and Wyatt both have se. Tauber gives se, d, nsm 'the' in 'se mæra mago'. The system's sē is the same demonstrative with the same function, marked long by habit. Class C.
+charsiug2p	soliloquies	soliloquies:00421:70	editorial	medium	The class column is empty. IPA xyː is faithful (x for h). In 'þæt þæt hy geseoð' both hy and hȳ (Clark Hall, BT) are the 3rd-person plural pronoun 'they' with the same function. Only the marking differs: dictionaries mark hī/hȳ long and this edition marks it short.
+charsiug2p	tauber_beowulf	tauber:45:12	grammatical	high	Not gold_in_doubt: HS and Wyatt have ne. Tauber gives ne, av 'not' in 'metod hie ne cuþon'. The system's nē is the conjunction 'nor'. Class B.
+charsiug2p	tauber_beowulf	tauber:414:5	homograph	high	Not gold_in_doubt: HS and Wyatt have ac. Tauber gives ac, c 'but' in 'hilderince ac he hraþe wolde'. The system's āc is 'oak', a different content-word headword. Class A.
+charsiug2p	soliloquies	soliloquies:00646:14	grammatical	high	IPA θeː is faithful apart from length. In 'on þære bec þe we hatað' the token is the relative particle. The system's þē is the pronoun 'thee'. Class B.
+charsiug2p	tauber_beowulf	tauber:592:28	editorial	medium	The class column is empty. IPA estum is faithful, and HS and Wyatt agree with the gold ēstum, so this is not gold_in_doubt. Tauber gives est, f, dp 'good will' in 'estum mid are'. Clark Hall and BT list only ēst/ēstum, so the short candidate is the same word left unmarked by some source. Same word and function, only the marking differs.
+charsiug2p	soliloquies	soliloquies:00661:20	grammatical	high	IPA θeː is faithful apart from length. In 'be þam andefnum þe he hær æfter æarnað' the token is the relative particle. The system's þē is the pronoun 'thee'. Class B.
+charsiug2p	tauber_beowulf	tauber:228:9	homograph	high	Not gold_in_doubt: HS and Wyatt have ac. Tauber gives ac, c 'but' in 'glædne Hroðgar ac þæt wæs god cyning'. The system's āc is 'oak', a different headword. Class A.
+charsiug2p	soliloquies	soliloquies:00497:1	grammatical	high	IPA neː is faithful apart from length. 'Hu ne cwæd þu ær' ('did you not say') needs the negative adverb ne 'not'. The system's nē is the conjunction 'nor'. Class B.
 charsiug2p	tauber_beowulf	tauber:511:47	grammatical	high	'se ðe' relative ðe vs pronoun ðē
-charsiug2p	soliloquies	soliloquies:00421:65	homograph	medium	pronoun hyre 'her' vs hȳre (hȳr/hȳran)
-charsiug2p	tauber_beowulf	tauber:41:10	editorial	high	his/hīs same pronoun
-charsiug2p	tauber_beowulf	tauber:413:11	editorial	high	preposition be/bē
-charsiug2p	soliloquies	soliloquies:00645:7	homograph	high	ac 'but' vs āc 'oak'
-charsiug2p	tauber_beowulf	tauber:591:22	grammatical	high	negative ne vs nē 'nor'
-charsiug2p	soliloquies	soliloquies:00661:14	homograph	high	ac 'but' vs āc 'oak'
-charsiug2p	tauber_beowulf	tauber:228:5	grammatical	high	negative ne vs nē 'nor'
-charsiug2p	soliloquies	soliloquies:00495:3	homograph	high	witan 'know' vs wītan 'blame'
-charsiug2p	tauber_beowulf	tauber:511:40	homograph	high	māga 'of kinsmen' vs maga 'son'
-charsiug2p	tauber_beowulf	tauber:670:11	editorial	high	his/hīs same pronoun
+charsiug2p	tauber_beowulf	tauber:670:17	editorial	medium	Not gold_in_doubt: HS and Wyatt have his. IPA xiːs is faithful apart from length. Tauber gives he, p, gsm 'his' in 'his helm onspeon'. The system's hīs is the same possessive pronoun with the same function, marked long by a lexicon source. Class C.
 charsiug2p	soliloquies	soliloquies:00004:112	homograph	high	is 'is' vs īs 'ice'
-charsiug2p	soliloquies	soliloquies:00698:33	grammatical	high	negative ne vs nē 'nor'
-charsiug2p	tauber_beowulf	tauber:410:28	homograph	high	gōd 'good' vs god 'God'
-charsiug2p	soliloquies	soliloquies:00246:12	grammatical	high	relative þe vs pronoun þē
-charsiug2p	tauber_beowulf	tauber:429:10	homograph	high	hæle 'hero' vs hǣle 'health'
-charsiug2p	tauber_beowulf	tauber:547:2	homograph	high	mǣg 'kinsman' vs mæg 'can'
-charsiug2p	soliloquies	soliloquies:00385:26	grammatical	high	negative ne vs nē 'nor'
-charsiug2p	tauber_beowulf	tauber:111:5	editorial	high	article se/sē
+charsiug2p	soliloquies	soliloquies:00699:3	homograph	high	IPA mɑːn is faithful apart from length. 'sum rice man' needs man 'man'. The system's mān is 'crime, wickedness', a different content-word headword. Class A.
+charsiug2p	tauber_beowulf	tauber:411:30	homograph	medium	The class column is empty. Not gold_in_doubt: HS and Wyatt have flet. Tauber gives flet, n, as 'floor' in 'heo on flet gecrong', and that word (flet/flett) is short in both dictionaries. The long flēt is listed separately in Clark Hall and BT, apparently as a variant of flīete 'cream' or flēot 'water'. It is therefore a different content word under another headword.
+charsiug2p	soliloquies	soliloquies:00246:20	grammatical	high	IPA θeː is faithful apart from length. In 'seo racu ðe me onhagað ðe to gerihtreccenne' the target is the first ðe, the relative particle after racu. The pronoun 'thee' is the later ðe. The system's ðē reads the target as the pronoun. Class B.
+charsiug2p	tauber_beowulf	tauber:430:2	editorial	high	Not gold_in_doubt: HS and Wyatt have be. Tauber gives be, pp 'by' in 'be feaxe on flet boren'. The system's bē is the same preposition, marked long by some dictionaries. Same word and function. Class C.
+charsiug2p	tauber_beowulf	tauber:547:6	editorial	high	Not gold_in_doubt: HS and Wyatt have ōðrum, the same as the gold, and the IPA oθrum is faithful apart from length. Tauber gives oþer, a, dsm 'other'. Same word and function, and the length of ōðer differs by dictionary habit. Class C.
+charsiug2p	soliloquies	soliloquies:00386:5	homograph	high	IPA ɑːk is faithful apart from length. 'forwyrnde ælcre leornunga ac he me ne ofteah' needs the conjunction ac 'but'. The system's āc is 'oak', a different headword. Class A.
+charsiug2p	tauber_beowulf	tauber:111:11	grammatical	high	negative ne vs nē 'nor'
 charsiug2p	soliloquies	soliloquies:00081:17	editorial	high	eom/ēom same verb form
-charsiug2p	tauber_beowulf	tauber:301:22	editorial	high	his/hīs same pronoun
-charsiug2p	soliloquies	soliloquies:00673:7	editorial	high	article se/sē
-charsiug2p	tauber_beowulf	tauber:566:6	homograph	high	gōd 'good' vs god 'God'
-charsiug2p	tauber_beowulf	tauber:523:1	editorial	medium	bīoð 'are', short only unmarked; IPA i͜u for io not a segment error
-charsiug2p	soliloquies	soliloquies:00377:16	grammatical	high	negative ne vs nē 'nor'
-charsiug2p	tauber_beowulf	tauber:389:3	editorial	high	oðrum/ōðrum same word
-charsiug2p	tauber_beowulf	tauber:69:4	homograph	high	gōd 'good' vs god 'God'
-charsiug2p	tauber_beowulf	tauber:315:2	homograph	medium	onfēng 'received' vs onfeng n. 'reception'
-charsiug2p	soliloquies	soliloquies:00666:0	homograph	high	ac 'but' vs āc 'oak'
-charsiug2p	soliloquies	soliloquies:00648:54	homograph	high	witan 'know' vs wītan 'blame'
+charsiug2p	tauber_beowulf	tauber:303:14	homograph	high	IPA mɑːn faithful except length; HS/Wyatt both 'man' (= gold), so not gold_in_doubt. Tauber: lemma mon, ns, gloss 'one' (indefinite pronoun, 'swa sceal man don'); system mān is the noun 'crime', a different headword and content word. Class A agrees.
+charsiug2p	soliloquies	soliloquies:00674:13	grammatical	high	IPA neː faithful except length; prose, so no gold_in_doubt. Target is the ne before 'magon' ('nanwiht ne magon ... geseon'), the verbal negator 'not'; system nē is the conjunction 'nor'. Which function the token fills here. Class B.
+charsiug2p	tauber_beowulf	tauber:566:9	homograph	high	IPA sæːl faithful except length; HS/Wyatt 'sæl' (= gold). Tauber: lemma sæl n., as, 'hall' ('geond sæl swingeð'); Clark Hall sæl n. 'room, hall'. System sǣl is the separate noun 'time, occasion, happiness' (BT/WikiPron). Two content-word headwords. Class column empty, typed by definition.
+charsiug2p	tauber_beowulf	tauber:524:4	grammatical	high	IPA neː faithful except length; HS/Wyatt 'ne' (= gold). Tauber: ne av. 'not' ('hyldo ne telge'); system nē is 'nor'. Negator vs conjunction. Class B.
+charsiug2p	soliloquies	soliloquies:00377:23	grammatical	high	IPA θeː faithful except length (θ for þ normal). 'for þæs ðinges lufum þe ðe rihtre ys to lufianne' - relative particle þe; system þē is the pronoun 'thee'. Class B.
+charsiug2p	tauber_beowulf	tauber:390:6	editorial	high	IPA seː faithful except length; HS/Wyatt 'se' (= gold). Tauber: se, d., nsm 'the' ('Geþenc nu se mæra maga Healfdenes'). sē is the same demonstrative in the same function, only the marking differs. Class C.
+charsiug2p	tauber_beowulf	tauber:71:5	homograph	high	IPA weːsɑn faithful except length; HS/Wyatt 'wesan' (= gold). Tauber: wesan v. infinitive 'be' ('Ne sceal þær dyrne sum wesan'). System wēsan is a different verb, Clark Hall wēsan 'to soak, macerate' (also BT, WikiPron). Different headwords, wēsan is a content word. Class empty, typed by definition.
+charsiug2p	tauber_beowulf	tauber:318:4	gold_in_doubt	high	IPA θeː faithful except length. HS 'þē' and Wyatt 'ðē' both carry the long mark like system ðē, gold 'ðe' short; alignment correct (same token in 'gefered þæt ðe feor ond neah'). Tauber itself parses it as pronoun þu, as, 'you', i.e. þē.
+charsiug2p	soliloquies	soliloquies:00666:22	grammatical	high	IPA θeː faithful except length. 'ne þæs þe ær us wæs' - relative particle þe 'which'; system þē is the pronoun 'thee'. Class B.
+charsiug2p	soliloquies	soliloquies:00650:9	grammatical	high	IPA θeː faithful except length. 'þa cwydas geendod þe þu of ðisum twam bocum alese' - relative particle þe; system þē 'thee'. Class B.
 charsiug2p	soliloquies	soliloquies:00002:7	grammatical	high	relative þe vs pronoun þē
-charsiug2p	tauber_beowulf	tauber:487:22	grammatical	high	'se þe' relative þe vs pronoun þē
-charsiug2p	tauber_beowulf	tauber:495:2	gold_in_doubt	high	HS up matches system; IPA faithful
-charsiug2p	tauber_beowulf	tauber:722:0	grammatical	high	'Ne meahte' negative ne vs nē
-charsiug2p	tauber_beowulf	tauber:687:29	grammatical	high	'ða ðe' relative ðe vs pronoun ðē
-charsiug2p	soliloquies	soliloquies:00628:11	editorial	high	preposition be/bē
-charsiug2p	tauber_beowulf	tauber:223:8	grammatical	high	'þara þe' relative þe vs pronoun þē
-charsiug2p	tauber_beowulf	tauber:648:13	editorial	high	article se/sē
+charsiug2p	tauber_beowulf	tauber:489:15	homograph	high	IPA ɡæːstɑs faithful except length; HS/Wyatt 'gæstas' (= gold). Tauber: lemma gist m. 'stranger', ap ('gæstas grette'); Clark Hall gæst 'stranger'. System gǣstas = gāst 'spirit' (Clark Hall gǣst = gāst). Two content-word headwords. Class empty, typed by definition.
+charsiug2p	tauber_beowulf	tauber:496:9	editorial	high	IPA swiθe faithful except length; HS/Wyatt 'swīðe' (= gold), so not gold_in_doubt. Tauber: swiðe av. 'very'. Short swiðe is the same adverb left unmarked in Bright's reader ('tō swiðe goodum'); same word, same function, only the marking differs. Class C.
+charsiug2p	tauber_beowulf	tauber:722:2	editorial	high	IPA seː faithful except length; HS/Wyatt 'se' (= gold). Tauber: se d. nsm 'the' ('Ne meahte se snella sunu Wonredes'). sē is the same demonstrative, marking differs. Class C.
+charsiug2p	tauber_beowulf	tauber:692:5	grammatical	high	IPA neː faithful except length; HS/Wyatt 'ne' (= gold). Tauber: ne av. 'not' ('wealdan ne moste'); system nē 'nor'. Class B.
+charsiug2p	soliloquies	soliloquies:00629:14	homograph	high	IPA wiːtɑn faithful except length. 'þu meaht gearu witan þe ðu ær woldest witan' - witan 'to know'; system wītan is the different verb 'to blame, reproach' (BT, WikiPron, Bright). Two content-word headwords. Class empty, typed by definition.
+charsiug2p	tauber_beowulf	tauber:225:14	editorial	medium	IPA onfenɡ faithful except length; HS/Wyatt 'onfēng' (= gold). Tauber: onfon v. p3s 'receive', preterite. Short onfeng in the lexicon is the same preterite unmarked (Bright: 'hwylc gife hē onfeng', 'Ða onfeng Ēadwine'; Clark Hall onfeng II 'pret. 3 sg. of onfōn' unmarked). Same word, same function; only marking differs. Not the noun onfeng (= andfeng), which does not fit 'him hel onfeng'. Class empty.
+charsiug2p	tauber_beowulf	tauber:650:2	editorial	low	IPA uːsiːt͡ʃ: t͡ʃ for c is a palatalisation rendering, vowels all present, so not segment/truncation. HS/Wyatt 'ūsic' (= gold), not system. Tauber: we p. ap 'us'. System ūsīc is the same pronoun in the same function with a spurious long second vowel; ūsīc is in no candidate or dictionary, so the 'editorial habit' rationale is weak and 'other' is a defensible alternative. Class empty.
 charsiug2p	soliloquies	soliloquies:00036:15	grammatical	high	relative þe vs pronoun þē
-charsiug2p	soliloquies	soliloquies:00418:33	editorial	high	swiðe/swīðe same adverb
-charsiug2p	tauber_beowulf	tauber:742:0	grammatical	high	'Ne meahton' negative ne vs nē
-charsiug2p	soliloquies	soliloquies:00323:23	homograph	medium	hēle (=hǣle 'health') vs hele 'hell/cover'
-charsiug2p	tauber_beowulf	tauber:517:5	editorial	medium	lȳtle 'little', short only unmarked
-charsiug2p	tauber_beowulf	tauber:613:27	grammatical	high	negative ne vs nē 'nor'
-charsiug2p	soliloquies	soliloquies:00338:0	grammatical	high	relative þe (continues 00337) vs pronoun þē
+charsiug2p	soliloquies	soliloquies:00420:4	editorial	high	IPA beː faithful except length. 'Swa hit bið æac be þam wisdome' - preposition be 'about'; bē is the same preposition with a different marking habit (Bright marks bē 3 times, be 109). Class C.
+charsiug2p	tauber_beowulf	tauber:742:6	gold_in_doubt	high	IPA riːt͡ʃes faithful except length (t͡ʃ palatal c). HS and Wyatt both 'rīces' = system, gold 'rices' short; alignment correct ('leofne þeoden rices hyrde'). Tauber: rice n. gs 'kingdom', normally rīce in Clark Hall/BT.
+charsiug2p	soliloquies	soliloquies:00325:3	grammatical	high	IPA neː faithful except length. 'Gyf þu hi ne lufadæst' - verbal negator 'not'; system nē 'nor'. Class B.
+charsiug2p	tauber_beowulf	tauber:517:6	editorial	high	IPA xwile faithful except length (x for h normal); HS/Wyatt 'hwīle' (= gold). Tauber: hwil f. as 'while' ('lytle hwile'). Short hwile in the lexicon is the same noun unmarked in Bright ('ðā hwile ðe'); same word and function, only marking differs. Class empty.
+charsiug2p	tauber_beowulf	tauber:613:32	homograph	high	IPA ɑːk faithful except length; HS/Wyatt 'ac' (= gold). Tauber: ac c. 'but'; system āc is the noun 'oak'. Different headwords, āc a content word. Class A.
+charsiug2p	soliloquies	soliloquies:00339:0	homograph	high	IPA ɑːk is faithful apart from length. Sentence-initial 'Ac þa þe unhale eagan hæbbað' is the conjunction ac 'but'; the system's āc is the noun 'oak', a different headword and a content word. Class A agrees.
 charsiug2p	soliloquies	soliloquies:00162:6	grammatical	high	relative þe vs pronoun þē
-charsiug2p	tauber_beowulf	tauber:519:4	editorial	medium	lāfe 'heirlooms', short only unmarked
-charsiug2p	soliloquies	soliloquies:00466:31	homograph	high	ac 'but' vs āc 'oak'
+charsiug2p	tauber_beowulf	tauber:519:26	homograph	high	IPA xyːrɑ is faithful apart from length. HS and Wyatt both have hyra, as the gold does, so gold_in_doubt does not apply. Tauber has hie, p, gpm, 'they', so this is the pronoun 'their' ('hyra sylfra feorh'). hȳra is a noun: Clark Hall gives 'hireling', and Wiktionary gives the plural of hȳr 'hire'. That is a different headword and a content word. Class empty.
+charsiug2p	soliloquies	soliloquies:00467:22	homograph	medium	IPA le͜oxte is faithful apart from length. 'næar þam leohte ðæs andgyttes' is the dative of the noun lēoht 'light', which Clark Hall, Bosworth-Toller and Wiktionary all mark long. The short leohte is listed in Clark Hall as the preterite 3sg of leccan 'moisten', a different headword. Class empty. Note: Sweet's Primer once marks the noun short ('on leohte'), which would point to editorial.
 charsiug2p	soliloquies	soliloquies:00041:19	grammatical	high	relative þe vs pronoun þē
 charsiug2p	soliloquies	soliloquies:00119:16	homograph	medium	mǣst 'most' vs mæst 'mast'
 charsiug2p	soliloquies	soliloquies:00147:7	grammatical	high	negative ne vs nē 'nor'
 charsiug2p	soliloquies	soliloquies:00025:23	editorial	medium	conj þæt; Hargrove marks þǣt by habit
-charsiug2p	tauber_beowulf	tauber:207:10	homograph	high	gemete 'measure' vs gemēte 'find'
+charsiug2p	tauber_beowulf	tauber:208:1	gold_in_doubt	high	IPA up is faithful. The HS form 'up' is short, like the system's form, while Tauber's gold and Wyatt have ūp. The alignment was checked: HS reads 'Swēg up āstāg', the same word in the same place.
 charsiug2p	soliloquies	soliloquies:00018:19	homograph	high	man 'one' vs mān 'crime'
-charsiug2p	soliloquies	soliloquies:00533:15	grammatical	high	relative þe vs pronoun þē
-charsiug2p	soliloquies	soliloquies:00448:21	grammatical	high	'þe ... þe' conj 'or' vs pronoun þē
-charsiug2p	soliloquies	soliloquies:00494:1	editorial	high	preposition be/bē
+charsiug2p	soliloquies	soliloquies:00535:0	homograph	high	IPA ɑːk is faithful apart from length. Sentence-initial 'Ac ic wolde witan' is the conjunction 'but', against āc 'oak', a different content-word headword. Class A.
+charsiug2p	soliloquies	soliloquies:00449:2	grammatical	high	IPA neː is faithful apart from length. 'þu ne scealt' uses ne as the negative adverb 'not' before the verb. The system's nē is the conjunction 'nor', a function-word distinction. Class B.
+charsiug2p	soliloquies	soliloquies:00495:3	homograph	high	witan 'know' vs wītan 'blame'
 charsiug2p	soliloquies	soliloquies:00196:15	editorial	medium	article þæt; Hargrove marks þǣt by habit
-charsiug2p	tauber_beowulf	tauber:723:1	editorial	high	article se/sē
-charsiug2p	soliloquies	soliloquies:00348:10	editorial	high	swiðe/swīðe same adverb
-charsiug2p	soliloquies	soliloquies:00646:4	homograph	high	witan 'know' vs wītan 'blame'
-charsiug2p	soliloquies	soliloquies:00562:47	grammatical	high	'ðe neron' conj 'or' vs pronoun ðē
+charsiug2p	tauber_beowulf	tauber:723:8	editorial	high	IPA xiːs is faithful apart from length. HS and Wyatt have his, as the gold does, so gold_in_doubt does not apply. Tauber gives the possessive (he, p, gsm, 'his'). The long hīs in the lexicon comes from Bright and Sweet, where it is the possessive marked long, so the word and function are the same. Clark Hall's hīs = īs 'ice' is not a possible reading here. Class C.
+charsiug2p	soliloquies	soliloquies:00348:15	grammatical	high	IPA neː is faithful apart from length. Token 15 is the ne directly before 'bruce', the verbal negation 'not' (the 'nor' is the ne at token 11). The system's nē 'nor' is a different function. Class B.
+charsiug2p	soliloquies	soliloquies:00647:6	editorial	medium	IPA beː is faithful apart from length. 'gehaten Be Godes Ansyne' uses be as the preposition 'about'. No dictionary in the lexicon has bē; its only training tokens are Bright's (OCR-like, for hē), so a long reading here can only be the same preposition marked long. Class C.
+charsiug2p	soliloquies	soliloquies:00565:2	grammatical	high	IPA neː is faithful apart from length. 'Hu nu ne were ðu ær geðafa' uses ne as the negative adverb 'not'. The system's nē is 'nor'. Class B.
 charsiug2p	soliloquies	soliloquies:00115:2	editorial	high	pronoun me/mē
-charsiug2p	soliloquies	soliloquies:00311:3	homograph	high	witan 'know' vs wītan 'blame'
-charsiug2p	soliloquies	soliloquies:00303:6	grammatical	high	relative þe vs pronoun þē
-charsiug2p	tauber_beowulf	tauber:453:11	grammatical	high	negative ne vs nē 'nor'
-charsiug2p	soliloquies	soliloquies:00313:2	grammatical	high	negative ne vs nē 'nor'
-charsiug2p	soliloquies	soliloquies:00505:5	homograph	medium	pronoun hyre 'her' vs hȳre (hȳr/hȳran)
-charsiug2p	soliloquies	soliloquies:00572:0	grammatical	high	'Ne getweoge' negative ne vs nē
-charsiug2p	tauber_beowulf	tauber:211:6	editorial	medium	lāfe 'heirloom', short only unmarked
-charsiug2p	soliloquies	soliloquies:00613:11	grammatical	high	negative ne vs nē 'nor'
-charsiug2p	tauber_beowulf	tauber:363:2	gold_in_doubt	high	HS up matches system; IPA faithful
-charsiug2p	tauber_beowulf	tauber:277:27	editorial	high	article se/sē
+charsiug2p	soliloquies	soliloquies:00312:0	editorial	medium	IPA niːs is faithful apart from length. 'Nis þæt nan wundor' is nis (ne + is) 'is not'. nīs is in no dictionary; its only source is one Bright token ('Sōðlīce nīs nān ðing'), the same contraction marked long, so the word and function are the same. Class empty.
+charsiug2p	soliloquies	soliloquies:00303:18	grammatical	high	IPA θeː is faithful apart from length (θ for þ is normal). 'þa hwile þe we on þysse worlde beoð' uses þe as the subordinating particle. The system's þē is 'thee' or the instrumental form, a different function. Class B.
+charsiug2p	tauber_beowulf	tauber:453:12	editorial	low	con 'can'; cōn is a BT/Bright marking, same word
+charsiug2p	soliloquies	soliloquies:00313:9	grammatical	high	relative þe vs pronoun þē
+charsiug2p	soliloquies	soliloquies:00506:19	editorial	high	IPA misliːkum is faithful apart from length. It is the same adjective, mislic 'various' ('mænega and mislicum gooda gifa'). Clark Hall and Bosworth-Toller mark mislic short, while Wiktionary and WikiPron have mislīc, so the dictionaries disagree on the suffix length. Class empty.
+charsiug2p	soliloquies	soliloquies:00572:13	grammatical	high	IPA neː is faithful apart from length. 'forðam hyt ne meg' uses ne as the negative adverb 'not' before the verb. The system's nē is 'nor'. Class B.
+charsiug2p	tauber_beowulf	tauber:212:2	grammatical	high	IPA neː is faithful apart from length. HS and Wyatt have ne, as the gold does, so gold_in_doubt does not apply. Tauber gives ne, av, 'not' ('Hie þæt ne wiston'), and the system's nē is 'nor'. Class B.
+charsiug2p	soliloquies	soliloquies:00614:26	editorial	high	IPA krist is faithful apart from length (k for c is normal). It is the same proper noun, Crist 'Christ' ('hwæs Crist cwæð'). Bosworth-Toller and Wiktionary list both crist and crīst, and Clark Hall has crīst, so the dictionaries disagree on its length. Class empty.
+charsiug2p	tauber_beowulf	tauber:363:4	homograph	high	IPA woːn is faithful apart from length. HS and Wyatt have won, as the gold does. Tauber gives wonn, a, nsn, 'dark' ('won to wolcnum'). wōn is an inflected form of wōh 'wrong, crooked' (Wiktionary; Clark Hall 'on wōn' 'wrongfully'), a different content-word headword. Class empty.
+charsiug2p	tauber_beowulf	tauber:277:29	homograph	high	IPA bejæ͜ɑːt is faithful apart from length (j for palatal g is normal). HS and Wyatt have begeat, as the gold does. Tauber gives begitan, v, p3s, 'befall'. Wiktionary gives beġeat (short) as the preterite of beġietan and beġēat as the preterite of beġēotan 'pour over'. Clark Hall's begēat is the noun 'attainment' or that same preterite of begēotan. These are different content-word headwords. Class empty.
 charsiug2p	soliloquies	soliloquies:00214:19	editorial	high	preposition be/bē
 charsiug2p	soliloquies	soliloquies:00033:17	editorial	medium	nānum same word, short only unmarked
-charsiug2p	soliloquies	soliloquies:00592:16	grammatical	high	negative ne vs nē 'nor'
-charsiug2p	soliloquies	soliloquies:00702:1	grammatical	high	'Hu ne' negative ne vs nē
-charsiug2p	soliloquies	soliloquies:00644:13	grammatical	high	'þe ma þe' conj 'than' þe vs þē
-charsiug2p	tauber_beowulf	tauber:92:10	editorial	high	his/hīs same pronoun
-charsiug2p	soliloquies	soliloquies:00352:9	homograph	medium	pronoun hyre vs hȳre (hȳr/hȳran)
-charsiug2p	soliloquies	soliloquies:00472:3	grammatical	high	relative ðe vs pronoun ðē
+charsiug2p	soliloquies	soliloquies:00596:3	editorial	high	IPA swiθe is faithful apart from length. 'Þu dest eac swiðe rihte' uses the adverb swīðe 'very'. The short swiðe occurs only in Bright's two tokens, where it is the same adverb, so the word and function are the same. Class C.
+charsiug2p	soliloquies	soliloquies:00703:14	grammatical	high	IPA θeː is faithful apart from length. 'feala oðra þinga þe ær urum dagum geweordon wæs' uses þe as the relative particle. The system's þē is 'thee' or the instrumental form, a different function. Class B.
+charsiug2p	soliloquies	soliloquies:00645:11	grammatical	high	IPA neː is faithful apart from length. 'ic hyt þe ne mæg ... gesecgan' uses ne as the negative adverb 'not' before the verb. The system's nē is 'nor'. Class B.
+charsiug2p	tauber_beowulf	tauber:93:3	editorial	high	IPA xiːs is faithful apart from length. HS and Wyatt have his, as the gold does. Tauber gives the possessive (he, p, gsm, 'his'), in 'to his winedrihtne'. The long hīs from Bright and Sweet is the same possessive marked long. Clark Hall's hīs = īs 'ice' does not fit here. Class C.
+charsiug2p	soliloquies	soliloquies:00353:2	grammatical	high	IPA neː is faithful apart from length. 'Forðam me ne þincð': here ne is the negative adverb 'not' (short), while nē reads as the conjunction 'nor'. Class B.
+charsiug2p	soliloquies	soliloquies:00474:4	grammatical	medium	IPA jyt is faithful (j for palatal g). Gold gȳt is the adverb 'yet' ('þæt ðille gyt witan'). Short gyt is the dual pronoun 'you two' (git/gyt in CH and BT). The readings differ in word class and one is a pronoun, so this is not a homograph. Class B.
 charsiug2p	soliloquies	soliloquies:00195:30	editorial	high	his/hīs same pronoun
-charsiug2p	soliloquies	soliloquies:00456:2	grammatical	high	relative þe vs pronoun þē
-charsiug2p	tauber_beowulf	tauber:401:34	editorial	high	his/hīs same pronoun
-charsiug2p	soliloquies	soliloquies:00392:2	homograph	high	is 'is' vs īs 'ice'
-charsiug2p	tauber_beowulf	tauber:658:12	editorial	high	his/hīs same pronoun
-charsiug2p	tauber_beowulf	tauber:134:7	gold_in_doubt	high	HS and Wyatt up match system; IPA faithful
+charsiug2p	soliloquies	soliloquies:00463:0	homograph	high	IPA ɑːk is faithful apart from length. Sentence-initial 'Ac læt beon þone wop' is the conjunction 'but', and āc is 'oak', a content word under a different headword. Class A.
+charsiug2p	tauber_beowulf	tauber:402:5	homograph	medium	IPA læːt is faithful. Tauber gives læt as an adjective (nsm, 'slack'): 'nalas elnes læt'. System lǣt is the verb form of lǣtan 'let' (as in the training texts: 'lǣt ūs inn', 'Unferð lǣt'). These are different headwords and both are content words. HS and Wyatt both have short læt, so the gold is not in doubt. Class column empty.
+charsiug2p	soliloquies	soliloquies:00393:2	homograph	high	IPA iːs is faithful apart from length. 'Ðæra sawle is se besta creft': is is the verb 'is', and īs is the noun 'ice'. Class A.
+charsiug2p	tauber_beowulf	tauber:658:18	editorial	high	IPA xiːs is faithful (x for h). Tauber: his is the pronoun he, gsm, 'his'. hīs is the same possessive with a habitual long mark (CH lists both). HS and Wyatt have short his. Class C.
+charsiug2p	tauber_beowulf	tauber:134:15	editorial	high	IPA xiːs is faithful. Tauber: his is the pronoun he, gsm, 'his' ('leof his leodum'). The system marks the same word long, only marking differs. HS and Wyatt have his. Class C.
 charsiug2p	soliloquies	soliloquies:00031:10	editorial	high	nis/nīs same form
-charsiug2p	soliloquies	soliloquies:00414:25	grammatical	high	negative ne vs nē 'nor'
+charsiug2p	soliloquies	soliloquies:00414:38	grammatical	high	IPA θeː is faithful. In 'ða hwile ðe he ... byð', ðe is the relative/conjunctive particle, while ðē is the pronoun 'thee'. The function differs. Class B.
 charsiug2p	soliloquies	soliloquies:00026:18	grammatical	high	negative ne vs nē 'nor'
-charsiug2p	tauber_beowulf	tauber:22:19	grammatical	high	'se þe' relative þe vs pronoun þē
-charsiug2p	soliloquies	soliloquies:00284:19	grammatical	high	relative þe vs pronoun þē
+charsiug2p	tauber_beowulf	tauber:24:9	grammatical	high	IPA neː is faithful. Tauber: ne is an adverb, 'not' ('ne wæs hit lenge'). System nē is the conjunction 'nor'. HS ne and Wyatt Ne are short, so the gold is not in doubt. Class B.
+charsiug2p	soliloquies	soliloquies:00285:8	homograph	high	IPA mɑːn is faithful apart from length. 'forðam man naþer ne ... don ne mæge': man is the indefinite 'one', and mān is the noun 'crime', a content word under a separate headword. Class A.
 charsiug2p	soliloquies	soliloquies:00043:6	homograph	high	man 'one' vs mān 'crime'
-charsiug2p	soliloquies	soliloquies:00305:4	homograph	high	man 'man' vs mān 'crime'
-charsiug2p	tauber_beowulf	tauber:185:4	editorial	medium	sīð 'time', short only unmarked
-charsiug2p	tauber_beowulf	tauber:394:13	homograph	medium	onfēng 'received' vs onfeng n. 'reception'
-charsiug2p	tauber_beowulf	tauber:111:11	grammatical	high	negative ne vs nē 'nor'
-charsiug2p	tauber_beowulf	tauber:503:2	editorial	medium	sīð 'journey', short only unmarked
-charsiug2p	soliloquies	soliloquies:00410:14	grammatical	high	'ne an ic' negative ne vs nē
-charsiug2p	tauber_beowulf	tauber:733:17	homograph	high	gōdum 'good one' vs godum 'gods'
-charsiug2p	tauber_beowulf	tauber:421:33	homograph	high	is 'is' vs īs 'ice'
-charsiug2p	tauber_beowulf	tauber:201:5	editorial	high	article se/sē
-charsiug2p	soliloquies	soliloquies:00412:7	grammatical	high	'se se þe' relative þe vs pronoun þē
-charsiug2p	tauber_beowulf	tauber:449:3	editorial	high	preposition be/bē
-charsiug2p	tauber_beowulf	tauber:14:1	gold_in_doubt	high	Wyatt gyt matches system; IPA faithful
+charsiug2p	soliloquies	soliloquies:00305:16	grammatical	high	IPA neː is faithful. In 'þeah he ne mage þas sunnan ... geseon', ne is the negative adverb 'not', and nē reads as 'nor'. Class B.
+charsiug2p	tauber_beowulf	tauber:188:2	editorial	medium	IPA θoːn is faithful. Tauber: þon is the instrumental (isn) of þæt, 'that' ('æfter þon'). þōn is the same instrumental with a long mark (Wiktionary þōn, CH ðōn, Bright 'þōn mā þe'), so it is the same word and function. HS and Wyatt have þon. Class column empty.
+charsiug2p	tauber_beowulf	tauber:396:4	grammatical	high	IPA θeː is faithful. Tauber: ðe is the relative particle 'who' ('se ðe floda begong ... beheold'), and ðē is the pronoun 'thee'. HS þe and Wyatt ðe are short. Class B.
+charsiug2p	tauber_beowulf	tauber:111:56	grammatical	high	IPA θeː is faithful. Tauber: þe is the relative particle 'who' ('se þe hine deað nimeð'), not the pronoun þē 'thee'. HS and Wyatt have þe. Class B.
+charsiug2p	tauber_beowulf	tauber:504:4	editorial	high	IPA seː is faithful. Tauber: se is the demonstrative, nsm, 'the' ('swa se rica bebead'). sē is the same article marked long by habit. HS and Wyatt have se. Class C.
+charsiug2p	soliloquies	soliloquies:00410:18	editorial	medium	IPA nɑnum is faithful apart from the missing length. 'hys nanum men': both readings are nān 'no, none', dat., with the same function. The short candidate nanum comes from unmarked training tokens (Bright, John WS), so only the marking differs. Class column empty.
+charsiug2p	tauber_beowulf	tauber:733:20	editorial	high	IPA seː is faithful. Tauber: se is the demonstrative, nsm, 'the' ('þæt se guðcyning'). Same word, only the long mark differs. HS and Wyatt have se. Class C.
+charsiug2p	tauber_beowulf	tauber:422:0	grammatical	high	IPA neː is faithful. Tauber: Ne is an adverb, 'not' ('Ne nom he'). System nē is the conjunction 'nor'. HS and Wyatt have Ne, short. Class B.
+charsiug2p	tauber_beowulf	tauber:203:2	editorial	medium	IPA bejeːn is faithful (j for palatal g). Only the length sits on the second vowel. Tauber: begen is the numeral 'both' (npm), and the system reads the same word. HS bēgen agrees with the gold. Wyatt begen does not match system begēn, so the gold is not in doubt. Editors disagree on bēgen vs begen (BT, Wyatt short). The system's begēn is a misplaced mark, not a candidate pattern. Class column empty.
+charsiug2p	soliloquies	soliloquies:00413:28	grammatical	medium	IPA neː is faithful. In 'ne furðum ne [ne] myst' the gold treats the token as the negative 'not', and the system's nē reads 'nor'. The functions differ. The doubled ne is hard to parse, and a 'nor' reading is possible, but prose gold cannot be gold_in_doubt. Class B.
+charsiug2p	tauber_beowulf	tauber:449:4	editorial	medium	IPA θoːn is faithful. Tauber: þon is the instrumental (isn) of þæt, 'that' ('be þon'). þōn is the same instrumental marked long in some sources (Wiktionary þōn, Bright 'þōn mā'). HS and Wyatt have þon. Class column empty.
+charsiug2p	tauber_beowulf	tauber:16:18	editorial	high	IPA oːθ is faithful. Tauber: oð þæt is a conjunction, 'until'. oþ and ōþ are the same word, and sources mark it either way (Zupitza ōð, Bright oð). HS oð and Wyatt oþ are short, so the gold is not in doubt. Class C.

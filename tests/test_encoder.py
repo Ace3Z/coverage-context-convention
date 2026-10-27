@@ -219,8 +219,8 @@ class TestMinority(unittest.TestCase):
         metrics = encoder_summary.runs_from_summary(json.loads((out / "summary.json").read_text(encoding="utf8")))
         with contextlib.redirect_stdout(io.StringIO()):
             stale = encoder_summary.minority(tables, metrics)
-        self.assertEqual(stale, set(metrics))  # the committed tables keep the flag that counted ties
-        for s, n in (("john_ws", 278), ("soliloquies", 607), ("tauber_beowulf", 325)):
+        self.assertEqual(stale, set())  # the committed runs recorded the strict flag
+        for s, n in (("john_ws", 278), ("soliloquies", 604), ("tauber_beowulf", 325)):
             mino = [t for t in tables[s] if t["capfull:minority_reading"] == "1"]
             self.assertEqual(len(mino), n, s)
             self.assertFalse(any(t["capfull:frequency"] == t["gold"] for t in mino), s)

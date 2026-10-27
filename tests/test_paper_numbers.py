@@ -1,5 +1,4 @@
 import contextlib
-import csv
 import io
 import re
 import sys
@@ -60,14 +59,12 @@ class TestWorkedExamples(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         with contextlib.redirect_stdout(io.StringIO()):
-            train = E.build_data(ROOT / "data", E.EXCLUDE_D3)[0]
+            train, _, cls.hs, cls.wy = E.build_data(ROOT / "data", E.EXCLUDE_D3)
             cls.lex, cls.counts = E.lexicon(train, str(ROOT / "data/lex_wikipron.csv"))
             cls.tb = E.heldout(ROOT / "data", "tauber_beowulf")
         cls.preds = {s: PN.jsonl(ROOT / f"results/wikipron/{s}_predictions.jsonl")
                      for s in ("soliloquies", "tauber_beowulf")}
         cls.enc = {s: {t["id"]: t for t in table} for s, table in read_tables(ROOT / "results/encoder").items()}
-        with open(ROOT / "results/error_typing/labels.tsv", encoding="utf8") as f:
-            cls.labels = list(csv.DictReader(f, delimiter="\t"))
 
     def test_examples_hold(self):
         PN.example_soliloquies_00026(self.preds["soliloquies"], self.enc["soliloquies"])
@@ -76,7 +73,7 @@ class TestWorkedExamples(unittest.TestCase):
         se = PN.example_se(self.tb, PN.tauber_columns(ROOT / "data/brunetti-length.txt"), self.preds["tauber_beowulf"],
                            self.enc["tauber_beowulf"])
         self.assertEqual((len(se), sum(gloss == "the" for _, gloss in se)), (175, 105))
-        self.assertEqual(PN.example_2796(self.enc["tauber_beowulf"], self.labels), 1)
+        self.assertEqual(PN.example_2796(self.enc["tauber_beowulf"], self), 0)  # self has hs, wy, tb; no run writes þē
 
     def test_a_changed_prediction_fails(self):
         enc = dict(self.enc["soliloquies"])

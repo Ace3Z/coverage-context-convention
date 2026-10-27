@@ -57,24 +57,24 @@
       }
     },
     "hs-tauber": {
-      "aligned": 16573,
+      "aligned": 16577,
       "hs_total": 17682,
       "tauber_total": 17361,
-      "alignment_rate_hs": 0.9372808505825133,
-      "alignment_rate_tauber": 0.9546109095098209,
+      "alignment_rate_hs": 0.937507069336048,
+      "alignment_rate_tauber": 0.9548413109843903,
       "all": {
-        "n": 16573,
-        "agreement": 0.9881735352682073,
-        "cohen_kappa": 0.98610442159869,
-        "prior_vs_hs": 0.8958547034332951,
-        "prior_vs_tauber": 0.8965787727025886
+        "n": 16577,
+        "agreement": 0.988176388972673,
+        "cohen_kappa": 0.9861075186635327,
+        "prior_vs_hs": 0.8958798335042529,
+        "prior_vs_tauber": 0.8966037280569463
       },
       "lexicon_ambiguous": {
-        "n": 4332,
-        "agreement": 0.9882271468144044,
-        "cohen_kappa": 0.982654784022887,
-        "prior_vs_hs": 0.8861957525392429,
-        "prior_vs_tauber": 0.8896583564173592
+        "n": 4334,
+        "agreement": 0.9882325796031379,
+        "cohen_kappa": 0.9826606014778897,
+        "prior_vs_hs": 0.8862482694970004,
+        "prior_vs_tauber": 0.8897092754960775
       },
       "attested_ambiguous": {
         "n": 3228,
@@ -106,24 +106,24 @@
       }
     },
     "wyatt-tauber": {
-      "aligned": 16912,
+      "aligned": 16918,
       "wyatt_total": 17568,
       "tauber_total": 17361,
-      "alignment_rate_wyatt": 0.9626593806921676,
-      "alignment_rate_tauber": 0.9741374344795807,
+      "alignment_rate_wyatt": 0.9630009107468124,
+      "alignment_rate_tauber": 0.9744830366914349,
       "all": {
-        "n": 16912,
-        "agreement": 0.9766438032166509,
-        "cohen_kappa": 0.9724534330263307,
-        "prior_vs_wyatt": 0.8997161778618732,
-        "prior_vs_tauber": 0.8970553453169348
+        "n": 16918,
+        "agreement": 0.9766520865350514,
+        "cohen_kappa": 0.9724630143575459,
+        "prior_vs_wyatt": 0.8997517437049296,
+        "prior_vs_tauber": 0.897091854829176
       },
       "lexicon_ambiguous": {
-        "n": 4333,
-        "agreement": 0.9607662127855989,
-        "cohen_kappa": 0.942369932753838,
-        "prior_vs_wyatt": 0.8912993307177475,
-        "prior_vs_tauber": 0.8887606738979922
+        "n": 4335,
+        "agreement": 0.9607843137254902,
+        "cohen_kappa": 0.9423899910319286,
+        "prior_vs_wyatt": 0.8913494809688581,
+        "prior_vs_tauber": 0.8888119953863899
       },
       "attested_ambiguous": {
         "n": 3223,
@@ -190,17 +190,17 @@
     },
     "hs-tauber": {
       "lexicon_ambiguous_floor_vs_hs": {
-        "n": 4332,
-        "ceiling": 0.9882271468144044,
-        "floor": 0.8861957525392429,
+        "n": 4334,
+        "ceiling": 0.9882325796031379,
+        "floor": 0.8862482694970004,
         "gap_points": 10.2,
         "clears_bar": true
       },
       "lexicon_ambiguous_floor_vs_tauber": {
-        "n": 4332,
-        "ceiling": 0.9882271468144044,
-        "floor": 0.8896583564173592,
-        "gap_points": 9.86,
+        "n": 4334,
+        "ceiling": 0.9882325796031379,
+        "floor": 0.8897092754960775,
+        "gap_points": 9.85,
         "clears_bar": false
       },
       "attested_ambiguous_floor_vs_hs": {
@@ -220,16 +220,16 @@
     },
     "wyatt-tauber": {
       "lexicon_ambiguous_floor_vs_wyatt": {
-        "n": 4333,
-        "ceiling": 0.9607662127855989,
-        "floor": 0.8912993307177475,
-        "gap_points": 6.95,
+        "n": 4335,
+        "ceiling": 0.9607843137254902,
+        "floor": 0.8913494809688581,
+        "gap_points": 6.94,
         "clears_bar": false
       },
       "lexicon_ambiguous_floor_vs_tauber": {
-        "n": 4333,
-        "ceiling": 0.9607662127855989,
-        "floor": 0.8887606738979922,
+        "n": 4335,
+        "ceiling": 0.9607843137254902,
+        "floor": 0.8888119953863899,
         "gap_points": 7.2,
         "clears_bar": false
       },

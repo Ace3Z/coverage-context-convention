@@ -21,8 +21,9 @@ The original extraction scripts are not in the repository. These rules were infe
 and their cleaning counts in data/manifest.json. With them, after clean_corpus, matthew_ws, bright_reader,
 physiologus, hs_beowulf and john_ws rebuild byte for byte. The other four (soliloquies, sweet_primer, zupitza_grammar
 and wyatt_beowulf) differ. In the first three this is mostly where the original language filter dropped lines these
-rules keep (and the reverse), and in sweet_primer also in the 12 sentences the original removed as overlapping
-Matthew. wyatt_beowulf skips the filters, so its differences have other causes.
+rules keep (and the reverse), in soliloquies also in the sentence ids, where the committed file keeps five gaps,
+and in sweet_primer also in the 12 sentences the original removed as overlapping Matthew. wyatt_beowulf skips the
+filters, so its differences have other causes.
 
 Usage: python -m oevl.build_corpus --source john_ws --out data/by_source [--raw data/raw/corpus]
 then python -m oevl.clean_corpus, which removes the old sentence-level split field and applies the character fixes.
@@ -285,17 +286,17 @@ def clean(text, log):
 
 def sentences(par, log, speaker=None, filters=True):
     """The kept sentences of one paragraph, after the language filters (unless filters is False) and cleaning.
-    speaker is a regex for the speaker label of a line of dialogue (A. or [G.]), at a line start or after a sentence end.
+    speaker is a regex for the speaker label of a line of dialogue (A. or [G.]) at a line start or after a sentence end.
 
-    The paragraph is NFC-normalised, zero-width spaces are removed and every speaker label is cut. A line
-    that line_lang reads as English or Latin is dropped, and so is every line of a paragraph that is one bracketed
-    note with no length mark, or one that line_lang reads as English once its macrons are removed (unmarked). Blank lines are skipped. The kept lines are joined by spaces, passed
-    through editorial, split after . ? or ! followed by white space and cleaned, and a piece with no letter is no
-    sentence. In a paragraph where some sentence has an Old English letter (OE), a sentence of three or more words
-    with none and two or more capitalised words is dropped. In any paragraph a sentence with four or more Latin
-    function words (WORD letter runs) is dropped. With filters False none of the line or sentence drops apply.
-    Drops are counted in log: dropped_line_eng/lat and dropped_words_eng/lat (words split at white space),
-    dropped_sentence_mixed and dropped_sentence_latin_words, next to the dropped_mark counts of clean."""
+    The paragraph is NFC-normalised, zero-width spaces are removed and every speaker label is cut. A line that line_lang
+    reads as English or Latin is dropped, and so is every line of a paragraph that is one bracketed note with no length
+    mark, or one that line_lang reads as English once its macrons are removed (unmarked). Blank lines are skipped. The
+    kept lines are joined by spaces, passed through editorial, split after . ? or ! followed by white space and cleaned,
+    and a piece with no letter is no sentence. In a paragraph where some sentence has an Old English letter (OE), a
+    sentence of three or more words with none and two or more capitalised words is dropped. In any paragraph a sentence
+    with four or more Latin function words (WORD letter runs) is dropped. With filters False none of the line or
+    sentence drops apply. Drops are counted in log: dropped_line_eng/lat and dropped_words_eng/lat (words split at white
+    space), dropped_sentence_mixed and dropped_sentence_latin_words, next to the dropped_mark counts of clean."""
     par = unicodedata.normalize("NFC", par).replace("\u200b", "")
     if speaker:
         par = re.sub(speaker, "", par, flags=re.M)

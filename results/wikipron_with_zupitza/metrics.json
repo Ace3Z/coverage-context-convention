@@ -1,7 +1,7 @@
 {
   "dataset": {
-    "train": 93038,
-    "test_prose": 15431,
+    "train": 93027,
+    "test_prose": 15426,
     "agreement_hs": 17682,
     "agreement_wyatt": 17568,
     "lexicon_origin": "training attested forms + external file",
@@ -75,14 +75,14 @@
     },
     "word_seed1": {
       "n": 16649,
-      "accuracy": 0.9570544777464112,
+      "accuracy": 0.9565139047390233,
       "lexicon_ambiguous": {
         "n": 7782,
-        "accuracy": 0.9448727833461835
+        "accuracy": 0.943716268311488
       },
       "attested_ambiguous": {
         "n": 6026,
-        "accuracy": 0.9495519415864587
+        "accuracy": 0.9480584135413209
       },
       "minority_reading": {
         "n": 345,
@@ -102,7 +102,7 @@
       },
       "class_unlisted": {
         "n": 1097,
-        "accuracy": 0.8568824065633546
+        "accuracy": 0.8486782133090246
       }
     },
     "word_seed2": {
@@ -139,14 +139,14 @@
     },
     "word_seed3": {
       "n": 16649,
-      "accuracy": 0.9570544777464112,
+      "accuracy": 0.956814223076461,
       "lexicon_ambiguous": {
         "n": 7782,
-        "accuracy": 0.9448727833461835
+        "accuracy": 0.9443587766640966
       },
       "attested_ambiguous": {
         "n": 6026,
-        "accuracy": 0.9495519415864587
+        "accuracy": 0.9488881513441753
       },
       "minority_reading": {
         "n": 345,
@@ -166,23 +166,23 @@
       },
       "class_unlisted": {
         "n": 1097,
-        "accuracy": 0.8568824065633546
+        "accuracy": 0.853236098450319
       }
     },
     "left_seed1": {
       "n": 16649,
-      "accuracy": 0.9563937774040483,
+      "accuracy": 0.9559733317316356,
       "lexicon_ambiguous": {
         "n": 7782,
-        "accuracy": 0.9434592649704446
+        "accuracy": 0.9425597532767926
       },
       "attested_ambiguous": {
         "n": 6026,
-        "accuracy": 0.9482243611018918
+        "accuracy": 0.946896780617325
       },
       "minority_reading": {
         "n": 345,
-        "accuracy": 0.028985507246376812
+        "accuracy": 0.0463768115942029
       },
       "class_A": {
         "n": 688,
@@ -190,7 +190,7 @@
       },
       "class_B": {
         "n": 1077,
-        "accuracy": 0.8885793871866295
+        "accuracy": 0.8848653667595172
       },
       "class_C": {
         "n": 4920,
@@ -198,15 +198,15 @@
       },
       "class_unlisted": {
         "n": 1097,
-        "accuracy": 0.8468550592525068
+        "accuracy": 0.8441203281677302
       }
     },
     "left_seed2": {
       "n": 16649,
-      "accuracy": 0.9565139047390233,
+      "accuracy": 0.9562736500690732,
       "lexicon_ambiguous": {
         "n": 7782,
-        "accuracy": 0.943716268311488
+        "accuracy": 0.9432022616294011
       },
       "attested_ambiguous": {
         "n": 6026,
@@ -214,7 +214,7 @@
       },
       "minority_reading": {
         "n": 345,
-        "accuracy": 0.03188405797101449
+        "accuracy": 0.034782608695652174
       },
       "class_A": {
         "n": 688,
@@ -230,23 +230,23 @@
       },
       "class_unlisted": {
         "n": 1097,
-        "accuracy": 0.8486782133090246
+        "accuracy": 0.845031905195989
       }
     },
     "left_seed3": {
       "n": 16649,
-      "accuracy": 0.9564538410715359,
+      "accuracy": 0.9565739684065109,
       "lexicon_ambiguous": {
         "n": 7782,
-        "accuracy": 0.9435877666409663
+        "accuracy": 0.9438447699820097
       },
       "attested_ambiguous": {
         "n": 6026,
-        "accuracy": 0.9483903086624627
+        "accuracy": 0.9485562562230335
       },
       "minority_reading": {
         "n": 345,
-        "accuracy": 0.03188405797101449
+        "accuracy": 0.034782608695652174
       },
       "class_A": {
         "n": 688,
@@ -254,7 +254,7 @@
       },
       "class_B": {
         "n": 1077,
-        "accuracy": 0.8885793871866295
+        "accuracy": 0.8895078922934077
       },
       "class_C": {
         "n": 4920,
@@ -262,23 +262,23 @@
       },
       "class_unlisted": {
         "n": 1097,
-        "accuracy": 0.8477666362807658
+        "accuracy": 0.8486782133090246
       }
     },
     "sentence_seed1": {
       "n": 16649,
-      "accuracy": 0.9570544777464112,
+      "accuracy": 0.9562736500690732,
       "lexicon_ambiguous": {
         "n": 7782,
-        "accuracy": 0.9448727833461835
+        "accuracy": 0.9432022616294011
       },
       "attested_ambiguous": {
         "n": 6026,
-        "accuracy": 0.9502157318287421
+        "accuracy": 0.9482243611018918
       },
       "minority_reading": {
         "n": 345,
-        "accuracy": 0.07246376811594203
+        "accuracy": 0.08115942028985507
       },
       "class_A": {
         "n": 688,
@@ -286,27 +286,27 @@
       },
       "class_B": {
         "n": 1077,
-        "accuracy": 0.8978644382544104
+        "accuracy": 0.8895078922934077
       },
       "class_C": {
         "n": 4920,
-        "accuracy": 0.975
+        "accuracy": 0.9745934959349594
       },
       "class_unlisted": {
         "n": 1097,
-        "accuracy": 0.845943482224248
+        "accuracy": 0.8441203281677302
       }
     },
     "sentence_seed2": {
       "n": 16649,
-      "accuracy": 0.956814223076461,
+      "accuracy": 0.9569343504114362,
       "lexicon_ambiguous": {
         "n": 7782,
-        "accuracy": 0.9443587766640966
+        "accuracy": 0.94461578000514
       },
       "attested_ambiguous": {
         "n": 6026,
-        "accuracy": 0.9497178891470296
+        "accuracy": 0.9498838367076003
       },
       "minority_reading": {
         "n": 345,
@@ -318,31 +318,31 @@
       },
       "class_B": {
         "n": 1077,
-        "accuracy": 0.8960074280408542
+        "accuracy": 0.8950789229340761
       },
       "class_C": {
         "n": 4920,
-        "accuracy": 0.9747967479674797
+        "accuracy": 0.975
       },
       "class_unlisted": {
         "n": 1097,
-        "accuracy": 0.845031905195989
+        "accuracy": 0.8468550592525068
       }
     },
     "sentence_seed3": {
       "n": 16649,
-      "accuracy": 0.9565739684065109,
+      "accuracy": 0.9569343504114362,
       "lexicon_ambiguous": {
         "n": 7782,
-        "accuracy": 0.9438447699820097
+        "accuracy": 0.94461578000514
       },
       "attested_ambiguous": {
         "n": 6026,
-        "accuracy": 0.949220046465317
+        "accuracy": 0.9500497842681712
       },
       "minority_reading": {
         "n": 345,
-        "accuracy": 0.06086956521739131
+        "accuracy": 0.0782608695652174
       },
       "class_A": {
         "n": 688,
@@ -350,30 +350,30 @@
       },
       "class_B": {
         "n": 1077,
-        "accuracy": 0.89322191272052
+        "accuracy": 0.8969359331476323
       },
       "class_C": {
         "n": 4920,
-        "accuracy": 0.9745934959349594
+        "accuracy": 0.9747967479674797
       },
       "class_unlisted": {
         "n": 1097,
-        "accuracy": 0.845031905195989
+        "accuracy": 0.845943482224248
       }
     },
     "seed_summary": {
       "word": {
         "accuracy": {
-          "mean": 0.9569743928564278,
-          "sd": 0.0001387110983697816
+          "mean": 0.9567141169639818,
+          "sd": 0.00017338887296224303
         },
         "lexicon_ambiguous": {
-          "mean": 0.9447014477854879,
-          "sd": 0.0002967618962681371
+          "mean": 0.9441446072132271,
+          "sd": 0.00037095237033515536
         },
         "attested_ambiguous": {
-          "mean": 0.9493306781723643,
-          "sd": 0.0003832394750678074
+          "mean": 0.9486115720765571,
+          "sd": 0.00047904934383475933
         },
         "minority_reading": {
           "mean": 0.005797101449275362,
@@ -392,115 +392,115 @@
           "sd": 0.0
         },
         "class_unlisted": {
-          "mean": 0.8556669705256761,
-          "sd": 0.0021051969706094016
+          "mean": 0.8517168034032209,
+          "sd": 0.00263149621326172
         }
       },
       "left": {
         "accuracy": {
-          "mean": 0.9564538410715359,
-          "sd": 6.00636674875088e-05
+          "mean": 0.9562736500690732,
+          "sd": 0.000300318337437655
         },
         "lexicon_ambiguous": {
-          "mean": 0.9435877666409663,
-          "sd": 0.0001285016705216968
+          "mean": 0.9432022616294011,
+          "sd": 0.0006425083526085396
         },
         "attested_ambiguous": {
-          "mean": 0.9482796769554154,
-          "sd": 9.580986876695186e-05
+          "mean": 0.94789246598075,
+          "sd": 0.0008781119518966215
         },
         "minority_reading": {
-          "mean": 0.030917874396135265,
-          "sd": 0.0016734790411293491
+          "mean": 0.03864734299516908,
+          "sd": 0.0066939161645174
         },
         "class_A": {
           "mean": 0.9602713178294574,
           "sd": 0.0008391719028918994
         },
         "class_B": {
-          "mean": 0.888888888888889,
-          "sd": 0.0005360726733422841
+          "mean": 0.8879603837821108,
+          "sd": 0.002680363366711357
         },
         "class_C": {
           "mean": 0.9745934959349594,
           "sd": 0.0
         },
         "class_unlisted": {
-          "mean": 0.8477666362807658,
-          "sd": 0.000911577028258892
+          "mean": 0.845943482224248,
+          "sd": 0.0024118061176523057
         }
       },
       "sentence": {
         "accuracy": {
-          "mean": 0.956814223076461,
-          "sd": 0.00024025466995014622
+          "mean": 0.9567141169639818,
+          "sd": 0.0003814555205169475
         },
         "lexicon_ambiguous": {
-          "mean": 0.9443587766640966,
-          "sd": 0.0005140066820868983
+          "mean": 0.944144607213227,
+          "sd": 0.0008160952147373289
         },
         "attested_ambiguous": {
-          "mean": 0.9497178891470296,
-          "sd": 0.0004978426817125459
+          "mean": 0.9493859940258877,
+          "sd": 0.001009419603434801
         },
         "minority_reading": {
-          "mean": 0.06763285024154589,
-          "sd": 0.006033814491206182
+          "mean": 0.07632850241545894,
+          "sd": 0.00603381449120618
         },
         "class_A": {
           "mean": 0.9607558139534884,
           "sd": 0.0
         },
         "class_B": {
-          "mean": 0.8956979263385949,
-          "sd": 0.0023366866094926483
+          "mean": 0.8938409161250387,
+          "sd": 0.003865675022221202
         },
         "class_C": {
           "mean": 0.9747967479674797,
           "sd": 0.00020325203252030688
         },
         "class_unlisted": {
-          "mean": 0.8453357642054087,
-          "sd": 0.0005262992426523824
+          "mean": 0.8456396232148283,
+          "sd": 0.0013924569112597329
         }
       }
     },
     "mcnemar_seed1": {
       "frequency_vs_word_seed1": {
         "a_wrong_b_right": 6,
-        "a_right_b_wrong": 36,
-        "discordant": 42,
-        "p_exact": 2.8288777684792876e-06
+        "a_right_b_wrong": 45,
+        "discordant": 51,
+        "p_exact": 1.8323628836469652e-08
       },
       "frequency_vs_left_seed1": {
-        "a_wrong_b_right": 14,
-        "a_right_b_wrong": 55,
-        "discordant": 69,
-        "p_exact": 6.921916920059638e-07
+        "a_wrong_b_right": 20,
+        "a_right_b_wrong": 68,
+        "discordant": 88,
+        "p_exact": 2.770265657008098e-07
       },
       "frequency_vs_sentence_seed1": {
-        "a_wrong_b_right": 29,
-        "a_right_b_wrong": 59,
-        "discordant": 88,
-        "p_exact": 0.0018240286456271994
+        "a_wrong_b_right": 32,
+        "a_right_b_wrong": 75,
+        "discordant": 107,
+        "p_exact": 3.918715378691487e-05
       },
       "word_seed1_vs_left_seed1": {
-        "a_wrong_b_right": 8,
-        "a_right_b_wrong": 19,
-        "discordant": 27,
-        "p_exact": 0.052238985896110535
+        "a_wrong_b_right": 21,
+        "a_right_b_wrong": 30,
+        "discordant": 51,
+        "p_exact": 0.2624375357110438
       },
       "word_seed1_vs_sentence_seed1": {
-        "a_wrong_b_right": 25,
-        "a_right_b_wrong": 25,
-        "discordant": 50,
-        "p_exact": 1.0
+        "a_wrong_b_right": 35,
+        "a_right_b_wrong": 39,
+        "discordant": 74,
+        "p_exact": 0.7275470834894697
       },
       "left_seed1_vs_sentence_seed1": {
-        "a_wrong_b_right": 23,
-        "a_right_b_wrong": 12,
-        "discordant": 35,
-        "p_exact": 0.08953107893466952
+        "a_wrong_b_right": 28,
+        "a_right_b_wrong": 23,
+        "discordant": 51,
+        "p_exact": 0.5758493477318467
       }
     },
     "per_word": [
@@ -536,12 +536,12 @@
         "word_seed1_accuracy": 0.843348,
         "word_seed2_accuracy": 0.843348,
         "word_seed3_accuracy": 0.843348,
-        "left_seed1_accuracy": 0.849785,
+        "left_seed1_accuracy": 0.854077,
         "left_seed2_accuracy": 0.849785,
-        "left_seed3_accuracy": 0.847639,
+        "left_seed3_accuracy": 0.849785,
         "sentence_seed1_accuracy": 0.860515,
-        "sentence_seed2_accuracy": 0.860515,
-        "sentence_seed3_accuracy": 0.854077,
+        "sentence_seed2_accuracy": 0.856223,
+        "sentence_seed3_accuracy": 0.862661,
         "bright_reader_pattern_counts": "{\"0\": 574, \"1\": 128}",
         "matthew_ws_pattern_counts": "{\"0\": 364, \"1\": 126}",
         "sweet_primer_pattern_counts": "{\"0\": 179, \"1\": 19}",
@@ -627,9 +627,9 @@
         "left_seed1_accuracy": 0.974063,
         "left_seed2_accuracy": 0.974063,
         "left_seed3_accuracy": 0.974063,
-        "sentence_seed1_accuracy": 0.974063,
-        "sentence_seed2_accuracy": 0.971182,
-        "sentence_seed3_accuracy": 0.9683,
+        "sentence_seed1_accuracy": 0.9683,
+        "sentence_seed2_accuracy": 0.974063,
+        "sentence_seed3_accuracy": 0.971182,
         "bright_reader_pattern_counts": "{\"1\": 465, \"0\": 6}",
         "matthew_ws_pattern_counts": "{\"1\": 330, \"0\": 3}",
         "sweet_primer_pattern_counts": "{\"0\": 94, \"1\": 26}",
@@ -646,12 +646,12 @@
         "word_seed1_accuracy": 0.927273,
         "word_seed2_accuracy": 0.927273,
         "word_seed3_accuracy": 0.927273,
-        "left_seed1_accuracy": 0.927273,
+        "left_seed1_accuracy": 0.909091,
         "left_seed2_accuracy": 0.930303,
-        "left_seed3_accuracy": 0.927273,
-        "sentence_seed1_accuracy": 0.933333,
-        "sentence_seed2_accuracy": 0.930303,
-        "sentence_seed3_accuracy": 0.927273,
+        "left_seed3_accuracy": 0.930303,
+        "sentence_seed1_accuracy": 0.906061,
+        "sentence_seed2_accuracy": 0.933333,
+        "sentence_seed3_accuracy": 0.930303,
         "bright_reader_pattern_counts": "{\"0\": 312, \"1\": 136}",
         "matthew_ws_pattern_counts": "{\"0\": 260, \"1\": 48}",
         "sweet_primer_pattern_counts": "{\"0\": 86}",
@@ -970,18 +970,18 @@
   ],
   "soliloquies": {
     "frequency": {
-      "n": 15431,
-      "accuracy": 0.8871751668718812,
+      "n": 15426,
+      "accuracy": 0.887333074030857,
       "lexicon_ambiguous": {
-        "n": 5968,
-        "accuracy": 0.881367292225201
+        "n": 5965,
+        "accuracy": 0.8818105616093881
       },
       "attested_ambiguous": {
-        "n": 4658,
-        "accuracy": 0.8718334048948047
+        "n": 4655,
+        "accuracy": 0.8723952738990333
       },
       "minority_reading": {
-        "n": 635,
+        "n": 632,
         "accuracy": 0.0
       },
       "class_A": {
@@ -997,23 +997,23 @@
         "accuracy": 0.961092961092961
       },
       "class_unlisted": {
-        "n": 915,
-        "accuracy": 0.8327868852459016
+        "n": 912,
+        "accuracy": 0.8355263157894737
       }
     },
     "oracle": {
-      "n": 15431,
-      "accuracy": 0.9322143736634049,
+      "n": 15426,
+      "accuracy": 0.9321924024374433,
       "lexicon_ambiguous": {
-        "n": 5968,
-        "accuracy": 0.9978217158176944
+        "n": 5965,
+        "accuracy": 0.9978206202849959
       },
       "attested_ambiguous": {
-        "n": 4658,
-        "accuracy": 0.9997853155860884
+        "n": 4655,
+        "accuracy": 0.9997851772287862
       },
       "minority_reading": {
-        "n": 635,
+        "n": 632,
         "accuracy": 1.0
       },
       "class_A": {
@@ -1029,24 +1029,24 @@
         "accuracy": 0.9994059994059994
       },
       "class_unlisted": {
-        "n": 915,
-        "accuracy": 0.9879781420765027
+        "n": 912,
+        "accuracy": 0.9879385964912281
       }
     },
     "word_seed1": {
-      "n": 15431,
-      "accuracy": 0.8890545006804484,
+      "n": 15426,
+      "accuracy": 0.8891481913652275,
       "lexicon_ambiguous": {
-        "n": 5968,
-        "accuracy": 0.8862265415549598
+        "n": 5965,
+        "accuracy": 0.8865046102263202
       },
       "attested_ambiguous": {
-        "n": 4658,
-        "accuracy": 0.8724774581365393
+        "n": 4655,
+        "accuracy": 0.8730397422126746
       },
       "minority_reading": {
-        "n": 635,
-        "accuracy": 0.009448818897637795
+        "n": 632,
+        "accuracy": 0.00949367088607595
       },
       "class_A": {
         "n": 663,
@@ -1061,24 +1061,24 @@
         "accuracy": 0.961092961092961
       },
       "class_unlisted": {
-        "n": 915,
-        "accuracy": 0.8644808743169399
+        "n": 912,
+        "accuracy": 0.8662280701754386
       }
     },
     "word_seed2": {
-      "n": 15431,
-      "accuracy": 0.8889896960663599,
+      "n": 15426,
+      "accuracy": 0.8891481913652275,
       "lexicon_ambiguous": {
-        "n": 5968,
-        "accuracy": 0.886058981233244
+        "n": 5965,
+        "accuracy": 0.8865046102263202
       },
       "attested_ambiguous": {
-        "n": 4658,
-        "accuracy": 0.8724774581365393
+        "n": 4655,
+        "accuracy": 0.8730397422126746
       },
       "minority_reading": {
-        "n": 635,
-        "accuracy": 0.009448818897637795
+        "n": 632,
+        "accuracy": 0.00949367088607595
       },
       "class_A": {
         "n": 663,
@@ -1093,24 +1093,24 @@
         "accuracy": 0.961092961092961
       },
       "class_unlisted": {
-        "n": 915,
-        "accuracy": 0.8633879781420765
+        "n": 912,
+        "accuracy": 0.8662280701754386
       }
     },
     "word_seed3": {
-      "n": 15431,
-      "accuracy": 0.8889896960663599,
+      "n": 15426,
+      "accuracy": 0.8891481913652275,
       "lexicon_ambiguous": {
-        "n": 5968,
-        "accuracy": 0.886058981233244
+        "n": 5965,
+        "accuracy": 0.8865046102263202
       },
       "attested_ambiguous": {
-        "n": 4658,
-        "accuracy": 0.8724774581365393
+        "n": 4655,
+        "accuracy": 0.8730397422126746
       },
       "minority_reading": {
-        "n": 635,
-        "accuracy": 0.009448818897637795
+        "n": 632,
+        "accuracy": 0.00949367088607595
       },
       "class_A": {
         "n": 663,
@@ -1125,92 +1125,60 @@
         "accuracy": 0.961092961092961
       },
       "class_unlisted": {
-        "n": 915,
-        "accuracy": 0.8633879781420765
+        "n": 912,
+        "accuracy": 0.8662280701754386
       }
     },
     "left_seed1": {
-      "n": 15431,
-      "accuracy": 0.8895729375931566,
+      "n": 15426,
+      "accuracy": 0.8911577855568521,
       "lexicon_ambiguous": {
-        "n": 5968,
-        "accuracy": 0.8875670241286864
+        "n": 5965,
+        "accuracy": 0.8917015926236379
       },
       "attested_ambiguous": {
-        "n": 4658,
-        "accuracy": 0.8750536711034779
+        "n": 4655,
+        "accuracy": 0.880343716433942
       },
       "minority_reading": {
-        "n": 635,
-        "accuracy": 0.03464566929133858
-      },
-      "class_A": {
-        "n": 663,
-        "accuracy": 0.9728506787330317
-      },
-      "class_B": {
-        "n": 1023,
-        "accuracy": 0.6129032258064516
-      },
-      "class_C": {
-        "n": 3367,
-        "accuracy": 0.961983961983962
-      },
-      "class_unlisted": {
-        "n": 915,
-        "accuracy": 0.8590163934426229
-      }
-    },
-    "left_seed2": {
-      "n": 15431,
-      "accuracy": 0.8895081329790681,
-      "lexicon_ambiguous": {
-        "n": 5968,
-        "accuracy": 0.8873994638069705
-      },
-      "attested_ambiguous": {
-        "n": 4658,
-        "accuracy": 0.8748389866895664
-      },
-      "minority_reading": {
-        "n": 635,
-        "accuracy": 0.03307086614173228
-      },
-      "class_A": {
-        "n": 663,
-        "accuracy": 0.9728506787330317
-      },
-      "class_B": {
-        "n": 1023,
-        "accuracy": 0.6129032258064516
-      },
-      "class_C": {
-        "n": 3367,
-        "accuracy": 0.961983961983962
-      },
-      "class_unlisted": {
-        "n": 915,
-        "accuracy": 0.8579234972677595
-      }
-    },
-    "left_seed3": {
-      "n": 15431,
-      "accuracy": 0.8894433283649796,
-      "lexicon_ambiguous": {
-        "n": 5968,
-        "accuracy": 0.8872319034852547
-      },
-      "attested_ambiguous": {
-        "n": 4658,
-        "accuracy": 0.8746243022756548
-      },
-      "minority_reading": {
-        "n": 635,
-        "accuracy": 0.031496062992125984
+        "n": 632,
+        "accuracy": 0.09018987341772151
       },
       "class_A": {
         "n": 663,
         "accuracy": 0.9743589743589743
+      },
+      "class_B": {
+        "n": 1023,
+        "accuracy": 0.6363636363636364
+      },
+      "class_C": {
+        "n": 3367,
+        "accuracy": 0.9616869616869617
+      },
+      "class_unlisted": {
+        "n": 912,
+        "accuracy": 0.8596491228070176
+      }
+    },
+    "left_seed2": {
+      "n": 15426,
+      "accuracy": 0.8895371450797355,
+      "lexicon_ambiguous": {
+        "n": 5965,
+        "accuracy": 0.8875104777870914
+      },
+      "attested_ambiguous": {
+        "n": 4655,
+        "accuracy": 0.8749731471535983
+      },
+      "minority_reading": {
+        "n": 632,
+        "accuracy": 0.03164556962025317
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.971342383107089
       },
       "class_B": {
         "n": 1023,
@@ -1218,27 +1186,59 @@
       },
       "class_C": {
         "n": 3367,
-        "accuracy": 0.961983961983962
+        "accuracy": 0.9616869616869617
       },
       "class_unlisted": {
-        "n": 915,
-        "accuracy": 0.8579234972677595
+        "n": 912,
+        "accuracy": 0.8629385964912281
+      }
+    },
+    "left_seed3": {
+      "n": 15426,
+      "accuracy": 0.8896667963179048,
+      "lexicon_ambiguous": {
+        "n": 5965,
+        "accuracy": 0.8878457669740151
+      },
+      "attested_ambiguous": {
+        "n": 4655,
+        "accuracy": 0.8754027926960258
+      },
+      "minority_reading": {
+        "n": 632,
+        "accuracy": 0.03639240506329114
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.9743589743589743
+      },
+      "class_B": {
+        "n": 1023,
+        "accuracy": 0.6089931573802542
+      },
+      "class_C": {
+        "n": 3367,
+        "accuracy": 0.9622809622809623
+      },
+      "class_unlisted": {
+        "n": 912,
+        "accuracy": 0.8629385964912281
       }
     },
     "sentence_seed1": {
-      "n": 15431,
-      "accuracy": 0.8901561791199534,
+      "n": 15426,
+      "accuracy": 0.8905743549850901,
       "lexicon_ambiguous": {
-        "n": 5968,
-        "accuracy": 0.8890750670241286
+        "n": 5965,
+        "accuracy": 0.8901927912824812
       },
       "attested_ambiguous": {
-        "n": 4658,
-        "accuracy": 0.8780592528982396
+        "n": 4655,
+        "accuracy": 0.8796992481203008
       },
       "minority_reading": {
-        "n": 635,
-        "accuracy": 0.06456692913385827
+        "n": 632,
+        "accuracy": 0.0981012658227848
       },
       "class_A": {
         "n": 663,
@@ -1246,67 +1246,35 @@
       },
       "class_B": {
         "n": 1023,
-        "accuracy": 0.6236559139784946
+        "accuracy": 0.6275659824046921
       },
       "class_C": {
         "n": 3367,
-        "accuracy": 0.9622809622809623
+        "accuracy": 0.9628749628749629
       },
       "class_unlisted": {
-        "n": 915,
-        "accuracy": 0.8568306010928962
+        "n": 912,
+        "accuracy": 0.8574561403508771
       }
     },
     "sentence_seed2": {
-      "n": 15431,
-      "accuracy": 0.8902857883481304,
+      "n": 15426,
+      "accuracy": 0.8897964475560741,
       "lexicon_ambiguous": {
-        "n": 5968,
-        "accuracy": 0.8894101876675603
+        "n": 5965,
+        "accuracy": 0.8881810561609388
       },
       "attested_ambiguous": {
-        "n": 4658,
-        "accuracy": 0.8787033061399743
+        "n": 4655,
+        "accuracy": 0.8769065520945221
       },
       "minority_reading": {
-        "n": 635,
-        "accuracy": 0.06771653543307087
+        "n": 632,
+        "accuracy": 0.05221518987341772
       },
       "class_A": {
         "n": 663,
-        "accuracy": 0.971342383107089
-      },
-      "class_B": {
-        "n": 1023,
-        "accuracy": 0.6265884652981427
-      },
-      "class_C": {
-        "n": 3367,
-        "accuracy": 0.9622809622809623
-      },
-      "class_unlisted": {
-        "n": 915,
-        "accuracy": 0.8557377049180328
-      }
-    },
-    "sentence_seed3": {
-      "n": 15431,
-      "accuracy": 0.8898969606635992,
-      "lexicon_ambiguous": {
-        "n": 5968,
-        "accuracy": 0.8884048257372654
-      },
-      "attested_ambiguous": {
-        "n": 4658,
-        "accuracy": 0.8772005152425933
-      },
-      "minority_reading": {
-        "n": 635,
-        "accuracy": 0.05354330708661417
-      },
-      "class_A": {
-        "n": 663,
-        "accuracy": 0.971342383107089
+        "accuracy": 0.9698340874811463
       },
       "class_B": {
         "n": 1023,
@@ -1314,29 +1282,61 @@
       },
       "class_C": {
         "n": 3367,
-        "accuracy": 0.9628749628749629
+        "accuracy": 0.961983961983962
       },
       "class_unlisted": {
-        "n": 915,
-        "accuracy": 0.8557377049180328
+        "n": 912,
+        "accuracy": 0.8585526315789473
+      }
+    },
+    "sentence_seed3": {
+      "n": 15426,
+      "accuracy": 0.8900557500324128,
+      "lexicon_ambiguous": {
+        "n": 5965,
+        "accuracy": 0.8888516345347862
+      },
+      "attested_ambiguous": {
+        "n": 4655,
+        "accuracy": 0.877765843179377
+      },
+      "minority_reading": {
+        "n": 632,
+        "accuracy": 0.06329113924050633
+      },
+      "class_A": {
+        "n": 663,
+        "accuracy": 0.971342383107089
+      },
+      "class_B": {
+        "n": 1023,
+        "accuracy": 0.6207233626588465
+      },
+      "class_C": {
+        "n": 3367,
+        "accuracy": 0.9625779625779626
+      },
+      "class_unlisted": {
+        "n": 912,
+        "accuracy": 0.8574561403508771
       }
     },
     "seed_summary": {
       "word": {
         "accuracy": {
-          "mean": 0.8890112976043895,
-          "sd": 3.741496138874357e-05
+          "mean": 0.8891481913652275,
+          "sd": 0.0
         },
         "lexicon_ambiguous": {
-          "mean": 0.8861148346738159,
-          "sd": 9.674099684813572e-05
+          "mean": 0.8865046102263202,
+          "sd": 0.0
         },
         "attested_ambiguous": {
-          "mean": 0.8724774581365393,
+          "mean": 0.8730397422126746,
           "sd": 0.0
         },
         "minority_reading": {
-          "mean": 0.009448818897637795,
+          "mean": 0.00949367088607595,
           "sd": 0.0
         },
         "class_A": {
@@ -1352,115 +1352,115 @@
           "sd": 0.0
         },
         "class_unlisted": {
-          "mean": 0.8637522768670309,
-          "sd": 0.0006309839007537029
+          "mean": 0.8662280701754386,
+          "sd": 0.0
         }
       },
       "left": {
         "accuracy": {
-          "mean": 0.8895081329790681,
-          "sd": 6.480461408847615e-05
+          "mean": 0.8901205756514975,
+          "sd": 0.0009005862822151209
         },
         "lexicon_ambiguous": {
-          "mean": 0.8873994638069705,
-          "sd": 0.00016756032171583168
+          "mean": 0.8890192791282481,
+          "sd": 0.002328993124803003
         },
         "attested_ambiguous": {
-          "mean": 0.8748389866895664,
-          "sd": 0.0002146844139115367
+          "mean": 0.8769065520945221,
+          "sd": 0.0029844133167453994
         },
         "minority_reading": {
-          "mean": 0.03307086614173228,
-          "sd": 0.0015748031496062992
+          "mean": 0.052742616033755275,
+          "sd": 0.03251700979282352
         },
         "class_A": {
           "mean": 0.9733534439416792,
-          "sd": 0.000870814885655541
+          "sd": 0.001741629771311082
         },
         "class_B": {
-          "mean": 0.6122515477354187,
-          "sd": 0.0011287395292074785
+          "mean": 0.6187683284457478,
+          "sd": 0.015269305329240758
         },
         "class_C": {
-          "mean": 0.961983961983962,
-          "sd": 0.0
+          "mean": 0.9618849618849619,
+          "sd": 0.00034294640284504975
         },
         "class_unlisted": {
-          "mean": 0.858287795992714,
-          "sd": 0.0006309839007537029
+          "mean": 0.8618421052631579,
+          "sd": 0.0018991785170711273
         }
       },
       "sentence": {
         "accuracy": {
-          "mean": 0.8901129760438944,
-          "sd": 0.00019798136629539868
+          "mean": 0.8901421841911923,
+          "sd": 0.0003960910752371228
         },
         "lexicon_ambiguous": {
-          "mean": 0.8889633601429848,
-          "sd": 0.0005119052384892404
+          "mean": 0.8890751606594021,
+          "sd": 0.001024325385852142
         },
         "attested_ambiguous": {
-          "mean": 0.8779876914269358,
-          "sd": 0.0007539468837021084
+          "mean": 0.8781238811313999,
+          "sd": 0.0014303604980621548
         },
         "minority_reading": {
-          "mean": 0.06194225721784777,
-          "sd": 0.007442229332681273
+          "mean": 0.07120253164556962,
+          "sd": 0.023944218275983472
         },
         "class_A": {
-          "mean": 0.971342383107089,
-          "sd": 0.0
+          "mean": 0.9708396178984414,
+          "sd": 0.000870814885655541
         },
         "class_B": {
-          "mean": 0.6230042359074617,
-          "sd": 0.003950588352226175
+          "mean": 0.6223525578364288,
+          "sd": 0.004619565617060219
         },
         "class_C": {
           "mean": 0.9624789624789625,
-          "sd": 0.00034294640284504975
+          "sd": 0.00045367544747608777
         },
         "class_unlisted": {
-          "mean": 0.8561020036429873,
-          "sd": 0.0006309839007537029
+          "mean": 0.8578216374269005,
+          "sd": 0.0006330595056903972
         }
       }
     },
     "mcnemar_seed1": {
       "frequency_vs_word_seed1": {
         "a_wrong_b_right": 43,
-        "a_right_b_wrong": 14,
-        "discordant": 57,
-        "p_exact": 0.0001538890224443423
+        "a_right_b_wrong": 15,
+        "discordant": 58,
+        "p_exact": 0.000306947015546566
       },
       "frequency_vs_left_seed1": {
-        "a_wrong_b_right": 59,
-        "a_right_b_wrong": 22,
-        "discordant": 81,
-        "p_exact": 4.769842118193509e-05
+        "a_wrong_b_right": 94,
+        "a_right_b_wrong": 35,
+        "discordant": 129,
+        "p_exact": 2.035172733143e-07
       },
       "frequency_vs_sentence_seed1": {
-        "a_wrong_b_right": 77,
-        "a_right_b_wrong": 31,
-        "discordant": 108,
-        "p_exact": 1.1153098221083044e-05
+        "a_wrong_b_right": 98,
+        "a_right_b_wrong": 48,
+        "discordant": 146,
+        "p_exact": 4.266345800701663e-05
       },
       "word_seed1_vs_left_seed1": {
-        "a_wrong_b_right": 16,
-        "a_right_b_wrong": 8,
-        "discordant": 24,
-        "p_exact": 0.15158963203430176
+        "a_wrong_b_right": 53,
+        "a_right_b_wrong": 22,
+        "discordant": 75,
+        "p_exact": 0.00044964797164381224
       },
       "word_seed1_vs_sentence_seed1": {
-        "a_wrong_b_right": 35,
-        "a_right_b_wrong": 18,
-        "discordant": 53,
-        "p_exact": 0.027008317653722358
+        "a_wrong_b_right": 57,
+        "a_right_b_wrong": 35,
+        "discordant": 92,
+        "p_exact": 0.02801690195894671
       },
       "left_seed1_vs_sentence_seed1": {
-        "a_wrong_b_right": 27,
-        "a_right_b_wrong": 18,
-        "discordant": 45,
-        "p_exact": 0.23269319190831084
+        "a_wrong_b_right": 29,
+        "a_right_b_wrong": 38,
+        "discordant": 67,
+        "p_exact": 0.3284320626971897
       }
     },
     "per_word": [
@@ -1496,12 +1496,12 @@
         "word_seed1_accuracy": 0.57672,
         "word_seed2_accuracy": 0.57672,
         "word_seed3_accuracy": 0.57672,
-        "left_seed1_accuracy": 0.582011,
+        "left_seed1_accuracy": 0.619048,
         "left_seed2_accuracy": 0.582011,
-        "left_seed3_accuracy": 0.578483,
-        "sentence_seed1_accuracy": 0.597884,
-        "sentence_seed2_accuracy": 0.599647,
-        "sentence_seed3_accuracy": 0.590829,
+        "left_seed3_accuracy": 0.582011,
+        "sentence_seed1_accuracy": 0.61552,
+        "sentence_seed2_accuracy": 0.590829,
+        "sentence_seed3_accuracy": 0.603175,
         "bright_reader_pattern_counts": "{\"0\": 574, \"1\": 128}",
         "matthew_ws_pattern_counts": "{\"0\": 364, \"1\": 126}",
         "sweet_primer_pattern_counts": "{\"0\": 179, \"1\": 19}",
@@ -1540,12 +1540,12 @@
         "word_seed1_accuracy": 0.770115,
         "word_seed2_accuracy": 0.770115,
         "word_seed3_accuracy": 0.770115,
-        "left_seed1_accuracy": 0.770115,
-        "left_seed2_accuracy": 0.770115,
-        "left_seed3_accuracy": 0.770115,
-        "sentence_seed1_accuracy": 0.767241,
+        "left_seed1_accuracy": 0.778736,
+        "left_seed2_accuracy": 0.772989,
+        "left_seed3_accuracy": 0.767241,
+        "sentence_seed1_accuracy": 0.744253,
         "sentence_seed2_accuracy": 0.770115,
-        "sentence_seed3_accuracy": 0.770115,
+        "sentence_seed3_accuracy": 0.764368,
         "bright_reader_pattern_counts": "{\"0\": 312, \"1\": 136}",
         "matthew_ws_pattern_counts": "{\"0\": 260, \"1\": 48}",
         "sweet_primer_pattern_counts": "{\"0\": 86}",
@@ -1893,11 +1893,11 @@
         "word_seed2_accuracy": 0.333333,
         "word_seed3_accuracy": 0.333333,
         "left_seed1_accuracy": 0.375,
-        "left_seed2_accuracy": 0.375,
-        "left_seed3_accuracy": 0.375,
-        "sentence_seed1_accuracy": 0.388889,
-        "sentence_seed2_accuracy": 0.388889,
-        "sentence_seed3_accuracy": 0.416667,
+        "left_seed2_accuracy": 0.361111,
+        "left_seed3_accuracy": 0.388889,
+        "sentence_seed1_accuracy": 0.416667,
+        "sentence_seed2_accuracy": 0.375,
+        "sentence_seed3_accuracy": 0.402778,
         "bright_reader_pattern_counts": "{\"1\": 465, \"0\": 6}",
         "matthew_ws_pattern_counts": "{\"1\": 330, \"0\": 3}",
         "sweet_primer_pattern_counts": "{\"0\": 94, \"1\": 26}",
@@ -1909,10 +1909,10 @@
   "tauber_beowulf": {
     "frequency": {
       "n": 17361,
-      "accuracy": 0.8943609239099131,
+      "accuracy": 0.8944761246471977,
       "lexicon_ambiguous": {
-        "n": 4434,
-        "accuracy": 0.8872350022552999
+        "n": 4436,
+        "accuracy": 0.8872858431018936
       },
       "attested_ambiguous": {
         "n": 3394,
@@ -1935,15 +1935,15 @@
         "accuracy": 0.9589299171062547
       },
       "class_unlisted": {
-        "n": 973,
-        "accuracy": 0.7780061664953751
+        "n": 975,
+        "accuracy": 0.7784615384615384
       }
     },
     "oracle": {
       "n": 17361,
-      "accuracy": 0.9231611082310927,
+      "accuracy": 0.9232763089683774,
       "lexicon_ambiguous": {
-        "n": 4434,
+        "n": 4436,
         "accuracy": 1.0
       },
       "attested_ambiguous": {
@@ -1967,16 +1967,16 @@
         "accuracy": 1.0
       },
       "class_unlisted": {
-        "n": 973,
+        "n": 975,
         "accuracy": 1.0
       }
     },
     "word_seed1": {
       "n": 17361,
-      "accuracy": 0.8937273198548471,
+      "accuracy": 0.8943609239099131,
       "lexicon_ambiguous": {
-        "n": 4434,
-        "accuracy": 0.8847541723049166
+        "n": 4436,
+        "accuracy": 0.8868349864743011
       },
       "attested_ambiguous": {
         "n": 3394,
@@ -1984,7 +1984,7 @@
       },
       "minority_reading": {
         "n": 349,
-        "accuracy": 0.034383954154727794
+        "accuracy": 0.025787965616045846
       },
       "class_A": {
         "n": 387,
@@ -1999,48 +1999,16 @@
         "accuracy": 0.9589299171062547
       },
       "class_unlisted": {
-        "n": 973,
-        "accuracy": 0.7667009249743063
+        "n": 975,
+        "accuracy": 0.7764102564102564
       }
     },
     "word_seed2": {
       "n": 17361,
-      "accuracy": 0.8937849202234894,
+      "accuracy": 0.8945913253844825,
       "lexicon_ambiguous": {
-        "n": 4434,
-        "accuracy": 0.8849797023004059
-      },
-      "attested_ambiguous": {
-        "n": 3394,
-        "accuracy": 0.9068945197407189
-      },
-      "minority_reading": {
-        "n": 349,
-        "accuracy": 0.034383954154727794
-      },
-      "class_A": {
-        "n": 387,
-        "accuracy": 0.8940568475452196
-      },
-      "class_B": {
-        "n": 420,
-        "accuracy": 0.680952380952381
-      },
-      "class_C": {
-        "n": 2654,
-        "accuracy": 0.9589299171062547
-      },
-      "class_unlisted": {
-        "n": 973,
-        "accuracy": 0.7677286742034943
-      }
-    },
-    "word_seed3": {
-      "n": 17361,
-      "accuracy": 0.8943609239099131,
-      "lexicon_ambiguous": {
-        "n": 4434,
-        "accuracy": 0.8872350022552999
+        "n": 4436,
+        "accuracy": 0.887736699729486
       },
       "attested_ambiguous": {
         "n": 3394,
@@ -2063,24 +2031,88 @@
         "accuracy": 0.9589299171062547
       },
       "class_unlisted": {
-        "n": 973,
-        "accuracy": 0.7780061664953751
+        "n": 975,
+        "accuracy": 0.7805128205128206
+      }
+    },
+    "word_seed3": {
+      "n": 17361,
+      "accuracy": 0.8944761246471977,
+      "lexicon_ambiguous": {
+        "n": 4436,
+        "accuracy": 0.8872858431018936
+      },
+      "attested_ambiguous": {
+        "n": 3394,
+        "accuracy": 0.9068945197407189
+      },
+      "minority_reading": {
+        "n": 349,
+        "accuracy": 0.025787965616045846
+      },
+      "class_A": {
+        "n": 387,
+        "accuracy": 0.8940568475452196
+      },
+      "class_B": {
+        "n": 420,
+        "accuracy": 0.680952380952381
+      },
+      "class_C": {
+        "n": 2654,
+        "accuracy": 0.9589299171062547
+      },
+      "class_unlisted": {
+        "n": 975,
+        "accuracy": 0.7784615384615384
       }
     },
     "left_seed1": {
       "n": 17361,
-      "accuracy": 0.8932665169057082,
+      "accuracy": 0.8942457231726283,
       "lexicon_ambiguous": {
-        "n": 4434,
-        "accuracy": 0.8829499323410014
+        "n": 4436,
+        "accuracy": 0.8863841298467088
       },
       "attested_ambiguous": {
         "n": 3394,
-        "accuracy": 0.9054213317619328
+        "accuracy": 0.9101355332940483
       },
       "minority_reading": {
         "n": 349,
-        "accuracy": 0.03724928366762178
+        "accuracy": 0.07449856733524356
+      },
+      "class_A": {
+        "n": 387,
+        "accuracy": 0.8940568475452196
+      },
+      "class_B": {
+        "n": 420,
+        "accuracy": 0.719047619047619
+      },
+      "class_C": {
+        "n": 2654,
+        "accuracy": 0.9589299171062547
+      },
+      "class_unlisted": {
+        "n": 975,
+        "accuracy": 0.757948717948718
+      }
+    },
+    "left_seed2": {
+      "n": 17361,
+      "accuracy": 0.8934393180116352,
+      "lexicon_ambiguous": {
+        "n": 4436,
+        "accuracy": 0.8832281334535618
+      },
+      "attested_ambiguous": {
+        "n": 3394,
+        "accuracy": 0.90571596935769
+      },
+      "minority_reading": {
+        "n": 349,
+        "accuracy": 0.03151862464183381
       },
       "class_A": {
         "n": 387,
@@ -2095,52 +2127,20 @@
         "accuracy": 0.9589299171062547
       },
       "class_unlisted": {
-        "n": 973,
-        "accuracy": 0.7574511819116135
-      }
-    },
-    "left_seed2": {
-      "n": 17361,
-      "accuracy": 0.8933241172743506,
-      "lexicon_ambiguous": {
-        "n": 4434,
-        "accuracy": 0.8831754623364908
-      },
-      "attested_ambiguous": {
-        "n": 3394,
-        "accuracy": 0.9063052445492045
-      },
-      "minority_reading": {
-        "n": 349,
-        "accuracy": 0.03724928366762178
-      },
-      "class_A": {
-        "n": 387,
-        "accuracy": 0.8940568475452196
-      },
-      "class_B": {
-        "n": 420,
-        "accuracy": 0.6857142857142857
-      },
-      "class_C": {
-        "n": 2654,
-        "accuracy": 0.9589299171062547
-      },
-      "class_unlisted": {
-        "n": 973,
-        "accuracy": 0.7574511819116135
+        "n": 975,
+        "accuracy": 0.7589743589743589
       }
     },
     "left_seed3": {
       "n": 17361,
-      "accuracy": 0.8933817176429929,
+      "accuracy": 0.8936121191175623,
       "lexicon_ambiguous": {
-        "n": 4434,
-        "accuracy": 0.8834009923319801
+        "n": 4436,
+        "accuracy": 0.8839044183949504
       },
       "attested_ambiguous": {
         "n": 3394,
-        "accuracy": 0.90571596935769
+        "accuracy": 0.9060106069534473
       },
       "minority_reading": {
         "n": 349,
@@ -2159,20 +2159,52 @@
         "accuracy": 0.9589299171062547
       },
       "class_unlisted": {
-        "n": 973,
-        "accuracy": 0.7595066803699897
+        "n": 975,
+        "accuracy": 0.762051282051282
       }
     },
     "sentence_seed1": {
       "n": 17361,
-      "accuracy": 0.8932089165370658,
+      "accuracy": 0.8934969183802777,
       "lexicon_ambiguous": {
-        "n": 4434,
-        "accuracy": 0.882724402345512
+        "n": 4436,
+        "accuracy": 0.883453561767358
       },
       "attested_ambiguous": {
         "n": 3394,
-        "accuracy": 0.9063052445492045
+        "accuracy": 0.9071891573364761
+      },
+      "minority_reading": {
+        "n": 349,
+        "accuracy": 0.054441260744985676
+      },
+      "class_A": {
+        "n": 387,
+        "accuracy": 0.8940568475452196
+      },
+      "class_B": {
+        "n": 420,
+        "accuracy": 0.6952380952380952
+      },
+      "class_C": {
+        "n": 2654,
+        "accuracy": 0.9589299171062547
+      },
+      "class_unlisted": {
+        "n": 975,
+        "accuracy": 0.7548717948717949
+      }
+    },
+    "sentence_seed2": {
+      "n": 17361,
+      "accuracy": 0.8931513161684235,
+      "lexicon_ambiguous": {
+        "n": 4436,
+        "accuracy": 0.8821009918845807
+      },
+      "attested_ambiguous": {
+        "n": 3394,
+        "accuracy": 0.9060106069534473
       },
       "minority_reading": {
         "n": 349,
@@ -2188,19 +2220,19 @@
       },
       "class_C": {
         "n": 2654,
-        "accuracy": 0.9593067068575735
+        "accuracy": 0.9589299171062547
       },
       "class_unlisted": {
-        "n": 973,
-        "accuracy": 0.7543679342240494
+        "n": 975,
+        "accuracy": 0.7528205128205128
       }
     },
-    "sentence_seed2": {
+    "sentence_seed3": {
       "n": 17361,
       "accuracy": 0.8933241172743506,
       "lexicon_ambiguous": {
-        "n": 4434,
-        "accuracy": 0.8831754623364908
+        "n": 4436,
+        "accuracy": 0.8827772768259693
       },
       "attested_ambiguous": {
         "n": 3394,
@@ -2216,66 +2248,34 @@
       },
       "class_B": {
         "n": 420,
-        "accuracy": 0.6904761904761905
+        "accuracy": 0.6928571428571428
       },
       "class_C": {
         "n": 2654,
         "accuracy": 0.9589299171062547
       },
       "class_unlisted": {
-        "n": 973,
-        "accuracy": 0.7553956834532374
-      }
-    },
-    "sentence_seed3": {
-      "n": 17361,
-      "accuracy": 0.8930937157997811,
-      "lexicon_ambiguous": {
-        "n": 4434,
-        "accuracy": 0.8822733423545331
-      },
-      "attested_ambiguous": {
-        "n": 3394,
-        "accuracy": 0.90571596935769
-      },
-      "minority_reading": {
-        "n": 349,
-        "accuracy": 0.034383954154727794
-      },
-      "class_A": {
-        "n": 387,
-        "accuracy": 0.8940568475452196
-      },
-      "class_B": {
-        "n": 420,
-        "accuracy": 0.6833333333333333
-      },
-      "class_C": {
-        "n": 2654,
-        "accuracy": 0.9589299171062547
-      },
-      "class_unlisted": {
-        "n": 973,
-        "accuracy": 0.7543679342240494
+        "n": 975,
+        "accuracy": 0.7528205128205128
       }
     },
     "seed_summary": {
       "word": {
         "accuracy": {
-          "mean": 0.8939577213294165,
-          "sd": 0.0003503693641091203
+          "mean": 0.8944761246471977,
+          "sd": 0.00011520073728471525
         },
         "lexicon_ambiguous": {
-          "mean": 0.8856562922868741,
-          "sd": 0.001371845406021241
+          "mean": 0.8872858431018936,
+          "sd": 0.00045085662759242195
         },
         "attested_ambiguous": {
           "mean": 0.9066980946768808,
           "sd": 0.00034021819044761616
         },
         "minority_reading": {
-          "mean": 0.03151862464183381,
-          "sd": 0.004962896296758961
+          "mean": 0.025787965616045846,
+          "sd": 0.0
         },
         "class_A": {
           "mean": 0.8940568475452196,
@@ -2290,115 +2290,115 @@
           "sd": 0.0
         },
         "class_unlisted": {
-          "mean": 0.7708119218910586,
-          "sd": 0.00625155450184811
+          "mean": 0.7784615384615384,
+          "sd": 0.0020512820512820773
         }
       },
       "left": {
         "accuracy": {
-          "mean": 0.8933241172743506,
-          "sd": 5.760036864232987e-05
+          "mean": 0.8937657201006086,
+          "sd": 0.00042457892954508587
         },
         "lexicon_ambiguous": {
-          "mean": 0.8831754623364908,
-          "sd": 0.0002255299954893597
+          "mean": 0.8845055605650737,
+          "sd": 0.0016616579792227448
         },
         "attested_ambiguous": {
-          "mean": 0.9058141818896092,
-          "sd": 0.0004500663617124015
+          "mean": 0.9072873698683952,
+          "sd": 0.0024709773375385952
         },
         "minority_reading": {
-          "mean": 0.03629417382999045,
-          "sd": 0.001654298765586321
+          "mean": 0.04680038204393505,
+          "sd": 0.024030077603455827
         },
         "class_A": {
           "mean": 0.8940568475452196,
           "sd": 0.0
         },
         "class_B": {
-          "mean": 0.6841269841269841,
-          "sd": 0.0013746434980705326
+          "mean": 0.6952380952380952,
+          "sd": 0.020619652471058052
         },
         "class_C": {
           "mean": 0.9589299171062547,
           "sd": 0.0
         },
         "class_unlisted": {
-          "mean": 0.7581363480644056,
-          "sd": 0.0011867425882623364
+          "mean": 0.7596581196581197,
+          "sd": 0.0021350420507344732
         }
       },
       "sentence": {
         "accuracy": {
-          "mean": 0.8932089165370658,
-          "sd": 0.00011520073728471525
+          "mean": 0.8933241172743506,
+          "sd": 0.00017280110592710063
         },
         "lexicon_ambiguous": {
-          "mean": 0.882724402345512,
-          "sd": 0.00045105999097883043
+          "mean": 0.8827772768259693,
+          "sd": 0.0006762849413886607
         },
         "attested_ambiguous": {
-          "mean": 0.9062070320172854,
-          "sd": 0.0004500663617124015
+          "mean": 0.9065998821449617,
+          "sd": 0.0005892751915144157
         },
         "minority_reading": {
-          "mean": 0.038204393505253106,
-          "sd": 0.0043768631279425384
+          "mean": 0.044890162368672396,
+          "sd": 0.008753726255885082
         },
         "class_A": {
           "mean": 0.8940568475452196,
           "sd": 0.0
         },
         "class_B": {
-          "mean": 0.6865079365079365,
-          "sd": 0.003636964837266527
+          "mean": 0.6912698412698413,
+          "sd": 0.004956347617776489
         },
         "class_C": {
-          "mean": 0.9590555136900276,
-          "sd": 0.00021753966435175397
+          "mean": 0.9589299171062547,
+          "sd": 0.0
         },
         "class_unlisted": {
-          "mean": 0.7547105173004454,
-          "sd": 0.0005933712941311361
+          "mean": 0.7535042735042735,
+          "sd": 0.0011843082444915872
         }
       }
     },
     "mcnemar_seed1": {
       "frequency_vs_word_seed1": {
-        "a_wrong_b_right": 53,
-        "a_right_b_wrong": 64,
-        "discordant": 117,
-        "p_exact": 0.35527968165224766
+        "a_wrong_b_right": 51,
+        "a_right_b_wrong": 53,
+        "discordant": 104,
+        "p_exact": 0.92194882762643
       },
       "frequency_vs_left_seed1": {
-        "a_wrong_b_right": 52,
-        "a_right_b_wrong": 71,
-        "discordant": 123,
-        "p_exact": 0.10420386640532607
+        "a_wrong_b_right": 66,
+        "a_right_b_wrong": 70,
+        "discordant": 136,
+        "p_exact": 0.7971023348689008
       },
       "frequency_vs_sentence_seed1": {
-        "a_wrong_b_right": 55,
-        "a_right_b_wrong": 75,
-        "discordant": 130,
-        "p_exact": 0.095253411432518
+        "a_wrong_b_right": 61,
+        "a_right_b_wrong": 78,
+        "discordant": 139,
+        "p_exact": 0.17453244937059012
       },
       "word_seed1_vs_left_seed1": {
-        "a_wrong_b_right": 6,
-        "a_right_b_wrong": 14,
-        "discordant": 20,
-        "p_exact": 0.11531829833984375
+        "a_wrong_b_right": 25,
+        "a_right_b_wrong": 27,
+        "discordant": 52,
+        "p_exact": 0.8898839652765371
       },
       "word_seed1_vs_sentence_seed1": {
-        "a_wrong_b_right": 15,
-        "a_right_b_wrong": 24,
-        "discordant": 39,
-        "p_exact": 0.19959086691960698
+        "a_wrong_b_right": 25,
+        "a_right_b_wrong": 40,
+        "discordant": 65,
+        "p_exact": 0.08168153394154003
       },
       "left_seed1_vs_sentence_seed1": {
-        "a_wrong_b_right": 14,
-        "a_right_b_wrong": 15,
-        "discordant": 29,
-        "p_exact": 1.0
+        "a_wrong_b_right": 12,
+        "a_right_b_wrong": 25,
+        "discordant": 37,
+        "p_exact": 0.04703102743951604
       }
     },
     "per_word": [
@@ -2500,12 +2500,12 @@
         "word_seed1_accuracy": 0.60396,
         "word_seed2_accuracy": 0.60396,
         "word_seed3_accuracy": 0.60396,
-        "left_seed1_accuracy": 0.608911,
+        "left_seed1_accuracy": 0.653465,
         "left_seed2_accuracy": 0.608911,
-        "left_seed3_accuracy": 0.60396,
-        "sentence_seed1_accuracy": 0.613861,
-        "sentence_seed2_accuracy": 0.623762,
-        "sentence_seed3_accuracy": 0.608911,
+        "left_seed3_accuracy": 0.608911,
+        "sentence_seed1_accuracy": 0.628713,
+        "sentence_seed2_accuracy": 0.613861,
+        "sentence_seed3_accuracy": 0.623762,
         "bright_reader_pattern_counts": "{\"0\": 574, \"1\": 128}",
         "matthew_ws_pattern_counts": "{\"0\": 364, \"1\": 126}",
         "sweet_primer_pattern_counts": "{\"0\": 179, \"1\": 19}",
@@ -2522,12 +2522,12 @@
         "word_seed1_accuracy": 0.772222,
         "word_seed2_accuracy": 0.772222,
         "word_seed3_accuracy": 0.772222,
-        "left_seed1_accuracy": 0.772222,
+        "left_seed1_accuracy": 0.8,
         "left_seed2_accuracy": 0.772222,
         "left_seed3_accuracy": 0.772222,
-        "sentence_seed1_accuracy": 0.772222,
+        "sentence_seed1_accuracy": 0.777778,
         "sentence_seed2_accuracy": 0.772222,
-        "sentence_seed3_accuracy": 0.772222,
+        "sentence_seed3_accuracy": 0.777778,
         "bright_reader_pattern_counts": "{\"0\": 312, \"1\": 136}",
         "matthew_ws_pattern_counts": "{\"0\": 260, \"1\": 48}",
         "sweet_primer_pattern_counts": "{\"0\": 86}",
@@ -2569,7 +2569,7 @@
         "left_seed1_accuracy": 0.417143,
         "left_seed2_accuracy": 0.417143,
         "left_seed3_accuracy": 0.417143,
-        "sentence_seed1_accuracy": 0.422857,
+        "sentence_seed1_accuracy": 0.417143,
         "sentence_seed2_accuracy": 0.417143,
         "sentence_seed3_accuracy": 0.417143,
         "bright_reader_pattern_counts": "{\"1\": 465, \"0\": 6}",

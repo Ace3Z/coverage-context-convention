@@ -3,13 +3,14 @@
 > Note added in this repository: this is the text given to the two runs of one LLM, Claude Opus 5.5 (model id
 > `claude-opus-5-5`), that typed the errors, with references to internal planning notes removed. The "two annotators"
 > are these two runs, and a third run of the same LLM settled their disagreements instead of a joint discussion. A
-> closing section on regenerating the items is left out, because its script is not in this repository. The runs wrote
+> closing section on regenerating the items is left out. The command `python -m oevl.error_typing items --out items.tsv`
+> regenerates them. The runs wrote
 > `labels_a.tsv` and `labels_b.tsv` (columns `system`, `set`, `id`, `type`, `confidence`, `reason`), not
-> `items_<initials>.tsv`. The settled labels, five of them later changed by a blind review, are the `final` and `note`
+> `items_<initials>.tsv`. The settled labels, three of them later changed by a blind review, are the `final` and `note`
 > columns of `results/error_typing/labels.tsv`, not `items_resolved.tsv`. The run folder
 > `exp_grid/capfull/sentence_s1` is not committed, and its predictions are the `capfull/sentence_s1` column of
-> `results/encoder/<set>_predictions.tsv.gz`. The CharsiuG2P sample was drawn before decision D3. Since then
-> `charsiu_g2p.analyse` leaves Zupitza out as well, which gives a pool of 2,589 errors (1,583 prose, 1,006 verse), and 2
+> `results/encoder/<set>_predictions.tsv.gz`. The CharsiuG2P sample uses the lexicon from before decision D3. Since then
+> `charsiu_g2p.analyse` leaves Zupitza out as well, which gives a pool of 2,588 errors (1,580 prose, 1,008 verse), and 3
 > of the 200 sampled tokens are not lexicon-ambiguous there.
 
 Two annotators type the same 400 errors independently. Cohen's kappa is reported, then the differences are resolved together.
@@ -20,10 +21,10 @@ Each row is one token that a system got wrong. That means its length pattern dif
 
 | System | Errors in the pool | Prose / verse in the pool | Prose / verse in the sample | Items |
 |---|---:|---|---|---|
-| `encoder_sentence`: ByT5 sentence arm, capfull, seed 1 (`exp_grid/capfull/sentence_s1`) | 917 | 468 / 449 | 96 / 104 | 1 to 200 |
-| `charsiug2p`: CharsiuG2P, IPA mapped to a length pattern (`results/charsiu/ipa.tsv`, `wikipron_to_marked.mark`) | 2,625 | 1,607 / 1,018 | 111 / 89 | 201 to 400 |
+| `encoder_sentence`: ByT5 sentence arm, capfull, seed 1 (`exp_grid/capfull/sentence_s1`) | 1,001 | 532 / 469 | 104 / 96 | 1 to 200 |
+| `charsiug2p`: CharsiuG2P, IPA mapped to a length pattern (`results/charsiu/ipa.tsv`, `wikipron_to_marked.mark`) | 2,624 | 1,604 / 1,020 | 111 / 89 | 201 to 400 |
 
-Each system is scored with the lexicon behind its own published numbers. The encoder run left Zupitza out of training (`--exclude-train zupitza_grammar`), so its lexicon is the forms in the other four training works plus WikiPron. CharsiuG2P uses all five training works plus WikiPron, as `charsiu_g2p.analyse` does. CharsiuG2P tokens whose IPA cannot be aligned to the vowel letters are skipped. Among lexicon-ambiguous tokens in these two test sets there are none (`results/charsiu/metrics.json`, `not_alignable` 0). Ten tokens appear in both samples. Type each row on its own.
+Each system is scored with the lexicon behind its own published numbers. The encoder run left Zupitza out of training (`--exclude-train zupitza_grammar`), so its lexicon is the forms in the other four training works plus WikiPron. CharsiuG2P uses all five training works plus WikiPron, as `charsiu_g2p.analyse` does. CharsiuG2P tokens whose IPA cannot be aligned to the vowel letters are skipped. Among lexicon-ambiguous tokens in these two test sets there are none (`results/charsiu/metrics.json`, `not_alignable` 0). Five tokens appear in both samples. Type each row on its own.
 
 | Column | Meaning |
 |---|---|

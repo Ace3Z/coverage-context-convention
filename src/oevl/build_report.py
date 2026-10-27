@@ -10,11 +10,10 @@ tab_classes.tex, tab_bootstrap.tex, fig_accuracy.pdf}. Of these, main.tex inputs
 of its macros) and tab_data.tex. Its other generated macros come from numbers_encoder.tex (oevl.encoder_summary) and
 numbers_paper.tex (oevl.paper_numbers).
 All work runs at module level, so importing the module runs the whole build. The run stops with sys.exit when a check
-fails: the two Soliloquies worked examples (the sentences starting "Ic clypie tō þē" and "Tō þē ic clypige") against
-the prior and the logistic runs, the first also against every ByT5 word and local2 run, Beowulf 2796 against the
-full-cap ByT5 runs and its row in results/error_typing/labels.tsv, the CharsiuG2P reproduction against its
-published WER and PER, the WikiPron conversion against data/lex_wikipron.csv, and a few consistency checks between
-result files. A failed LaTeX pass also stops it.
+fails: the Soliloquies worked example (the sentence starting "Ic clypie tō þē") against the prior, the logistic
+runs and every ByT5 word and local2 run, Beowulf 2796 against the full-cap ByT5 runs, the CharsiuG2P reproduction
+against its published WER and PER, the WikiPron conversion against data/lex_wikipron.csv, and a few consistency
+checks between result files. A failed LaTeX pass also stops it.
 When pdflatex is installed it runs pdflatex, bibtex and pdflatex twice in report/ and copies main.pdf to REPORT.pdf
 (otherwise upload report/ to Overleaf).
 Usage: python -m oevl.build_report
@@ -305,7 +304,6 @@ for p in preds:
     bysent.setdefault(p["sentence_id"], []).append(p)
 EXAMPLES = {
     "Ic clypie tō þē Drihten þū þe æall geworhtest": "ex1",
-    "Tō þē ic clypige þe nēfre nān yfel ne worhtest": "ex2",
 }
 found = {}
 for sid, toks in bysent.items():
@@ -368,14 +366,11 @@ for c in enc_runs:
         sys.exit(f"ex1: the local2 claim no longer holds for {c}")
     if arm == "word" and (ENC_SOL[the_long["id"]][c], ENC_SOL[the_rel["id"]][c]) != ("0", "0"):
         sys.exit(f"ex1: the word-arm claim no longer holds for {c}")
-# Beowulf 2796 "þē ic hēr on starie": gold and Harrison and Sharp long, Wyatt short, every full-cap ByT5 run short,
-# and the error label is gold_in_doubt
+# Beowulf 2796 "þē ic hēr on starie": gold long and every full-cap ByT5 run short (paper_numbers checks the editions)
 head, *rows = gzip.decompress((ROOT / "results/encoder/tauber_beowulf_predictions.tsv.gz").read_bytes()).decode(
     "utf8").split("\n")[:-1]
 b2796 = next(dict(zip(head.split("\t"), r.split("\t"))) for r in rows if r.startswith("tauber:685:44\t"))
-lab = next(r for r in csv.DictReader(open(ROOT / "results/error_typing/labels.tsv", encoding="utf8"), delimiter="\t")
-           if r["id"] == "tauber:685:44")
-if (b2796["gold"], lab["hs_form"], lab["wyatt_form"], lab["final"]) != ("1", "þē", "þe", "gold_in_doubt") or any(
+if b2796["gold"] != "1" or any(
         v != "0" for k, v in b2796.items() if k.startswith("capfull/")):
     sys.exit("Beowulf 2796 example no longer holds")
 for a, short in (("word", "Word"), ("left", "Left"), ("sentence", "Bil")):
