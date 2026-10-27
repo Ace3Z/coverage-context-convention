@@ -1,5 +1,5 @@
 {
- "date": "2026-10-19",
+ "date": "2026-10-19, and 2026-10-27 for the 319 redrawn error-type items",
  "provenance": "Runs of the LLM that made the labels, Claude Opus 5.5 (model id claude-opus-5-5), not people. Each reviewing run was told to act as a senior Old English philologist and labelled its items blind, without the existing labels. Wherever its label differed from the existing one, a further run of the model re-examined the item and decided. The labels were then manually checked, and none was changed (reported 2026-10-20, and 2026-10-27 for the 319 error-type items reviewed that day).",
  "evidence_used": "Tauber's lemma, part of speech and gloss (data/brunetti-length.txt), the corpus (data/by_source), the dictionaries (data/lex_*.csv), Clark Hall, Bosworth-Toller, Wiktionary, and the editions' own glossaries and notes.",
  "areas": {
@@ -3900,7 +3900,7 @@
       "key": "143",
       "label": "homograph",
       "confidence": "medium",
-      "reason": "Tauber: Geatas np gp 'of the Geats', gold Gēata. HS/Wyatt both Gēata = gold, so not gold_in_doubt. The short candidate geata comes only from Wiktionary/WikiPron, alongside the paradigm geat/geatu/geates/geatum, so it is most plausibly the gen. pl. of geat 'gate', a different content word [assumed]. Class column empty."
+      "reason": "Tauber: Geatas np gp 'of the Geats', gold Gēata. HS/Wyatt both Gēata = gold, so not gold_in_doubt. The short candidate geata comes only from Wiktionary/WikiPron, alongside the paradigm geat/geatu/geates/geatum, so it is most plausibly the gen. pl. of geat 'gate', a different content word. Class column empty."
      },
      {
       "key": "144",
@@ -3918,7 +3918,7 @@
       "key": "146",
       "label": "homograph",
       "confidence": "medium",
-      "reason": "Same case as item 143: Tauber Geatas gp 'Geats', gold Gēata, HS/Wyatt Gēata = gold. The short geata exists only via Wiktionary/WikiPron, most plausibly the gen. pl. of geat 'gate' [assumed]. Different content words. Class empty."
+      "reason": "Same case as item 143: Tauber Geatas gp 'Geats', gold Gēata, HS/Wyatt Gēata = gold. The short geata exists only via Wiktionary/WikiPron, most plausibly the gen. pl. of geat 'gate'. Different content words. Class empty."
      },
      {
       "key": "147",
@@ -5139,76 +5139,76 @@
      "key": "22",
      "correct_label": "grammatical",
      "existing_label_is": "wrong",
-     "reason": "[verified] Same case as item 45, which is settled as grammatical. The clause continues into soliloquies:00517: 'and þes God byddan þæt ic hyt gefremman mage', so þes is Hargrove's spelling of þæs, the genitive object of biddan ('ask God for this'). All 10 þes/ðes in the Soliloquies are short and genitive. Long þēs is only ever the nominative masculine 'this': Bright 6/6, Matthew 25/25, John 30/30, and Wiktionary's þēs determiner/pronoun. The gold (genitive of se/þæt) and the system's þēs (nominative of þes) differ in case and lemma, and both are pronouns, so this is grammatical. Editorial's 'same word, same function' fails, because no source marks this genitive long. The class C label is for the nominative 'this'. The truncated sentence ('and þes God') explains the miss but does not change the type."
+     "reason": "Same case as item 45, which is settled as grammatical. The clause continues into soliloquies:00517: 'and þes God byddan þæt ic hyt gefremman mage', so þes is Hargrove's spelling of þæs, the genitive object of biddan ('ask God for this'). All 10 þes/ðes in the Soliloquies are short and genitive. Long þēs is only ever the nominative masculine 'this': Bright 6/6, Matthew 25/25, John 30/30, and Wiktionary's þēs determiner/pronoun. The gold (genitive of se/þæt) and the system's þēs (nominative of þes) differ in case and lemma, and both are pronouns, so this is grammatical. Editorial's 'same word, same function' fails, because no source marks this genitive long. The class C label is for the nominative 'this'. The truncated sentence ('and þes God') explains the miss but does not change the type."
     },
     {
      "key": "24",
      "correct_label": "grammatical",
      "existing_label_is": "correct",
-     "reason": "[verified] Tauber row 3658: an = lemma on, rd/pp 'in' (an herewæsmun). HS an and Wyatt an match the gold, so it is not gold_in_doubt. The system's ān is the numeral 'one'. Preposition against numeral are both closed-class, so homograph's content-word condition fails, and they differ in word class, so the item is grammatical. The class file's note puts the an skeleton in A only because of the verb unnan, which this token is not. The existing final is not clearly wrong."
+     "reason": "Tauber row 3658: an = lemma on, rd/pp 'in' (an herewæsmun). HS an and Wyatt an match the gold, so it is not gold_in_doubt. The system's ān is the numeral 'one'. Preposition against numeral are both closed-class, so homograph's content-word condition fails, and they differ in word class, so the item is grammatical. The class file's note puts the an skeleton in A only because of the verb unnan, which this token is not. The existing final is not clearly wrong."
     },
     {
      "key": "45",
      "correct_label": "grammatical",
      "existing_label_is": "correct",
-     "reason": "[verified] 'Forðām þes nis nān twēo': þes = þæs, the genitive of se/þæt governed by twēo ('no doubt of this'). Hargrove writes it short 10/10, always as this genitive. Every long þēs in the sources is the nominative masculine 'this': Bright 6/6, Matthew 25/25, John 30/30, and Wiktionary's þēs determiner/pronoun. The blind reviewers took the long reading to be the same genitive, but no source marks it so. The two readings differ in case and lemma, so the item is grammatical, not editorial; class C covers the nominative 'this'."
+     "reason": "'Forðām þes nis nān twēo': þes = þæs, the genitive of se/þæt governed by twēo ('no doubt of this'). Hargrove writes it short 10/10, always as this genitive. Every long þēs in the sources is the nominative masculine 'this': Bright 6/6, Matthew 25/25, John 30/30, and Wiktionary's þēs determiner/pronoun. The blind reviewers took the long reading to be the same genitive, but no source marks it so. The two readings differ in case and lemma, so the item is grammatical, not editorial; class C covers the nominative 'this'."
     },
     {
      "key": "105",
      "correct_label": "homograph",
      "existing_label_is": "wrong",
-     "reason": "[verified] Tauber row 6156: gripe m as 'attack' after grimne (asm). HS and Wyatt both have gripe, so it is not gold_in_doubt. Bosworth-Toller online cites this exact line ('Grimne gripe Gúðláf and Ósláf mǽndon, B. 1148') under short gripe m. 'grip, grasp; attack, assault'. Its long grípe headwords are different words: grípe, an f. 'ditch, drain' and grípe, es m. 'vulture'. Wiktionary has gripe as the noun (i-stem, short) and grīpe as a form of the verb grīpan; Clark Hall has only gripe. So the dictionaries agree that the noun is short, and long grīpe is a different content word under a different headword. The existing note's premise that BT's grīpe is this noun marked long is wrong. Step 4 applies before editorial."
+     "reason": "Tauber row 6156: gripe m as 'attack' after grimne (asm). HS and Wyatt both have gripe, so it is not gold_in_doubt. Bosworth-Toller online cites this exact line ('Grimne gripe Gúðláf and Ósláf mǽndon, B. 1148') under short gripe m. 'grip, grasp; attack, assault'. Its long grípe headwords are different words: grípe, an f. 'ditch, drain' and grípe, es m. 'vulture'. Wiktionary has gripe as the noun (i-stem, short) and grīpe as a form of the verb grīpan; Clark Hall has only gripe. So the dictionaries agree that the noun is short, and long grīpe is a different content word under a different headword. The existing note's premise that BT's grīpe is this noun marked long is wrong. Step 4 applies before editorial."
     },
     {
      "key": "197",
      "correct_label": "grammatical",
      "existing_label_is": "correct",
-     "reason": "[verified] Tauber row 2735: git, p, nd, 'you two', the subject of cunnedon. HS git and Wyatt git match the gold, so it is not gold_in_doubt. The system's gīt is the adverb 'yet' (Clark Hall gīt, Wiktionary, and Bright and HS gīt). The class file's gyt row (B) settles this exact pair: 'dual pronoun git vs adverb gȳt yet are both closed-class... same kind of pair as þe, ne and ge'. Homograph needs a content word, which neither reading is, so grammatical is not clearly wrong."
+     "reason": "Tauber row 2735: git, p, nd, 'you two', the subject of cunnedon. HS git and Wyatt git match the gold, so it is not gold_in_doubt. The system's gīt is the adverb 'yet' (Clark Hall gīt, Wiktionary, and Bright and HS gīt). The class file's gyt row (B) settles this exact pair: 'dual pronoun git vs adverb gȳt yet are both closed-class... same kind of pair as þe, ne and ge'. Homograph needs a content word, which neither reading is, so grammatical is not clearly wrong."
     },
     {
      "key": "219",
      "correct_label": "grammatical",
      "existing_label_is": "correct",
-     "reason": "Not clearly wrong. 'Forðam þes nis nan tweo' is the genitive þæs (idiom þæs nis nān twēo). The Soliloquies gold writes this genitive short every time: 'ðes þe ic', 'ðes þe man', 'ðes gemyndes', 'wæs æac þes geðafa' [verified]. Every long þēs in the lexicon is the nominative masculine 'this' (Bright 'þēs middangeard', 13+ Matthew WS 'Þēs is', WikiPron þēs) [verified]. So the two readings differ in word and case (gen. of se/þæt against nom. of þes), and both are function words. That fits step 5 before step 6. The blind reviewers' editorial needs a long-marked genitive, and none is attested."
+     "reason": "Not clearly wrong. 'Forðam þes nis nan tweo' is the genitive þæs (idiom þæs nis nān twēo). The Soliloquies gold writes this genitive short every time: 'ðes þe ic', 'ðes þe man', 'ðes gemyndes', 'wæs æac þes geðafa'. Every long þēs in the lexicon is the nominative masculine 'this' (Bright 'þēs middangeard', 13+ Matthew WS 'Þēs is', WikiPron þēs). So the two readings differ in word and case (gen. of se/þæt against nom. of þes), and both are function words. That fits step 5 before step 6. The blind reviewers' editorial needs a long-marked genitive, and none is attested."
     },
     {
      "key": "234",
      "correct_label": "editorial",
      "existing_label_is": "correct",
-     "reason": "'on þis myddangearde' has a masculine dative noun, so both readings are the same dative/instrumental þīs. The class B contrast (neuter nom/acc þis) does not apply to this token. Editors differ only in marking. Bright has 'on þīs middangearde' and Matthew WS 'on þīs westene', both long, but the Soliloquies gold marks this construction short 5 times ('on þis wege', 'æallum þis middangearde', 'on þis andweardan life' x3) and long once ('be þīs wæge') [verified]. Same word, same function, marking by habit. The blind reviewers' 'uninflected demonstrative' reading clashes with the dative -e."
+     "reason": "'on þis myddangearde' has a masculine dative noun, so both readings are the same dative/instrumental þīs. The class B contrast (neuter nom/acc þis) does not apply to this token. Editors differ only in marking. Bright has 'on þīs middangearde' and Matthew WS 'on þīs westene', both long, but the Soliloquies gold marks this construction short 5 times ('on þis wege', 'æallum þis middangearde', 'on þis andweardan life' x3) and long once ('be þīs wæge'). Same word, same function, marking by habit. The blind reviewers' 'uninflected demonstrative' reading clashes with the dative -e."
     },
     {
      "key": "287",
      "correct_label": "homograph",
      "existing_label_is": "correct",
-     "reason": "IPA xɑmes is faithful apart from length. HS and Wyatt have hāmes, the same as the gold, so this is not gold_in_doubt. Tauber: gs of hām 'home'. The blind reviewers say no other headword gives a short hames, which is wrong. WikiPron/Wiktionary list a full short paradigm (ham, hamas, hame, hames, hamum), and BT has a separate short headword ham [verified]. Wiktionary's page 'hames' gives 'hames, genitive singular of ham' and 'hāmes, genitive singular of hām'. Its short ham is a noun 'covering, garment', or a variant of hamm 'enclosure' [verified via Wiktionary]. Different headwords, both content words: homograph."
+     "reason": "IPA xɑmes is faithful apart from length. HS and Wyatt have hāmes, the same as the gold, so this is not gold_in_doubt. Tauber: gs of hām 'home'. The blind reviewers say no other headword gives a short hames, which is wrong. WikiPron/Wiktionary list a full short paradigm (ham, hamas, hame, hames, hamum), and BT has a separate short headword ham. Wiktionary's page 'hames' gives 'hames, genitive singular of ham' and 'hāmes, genitive singular of hām'. Its short ham is a noun 'covering, garment', or a variant of hamm 'enclosure'. Different headwords, both content words: homograph."
     },
     {
      "key": "301",
      "correct_label": "homograph",
      "existing_label_is": "correct",
-     "reason": "IPA estum is faithful apart from length. HS and Wyatt have ēstum, the same as the gold, so this is not gold_in_doubt. Tauber: est f. dp 'good will'. The only short estum in the CharsiuG2P lexicon is Bright's 'mid Estum' (5 times, the Estonians in Wulfstan's voyage). WikiPron, Clark Hall, BT and Wiktionary have only ēstum [verified]. So no source marks ēst 'favour' short, and the blind reviewers' 'same word left unmarked in a source' has no backing. The short reading is the ethnonym, a different headword, and both are content words: homograph."
+     "reason": "IPA estum is faithful apart from length. HS and Wyatt have ēstum, the same as the gold, so this is not gold_in_doubt. Tauber: est f. dp 'good will'. The only short estum in the CharsiuG2P lexicon is Bright's 'mid Estum' (5 times, the Estonians in Wulfstan's voyage). WikiPron, Clark Hall, BT and Wiktionary have only ēstum. So no source marks ēst 'favour' short, and the blind reviewers' 'same word left unmarked in a source' has no backing. The short reading is the ethnonym, a different headword, and both are content words: homograph."
     },
     {
      "key": "332",
      "correct_label": "editorial",
      "existing_label_is": "correct",
-     "reason": "IPA onfenɡ is faithful apart from length. HS and Wyatt have onfēng, the same as the gold. Tauber: p3s of onfon 'receive'. In the training lexicon, the short onfeng is Bright's preterite verb in the same use: 'hwylc gife he onfeng', 'from þæm soðan Gode onfeng', 'Ða onfeng Eadwine cyning' [verified]. Bright and Matthew WS also write onfēng long. Expert-2's homograph says the short form is backed only by the CH/BT noun 'reception', but the training data back it as the same verb. Same word, same function: editorial."
+     "reason": "IPA onfenɡ is faithful apart from length. HS and Wyatt have onfēng, the same as the gold. Tauber: p3s of onfon 'receive'. In the training lexicon, the short onfeng is Bright's preterite verb in the same use: 'hwylc gife he onfeng', 'from þæm soðan Gode onfeng', 'Ða onfeng Eadwine cyning'. Bright and Matthew WS also write onfēng long. Expert-2's homograph says the short form is backed only by the CH/BT noun 'reception', but the training data back it as the same verb. Same word, same function: editorial."
     },
     {
      "key": "343",
      "correct_label": "editorial",
      "existing_label_is": "correct",
-     "reason": "'nǣar þam leohte ðæs andgyttes' is the noun lēoht 'light', dative. The lexicon's short leohte includes this very noun in the same dative: Sweet's Primer 'secgaþ hit on leohte', where Matthew WS has the same verse long, 'on lēohte' [verified]. Bright's two short leohte are the adjective 'light, easy', which WikiPron also has only long (lēohte) [verified]. So length does not separate the two words, and for the noun in this sentence only the marking differs: editorial."
+     "reason": "'nǣar þam leohte ðæs andgyttes' is the noun lēoht 'light', dative. The lexicon's short leohte includes this very noun in the same dative: Sweet's Primer 'secgaþ hit on leohte', where Matthew WS has the same verse long, 'on lēohte'. Bright's two short leohte are the adjective 'light, easy', which WikiPron also has only long (lēohte). So length does not separate the two words, and for the noun in this sentence only the marking differs: editorial."
     },
     {
      "key": "397",
      "correct_label": "editorial",
      "existing_label_is": "correct",
-     "reason": "IPA bejeːn is faithful apart from where ː falls, so it is neither segment nor truncation. HS bēgen and Wyatt begen do not carry the system's marks (begēn), so this is not gold_in_doubt. Tauber: begen npm 'both', the same numeral in both readings. The short first vowel is editorial habit: BT begen, Wyatt begen, Zupitza begen x5, Bright once [verified]. The long second vowel is a model artifact. 'other' is meant for gold-side faults such as typos and normalisation, so editorial is the nearest fit and not clearly wrong."
+     "reason": "IPA bejeːn is faithful apart from where ː falls, so it is neither segment nor truncation. HS bēgen and Wyatt begen do not carry the system's marks (begēn), so this is not gold_in_doubt. Tauber: begen npm 'both', the same numeral in both readings. The short first vowel is editorial habit: BT begen, Wyatt begen, Zupitza begen x5, Bright once. The long second vowel is a model artifact. 'other' is meant for gold-side faults such as typos and normalisation, so editorial is the nearest fit and not clearly wrong."
     }
    ],
-   "redrawn": "2026-10-27: three data fixes changed the error pools, so the 400 items were redrawn by the same rule (oevl.error_typing items). 81 items are identical to items of the first sample and keep their labels and review records (renumbered). The other 319 were labelled again by two runs, a third run settled their disagreements, and two further runs reviewed them blind, each labelling every new item; where either differed from the settled label, another run decided (blind_experts errors-blind-2026-10-27-*, adjudication). They were then manually checked, and none was changed (reported 2026-10-27)."
+   "redrawn": "2026-10-27: three data fixes changed the error pools, so the 400 items were redrawn by the same rule (oevl.error_typing items). 81 items are identical to items of the first sample and keep their labels and review records, renumbered: the errors-expert-<range> groups keep their names from the first sample, so the ranges are the old item numbers, while their keys are the new ones. The other 319 were labelled again by two runs, a third run settled their disagreements, and two further runs reviewed them blind, each labelling every new item; where either differed from the settled label, another run decided (blind_experts errors-blind-2026-10-27-*, adjudication). They were then manually checked, and none was changed (reported 2026-10-27)."
   },
   "disagreements": {
    "key_means": "1-based data row of results/agreement/disagreements_checked.tsv (not its key column, which holds the skeleton)",

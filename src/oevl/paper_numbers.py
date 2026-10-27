@@ -228,7 +228,7 @@ def example_geata(preds, enc, lex, counts):
 
     It also asserts that every ByT5 word run (full cap) writes gēata on every token and no full-cap sentence run writes
     it on more than two. preds: the WikiPron prediction rows of Beowulf; enc: its encoder table by token id; lex,
-    counts: the WikiPron lexicon and training counts from experiment.lexicon. Returns the tokens as prediction rows."""
+    counts: the WikiPron lexicon and training counts from experiment.lexicon. The tokens come back as prediction rows."""
     g = [p for p in preds if p["key"] == "geata"]
     need(len(g) == 39 and {p["gold_pattern"] for p in g} == {"100"}, "Gēata: 39 tokens, all long in the gold")
     need(not counts.get("geata") and set(lex["geata"]) == {"000", "100"},

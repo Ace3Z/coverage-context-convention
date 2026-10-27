@@ -166,6 +166,14 @@ PYTHONPATH=src python -m oevl.select_config
 committed prediction tables and run records. The `minority_reading` columns of the committed tables count only strict
 minority readings, and `encoder_summary` recomputes the same flag from the data.
 
+```bash
+PYTHONPATH=src python -m oevl.error_typing items --out items.tsv
+```
+
+This draws the 400 error-type items again by the sampling rule in `oevl.error_typing` (200 per system with
+`random.Random(1)`) and writes the item sheet. On the committed predictions it reproduces
+`results/label_review/materials/error_types/items.tsv` byte for byte. `run_all.sh` does not run it.
+
 ## 6. CharsiuG2P error analysis
 
 ```bash
@@ -203,7 +211,8 @@ with correct macrons) it prints the accuracy. `--tsv` writes one row per word: t
 known, changed and correct. `--model` picks `frequency`, `word`, `left` or `bilateral` (the default), and
 `--lexicon none` uses training texts only.
 
-It trains the report's logistic model (bilateral by default, seed 1) in under a minute and changes no existing file.
+It trains the report's logistic model (bilateral by default, seed 1) in under a minute and writes no file except the
+`--tsv` table, which replaces any file at that path.
 Unknown words stay unchanged. Text that is not Old English has no correct answer, so count the words it wrongly changed
 instead.
 
@@ -251,6 +260,7 @@ results/
 report/
 ├── main.tex
 ├── references.bib
+├── abbrvurl.bst
 ├── logo_uzh.pdf
 └── generated/                  tables, numbers and figures (build_report, encoder_summary, error_typing,
                                 paper_numbers)

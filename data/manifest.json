@@ -317,6 +317,7 @@
         "dropped_sentence_mixed": 2,
         "dropped_sentence_latin_words": 1,
         "dropped_mark_U+030B": 1,
+        "dropped_unit_speaker_label": 5,
         "removed_field_split": 711,
         "mapped_U+0110_to_U+00D0": 45,
         "mapped_U+043E_to_U+006F": 2,

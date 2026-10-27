@@ -18,8 +18,9 @@ The corpus, the dictionaries and the class labels are also on Hugging Face as
 | Evaluation only: editor agreement and the prior's score against each edition | Harrison & Sharp and Wyatt *Beowulf*, each with the *Finnsburh Fragment* (Wyatt's file lacks the first 18 lines of the fragment) | 35,250 (17,682 and 17,568) |
 
 The split is by work, and no *Beowulf* text is used for training. A dev or test sentence that shares a word 6-gram
-(bare, lower-cased, ð folded to þ) with a training work is left out of scoring. That removes 34 John sentences
-(661 tokens, shared with Matthew and Sweet), one *Soliloquies* sentence (49 tokens) and nothing from *Beowulf*.
+(bare, lower-cased, ð folded to þ, hyphens and apostrophes dropped) with a training work is left out of scoring. That
+removes 34 John sentences (661 tokens, shared with Matthew and Sweet), one *Soliloquies* sentence (49 tokens) and
+nothing from *Beowulf*.
 `PYTHONPATH=src python -m oevl.audit_splits` repeats the check.
 
 A few short Latin and markup fragments survived the extraction, for example a stray `nop` token in `matthew_ws:00907`.
@@ -33,7 +34,8 @@ on it was left open. We decided on the John dev set, on the 7,639 lexicon-ambigu
 WikiPron) that both settings share. Dropping Zupitza raised the prior from 95.12% to 95.60% and the bilateral
 logistic model from 94.70% to 95.31% (seeds 1 to 3). The best ByT5 sentence-arm setting without Zupitza also beats the
 best one with it (95.70% against 95.21%, seeds 1 and 2), but at the five matched settings without a collapsed run the
-change ranges from -7.40 to +0.49 points, so ByT5 gains from the decision in all but its least trained setting (1 epoch at learning rate 1e-4).
+change ranges from -7.40 to +0.49 points, so ByT5 gains slightly from the decision in all but its least trained
+setting (1 epoch at learning rate 1e-4).
 
 So every system in `results/<setting>/` trains without Zupitza. So do `oevl.try_text`, the ByT5 default, the coverage
 numbers in the report, the CharsiuG2P populations, and the prior that `oevl.agreement` compares the editors with.

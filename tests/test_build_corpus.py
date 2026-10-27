@@ -39,8 +39,14 @@ class TestBuildCorpus(unittest.TestCase):
                                       "dēadra, ac lybbyndra.", log), ["Nys God nā dēadra, ac lybbyndra."])
         self.assertEqual(log["dropped_sentence_mixed"], 1)
         self.assertEqual(bc.sentences("[From the Parker MS. of the Chronicle (A).]\n", log), [])
-        self.assertEqual(bc.sentences("G. Heald þonne hys bebodu.", log, speaker=r"^\s*[AGR]\.\s+"),
-                         ["Heald þonne hys bebodu."])
+        speaker = bc.SOURCES["soliloquies"]["speaker"]
+        self.assertEqual(bc.sentences("G. Heald þonne hys bebodu.", log, speaker=speaker), ["Heald þonne hys bebodu."])
+        self.assertEqual(bc.sentences("[A.] Hwilce bebodu? G. Ic gehīre nū.", log, speaker=speaker),
+                         ["Hwilce bebodu?", "Ic gehīre nū."])  # bracketed, and after a sentence end
+        note = ("[From the Anglo-Saxon version of the apocryphal Gospel of Nicodemus.  The text follows the Camb. Univ. "
+                "Lib. MS. Ii. 2. 11 (MS. A of the Gospels); selected variants from MS. Cotton Vitellius A. xv. (C, the "
+                "Bēowulf MS.) are given.]")  # Bright's Reader, The Harrowing of Hell: an English note with a length mark
+        self.assertEqual(bc.sentences(note, log), [])
 
     def test_line_lang(self):
         self.assertEqual(bc.line_lang("3. Philippus, and Bartholomeus; Thomas, and Matheus, publicanus; and Iacobus "

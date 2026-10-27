@@ -3,7 +3,7 @@ from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'src'))
 from oevl.experiment import *
 class Tests(unittest.TestCase):
- def test_macron(self):self.assertEqual(bare('ǣ'), 'æ');self.assertEqual(pattern('gōd'),'1')
+ def test_macron(self):self.assertEqual(bare('ǣ'), 'æ');self.assertEqual(pattern('gōd'),'1');self.assertEqual([key(w) for w in ('Wēn’',"sum'",'Gār-Dena')],['wen','sum','gardena'])
  def test_oracle_oov(self):
   rs=[{'key':'x','gold_pattern':'1'},{'key':'y','gold_pattern':'0'},{'key':'z','gold_pattern':'1'}]
   self.assertEqual(oracle(rs,{'y':{'0'},'z':{'0'}}),['0','0','0'])
