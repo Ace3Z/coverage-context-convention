@@ -103,14 +103,14 @@ in function.
 | CharsiuG2P's errors are mostly about length | its own 500-word Old English test set | word error rate 0.208 as published and 0.188 with 50 decoding steps, where 75.5% of the word errors differ only in vowel length |
 
 An LLM, Claude Opus 5.5 (model id `claude-opus-5-5`), made the 560 labels. Two separate runs of it labelled the
-ambiguity classes and the error types with the same written guidelines, and a third run settled their disagreements.
-A single run labelled a sample of 100 editor disagreements. A blind review by further runs of the same model agreed
-with 535 of the 560 labels, and of the 25 it disputed another run kept 18 and corrected seven. The labels were then
-manually checked, and none was changed. The guidelines, the item sheets and the labels of the two runs
-(`labels_a.tsv`, `labels_b.tsv`) are in `results/label_review/materials/`, and the blind review is in
-`results/label_review/expert_review.json`. The settled labels are in `data/ambiguity_classes.csv` and
-`results/error_typing/labels.tsv`, and the labels of the 100 editor disagreements in
-`results/agreement/disagreements_checked.tsv`.
+ambiguity classes and the error types with the same written guidelines, and a third run settled their disagreements. A
+single run labelled a sample of 100 editor disagreements. A blind review by further runs of the same model agreed with
+535 of the 560 labels, and of the 25 it disputed another run kept 18 and corrected seven. The labels were then manually
+checked, and none was changed. The guidelines and item sheets are in `results/label_review/materials/`, and the labels
+of the two runs (`labels_a.tsv`, `labels_b.tsv`) are in its `classes/` folder (one row per spelling without macrons) and
+its `error_types/` folder (one row per sampled error). The blind review is in `results/label_review/expert_review.json`.
+The settled labels are in `data/ambiguity_classes.csv` and `results/error_typing/labels.tsv`, and the labels of the 100
+editor disagreements in `results/agreement/disagreements_checked.tsv`.
 The [report](report/essentials_final_report.pdf) has the full tables, the caveats and the run-to-run variance.
 
 ---
