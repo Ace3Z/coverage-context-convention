@@ -1,17 +1,17 @@
 \begin{tabular}{@{}llllrrl@{}}
 \toprule
-Edition & Editor, printing & Source & Genre & Tokens & \% long & Role (\% unseen) \\
+Edition & Editor, printing & Source & Genre & Tokens & \% long & Role \\
 \midrule
 Ælfric's \textit{Grammar} & Zupitza 1880 & PG & prose & 23,940 & 23.58 & ablation \\
 \textit{Anglo-Saxon Reader} & Bright 1913 & WS & mixed & 38,484 & 23.91 & train \\
 Gospel of Matthew & Bright, 1910 printing & WS & prose & 20,648 & 25.86 & train \\
 \textit{Anglo-Saxon Primer} & Sweet 1905 & PG & prose & 9,003 & 24.20 & train \\
 \textit{Physiologus} & Cook 1921 & PG & verse & 952 & 20.57 & train \\
-Gospel of John & Bright 1904 & WS & prose & 17,310 & 26.14 & dev (6.36) \\
-Alfred's \textit{Soliloquies} & Hargrove 1902 & WS & prose & 15,475 & 26.11 & prose test (17.94) \\
+Gospel of John & Bright 1904 & WS & prose & 17,310 & 26.14 & dev \\
+Alfred's \textit{Soliloquies} & Hargrove 1902 & WS & prose & 15,475 & 26.11 & prose test \\
 \textit{Beowulf} & Harrison \& Sharp 1894$^a$ & PG & verse & 17,682 & 21.24 & agreement \\
 \textit{Beowulf} & Wyatt 1894$^b$ & WS & verse & 17,568 & 20.74 & agreement \\
-\textit{Beowulf} & Klaeber 1922 & Tauber & verse & 17,361 & 21.22 & verse test (31.53) \\
+\textit{Beowulf} & Klaeber 1922 & Tauber & verse & 17,361 & 21.22 & verse test \\
 \bottomrule
-\multicolumn{7}{@{}p{\linewidth}@{}}{\footnotesize $^a$Project Gutenberg revision of the 4th edition (first edition 1883). $^b$Its \textit{Finnsburh Fragment} lacks lines 1 to 18 in our file (187 of 297 tokens). Scored tokens: dev 16,649, prose 15,426, verse 17,361. Training without Zupitza: 69,087 tokens. Hugging Face release: 8,650 sentences, 178,423 tokens.} \\
+\multicolumn{7}{@{}p{\linewidth}@{}}{\footnotesize $^a$Project Gutenberg revision of the 4th edition (first edition 1883). $^b$Its \textit{Finnsburh Fragment} lacks lines 1 to 18 in our file (187 tokens, against 297 in Harrison and Sharp). Scored tokens: dev 16,649, prose 15,426, verse 17,361. Hugging Face release: 8,650 sentences, 178,423 tokens.} \\
 \end{tabular}

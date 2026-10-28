@@ -341,21 +341,18 @@ for k in ORDER:
     sentences += 0 if k == "tauber_beowulf" else s["units"]
     long = 100 * sum(t["gold_pattern"].count("1") for t in toks) / sum(len(t["gold_pattern"]) for t in toks)
     role = ROLE.get(k, "train")
-    if k in ("john_ws", "soliloquies", "tauber_beowulf"):  # the share of scored tokens unseen in training
-        held = beo if k == "tauber_beowulf" else E.heldout(ROOT / "data", k)
-        role += f" ({100 * sum(not lex_t.get(t['key']) for t in held) / len(held):.2f})"
     src = "PG" if "gutenberg" in s["origin"] else "WS" if "wikisource" in s["origin"] else "Tauber"
     editor = EDITOR.get(k) or s["editor"].replace("&", r"\&") + f" {s['year']}"
     rows.append(f"{TITLES[k]} & {editor} & {src} & {GENRE.get(k, s['genre'])} & {len(toks):,} & {long:.2f} & {role} \\\\")
 release = sum(s["tokens"] for s in manifest.values()) + len(beo)
 notes = (f"$^a$Project Gutenberg revision of the 4th edition (first edition 1883). $^b$Its \\textit{{Finnsburh Fragment}} "
-         f"lacks lines 1 to 18 in our file ({fin[0]} of {fin[1]} tokens). "
+         f"lacks lines 1 to 18 in our file ({fin[0]} tokens, against {fin[1]} in Harrison and Sharp). "
          f"Scored tokens: dev {W['john_ws']['frequency']['n']:,}, prose "
-         f"{n(W, 'soliloquies', 'accuracy'):,}, verse {n(W, 'tauber_beowulf', 'accuracy'):,}. Training without Zupitza: "
-         f"{W['dataset']['train']:,} tokens. Hugging Face release: {sentences:,} sentences, {release:,} tokens.")
+         f"{n(W, 'soliloquies', 'accuracy'):,}, verse {n(W, 'tauber_beowulf', 'accuracy'):,}. Hugging Face release: "
+         f"{sentences:,} sentences, {release:,} tokens.")
 (OUT / "tab_data.tex").write_text(
     "\\begin{tabular}{@{}llllrrl@{}}\n\\toprule\nEdition & Editor, printing & Source & Genre & Tokens & \\% long & "
-    "Role (\\% unseen) \\\\\n\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n"
+    "Role \\\\\n\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n"
     f"\\multicolumn{{7}}{{@{{}}p{{\\linewidth}}@{{}}}}{{\\footnotesize {notes}}} \\\\\n\\end{{tabular}}\n", encoding="utf8")
 
 # Paired sentence bootstrap (oevl.stats.bootstrap_diff) of the prior and the logistic models of the + WikiPron run
