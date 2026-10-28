@@ -507,22 +507,6 @@
       }
     }
   },
-  "editor_agreement": {
-    "aligned": 16833,
-    "a_total": 17682,
-    "b_total": 17568,
-    "alignment_rate_a": 0.9519850695622667,
-    "all": {
-      "n": 16833,
-      "agreement": 0.9773064813164617,
-      "cohen_kappa": 0.9733051903496697
-    },
-    "lexicon_ambiguous": {
-      "n": 5976,
-      "agreement": 0.9605087014725568,
-      "cohen_kappa": 0.9467322708311049
-    }
-  },
   "statistical_test": "Exact paired McNemar, seed 1, all tokens; observations within sentences are not independent.",
   "model_seeds": [
     1,

@@ -96,21 +96,12 @@ for tag, m in (("W", W), ("T", T), ("P", P), ("A", A), ("Z", Z)):
             num[f"{tag}{short}A{s}"] = str(mc[key]["a_wrong_b_right"])
             num[f"{tag}{short}B{s}"] = str(mc[key]["a_right_b_wrong"])
         num[f"{tag}{short}MinP"] = p_fmt(min(r["p_exact"] for k, r in mc.items() if k.startswith("frequency_vs")))
-    e = m["editor_agreement"]
-    num[f"{tag}AgrAligned"] = f"{e['aligned']:,}"
-    num[f"{tag}AgrAll"] = pct(e["all"]["agreement"])
-    num[f"{tag}AgrAllK"] = f"{e['all']['cohen_kappa']:.3f}"
-    num[f"{tag}AgrAmbN"] = f"{e['lexicon_ambiguous']['n']:,}"
-    num[f"{tag}AgrAmb"] = pct(e["lexicon_ambiguous"]["agreement"])
-    num[f"{tag}AgrAmbK"] = f"{e['lexicon_ambiguous']['cohen_kappa']:.3f}"
 num["BeoGain"] = f"{100 * (W['tauber_beowulf']['frequency']['accuracy'] - T['tauber_beowulf']['frequency']['accuracy']):.2f}"
 num["SolGain"] = f"{100 * (W['soliloquies']['frequency']['accuracy'] - T['soliloquies']['frequency']['accuracy']):.2f}"
 sds = [W[t]["seed_summary"][a][p]["sd"] for t in TESTS for a in ("word", "left", "sentence")
        for p in ("accuracy", "lexicon_ambiguous")]
 num["SdMaxMain"] = f"{100 * max(sds):.2f}"
 num["SdMaxMin"] = f"{100 * max(W[t]['seed_summary'][a]['minority_reading']['sd'] for t in TESTS for a in ('word', 'left', 'sentence')):.2f}"
-num["EditorGap"] = f"{100 * (W['editor_agreement']['lexicon_ambiguous']['agreement'] - W['tauber_beowulf']['seed_summary']['word']['lexicon_ambiguous']['mean']):.1f}"
-num["AgrGap"] = f"{100 * (1 - W['editor_agreement']['lexicon_ambiguous']['agreement']):.1f}"
 
 # ambiguity classes: annotator agreement and final counts
 CLS = json.loads((ROOT / "data" / "ambiguity_classes.json").read_text(encoding="utf8"))

@@ -61,7 +61,7 @@ contrasts `oevl.paper_numbers` also gives intervals that resample the runs as we
 tests are stored as well (per seed for ByT5, seed 1 for the logistic models).
 
 `run_all.sh` runs four candidate settings: training forms only, training forms plus WikiPron (the main setting), the
-three proposal dictionaries, and all four sources together. `check_expected` freezes 660 values from these settings, the
+three proposal dictionaries, and all four sources together. `check_expected` freezes 630 values from these settings, the
 Zupitza ablation and the editor agreement. On Linux some McNemar p-values differ from the committed ones in the 15th
 significant digit, which the check tolerates. The committed figure embeds Times New Roman, the third serif font it asks
 for. Where matplotlib finds Liberation Serif or Nimbus Roman first, or none of the three and falls back to DejaVu Serif,

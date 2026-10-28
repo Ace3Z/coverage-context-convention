@@ -3,7 +3,7 @@
 Reads results/<setting>/metrics.json for the four candidate settings and the Zupitza ablation, and
 results/agreement/metrics.json. Checks counts exactly, accuracies, agreements and kappas to 0.00005 (the frozen values
 are rounded to four decimals) and McNemar p-values to 0.0005 absolute, and that no seed-1 McNemar p-value of the
-training-only setting on Beowulf falls below 0.12. That makes 660 checks when every file is complete.
+training-only setting on Beowulf falls below 0.12. That makes 630 checks when every file is complete.
 Prints PASSED, or FAILED with one line per mismatch or missing entry, and exits 0 or 1.
 Usage: python -m oevl.check_expected
 """
@@ -235,16 +235,6 @@ MCNEMAR = {
 # training-only on Beowulf: no seed-1 McNemar pair of the prior and the three arms reaches p < 0.12 (min p 0.1934)
 MIN_P_TRAINING_ONLY = {"tauber_beowulf": 0.12}
 
-# folder -> (aligned, all agreement, all kappa, ambiguous n, ambiguous agreement, ambiguous kappa) in editor_agreement:
-# Harrison and Sharp against Wyatt, with "ambiguous" meaning lexicon-ambiguous under that setting's lexicon
-AGREEMENT = {
-    "results_wikipron": (16833, .9773, .9733, 4387, .9608, .9423),
-    "results_training_only": (16833, .9773, .9733, 3874, .9566, .9326),
-    "results_proposal": (16833, .9773, .9733, 5976, .9605, .9467),
-    "results_all": (16833, .9773, .9733, 5981, .9602, .9464),
-    "results_wikipron_with_zupitza": (16833, .9773, .9733, 4420, .9604, .9419),
-}
-
 # results/agreement: editor pair -> (aligned, ambiguous n, ambiguous agreement, ambiguous kappa), where hs is Harrison
 # and Sharp, wyatt is Wyatt and tauber is Tauber's gold, with the lexicon of results_wikipron
 AGREEMENT_PAIRS = {
@@ -325,18 +315,6 @@ def main() -> int:
             checked += 1
             if r["p_exact"] < floor:
                 errors.append(f"results_training_only/{test}/mcnemar/{pair}: p={r['p_exact']} < {floor}")
-
-    for folder, (al, ag, ka, an, aag, aka) in AGREEMENT.items():
-        e = metrics.get(folder, {}).get("editor_agreement")
-        if e is None:
-            errors.append(f"{folder}/editor_agreement: missing")
-            continue
-        equal(f"{folder}/agreement/aligned", e["aligned"], al)
-        close(f"{folder}/agreement/all", e["all"]["agreement"], ag, PROP_TOL)
-        close(f"{folder}/agreement/all_kappa", e["all"]["cohen_kappa"], ka, PROP_TOL)
-        equal(f"{folder}/agreement/ambiguous_n", e["lexicon_ambiguous"]["n"], an)
-        close(f"{folder}/agreement/ambiguous", e["lexicon_ambiguous"]["agreement"], aag, PROP_TOL)
-        close(f"{folder}/agreement/ambiguous_kappa", e["lexicon_ambiguous"]["cohen_kappa"], aka, PROP_TOL)
 
     apath = ROOT / "results" / "agreement" / "metrics.json"
     pairs = json.loads(apath.read_text(encoding="utf8"))["pairs"] if apath.exists() else {}

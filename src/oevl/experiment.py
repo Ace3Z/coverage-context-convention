@@ -3,8 +3,7 @@
 Runs the frequency prior, the oracle and the logistic word, left and bilateral models (arm "sentence" here), each
 choosing among a key's candidate length patterns: the training forms plus an optional --lexicon file. Training is
 the works in TRAIN minus --exclude-train, and every set in --tests is scored without the sentences that share a word
-6-gram with any TRAIN work (heldout). It also measures length agreement between the Harrison and Sharp and the Wyatt
-editions of Beowulf.
+6-gram with any TRAIN work (heldout).
 
   python -m oevl.experiment --data data --out results/wikipron --lexicon data/lex_wikipron.csv
       --exclude-train zupitza_grammar --tests soliloquies
@@ -226,22 +225,6 @@ def kappa(x:list[str],y:list[str])->float|None:
  from sklearn.metrics import cohen_kappa_score
  return float(cohen_kappa_score(x,y)) if x and len(set(x+y))>1 else None
 
-def agreement(a:Sequence[dict[str,Any]],b:Sequence[dict[str,Any]],
-              lex:Mapping[str,Collection[str]])->dict[str,Any]:
- """Length agreement between two editions a and b (token dicts in text order) on the tokens that align.
-
- The tokens are paired with align(). Returns aligned, a_total, b_total, alignment_rate_a (aligned / len(a)) and two
- dicts, 'all' for every pair and 'lexicon_ambiguous' for the pairs whose key has two or more candidates in lex, each
- with n, agreement (share of identical whole-token patterns, rate()) and cohen_kappa (kappa()) over the pattern strings.
- Both are None for an empty subset, and kappa also when one pattern is the only one in both editions. a must not be
- empty."""
- pairs=align(a,b)
- result:dict[str,Any]={'aligned':len(pairs),'a_total':len(a),'b_total':len(b),'alignment_rate_a':len(pairs)/len(a)}
- for label,subset in [('all',pairs),('lexicon_ambiguous',[(x,y) for x,y in pairs if len(lex.get(x['key'],set()))>=2])]:
-  aa=[x['gold_pattern'] for x,y in subset];bb=[y['gold_pattern'] for x,y in subset]
-  result[label]={'n':len(subset),'agreement':rate(aa,bb),'cohen_kappa':kappa(aa,bb)}
- return result
-
 def clean_tauber(s:str)->str:
  """Bring a Tauber form to the corpus convention of the macron as the only diacritic.
 
@@ -309,7 +292,7 @@ def main()->None:
  For each set it writes <set>_predictions.jsonl (each token without its sentence, with its flags and every system's
  prediction) and <set>_per_word.csv to --out. metrics.json gets per set every system's metrics, the mean and sample
  SD of each logistic arm over seeds 1 to 3 and seed-1 McNemar tests, plus a dataset block (sizes,
- lexicon, left-out works), the Harrison and Sharp vs Wyatt agreement, a note on the test and the seeds. An existing
+ lexicon, left-out works), a note on the test and the seeds. An existing
  metrics.json is merged at the top level (this run's keys replace the old ones), and a run whose lexicon (origin,
  file name, SHA-256) or left-out works differ from it exits before writing any file. So does a run that asks for
  tauber_beowulf without the Tauber file. The merged metrics are also printed."""
@@ -346,7 +329,6 @@ def main()->None:
    for i,r in enumerate(test):f.write(json.dumps({**{k:v for k,v in r.items() if k!='sentence'},**flags(r,lex,counts),**{arm+'_prediction':values[i] for arm,values in pred.items()}},ensure_ascii=False)+'\n')
   with open(out/(name+'_per_word.csv'),'w',encoding='utf8',newline='') as f:
    rows=per_word(train,test,pred,lex,counts,cls=cls);writer=csv.DictWriter(f,fieldnames=list(rows[0]) if rows else ['word']);writer.writeheader();writer.writerows(rows)
- summary['editor_agreement']=agreement(hs,wy,lex)
  summary['statistical_test']='Exact paired McNemar, seed 1, all tokens; observations within sentences are not independent.'
  summary['model_seeds']=[1,2,3]
  if mpath.exists():  # runs with --tests one at a time add their test to the same file
