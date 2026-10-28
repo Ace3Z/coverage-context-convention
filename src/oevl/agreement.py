@@ -10,7 +10,7 @@ results/wikipron: training forms without Zupitza (decision D3) + WikiPron.
   python -m oevl.agreement   -> results/agreement/metrics.json and disagreements.tsv (run_all.sh saves the printout
                                 as agreement.log)
 
-If data/ambiguity_classes.csv exists (columns skeleton and a final A/B/C label), agreement is also given per class.
+If data/ambiguity_classes.csv exists (columns skeleton and final), agreement is also given per class.
 If results/agreement/disagreements_checked.tsv exists (the seed-1 sample of 100 Harrison and Sharp vs Wyatt
 disagreements), its label counts are added to metrics.json, or a stale note when the sample no longer matches the
 current disagreements. One run of an LLM, Claude Opus 5.5 (model id claude-opus-5-5), labelled the sample. A blind
@@ -25,7 +25,8 @@ from collections.abc import Callable, Iterable, Mapping, Sequence
 from pathlib import Path
 from typing import Any
 
-from oevl.experiment import EXCLUDE_D3, align, build_data, flags, kappa, key, lexicon, load_tauber, predict, rate
+from oevl.experiment import (EXCLUDE_D3, align, build_data, flags, kappa, lexicon, load_classes, load_tauber, predict,
+                             rate)
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "results" / "agreement"
@@ -38,31 +39,14 @@ GATE_NOTE = ("Applied after the fact: the rule was not written down before the a
              "These fields say which side of the bar each pair lands on. They do not decide the outcome.")
 
 
-def classes(path: str | Path) -> dict[str, str]:
-    """skeleton -> A, B or C from the class file (LLM labels, manually checked), or empty when the file is absent.
-
-    Skeletons are normalised with experiment.key. The first letter of the label, upper-cased, is the class, and rows
-    whose label does not start with A, B or C are left out. When two skeletons share a key, the later row wins.
-    Raises SystemExit when no label column (final_label, final, class or label, in that order) is found, which includes
-    a file with a header but no rows. A missing skeleton column raises KeyError instead."""
-    if not Path(path).exists():
-        return {}
-    with open(path, encoding="utf8") as f:
-        rows = list(csv.DictReader(f))
-    # the committed class file names its label column 'final'; tests/test_agreement.py uses final_label
-    col = next((c for c in ("final_label", "final", "class", "label") if rows and c in rows[0]), None)
-    if col is None:
-        raise SystemExit(f"{path}: needs a skeleton column and a final label column (final_label, final, class or label)")
-    return {key(r["skeleton"]): r[col].strip()[:1].upper() for r in rows if r[col].strip()[:1].upper() in ("A", "B", "C")}
-
-
 def compare(a: Sequence[dict[str, Any]], b: Sequence[dict[str, Any]], na: str, nb: str,
             lex: Mapping[str, Mapping[str, set[str]]], counts: collections.defaultdict[str, collections.Counter[str]],
             cls: Mapping[str, str]) -> tuple[list[tuple[dict[str, Any], dict[str, Any]]], dict[str, Any]]:
     """Aligned pairs and, per population, n, raw agreement, kappa and the prior's accuracy against each side.
 
     a, b: token rows of two editions. na, nb: their short names, used in the result keys. lex, counts: the lexicon and
-    training pattern counts from experiment.lexicon. cls: skeleton -> class letter from classes(), or empty.
+    training pattern counts from experiment.lexicon. cls: skeleton -> class letter from experiment.load_classes, or
+    empty.
     The prior is the frequency arm of experiment.predict, run on the a-side tokens. It depends only on the key, which
     both sides share. Populations: all, lexicon_ambiguous and attested_ambiguous (flags of the a-side token, which also
     depend only on its key) and, when cls is not empty, class_A, class_B and class_C. A class population takes every
@@ -168,7 +152,8 @@ def main() -> None:
     train, _, hs, wy = build_data(ROOT / "data", EXCLUDE_D3)
     lex, counts = lexicon(train, str(ROOT / "data/lex_wikipron.csv"))
     eds = {"hs": hs, "wyatt": wy, "tauber": load_tauber(ROOT / "data/brunetti-length.txt")}
-    cls = classes(ROOT / "data/ambiguity_classes.csv")
+    cpath = ROOT / "data/ambiguity_classes.csv"
+    cls = load_classes(cpath) if cpath.exists() else {}
     metrics: dict[str, Any]  # JSON: strings and nested dicts
     metrics = {"editions": {"hs": "Harrison and Sharp 1883", "wyatt": "Wyatt 1894", "tauber": "Tauber gold (Klaeber 1922 via Perseus)"},
                "lexicon": "training forms without zupitza_grammar (decision D3) + data/lex_wikipron.csv, as results/wikipron",

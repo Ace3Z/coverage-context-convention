@@ -4,7 +4,7 @@
     "test_prose": 15426,
     "agreement_hs": 17682,
     "agreement_wyatt": 17568,
-    "lexicon_origin": "training attested forms (proxy; NOT Clark Hall/Wiktionary/Bosworth-Toller)",
+    "lexicon_origin": "training attested forms only",
     "exclude_train": [
       "zupitza_grammar"
     ]

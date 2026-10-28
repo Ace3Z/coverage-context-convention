@@ -30,7 +30,7 @@ from collections.abc import Iterable, Sequence
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Literal
 
-from oevl.experiment import EXCLUDE_D3, TESTS, build_data, evaluate, heldout, lexicon, pattern
+from oevl.experiment import EXCLUDE_D3, TESTS, build_data, evaluate, heldout, lexicon, load, pattern
 from oevl.wikipron_to_marked import mark
 
 if TYPE_CHECKING:
@@ -203,12 +203,7 @@ def analyse() -> None:
     lex, counts = lexicon(train, str(ROOT / "data/lex_wikipron.csv"))
     summary: dict[str, object] = {"model": MODEL, "prefix": PREFIX}
     for test, rows in tests().items():
-        preds = {}
-        p = ROOT / "results" / "wikipron" / f"{test}_predictions.jsonl"
-        with open(p, encoding="utf8") as f:
-            for line in f:
-                d = json.loads(line)
-                preds[d["id"]] = d
+        preds = {d["id"]: d for d in load(ROOT / "results" / "wikipron" / f"{test}_predictions.jsonl")}
         cats: collections.Counter[str]
         amb_cats: collections.Counter[str]
         seen_cats: collections.Counter[tuple[str, str]]

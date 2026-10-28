@@ -33,10 +33,10 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
 from oevl import experiment as E  # noqa: E402
-from oevl.agreement import align, classes, compare, kappa, rate  # noqa: E402
+from oevl.agreement import compare  # noqa: E402
 from oevl.audit_splits import grams  # noqa: E402
 from oevl.encoder_summary import configs, read_tables  # noqa: E402
-from oevl.select_config import jsonl  # noqa: E402
+from oevl.experiment import align, kappa, rate  # noqa: E402
 from oevl.stats import bootstrap_diff, bootstrap_diff_runs  # noqa: E402
 from oevl.wikipron_to_marked import mark  # noqa: E402
 
@@ -262,7 +262,7 @@ def example_2796(enc: dict[str, dict[str, str]], ctx: "Context") -> int:
     full-cap ByT5 run writes þe. Returns the number of runs over all caps that write þē.
 
     The token is tauber:685:44 (line 2796 in Tauber's columns, which the code does not check). The Harrison and Sharp
-    and Wyatt forms come from aligning each edition with the scored Tauber rows (agreement.align). enc: the Beowulf
+    and Wyatt forms come from aligning each edition with the scored Tauber rows (experiment.align). enc: the Beowulf
     encoder table by token id; ctx: the Context (hs, wy and tb)."""
     b = enc["tauber:685:44"]
     hs, wy = ({t["id"]: e["gold"] for e, t in align(ed, ctx.tb)}.get("tauber:685:44") for ed in (ctx.hs, ctx.wy))
@@ -293,7 +293,7 @@ class Context:
         self.tb = self.held["tauber_beowulf"]
         self.tb_cols = tauber_columns(DATA / "brunetti-length.txt")
         need(len(self.tb_cols) == len(self.tb), "Tauber's columns line up with its tokens")
-        self.preds = {(tag, s): jsonl(RES / folder / f"{s}_predictions.jsonl")
+        self.preds = {(tag, s): E.load(RES / folder / f"{s}_predictions.jsonl")
                       for tag, folder, _ in SETTINGS for _, s in SETS}
         for (tag, s), p in self.preds.items():
             need([r["id"] for r in p] == [r["id"] for r in self.held[s]], f"{tag} {s}: the predictions cover the tokens")
@@ -408,7 +408,7 @@ def corpus(put: Numbers, ctx: Context) -> None:
     put("CorpusOverTauber", f"{len(corpus_toks) / len(ctx.tb):.1f}")
 
     lex, cnt = ctx.lex["W"]
-    cls = classes(DATA / "ambiguity_classes.csv")
+    cls = ctx.cls
     fin_ids = {t["id"] for ts in fin.values() for t in ts}
     put("FinnsburhAligned", sum(x["id"] in fin_ids for x, _ in align(ctx.hs, ctx.wy)))
     _, res = compare([t for t in ctx.hs if t["id"] not in fin_ids], [t for t in ctx.wy if t["id"] not in fin_ids],
@@ -695,7 +695,7 @@ def selection(put: Numbers, ctx: Context) -> None:
     put("DThreeEncMax", pts(max(matched.values())))
     # what Zupitza's Grammar changes (decision D3)
     zup = list(E.tokens(E.load(DATA / "by_source" / "zupitza_grammar.jsonl")))
-    W, Z = ctx.preds["W", "john_ws"], jsonl(RES / "wikipron_with_zupitza" / "john_ws_predictions.jsonl")
+    W, Z = ctx.preds["W", "john_ws"], E.load(RES / "wikipron_with_zupitza" / "john_ws_predictions.jsonl")
 
     def right(p: dict[str, Any]) -> bool:
         """Whether the prior's pattern on prediction row p is the gold."""
@@ -706,7 +706,7 @@ def selection(put: Numbers, ctx: Context) -> None:
         need(z and all("1" not in t["gold_pattern"] for t in z), f"Zupitza marks {k} short")
         put(f"ZupShort{word_tag(k)}", len(z))
         put(f"DevGain{word_tag(k)}", sum(right(w) - right(x) for w, x in zip(W, Z) if w["key"] == k))
-    W, Z = ctx.preds["W", "soliloquies"], jsonl(RES / "wikipron_with_zupitza" / "soliloquies_predictions.jsonl")
+    W, Z = ctx.preds["W", "soliloquies"], E.load(RES / "wikipron_with_zupitza" / "soliloquies_predictions.jsonl")
     P, lex = ctx.preds["P", "soliloquies"], ctx.lex["W"][0]
     words = ("forþam", "swaswa", "forþi")
     for k in words:
@@ -805,8 +805,7 @@ def editors(put: Numbers, ctx: Context) -> None:
     for key, c in collections.Counter(r["key"] for r in dis).items():  # over all of them, whichever edition is short
         put(f"WTClsBDis{word_tag(key)}", c)
     # ByT5 local2 and the word arm scored against Wyatt and against Klaeber (Tauber) on the class B tokens they share
-    cls = classes(DATA / "ambiguity_classes.csv")
-    pairs = [(x, y) for x, y in align(ctx.wy, ctx.tb) if cls.get(x["key"]) == "B"]
+    pairs = [(x, y) for x, y in align(ctx.wy, ctx.tb) if ctx.cls.get(x["key"]) == "B"]
     need(len(pairs) == wt["n"], "the Wyatt and Tauber class B tokens")
     glosses = {t["id"]: g for t, (_, g) in zip(ctx.tb, ctx.tb_cols)}
     you = [(x, y) for x, y in pairs if glosses[y["id"]].startswith("you")]  # þē 'thee' and gē 'ye', by Tauber's glosses

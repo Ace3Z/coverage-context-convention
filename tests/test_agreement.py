@@ -6,8 +6,8 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from oevl.agreement import align, classes, compare, disagreements, gate, hand_check, kappa  # noqa: E402
-from oevl.experiment import bare, tokens  # noqa: E402
+from oevl.agreement import compare, disagreements, gate, hand_check  # noqa: E402
+from oevl.experiment import align, bare, kappa, load_classes, tokens  # noqa: E402
 
 
 def edition(name, words):
@@ -35,9 +35,8 @@ class TestAgreement(unittest.TestCase):
     def test_compare_and_classes(self):
         with tempfile.TemporaryDirectory() as d:
             p = Path(d) / "ambiguity_classes.csv"
-            p.write_text("skeleton,n,final_label\ncom,3,A\nmore,4,C\nof,1,\n", encoding="utf8")
-            cls = classes(p)
-            self.assertEqual(classes(Path(d) / "missing.csv"), {})
+            p.write_text("skeleton,final\ncom,A\nmore,C\n", encoding="utf8")
+            cls = load_classes(p)
         self.assertEqual(cls, {"com": "A", "more": "C"})
         _, res = compare(A, B, "a", "b", LEX, COUNTS, cls)
         self.assertEqual((res["aligned"], res["all"]["n"], res["all"]["agreement"]), (4, 4, 0.25))

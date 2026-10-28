@@ -49,7 +49,7 @@ done
 for d in training_only wikipron proposal all wikipron_with_zupitza; do mv results_${d}_{john_ws,soliloquies,tauber_beowulf}.log "results/$d/"; done
 
 if [[ -s results/charsiu/ipa.tsv ]]; then
-  python -m oevl.charsiu_g2p analyse > results/charsiu/analyse.log   # uses the shipped CharsiuG2P outputs (made on Colab)
+  python -m oevl.charsiu_g2p analyse > results/charsiu/analyse.log   # uses the shipped CharsiuG2P outputs (made on a GPU)
 fi
 mkdir -p results/agreement
 python -m oevl.agreement > results/agreement/agreement.log   # three Beowulf editions, kappa and the gate
@@ -57,9 +57,9 @@ python -m oevl.agreement > results/agreement/agreement.log   # three Beowulf edi
 echo "== 5/6 check all headline values"
 python -m oevl.check_expected
 
-echo "== 6/6 report tables, numbers and figure"
-python -m oevl.error_typing   # error typing table from the adjudicated labels in results/error_typing/labels.tsv
-python -m oevl.encoder_summary --from-tsv   # encoder table and numbers from the committed GPU predictions (no GPU)
+echo "== 6/6 report numbers, table and figure"
+python -m oevl.error_typing   # results/error_typing/summary.json from the labels in results/error_typing/labels.tsv
+python -m oevl.encoder_summary --from-tsv   # summary.json and numbers_encoder.tex from the committed GPU predictions
 python -m oevl.select_config   # the encoder selection rule on the committed dev runs -> results/encoder/selection.json
 python -m oevl.paper_numbers   # the paper's other numbers, Figure 1 and its worked examples -> numbers_paper.tex
 python -m oevl.build_report

@@ -24,11 +24,12 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from oevl import experiment as E
 from oevl.check_expected import acc
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "report" / "generated"
-TESTS = (("soliloquies", "Soliloquies"), ("tauber_beowulf", "Beowulf"))
+TESTS = ("soliloquies", "tauber_beowulf")
 
 
 def load(folder: str) -> dict[str, Any]:
@@ -104,10 +105,10 @@ for tag, m in (("W", W), ("T", T), ("P", P), ("A", A), ("Z", Z)):
     num[f"{tag}AgrAmbK"] = f"{e['lexicon_ambiguous']['cohen_kappa']:.3f}"
 num["BeoGain"] = f"{100 * (W['tauber_beowulf']['frequency']['accuracy'] - T['tauber_beowulf']['frequency']['accuracy']):.2f}"
 num["SolGain"] = f"{100 * (W['soliloquies']['frequency']['accuracy'] - T['soliloquies']['frequency']['accuracy']):.2f}"
-sds = [W[t]["seed_summary"][a][p]["sd"] for t, _ in TESTS for a in ("word", "left", "sentence")
+sds = [W[t]["seed_summary"][a][p]["sd"] for t in TESTS for a in ("word", "left", "sentence")
        for p in ("accuracy", "lexicon_ambiguous")]
 num["SdMaxMain"] = f"{100 * max(sds):.2f}"
-num["SdMaxMin"] = f"{100 * max(W[t]['seed_summary'][a]['minority_reading']['sd'] for t, _ in TESTS for a in ('word', 'left', 'sentence')):.2f}"
+num["SdMaxMin"] = f"{100 * max(W[t]['seed_summary'][a]['minority_reading']['sd'] for t in TESTS for a in ('word', 'left', 'sentence')):.2f}"
 num["EditorGap"] = f"{100 * (W['editor_agreement']['lexicon_ambiguous']['agreement'] - W['tauber_beowulf']['seed_summary']['word']['lexicon_ambiguous']['mean']):.1f}"
 num["AgrGap"] = f"{100 * (1 - W['editor_agreement']['lexicon_ambiguous']['agreement']):.1f}"
 
@@ -146,8 +147,8 @@ for pair, short in (("hs-wyatt", "HW"), ("hs-tauber", "HT"), ("wyatt-tauber", "W
 wt_b = AG["pairs"]["wyatt-tauber"]["class_B"]
 num["PairWTClsBPriorGap"] = f"{100 * (wt_b['prior_vs_wyatt'] - wt_b['prior_vs_tauber']):.2f}"
 # class B disagreements between Harrison & Sharp and Wyatt, and how many are ne (the PG revision prints nē, Wyatt ne)
-cls_b = {r["skeleton"] for r in csv.DictReader(open(ROOT / "data" / "ambiguity_classes.csv", encoding="utf8"))
-         if r["final"] == "B"}
+CLASSES = E.load_classes(ROOT / "data" / "ambiguity_classes.csv")
+cls_b = {s for s, c in CLASSES.items() if c == "B"}
 hw_b = [r for r in csv.DictReader(open(ROOT / "results/agreement/disagreements.tsv", encoding="utf8"), delimiter="\t")
         if r["pair"] == "hs-wyatt" and r["key"] in cls_b]
 r = AG["pairs"]["hs-wyatt"]["class_B"]
@@ -265,7 +266,6 @@ def counts(js: str) -> str:
 
 
 # Zupitza is not trained on (decision D3), so the per-word CSVs hold no counts for it: GeZup counts the corpus file
-from oevl import experiment as E  # noqa: E402
 ZUP = collections.Counter((r["key"], r["gold_pattern"]) for r in E.tokens(E.load(ROOT / "data/by_source/zupitza_grammar.jsonl")))
 
 
@@ -283,11 +283,10 @@ num["GeMat"] = counts(ge["matthew_ws_pattern_counts"])
 num["GeSol"] = counts(ge["test_pattern_counts"])
 
 # ---------------------------------------------------------------- the WikiPron run's Soliloquies predictions
-preds = [json.loads(line) for line in open(ROOT / "results" / "wikipron" / "soliloquies_predictions.jsonl",
-                                           encoding="utf8")]
+preds = E.load(ROOT / "results" / "wikipron" / "soliloquies_predictions.jsonl")
 bysent: dict[str, list[dict[str, Any]]] = {}
-for p in preds:
-    bysent.setdefault(p["sentence_id"], []).append(p)
+for pr in preds:
+    bysent.setdefault(pr["sentence_id"], []).append(pr)
 
 # ---------------------------------------------------------------- coverage from data/, þe facts from predictions
 # Beowulf coverage by the training forms alone (D3 training, no dictionary), and the rows of Tauber's file
@@ -324,7 +323,7 @@ for a, short in (("word", "Word"), ("left", "Left"), ("sentence", "Bil")):
     num[f"SolGain{short}"] = f"{100 * (W['soliloquies']['seed_summary'][a]['accuracy']['mean'] - T['soliloquies']['seed_summary'][a]['accuracy']['mean']):.2f}"
     num[f"BeoGain{short}"] = f"{100 * (W['tauber_beowulf']['seed_summary'][a]['accuracy']['mean'] - T['tauber_beowulf']['seed_summary'][a]['accuracy']['mean']):.2f}"
 
-# ---------------------------------------------------------------- tables
+# ---------------------------------------------------------------- Table 1 (tab_data.tex)
 ORDER = ["zupitza_grammar", "bright_reader", "matthew_ws", "sweet_primer", "physiologus", "john_ws", "soliloquies",
          "hs_beowulf", "wyatt_beowulf", "tauber_beowulf"]
 TITLES = {"zupitza_grammar": "Ælfric's \\textit{Grammar}", "bright_reader": "\\textit{Anglo-Saxon Reader}",
@@ -372,16 +371,14 @@ notes = (f"$^a$Project Gutenberg revision of the 4th edition (first edition 1883
 # (results/wikipron): each arm's per-token correctness is its mean over seeds 1-3. Differences in points with a 95%
 # interval. Class B means lexicon-ambiguous tokens whose skeleton is class B, as in metrics.json
 from oevl.stats import bootstrap_diff  # noqa: E402
-CLASSES = E.load_classes(ROOT / "data" / "ambiguity_classes.csv")
 PAIRS = (("word", "frequency"), ("left", "frequency"), ("sentence", "frequency"), ("left", "word"),
          ("sentence", "word"), ("sentence", "left"))
-BPOPS = (("lexicon_ambiguous", "Lex.-amb."), ("class_B", "Class B"))
+BPOPS = ("lexicon_ambiguous", "class_B")
 boot = {}
-for t, _ in TESTS:
-    rows = preds if t == "soliloquies" else [json.loads(line) for line in open(
-        ROOT / "results" / "wikipron" / f"{t}_predictions.jsonl", encoding="utf8")]
-    for pop, _ in BPOPS:
-        sub = [r for r in rows if r["lexicon_ambiguous"] and (pop == "lexicon_ambiguous" or
+for t in TESTS:
+    trows = preds if t == "soliloquies" else E.load(ROOT / "results" / "wikipron" / f"{t}_predictions.jsonl")
+    for pop in BPOPS:
+        sub = [r for r in trows if r["lexicon_ambiguous"] and (pop == "lexicon_ambiguous" or
                                                               CLASSES.get(r["key"], "unlisted") == "B")]
         ok: dict[str, list[float]] = {"frequency": [r["frequency_prediction"] == r["gold_pattern"] for r in sub]}
         for a in ("word", "left", "sentence"):

@@ -62,7 +62,7 @@ class TestWorkedExamples(unittest.TestCase):
             train, _, cls.hs, cls.wy = E.build_data(ROOT / "data", E.EXCLUDE_D3)
             cls.lex, cls.counts = E.lexicon(train, str(ROOT / "data/lex_wikipron.csv"))
             cls.tb = E.heldout(ROOT / "data", "tauber_beowulf")
-        cls.preds = {s: PN.jsonl(ROOT / f"results/wikipron/{s}_predictions.jsonl")
+        cls.preds = {s: E.load(ROOT / f"results/wikipron/{s}_predictions.jsonl")
                      for s in ("soliloquies", "tauber_beowulf")}
         cls.enc = {s: {t["id"]: t for t in table} for s, table in read_tables(ROOT / "results/encoder").items()}
 

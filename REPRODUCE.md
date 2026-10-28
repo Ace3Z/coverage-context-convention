@@ -48,11 +48,12 @@ populations: lexicon-ambiguous tokens (two or more candidate patterns), attested
 patterns, each seen at least twice in training), and minority readings (the gold pattern is seen in training, but less
 often than the most frequent one there). The lexicon-ambiguous tokens are also split by ambiguity class (`class_A`,
 `class_B`, `class_C` in `metrics.json`) for the 60 skeletons (spellings without macrons) in
-`data/ambiguity_classes.csv`, with `class_unlisted` for the rest. The classes are LLM labels, manually checked, made as
-the [README](README.md#-headline-results) describes. The 60 skeletons are the ones with the most lexicon-ambiguous
-tokens in the training works (Zupitza included) and both test sets, and they are kept under decision D3. With training
-forms plus WikiPron, the `d3` block of `data/ambiguity_classes.json` records that `hi` is no longer lexicon-ambiguous
-without Zupitza, and that 6,757 of the 36,201 lexicon-ambiguous tokens counted there fall outside the list.
+`data/ambiguity_classes.csv`, with `class_unlisted` for the rest. The classes are LLM labels, manually checked, and the
+[README](README.md#-headline-results) describes how they were made. The 60 skeletons are the ones with the most
+lexicon-ambiguous tokens in the training works (Zupitza included) and both test sets, counted with training forms plus
+WikiPron, and they are kept under decision D3. Without Zupitza and with the same lexicon, the `d3` block of
+`data/ambiguity_classes.json` records that `hi` is no longer lexicon-ambiguous, and that 6,757 of the 36,201
+lexicon-ambiguous tokens counted there fall outside the list.
 
 Results are the mean and sample standard deviation over seeds. A difference between two systems gets a 95%
 sentence-level bootstrap interval on each token's correctness averaged over seeds (`oevl.stats`). For a few ByT5
@@ -62,9 +63,9 @@ tests are stored as well (per seed for ByT5, seed 1 for the logistic models).
 `run_all.sh` runs four candidate settings: training forms only, training forms plus WikiPron (the main setting), the
 three proposal dictionaries, and all four sources together. `check_expected` freezes 660 values from these settings, the
 Zupitza ablation and the editor agreement. On Linux some McNemar p-values differ from the committed ones in the 15th
-significant digit, which the check tolerates. The committed figures embed Times New Roman, the third serif font they ask
+significant digit, which the check tolerates. The committed figure embeds Times New Roman, the third serif font it asks
 for. Where matplotlib finds Liberation Serif or Nimbus Roman first, or none of the three and falls back to DejaVu Serif,
-the figure PDFs differ in their bytes.
+the figure PDF differs in its bytes.
 
 ## 1. Reproduce everything
 
@@ -88,13 +89,12 @@ It takes about two minutes and has six steps:
    output and `oevl.agreement` writes `results/agreement/`.
 5. `oevl.check_expected` fails if any frozen value changes.
 6. `oevl.error_typing`, `oevl.encoder_summary --from-tsv` and `oevl.select_config` rebuild
-   `results/error_typing/summary.json`, the ByT5 numbers and `results/encoder/selection.json` from committed files
-   without a GPU (section 5).
-   `oevl.paper_numbers` computes the other numbers the paper may print into `report/generated/numbers_paper.tex`,
-   draws Figure 1 (`report/generated/fig_coverage.pdf`) and stops the run if a worked example no longer holds. Then
-   `oevl.build_report` writes `numbers.tex` and Table 1 (`tab_data.tex`) to `report/generated/` and compiles
-   `REPORT.pdf` (pdflatex, bibtex, then pdflatex twice) if `pdflatex` is
-   installed. Without LaTeX, upload `report/` to Overleaf and compile `main.tex`.
+   `results/error_typing/summary.json`, the ByT5 numbers (`results/encoder/summary.json` and `numbers_encoder.tex`) and
+   `results/encoder/selection.json` from committed files without a GPU (section 5). `oevl.paper_numbers` computes the
+   other numbers the paper may print into `report/generated/numbers_paper.tex`, draws Figure 1
+   (`report/generated/fig_coverage.pdf`) and stops the run if a worked example no longer holds. Then `oevl.build_report`
+   writes `numbers.tex` and Table 1 (`tab_data.tex`) to `report/generated/` and compiles `REPORT.pdf` (pdflatex, bibtex,
+   then pdflatex twice) if `pdflatex` is installed. Without LaTeX, upload `report/` to Overleaf and compile `main.tex`.
 
 ## 2. Run a single experiment
 
@@ -116,12 +116,12 @@ PYTHONPATH=src python -m oevl.build_lexicons
 
 `oevl.build_corpus` fetches an edition into `data/raw/corpus/` and rebuilds its file and manifest entry: the URL,
 retrieval date and SHA-256 of each input, and the work's `role` (train, dev, test or agreement). The original extraction
-script is not part of this repository, so the rules were worked out from the files. After `clean_corpus`, `matthew_ws`, `bright_reader`,
-`physiologus`, `hs_beowulf` and `john_ws` rebuild byte for byte. The other four rebuilds contain all but four of their
-65,986 committed tokens in order, but some sentences differ, mostly where the original language filter dropped short
-lines (the module docstring has the details). Those four committed files were kept as they are. The builder
-writes a sentence-level `split` field, which `clean_corpus` removes, because the split is by work as the manifest
-`role` says.
+script is not part of this repository, so the rules were worked out from the files. After `clean_corpus`, `matthew_ws`,
+`bright_reader`, `physiologus`, `hs_beowulf` and `john_ws` rebuild byte for byte. The other four rebuilds contain all
+but four of their 65,986 committed tokens in order, but some sentences differ, mostly where the original language filter
+dropped short lines (the module docstring has the details). Those four committed files were kept as they are. The
+builder writes a sentence-level `split` field, which `clean_corpus` removes, because the split is by work as the
+manifest `role` says.
 
 ## 4. ByT5 (GPU)
 
@@ -236,7 +236,7 @@ results/
 ├── proposal/
 ├── all/
 ├── wikipron_with_zupitza/      the Zupitza ablation
-├── agreement/                  metrics.json, disagreements.tsv, agreement.log, and disagreements_checked.tsv
+├── agreement/                  metrics.json, disagreements.tsv and disagreements_checked.tsv
 │                               (the 100 labelled disagreements)
 ├── encoder/                    selection.json, summary.json, <set>_predictions.tsv.gz
 ├── charsiu/                    benchmark.json, benchmark.tsv, ipa.tsv, metrics.json

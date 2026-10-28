@@ -132,7 +132,7 @@ not read as a missing value.
 
 ## Licence
 
-CC BY-SA 4.0, except two dictionary files with more permissive terms (`lex_clarkhall.csv` and `lex_bt.csv`, see
-`LICENSE.md`). Please credit the Wikisource contributors (Bright's *Reader*, Matthew, John, the *Soliloquies* and
-Wyatt's *Beowulf*), James Tauber (`test_verse`), and, for the dictionaries, WikiPron, Wiktionary via kaikki.org,
-Tichý et al. (Bosworth-Toller) and Serg078 (Clark Hall). `LICENSE.md` gives the licence of every file.
+CC BY-SA 4.0, except two dictionary files with more permissive terms (`lexicons/lex_clarkhall.csv` and
+`lexicons/lex_bt.csv`, see `LICENSE.md`). Please credit the Wikisource contributors (Bright's *Reader*, Matthew, John,
+the *Soliloquies* and Wyatt's *Beowulf*), James Tauber (`test_verse`), and, for the dictionaries, WikiPron, Wiktionary
+via kaikki.org, Tichý et al. (Bosworth-Toller) and Serg078 (Clark Hall). `LICENSE.md` gives the licence of every file.

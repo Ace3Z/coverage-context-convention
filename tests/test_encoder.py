@@ -178,7 +178,7 @@ class TestSummary(unittest.TestCase):
             self.check_from_tsv(d)
 
     def check_from_tsv(self, d):
-        """--from-tsv gives the same three files from the tables and the run records alone (derived fields blanked)."""
+        """--from-tsv gives the same two files from the tables and the run records alone (derived fields blanked)."""
         s = json.loads((d / "enc/summary.json").read_text())
         for k in encoder_summary.BLOCKS:
             s.pop(k, None)

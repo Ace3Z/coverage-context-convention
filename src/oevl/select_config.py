@@ -14,6 +14,8 @@ from collections.abc import Iterable, Mapping
 from pathlib import Path
 from typing import Any
 
+from oevl.experiment import load
+
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "results" / "encoder" / "selection.json"
 RULE = ("Highest mean dev lexicon-ambiguous accuracy over seeds 1-2. Configurations within 0.1 points of the best "
@@ -23,12 +25,6 @@ RULE = ("Highest mean dev lexicon-ambiguous accuracy over seeds 1-2. Configurati
 def pct(x: float | None) -> float | None:
     """A fraction as a percent rounded to two decimals, None stays None."""
     return round(100 * x, 2) if x is not None else None
-
-
-def jsonl(p: str | Path) -> list[dict[str, Any]]:
-    """All records of the JSON-lines file at path p, as a list of dicts (the file must have no blank lines)."""
-    with open(p, encoding="utf8") as f:
-        return [json.loads(line) for line in f]
 
 
 def read_runs(runs: str | Path, shared: set[str]) -> list[dict[str, Any]]:
@@ -51,7 +47,7 @@ def read_runs(runs: str | Path, shared: set[str]) -> list[dict[str, Any]]:
         a = d["arms"]["sentence"]
         j = a["john_ws"]
         assert d["max_bytes"] == 2560 and d["batch"] == 32 and d["arms"].keys() == {"sentence"}, m
-        ps = jsonl(m.parent / "john_ws_predictions.jsonl")
+        ps = load(m.parent / "john_ws_predictions.jsonl")
         if d["exclude_train"]:  # every run without Zupitza must flag the shared population
             assert {p["id"] for p in ps if p["lexicon_ambiguous"]} == shared, m
         ok = [p["encoder_sentence"] == p["gold_pattern"] for p in ps if p["id"] in shared]
@@ -121,7 +117,7 @@ def logistic(folder: str, shared: set[str] | None = None) -> dict[str, dict[str,
             res[pop][arm] = {"seeds": [round(x, 2) for x in exact], "mean": round(statistics.mean(exact), 2),
                              "sd": round(statistics.stdev(exact), 2)}
     if shared is not None:
-        ps = [d for d in jsonl(ROOT / "results" / folder / "john_ws_predictions.jsonl") if d["id"] in shared]
+        ps = [d for d in load(ROOT / "results" / folder / "john_ws_predictions.jsonl") if d["id"] in shared]
         assert len(ps) == len(shared)
 
         def a(k: str) -> float:
@@ -152,7 +148,7 @@ def main() -> None:
     ap.add_argument("--runs", help="folder of <z|noz>_lr<LR>_ep<N>/sentence_s<seed> runs (default: the committed list)")
     a = ap.parse_args()
     # the shared population: the lexicon-ambiguous dev tokens without Zupitza, a strict subset of those with it
-    amb = {f: {d["id"] for d in jsonl(ROOT / "results" / f / "john_ws_predictions.jsonl") if d["lexicon_ambiguous"]}
+    amb = {f: {d["id"] for d in load(ROOT / "results" / f / "john_ws_predictions.jsonl") if d["lexicon_ambiguous"]}
            for f in ("wikipron", "wikipron_with_zupitza")}
     shared = amb["wikipron"]
     assert shared < amb["wikipron_with_zupitza"]

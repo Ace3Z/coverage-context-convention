@@ -21,8 +21,8 @@ from collections.abc import Collection, Iterable, Mapping, Sequence
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, TypeVar
 
-from oevl.agreement import align, classes, kappa, rate
-from oevl.experiment import EXCLUDE_D3, build_data, heldout, lexicon, load_tauber, pattern
+from oevl.experiment import (EXCLUDE_D3, align, build_data, heldout, kappa, lexicon, load_classes, load_tauber, pattern,
+                             rate)
 from oevl.try_text import apply
 from oevl.wikipron_to_marked import mark
 
@@ -144,13 +144,13 @@ def items(systems: Collection[str]) -> list[dict[str, int | str]]:
     data/lex_wikipron.csv plus the training forms, without Zupitza (D3) for encoder_sentence and of all five works for
     charsiug2p. sentence is the sentence's bare tokens joined by spaces, the target in [[ ]]. candidates are the key's
     lexicon patterns in sorted order, each put on the lower-cased bare word, joined by ' | '. class is the final label
-    from data/ambiguity_classes.csv (agreement.classes), empty when not listed. hs_form and wyatt_form are the Harrison
-    and Sharp and Wyatt tokens that agreement.align pairs with the Tauber token, not_aligned when it pairs none, and
-    empty for prose."""
+    from data/ambiguity_classes.csv (experiment.load_classes), empty when not listed. hs_form and wyatt_form are the
+    Harrison and Sharp and Wyatt tokens that experiment.align pairs with the Tauber token, not_aligned when it pairs
+    none, and empty for prose."""
     data = ROOT / "data"
     tests = {s: heldout(data, s) for s in SETS}
     tauber = load_tauber(data / "brunetti-length.txt")
-    cls = classes(data / "ambiguity_classes.csv")
+    cls = load_classes(data / "ambiguity_classes.csv")
     rows = []
     for k, system in enumerate(SYSTEMS):
         if system not in systems:

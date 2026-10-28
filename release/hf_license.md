@@ -1,11 +1,11 @@
 # Licences
 
-Everything in this dataset that we made or derived from CC BY-SA material is released under the Creative Commons
-Attribution-ShareAlike 4.0 International licence (CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/). A
-file that combines several sources takes the strictest licence among them, and the tables below give the licence of
-each file. The statements below were checked on 2026-10-20 against the licence
-file or source page of each source. The code repository, https://github.com/Ace3Z/coverage-context-convention, keeps
-a fuller version of these tables for its own `data/` folder in `data/LICENSE.md`.
+Every file in this dataset is released under the Creative Commons Attribution-ShareAlike 4.0 International licence (CC
+BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/), except `lexicons/lex_clarkhall.csv` (Unlicense) and
+`lexicons/lex_bt.csv` (CC BY 4.0). A file that combines several sources takes the strictest licence among them. The
+tables below give the licence of each file and were checked on 2026-10-20 against the licence file or source page of
+each source. The code repository, https://github.com/Ace3Z/coverage-context-convention, keeps a fuller version of these
+tables for its own `data/` folder in `data/LICENSE.md`.
 
 ## Corpus splits
 

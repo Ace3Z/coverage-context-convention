@@ -320,8 +320,8 @@ def main()->None:
  cpath=Path(a.data)/'ambiguity_classes.csv'  # optional: without it no per-class accuracy is reported
  train,prose,hs,wy=build_data(a.data,exclude);lex,counts=lexicon(train,a.lexicon);cls=load_classes(cpath) if cpath.exists() else None;out=Path(a.out);out.mkdir(parents=True,exist_ok=True)
  summary:dict[str,Any]
- summary={'dataset':{'train':len(train),'test_prose':len(prose),'agreement_hs':len(hs),'agreement_wyatt':len(wy),'lexicon_origin':'training attested forms'+(' + external file' if a.lexicon else ' (proxy; NOT Clark Hall/Wiktionary/Bosworth-Toller)')}}
- if exclude:summary['dataset']['exclude_train']=exclude  # only when set, so a run on all five works writes no exclude_train key
+ summary={'dataset':{'train':len(train),'test_prose':len(prose),'agreement_hs':len(hs),'agreement_wyatt':len(wy),'lexicon_origin':'training attested forms'+(' + external file' if a.lexicon else ' only')}}
+ if exclude:summary['dataset']['exclude_train']=exclude  # only when set: a run on all five works has no such key
  if a.lexicon:summary['dataset'].update(lexicon_file=Path(a.lexicon).name,lexicon_sha256=hashlib.sha256(Path(a.lexicon).read_bytes()).hexdigest())
  mpath=out/'metrics.json'  # refuse a mismatched --out folder before any file in it is overwritten
  if mpath.exists() and any(json.loads(mpath.read_text(encoding='utf8')).get('dataset',{}).get(k)!=summary['dataset'].get(k) for k in ('lexicon_origin','lexicon_file','lexicon_sha256','exclude_train')):raise SystemExit(f'{mpath} was made with a different lexicon or training set; use another --out folder')

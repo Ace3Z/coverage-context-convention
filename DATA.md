@@ -8,7 +8,7 @@ The corpus, the dictionaries and the class labels are also on Hugging Face as
 
 ## Splits
 
-The names in brackets are the splits of the Hugging Face copy.
+The names in brackets in the Role column are the splits of the Hugging Face copy.
 
 | Role | Works | Tokens |
 |---|---|---|

@@ -2,8 +2,8 @@
 
 Every change to a record is one of the explicit mappings below (CHARS for characters, WORDS for whole words), and
 each is counted over the marked tokens and added to the counts already in the file's manifest "cleaning" record.
-It also removes the sentence-level "split" field that build_corpus writes, and any manifest "splits" block: the
-split is by work (experiment.build_data).
+It also removes the sentence-level "split" field that build_corpus writes, because the split is by work
+(experiment.build_data).
 Running it again on clean files changes nothing, and a file that build_corpus writes later is cleaned the same way.
 It writes nothing if a token would keep a character outside the canonical inventory or a text field a letter or
 mark outside it, if a sentence's marked and bare token lists would differ in length, or if a bare token would no
@@ -67,7 +67,7 @@ def sub(tokens: Sequence[str], old: tuple[str, ...], new: str) -> tuple[list[str
 def clean_record(r: dict[str, Any], log: collections.Counter[str]) -> dict[str, Any]:
     """Apply every mapping to one record in place, counting the changes in log, and return it.
 
-    r is one corpus row with "text", "text_bare", "tokens" and "tokens_bare", and an old "split" field is dropped.
+    r is one corpus row with "text", "text_bare", "tokens" and "tokens_bare", and its "split" field is dropped.
     log is a collections.Counter. It gains "removed_field_split", "mapped_U+XXXX_to_U+YYYY" with the occurrences of
     each CHARS character in the marked tokens, and "repaired_word_<spelling>" per WORDS run replaced in the marked
     tokens. The text fields get the same mappings by plain substring replacement, so a WORDS spelling inside a longer
@@ -127,12 +127,11 @@ def main() -> None:
     status 1, the problems on stderr, and writes nothing. Otherwise every file is rewritten, even when nothing changed
     (UTF-8, one JSON object per line, non-ASCII kept), and manifest["sources"][<file stem>] (created if missing) gets
     units (sentences), tokens, long_vowel_marks (long vowels of either case in the marked tokens) and the SHA-256 of
-    the written bytes, with this run's counts added to its "cleaning" record. The top-level "splits" block is
-    removed, the manifest is written with indent 2, and one line per file is printed.
+    the written bytes, with this run's counts added to its "cleaning" record. The manifest is written with indent 2,
+    and one line per file is printed.
     """
     mpath = ROOT / "data" / "manifest.json"
     manifest = json.loads(mpath.read_text(encoding="utf8"))
-    manifest.pop("splits", None)  # sentence-level split counts, if an older manifest has them
     done, problems = [], []
     for path in sorted((ROOT / "data" / "by_source").glob("*.jsonl")):
         log: collections.Counter[str] = collections.Counter()

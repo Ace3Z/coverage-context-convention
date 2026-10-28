@@ -7,8 +7,8 @@
 # from the committed ones.
 # Usage (repository root, after pip install -r requirements.txt):
 #   bash scripts/encoder_grid.sh [select|grid|all] [RUNS_DIR]   (default: all, encoder_runs)
-# At the end it rewrites results/encoder/ (selection.json, summary.json, the prediction tables) and the encoder table
-# and numbers in report/generated/ from the new runs.
+# At the end it rewrites results/encoder/ (selection.json, summary.json, the prediction tables) and
+# report/generated/numbers_encoder.tex from the new runs.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 export PYTHONPATH="$PWD/src${PYTHONPATH:+:$PYTHONPATH}"

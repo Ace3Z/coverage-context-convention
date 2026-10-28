@@ -35,7 +35,7 @@ from collections.abc import Collection
 from pathlib import Path
 from typing import Any
 
-from oevl.experiment import TESTS, build_data, flags, heldout, lexicon, mcnemar
+from oevl.experiment import TESTS, build_data, flags, heldout, lexicon, load, mcnemar
 from oevl.stats import bootstrap_diff
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -111,8 +111,7 @@ def collect(runs: str | Path) -> tuple[dict[str, list[dict[str, str]]],
             for s in TESTS:
                 if s not in d["arms"][arm]:
                     continue
-                with open(folder / f"{s}_predictions.jsonl", encoding="utf8") as f:
-                    rows = [json.loads(line) for line in f]
+                rows = load(folder / f"{s}_predictions.jsonl")
                 table = tables.setdefault(s, [{"id": r["id"], "sentence_id": r["sentence_id"], "gold": r["gold_pattern"]}
                                               for r in rows])
                 if [t["id"] for t in table] != [r["id"] for r in rows]:
@@ -372,7 +371,7 @@ def tag(name: str) -> str:
 def full_caps(summary: dict[str, dict[str, Any]]) -> dict[str, str]:
     """Map each replicate arm to its full cap, the config of identical_inputs_at with the largest max_bytes.
 
-    That is the only config whose table rows and per-config numbers show the arm."""
+    That is the only config whose per-config numbers show the arm."""
     return {a: max(A["identical_inputs_at"], key=lambda c: summary[c]["settings"]["max_bytes"])
             for C in configs(summary).values() for a, A in C["arms"].items() if "identical_inputs_at" in A}
 

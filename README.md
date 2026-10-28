@@ -109,7 +109,8 @@ with 535 of the 560 labels, and of the 25 it disputed another run kept 18 and co
 manually checked, and none was changed. The guidelines, the item sheets and the labels of the two runs
 (`labels_a.tsv`, `labels_b.tsv`) are in `results/label_review/materials/`, and the blind review is in
 `results/label_review/expert_review.json`. The settled labels are in `data/ambiguity_classes.csv` and
-`results/error_typing/labels.tsv`, and the disagreement labels in `results/agreement/disagreements_checked.tsv`.
+`results/error_typing/labels.tsv`, and the labels of the 100 editor disagreements in
+`results/agreement/disagreements_checked.tsv`.
 The [report](report/essentials_final_report.pdf) has the full tables, the caveats and the run-to-run variance.
 
 ---
@@ -173,8 +174,8 @@ from datasets import load_dataset
 corpus = load_dataset("Ace3Z/old-english-vowel-length")
 ```
 
-The split is by work, and no *Beowulf* text is in `train`. [DATA.md](DATA.md#splits) gives the works and token counts of
-each split and covers the sources, the leakage audit, decision D3 and the licences.
+[DATA.md](DATA.md#splits) gives the works and token counts of each split, the leakage audit and decision D3, and links
+the licence of every file.
 
 ---
 
@@ -205,7 +206,7 @@ coverage-context-convention/
 ├── tests/                   unit tests, run by run_all.sh
 ├── data/                    corpus (by_source/), Tauber, WikiPron and CharsiuG2P inputs, dictionaries,
 │                            class files, licences
-├── results/                 one folder per experiment: metrics, predictions, logs, labels
+├── results/                 one folder per experiment: metrics, predictions, labels
 ├── report/                  the submitted PDF, main.tex, references.bib, abbrvurl.bst, the UZH logo and generated/
 │                            (numbers, Table 1 and Figure 1)
 ├── notebooks/               ByT5 pilot notebooks
@@ -218,7 +219,7 @@ coverage-context-convention/
 
 ## 🖥️ Compute
 
-- `bash run_all.sh` takes about two minutes on an Apple M-series laptop, tests, frozen checks and the report included.
+- `bash run_all.sh`, with its tests, frozen checks and the report, takes about two minutes on an Apple M-series laptop.
 - A ByT5-small dev selection run took 12 to 180 minutes on a shared lab GPU (`results/encoder/selection.json` records
   each run's time).
 
