@@ -1,7 +1,7 @@
 """Exploratory GPU pilot: the ByT5 encoder's context arms on a fixed training subset.
 
-This is the logic that used to live in the four Kaggle/Colab notebooks. The notebooks in notebooks/ now only put
-the project on the machine and call the line below, adding --max-hours with the hours left of their 9-hour budget:
+The two notebooks in notebooks/ (Kaggle and Colab) only put the project on the machine and call the line below,
+adding --max-hours with the hours left of their 9-hour budget:
 
   python -m oevl.pilot --max-bytes 128 --out /kaggle/working/encoder_pilot_128_results [--restore OLD.zip ...]
 
@@ -155,10 +155,10 @@ def restore(src: Path, base: Path) -> list[str]:
 def validate(out: Path, arm: str, a: argparse.Namespace) -> str:
     """Check one arm's outputs in out against the run's settings and results/wikipron, and return its subset checksum.
 
-    These are the checks the notebooks made after every arm. metrics.json must record the same epochs, max_bytes,
-    seed, batch, lr and train_limit as a, exactly train_limit training examples (not checked with --tiny, whose
-    subset is smaller) and results for arm. For each of TESTS, the predictions file must have no token id twice and
-    an encoder_<arm> prediction on every line, its ids must equal those of results/wikipron (a subset with --tiny),
+    main() runs these checks on every finished arm, new or restored. metrics.json must record the same epochs,
+    max_bytes, seed, batch, lr and train_limit as a, exactly train_limit training examples (not checked with --tiny,
+    whose subset is smaller) and results for arm. For each of TESTS, the predictions file must have no token id twice
+    and an encoder_<arm> prediction on every line, its ids must equal those of results/wikipron (a subset with --tiny),
     and metrics.json's accuracy n must equal the number of lines. micro, model and exclude_train are not checked.
     Raises AssertionError on a failed check, and KeyError or FileNotFoundError when a key or file is missing.
     Returns metrics.json's train_subset_sha256, which main() requires to be the same for every arm."""

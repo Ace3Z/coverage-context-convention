@@ -143,7 +143,6 @@ class TestSummary(unittest.TestCase):
             self.assertEqual([r["cap128:class"] for r in rows], ["B", "B", "C", ""])
             self.assertIn("\\newcommand{\\NEncCapOneTwoEightSolLexBilVsWord}{+33.33}",
                           (d / "gen/numbers_encoder.tex").read_text())
-            self.assertIn("Bilateral & 2 & 1 & 100.00", (d / "gen/tab_encoder.tex").read_text())
             self.assertNotIn("local_replicates", json.loads((d / "enc/summary.json").read_text()))
             self.check_from_tsv(d)
 
@@ -165,10 +164,7 @@ class TestSummary(unittest.TestCase):
             # prior 2/3 right on the lexicon-ambiguous tokens, local2 5/6 averaged over its two runs
             self.assertAlmostEqual(s["local_replicates"]["paired"]["soliloquies"]["lexicon_ambiguous"]
                                    ["local2-frequency"]["diff"], 1 / 6)
-            tab, num = (d / "gen/tab_encoder.tex").read_text(), (d / "gen/numbers_encoder.tex").read_text()
-            self.assertNotIn("replicates", tab)
-            self.assertIn(" & Local 2 & 1 & 0 & 100.00", tab)  # only at its full cap, 256 bytes, like the numbers
-            self.assertEqual(tab.count("Local 2"), 1)
+            num = (d / "gen/numbers_encoder.tex").read_text()
             self.assertIn("\\newcommand{\\NEncRepSolLexLocalTwoVsFreq}{+16.67}", num)
             self.assertIn("\\newcommand{\\NEncRepSolClsBLocalTwoSpread}{50.00}", num)
             self.assertNotIn("NEncCapOneTwoEightSolLexLocalTwo", num)  # a replicate arm only at its full cap
@@ -197,8 +193,7 @@ class TestSummary(unittest.TestCase):
             shutil.copy(f, d / "tsv")
         (d / "tsv/summary.json").write_text(json.dumps(s))
         run(encoder_summary.main, "--from-tsv", "--out", str(d / "tsv"), "--report", str(d / "gen2"))
-        for a, b in (("enc/summary.json", "tsv/summary.json"), ("gen/tab_encoder.tex", "gen2/tab_encoder.tex"),
-                     ("gen/numbers_encoder.tex", "gen2/numbers_encoder.tex")):
+        for a, b in (("enc/summary.json", "tsv/summary.json"), ("gen/numbers_encoder.tex", "gen2/numbers_encoder.tex")):
             self.assertEqual((d / a).read_text(), (d / b).read_text(), b)
 
     def test_refuses_predictions_that_disagree_with_metrics(self):
@@ -254,7 +249,7 @@ class TestTinySmoke(unittest.TestCase):
             self.assertEqual(run1["exclude_train"], ["zupitza_grammar"])
             self.assertEqual(len(run1["arms"]["left"]["train_loss_per_epoch"]), 1)
             self.assertIn(run1["arms"]["left"]["collapsed"], (True, False))
-            # a number recomputed from the committed table alone
+            # a number recomputed from the written table alone
             with gzip.open(d / "enc/soliloquies_predictions.tsv.gz", "rt", encoding="utf8") as f:
                 rows = list(csv.DictReader(f, delimiter="\t"))
             amb = [r for r in rows if r["cap128:lexicon_ambiguous"] == "1"]
@@ -264,7 +259,7 @@ class TestTinySmoke(unittest.TestCase):
             with open(ROOT / "results/wikipron/soliloquies_predictions.jsonl", encoding="utf8") as f:
                 ref = {x["id"]: x["frequency_prediction"] for x in map(json.loads, f)}
             self.assertEqual([r["cap128:frequency"] for r in rows], [ref[r["id"]] for r in rows])
-            self.assertTrue((d / "gen/tab_encoder.tex").exists() and (d / "gen/numbers_encoder.tex").exists())
+            self.assertTrue((d / "gen/numbers_encoder.tex").exists())
 
 
 if __name__ == "__main__":

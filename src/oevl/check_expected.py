@@ -289,7 +289,7 @@ def main() -> int:
     metrics = {}
     for folder in ("results_wikipron", "results_training_only", "results_proposal", "results_all",
                    "results_wikipron_with_zupitza"):
-        path = ROOT / "results" / folder.removeprefix("results_") / "metrics.json"  # keys keep the old folder names
+        path = ROOT / "results" / folder.removeprefix("results_") / "metrics.json"  # key results_<setting>
         if not path.exists():
             errors.append(f"missing {path}")
             continue
@@ -318,8 +318,7 @@ def main() -> int:
                 continue
             equal(f"{folder}/{test}/mcnemar/{pair}/a_wrong_b_right", r["a_wrong_b_right"], b01)
             equal(f"{folder}/{test}/mcnemar/{pair}/a_right_b_wrong", r["a_right_b_wrong"], b10)
-            # max(1, p) is 1 for any p-value, so the tolerance is P_TOL absolute
-            close(f"{folder}/{test}/mcnemar/{pair}/p", r["p_exact"], p, P_TOL * max(1, p))
+            close(f"{folder}/{test}/mcnemar/{pair}/p", r["p_exact"], p, P_TOL)
     for test, floor in MIN_P_TRAINING_ONLY.items():
         d = metrics.get("results_training_only", {}).get(test, {}).get("mcnemar_seed1", {})
         for pair, r in d.items():

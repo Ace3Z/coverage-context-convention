@@ -209,24 +209,37 @@ def mcnemar(a:Sequence[str],b:Sequence[str],gold:Sequence[str])->dict[str,int|fl
  b01=sum(x!=g and y==g for x,y,g in zip(a,b,gold));b10=sum(x==g and y!=g for x,y,g in zip(a,b,gold));n=b01+b10
  return {'a_wrong_b_right':b01,'a_right_b_wrong':b10,'discordant':n,'p_exact':binomtest(min(b01,b10),n,0.5).pvalue if n else 1.0}
 
-def agreement(a:Sequence[Mapping[str,Any]],b:Sequence[Mapping[str,Any]],
+def align(a:Sequence[dict[str,Any]],b:Sequence[dict[str,Any]])->list[tuple[dict[str,Any],dict[str,Any]]]:
+ """Token pairs (row of a, row of b) from the equal runs of the two key sequences.
+
+ a, b: token rows of two editions in text order (dicts with a key field, as made by tokens). autojunk is off so that
+ frequent keys are not treated as junk. Tokens in replaced, inserted or deleted runs are left out."""
+ sm=difflib.SequenceMatcher(None,[r['key'] for r in a],[r['key'] for r in b],autojunk=False)
+ return [p for op,i,j,k,m in sm.get_opcodes() if op=='equal' for p in zip(a[i:j],b[k:m])]
+
+def rate(x:Sequence[str],y:Sequence[str])->float|None:
+ """Share of positions where the two equal-length lists hold the same value, or None when x is empty."""
+ return sum(p==q for p,q in zip(x,y))/len(x) if x else None
+
+def kappa(x:list[str],y:list[str])->float|None:
+ """Cohen's kappa of two equal-length label lists, or None when they are empty or hold only one label in all."""
+ from sklearn.metrics import cohen_kappa_score
+ return float(cohen_kappa_score(x,y)) if x and len(set(x+y))>1 else None
+
+def agreement(a:Sequence[dict[str,Any]],b:Sequence[dict[str,Any]],
               lex:Mapping[str,Collection[str]])->dict[str,Any]:
  """Length agreement between two editions a and b (token dicts in text order) on the tokens that align.
 
- The two key sequences are aligned with difflib.SequenceMatcher (autojunk off) and the tokens of its equal blocks are
- paired. Returns aligned, a_total, b_total, alignment_rate_a (aligned / len(a)) and two dicts, 'all' for every pair
- and 'lexicon_ambiguous' for the pairs whose key has two or more candidates in lex, each with n, agreement (share of
- identical whole-token patterns) and cohen_kappa over the pattern strings. Both are None for an empty subset, and
- kappa also when one pattern is the only one in both editions. a must not be empty."""
- ak=[r['key'] for r in a];bk=[r['key'] for r in b]
- sm=difflib.SequenceMatcher(None,ak,bk,autojunk=False); pairs:list[tuple[Mapping[str,Any],Mapping[str,Any]]]=[]
- for op,i,j,k,l in sm.get_opcodes():
-  if op=='equal':pairs.extend(zip(a[i:j],b[k:l]))
- from sklearn.metrics import cohen_kappa_score
+ The tokens are paired with align(). Returns aligned, a_total, b_total, alignment_rate_a (aligned / len(a)) and two
+ dicts, 'all' for every pair and 'lexicon_ambiguous' for the pairs whose key has two or more candidates in lex, each
+ with n, agreement (share of identical whole-token patterns, rate()) and cohen_kappa (kappa()) over the pattern strings.
+ Both are None for an empty subset, and kappa also when one pattern is the only one in both editions. a must not be
+ empty."""
+ pairs=align(a,b)
  result:dict[str,Any]={'aligned':len(pairs),'a_total':len(a),'b_total':len(b),'alignment_rate_a':len(pairs)/len(a)}
  for label,subset in [('all',pairs),('lexicon_ambiguous',[(x,y) for x,y in pairs if len(lex.get(x['key'],set()))>=2])]:
   aa=[x['gold_pattern'] for x,y in subset];bb=[y['gold_pattern'] for x,y in subset]
-  result[label]={'n':len(subset),'agreement':sum(x==y for x,y in zip(aa,bb))/len(aa) if aa else None,'cohen_kappa':float(cohen_kappa_score(aa,bb)) if aa and len(set(aa+bb))>1 else None}
+  result[label]={'n':len(subset),'agreement':rate(aa,bb),'cohen_kappa':kappa(aa,bb)}
  return result
 
 def clean_tauber(s:str)->str:
@@ -281,7 +294,7 @@ def per_word(train:Sequence[Mapping[str,Any]],test:Sequence[Mapping[str,Any]],pr
   indices=[i for i,r in subset if r['key']==word];gold=[test[i]['gold_pattern'] for i in indices]
   row={'word':word,'n':n,'class':(cls or {}).get(word,'unlisted'),'test_pattern_counts':json.dumps(dict(collections.Counter(gold)),ensure_ascii=False)}
   for name,values in pred.items():row[name+'_accuracy']=round(sum(values[i]==test[i]['gold_pattern'] for i in indices)/n,6)
-  for source in ['bright_reader','matthew_ws','sweet_primer','physiologus','zupitza_grammar']:
+  for source in TRAIN:
    ct=collections.Counter(r['gold_pattern'] for r in train if r['source']==source and r['key']==word)
    row[source+'_pattern_counts']=json.dumps(dict(ct),ensure_ascii=False)
   out.append(row)
@@ -295,7 +308,7 @@ def main()->None:
  --exclude-train names exit with status 2, and if <data>/ambiguity_classes.csv exists accuracy is also split by class.
  For each set it writes <set>_predictions.jsonl (each token without its sentence, with its flags and every system's
  prediction) and <set>_per_word.csv to --out. metrics.json gets per set every system's metrics, the mean and sample
- SD of each logistic arm over seeds 1 to 3, seed-1 McNemar tests and the per-word rows, plus a dataset block (sizes,
+ SD of each logistic arm over seeds 1 to 3 and seed-1 McNemar tests, plus a dataset block (sizes,
  lexicon, left-out works), the Harrison and Sharp vs Wyatt agreement, a note on the test and the seeds. An existing
  metrics.json is merged at the top level (this run's keys replace the old ones), and a run whose lexicon (origin,
  file name, SHA-256) or left-out works differ from it exits before writing any file. So does a run that asks for
@@ -308,7 +321,7 @@ def main()->None:
  train,prose,hs,wy=build_data(a.data,exclude);lex,counts=lexicon(train,a.lexicon);cls=load_classes(cpath) if cpath.exists() else None;out=Path(a.out);out.mkdir(parents=True,exist_ok=True)
  summary:dict[str,Any]
  summary={'dataset':{'train':len(train),'test_prose':len(prose),'agreement_hs':len(hs),'agreement_wyatt':len(wy),'lexicon_origin':'training attested forms'+(' + external file' if a.lexicon else ' (proxy; NOT Clark Hall/Wiktionary/Bosworth-Toller)')}}
- if exclude:summary['dataset']['exclude_train']=exclude  # only when set: the default metrics.json stays as before
+ if exclude:summary['dataset']['exclude_train']=exclude  # only when set, so a run on all five works writes no exclude_train key
  if a.lexicon:summary['dataset'].update(lexicon_file=Path(a.lexicon).name,lexicon_sha256=hashlib.sha256(Path(a.lexicon).read_bytes()).hexdigest())
  mpath=out/'metrics.json'  # refuse a mismatched --out folder before any file in it is overwritten
  if mpath.exists() and any(json.loads(mpath.read_text(encoding='utf8')).get('dataset',{}).get(k)!=summary['dataset'].get(k) for k in ('lexicon_origin','lexicon_file','lexicon_sha256','exclude_train')):raise SystemExit(f'{mpath} was made with a different lexicon or training set; use another --out folder')
@@ -329,11 +342,10 @@ def main()->None:
   gold=[r['gold_pattern'] for r in test]
   pairs=[('frequency',f'{arm}_seed1') for arm in ['word','left','sentence']]+[(f'{x}_seed1',f'{y}_seed1') for x,y in [('word','left'),('word','sentence'),('left','sentence')]]
   summary[name]['mcnemar_seed1']={f'{x}_vs_{y}':mcnemar(pred[x],pred[y],gold) for x,y in pairs}
-  summary[name]['per_word']=per_word(train,test,pred,lex,counts,cls=cls)
   with open(out/(name+'_predictions.jsonl'),'w',encoding='utf8') as f:
    for i,r in enumerate(test):f.write(json.dumps({**{k:v for k,v in r.items() if k!='sentence'},**flags(r,lex,counts),**{arm+'_prediction':values[i] for arm,values in pred.items()}},ensure_ascii=False)+'\n')
   with open(out/(name+'_per_word.csv'),'w',encoding='utf8',newline='') as f:
-   rows=summary[name]['per_word'];writer=csv.DictWriter(f,fieldnames=list(rows[0]) if rows else ['word']);writer.writeheader();writer.writerows(rows)
+   rows=per_word(train,test,pred,lex,counts,cls=cls);writer=csv.DictWriter(f,fieldnames=list(rows[0]) if rows else ['word']);writer.writeheader();writer.writerows(rows)
  summary['editor_agreement']=agreement(hs,wy,lex)
  summary['statistical_test']='Exact paired McNemar, seed 1, all tokens; observations within sentences are not independent.'
  summary['model_seeds']=[1,2,3]

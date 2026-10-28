@@ -2,9 +2,9 @@
 
 Every change to a record is one of the explicit mappings below (CHARS for characters, WORDS for whole words), and
 each is counted over the marked tokens and added to the counts already in the file's manifest "cleaning" record.
-It also removes the sentence-level "split" field of an earlier build, and the manifest's "splits" block with it:
-the split is by work (experiment.build_data).
-Running it again on clean files changes nothing, and a new file such as john_ws.jsonl is cleaned the same way.
+It also removes the sentence-level "split" field that build_corpus writes, and any manifest "splits" block: the
+split is by work (experiment.build_data).
+Running it again on clean files changes nothing, and a file that build_corpus writes later is cleaned the same way.
 It writes nothing if a token would keep a character outside the canonical inventory or a text field a letter or
 mark outside it, if a sentence's marked and bare token lists would differ in length, or if a bare token would no
 longer equal its marked token with the length marks removed (compared in lower case).
@@ -132,7 +132,7 @@ def main() -> None:
     """
     mpath = ROOT / "data" / "manifest.json"
     manifest = json.loads(mpath.read_text(encoding="utf8"))
-    manifest.pop("splits", None)  # sentence-level split counts of the same earlier build
+    manifest.pop("splits", None)  # sentence-level split counts, if an older manifest has them
     done, problems = [], []
     for path in sorted((ROOT / "data" / "by_source").glob("*.jsonl")):
         log: collections.Counter[str] = collections.Counter()

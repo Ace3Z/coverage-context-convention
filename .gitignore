@@ -13,6 +13,7 @@ my_tests/
 data/raw/
 REPORT.pdf
 results/charsiu/analyse.log
+results/*/results_*.log
 results/charsiu/ipa_tiny.tsv
 *.zip
 *.egg-info/

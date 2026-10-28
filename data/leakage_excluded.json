@@ -1,6 +1,6 @@
 {
  "ngram": 6,
- "text": "bare tokens, lower-cased, ð folded to þ, 6-grams within a sentence",
+ "text": "bare tokens, lower-cased, ð folded to þ, hyphens and apostrophes dropped, 6-grams within a sentence",
  "train": [
   "bright_reader",
   "matthew_ws",

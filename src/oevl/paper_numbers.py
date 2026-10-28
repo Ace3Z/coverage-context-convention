@@ -36,6 +36,7 @@ from oevl import experiment as E  # noqa: E402
 from oevl.agreement import align, classes, compare, kappa, rate  # noqa: E402
 from oevl.audit_splits import grams  # noqa: E402
 from oevl.encoder_summary import configs, read_tables  # noqa: E402
+from oevl.select_config import jsonl  # noqa: E402
 from oevl.stats import bootstrap_diff, bootstrap_diff_runs  # noqa: E402
 from oevl.wikipron_to_marked import mark  # noqa: E402
 
@@ -180,12 +181,6 @@ def tauber_columns(path: str | Path) -> list[tuple[str, str]]:
             c = line.split("|")
             out += [(c[4], c[16])] * len(E.clean_tauber(c[9]).split())
     return out
-
-
-def jsonl(path: str | Path) -> list[Any]:
-    """The JSON value on each line of a JSON Lines file, in order (the file must have no blank lines)."""
-    with open(path, encoding="utf8") as f:
-        return [json.loads(line) for line in f]
 
 
 def runs_of(row: dict[str, str], arm: str | None = None, cap: str | None = None) -> list[str]:

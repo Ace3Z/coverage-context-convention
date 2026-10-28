@@ -1,19 +1,15 @@
-"""Generate report/generated/numbers.tex, six tables and an accuracy figure from data/ and results/, then compile.
+"""Generate report/generated/numbers.tex and tab_data.tex from data/ and results/, then compile the report.
 
 Reads results/<setting>/metrics.json of the five logistic settings (training_only, wikipron, proposal, all,
 wikipron_with_zupitza), results/training_only/soliloquies_per_word.csv, the WikiPron run's predictions
 (results/wikipron/{soliloquies, tauber_beowulf}_predictions.jsonl), results/{agreement, charsiu, encoder,
 error_typing}/ and data/ (manifest, ambiguity classes, leakage audit, WikiPron TSV, lex_wikipron.csv, Tauber's
 Beowulf, by_source/*.jsonl).
-Writes report/generated/{numbers.tex, tab_data.tex, tab_main.tex, tab_ablation.tex, tab_perword.tex,
-tab_classes.tex, tab_bootstrap.tex, fig_accuracy.pdf}. Of these, main.tex inputs only numbers.tex (and uses only some
-of its macros) and tab_data.tex. Its other generated macros come from numbers_encoder.tex (oevl.encoder_summary) and
-numbers_paper.tex (oevl.paper_numbers).
+Writes report/generated/numbers.tex (main.tex uses only some of its macros) and tab_data.tex. main.tex's other
+generated macros come from numbers_encoder.tex (oevl.encoder_summary) and numbers_paper.tex (oevl.paper_numbers).
 All work runs at module level, so importing the module runs the whole build. The run stops with sys.exit when a check
-fails: the Soliloquies worked example (the sentence starting "Ic clypie tō þē") against the prior, the logistic
-runs and every ByT5 word and local2 run, Beowulf 2796 against the full-cap ByT5 runs, the CharsiuG2P reproduction
-against its published WER and PER, the WikiPron conversion against data/lex_wikipron.csv, and a few consistency
-checks between result files. A failed LaTeX pass also stops it.
+fails: the CharsiuG2P reproduction against its published WER and PER, the WikiPron conversion against
+data/lex_wikipron.csv, and a few consistency checks between result files. A failed LaTeX pass also stops it.
 When pdflatex is installed it runs pdflatex, bibtex and pdflatex twice in report/ and copies main.pdf to REPORT.pdf
 (otherwise upload report/ to Overleaf).
 Usage: python -m oevl.build_report
@@ -28,14 +24,10 @@ import sys
 from pathlib import Path
 from typing import Any
 
-import matplotlib
-
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa: E402
+from oevl.check_expected import acc
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "report" / "generated"
-SYSTEMS = (("frequency", "Frequency"), ("word", "Word"), ("left", "Left"), ("sentence", "Bilateral"))
 TESTS = (("soliloquies", "Soliloquies"), ("tauber_beowulf", "Beowulf"))
 
 
@@ -51,13 +43,6 @@ P, A, Z = load("proposal"), load("all"), load("wikipron_with_zupitza")  # propos
 def pct(x: float) -> str:
     """Format a fraction as a percentage with two decimals and no % sign, e.g. 0.87836 gives "87.84"."""
     return f"{100 * x:.2f}"
-
-
-def acc(d: dict[str, Any], pop: str) -> float | None:
-    """Accuracy (a fraction) of one system entry of metrics.json, such as frequency or oracle, on a population.
-
-    pop "accuracy" (all scored tokens) reads d["accuracy"], any other population name reads d[pop]["accuracy"]."""
-    return d["accuracy"] if pop == "accuracy" else d[pop]["accuracy"]
 
 
 def val(m: dict[str, Any], test: str, system: str, pop: str, sd: bool = False) -> str:
@@ -215,7 +200,7 @@ if len(collapsed) != 1:
 num["CollapseSolAll"], num["CollapseSolLex"] = f"{collapsed[0]['sol_all']:.2f}", f"{collapsed[0]['sol_lexamb']:.2f}"
 num["CollapseEpochs"] = str(collapsed[0]["epochs"])
 num["CollapseDevLex"], num["CollapseDevMostLong"] = f"{collapsed[0]['dev_lexamb']:.2f}", f"{collapsed[0]['dev_most_long']:.2f}"
-from oevl.encoder_summary import configs  # noqa: E402
+from oevl.encoder_summary import configs, read_tables  # noqa: E402
 ENC = configs(rjson("results/encoder/summary.json"))
 num["GridRuns"] = str(sum(len(A["seeds"]) for C in ENC.values() for A in C["arms"].values()))
 num["GridCollapsed"] = str(sum(A["n_collapsed"] for C in ENC.values() for A in C["arms"].values()))
@@ -264,13 +249,13 @@ num["WikiForms"] = f"{lex_rows:,}"
 num["WikiAligned"] = f"{100 * wp_ok / wp_rows:.1f}"
 num["WikiAlignedN"], num["WikiAlignedAlpha"] = f"{wp_ok:,}", f"{100 * wp_ok / wp_alpha:.1f}"  # of the alphabetic rows
 
-# ---------------------------------------------------------------- per-word table (training-only run)
+# ---------------------------------------------------------------- per-word numbers (training-only run)
 pw = {r["word"]: r for r in csv.DictReader(open(ROOT / "results" / "training_only" / "soliloquies_per_word.csv",
                                                 encoding="utf8"))}
-WORDS = ["þæt", "þe", "þu", "ne", "to", "se", "ge"]
+WORDS = ["þæt", "ge"]
 missing = [w for w in WORDS if w not in pw]
 if missing:
-    sys.exit(f"per-word table: words missing from CSV: {missing}")
+    sys.exit(f"per-word numbers: words missing from CSV: {missing}")
 
 
 def counts(js: str) -> str:
@@ -279,7 +264,7 @@ def counts(js: str) -> str:
     return f"{c.get('0', 0)}/{c.get('1', 0)}"
 
 
-# Zupitza is not trained on (decision D3), so the per-word CSVs hold no counts for it: its column counts the corpus file
+# Zupitza is not trained on (decision D3), so the per-word CSVs hold no counts for it: GeZup counts the corpus file
 from oevl import experiment as E  # noqa: E402
 ZUP = collections.Counter((r["key"], r["gold_pattern"]) for r in E.tokens(E.load(ROOT / "data/by_source/zupitza_grammar.jsonl")))
 
@@ -297,31 +282,12 @@ num["GeZup"] = zup("ge")
 num["GeMat"] = counts(ge["matthew_ws_pattern_counts"])
 num["GeSol"] = counts(ge["test_pattern_counts"])
 
-# ---------------------------------------------------------------- worked examples: verify the claims
+# ---------------------------------------------------------------- the WikiPron run's Soliloquies predictions
 preds = [json.loads(line) for line in open(ROOT / "results" / "wikipron" / "soliloquies_predictions.jsonl",
                                            encoding="utf8")]
 bysent: dict[str, list[dict[str, Any]]] = {}
 for p in preds:
     bysent.setdefault(p["sentence_id"], []).append(p)
-EXAMPLES = {
-    "Ic clypie tō þē Drihten þū þe æall geworhtest": "ex1",
-}
-found = {}
-for sid, toks in bysent.items():
-    text = " ".join(t["gold"] for t in toks)
-    for start, tag in EXAMPLES.items():
-        if text.startswith(start):
-            found[tag] = toks
-if set(found) != set(EXAMPLES.values()):
-    sys.exit(f"worked examples not found in predictions: {set(EXAMPLES.values()) - set(found)}")
-arms = ["frequency_prediction"] + [f"{a}_seed{s}_prediction" for a in ("word", "left", "sentence") for s in (1, 2, 3)]
-for tag, toks in found.items():
-    first_the = next(t for i, t in enumerate(toks) if t["key"] == "þe" and i > 0 and toks[i - 1]["key"] == "to")
-    if first_the["gold_pattern"] != "1" or any(first_the[a] != "0" for a in arms):
-        sys.exit(f"{tag}: 'tō þē' claim no longer holds: {first_the}")
-    rel = next(t for i, t in enumerate(toks) if t["key"] == "þe" and t["gold_pattern"] == "0")
-    if any(rel[a] != "0" for a in arms):
-        sys.exit(f"{tag}: relative 'þe' claim no longer holds: {rel}")
 
 # ---------------------------------------------------------------- coverage from data/, þe facts from predictions
 # Beowulf coverage by the training forms alone (D3 training, no dictionary), and the rows of Tauber's file
@@ -348,32 +314,12 @@ num["ToTheN"] = str(len(after_to))
 num["ToTheMissed"] = str(sum(t["left_seed1_prediction"] == "0" and t["sentence_seed1_prediction"] == "0" for t in after_to))
 # the same tokens in the ByT5 runs (results/encoder): fewest and most long þē after tō per arm, over its runs at
 # every cap (128, 256 and full)
-import gzip  # noqa: E402
-head, *enc_rows = gzip.decompress((ROOT / "results/encoder/soliloquies_predictions.tsv.gz").read_bytes()).decode(
-    "utf8").split("\n")[:-1]
-ENC_SOL = {r[0]: dict(zip(head.split("\t"), r)) for r in (line.split("\t") for line in enc_rows)}
-enc_runs = [c for c in head.split("\t") if "/" in c]
+ENC_SOL = {r["id"]: r for r in read_tables(ROOT / "results/encoder")["soliloquies"]}
+enc_runs = [c for c in next(iter(ENC_SOL.values())) if "/" in c]
 for arm, short in (("word", "Word"), ("local2", "LocalTwo"), ("sentence", "Bil")):
     hits = [sum(ENC_SOL[t["id"]][c] == "1" for t in after_to) for c in enc_runs if c.split("/")[1].startswith(arm + "_")]
     num[f"ToTheEnc{short}Min"], num[f"ToTheEnc{short}Max"] = str(min(hits)), str(max(hits))
     num[f"ToTheEnc{short}Runs"] = str(len(hits))
-# ex1, "tō þē ... þū þe": every local2 run gets both right, every word run marks both short
-ex1 = found["ex1"]
-the_long = next(t for i, t in enumerate(ex1) if t["key"] == "þe" and i > 0 and ex1[i - 1]["key"] == "to")
-the_rel = next(t for t in ex1 if t["key"] == "þe" and t["gold_pattern"] == "0")
-for c in enc_runs:
-    arm = c.split("/")[1].rsplit("_", 1)[0]
-    if arm == "local2" and (ENC_SOL[the_long["id"]][c], ENC_SOL[the_rel["id"]][c]) != ("1", "0"):
-        sys.exit(f"ex1: the local2 claim no longer holds for {c}")
-    if arm == "word" and (ENC_SOL[the_long["id"]][c], ENC_SOL[the_rel["id"]][c]) != ("0", "0"):
-        sys.exit(f"ex1: the word-arm claim no longer holds for {c}")
-# Beowulf 2796 "þē ic hēr on starie": gold long and every full-cap ByT5 run short (paper_numbers checks the editions)
-head, *rows = gzip.decompress((ROOT / "results/encoder/tauber_beowulf_predictions.tsv.gz").read_bytes()).decode(
-    "utf8").split("\n")[:-1]
-b2796 = next(dict(zip(head.split("\t"), r.split("\t"))) for r in rows if r.startswith("tauber:685:44\t"))
-if b2796["gold"] != "1" or any(
-        v != "0" for k, v in b2796.items() if k.startswith("capfull/")):
-    sys.exit("Beowulf 2796 example no longer holds")
 for a, short in (("word", "Word"), ("left", "Left"), ("sentence", "Bil")):
     num[f"SolGain{short}"] = f"{100 * (W['soliloquies']['seed_summary'][a]['accuracy']['mean'] - T['soliloquies']['seed_summary'][a]['accuracy']['mean']):.2f}"
     num[f"BeoGain{short}"] = f"{100 * (W['tauber_beowulf']['seed_summary'][a]['accuracy']['mean'] - T['tauber_beowulf']['seed_summary'][a]['accuracy']['mean']):.2f}"
@@ -422,48 +368,6 @@ notes = (f"$^a$Project Gutenberg revision of the 4th edition (first edition 1883
     "Role (\\% unseen) \\\\\n\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n"
     f"\\multicolumn{{7}}{{@{{}}p{{\\linewidth}}@{{}}}}{{\\footnotesize {notes}}} \\\\\n\\end{{tabular}}\n", encoding="utf8")
 
-hdr = ("\\begin{tabular}{@{}lrrrrrr@{}}\n\\toprule\n & \\multicolumn{3}{c}{\\textit{Soliloquies} (prose)} & "
-       "\\multicolumn{3}{c}{\\textit{Beowulf} (verse)} \\\\\n\\cmidrule(lr){2-4}\\cmidrule(l){5-7}\n")
-pops = ("accuracy", "lexicon_ambiguous", "minority_reading")
-lab = {"accuracy": "All", "lexicon_ambiguous": "Lex.-amb.", "minority_reading": "Minority"}
-head = "System & " + " & ".join(f"{lab[p]}" for p in pops) + " & " + " & ".join(f"{lab[p]}" for p in pops) + " \\\\\n"
-nrow = "\\textit{n} & " + " & ".join(f"{n(W, t, p):,}" for t, _ in TESTS for p in pops) + " \\\\\n\\midrule\n"
-body = []
-for s, name in SYSTEMS + (("oracle", "Oracle"),):
-    body.append(name + " & " + " & ".join(val(W, t, s, p) for t, _ in TESTS for p in pops) + " \\\\")
-(OUT / "tab_main.tex").write_text(hdr + head + nrow + "\n".join(body) + "\n\\bottomrule\n\\end{tabular}\n",
-                                  encoding="utf8")
-
-abl = ["\\begin{tabular}{@{}llrrrr@{}}\n\\toprule\n & & \\multicolumn{2}{c}{Training-only} & "
-       "\\multicolumn{2}{c}{+ WikiPron} \\\\\n\\cmidrule(lr){3-4}\\cmidrule(l){5-6}\n"
-       "Test & System & All & Lex.-amb. & All & Lex.-amb. \\\\\n\\midrule"]
-for t, tname in TESTS:
-    for s, name in (("frequency", "Frequency"), ("sentence", "Bilateral"), ("oracle", "Oracle")):
-        abl.append(f"{tname} & {name} & {val(T, t, s, 'accuracy')} & {val(T, t, s, 'lexicon_ambiguous')} & "
-                   f"{val(W, t, s, 'accuracy')} & {val(W, t, s, 'lexicon_ambiguous')} \\\\")
-    abl.append("\\addlinespace" if t == "soliloquies" else "")
-(OUT / "tab_ablation.tex").write_text("\n".join(abl) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf8")
-
-pwr = ["\\begin{tabular}{@{}lrrrrrrr@{}}\n\\toprule\nWord & \\textit{n} & Gold s/l & Freq. & Bil. & "
-       "Zupitza s/l & Matthew s/l & Bright s/l \\\\\n\\midrule"]
-for w in WORDS:
-    r = pw[w]
-    pwr.append(f"\\textit{{{w}}} & {r['n']} & {counts(r['test_pattern_counts'])} & "
-               f"{100 * float(r['frequency_accuracy']):.1f} & {100 * float(r['sentence_seed1_accuracy']):.1f} & "
-               f"{zup(w)} & {counts(r['matthew_ws_pattern_counts'])} & "
-               f"{counts(r['bright_reader_pattern_counts'])} \\\\")
-(OUT / "tab_perword.tex").write_text("\n".join(pwr) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf8")
-
-cls = ["\\begin{tabular}{@{}llrrrrrr@{}}\n\\toprule\n"
-       "Test & Class & \\textit{n} & Freq. & Word & Left & Bil. & Oracle \\\\\n\\midrule"]
-for t, tname in TESTS:
-    for c, cname in (("A", "A lexical"), ("B", "B grammatical"), ("C", "C editorial"), ("unlisted", "Outside top 60")):
-        pop = "class_" + c
-        accs = " & ".join(val(W, t, s, pop) for s in ("frequency", "word", "left", "sentence", "oracle"))
-        cls.append(f"{tname if c == 'A' else ''} & {cname} & {n(W, t, pop):,} & {accs} \\\\")
-    cls.append("\\addlinespace" if t == "soliloquies" else "")
-(OUT / "tab_classes.tex").write_text("\n".join(cls) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf8")
-
 # Paired sentence bootstrap (oevl.stats.bootstrap_diff) of the prior and the logistic models of the + WikiPron run
 # (results/wikipron): each arm's per-token correctness is its mean over seeds 1-3. Differences in points with a 95%
 # interval. Class B means lexicon-ambiguous tokens whose skeleton is class B, as in metrics.json
@@ -471,31 +375,19 @@ from oevl.stats import bootstrap_diff  # noqa: E402
 CLASSES = E.load_classes(ROOT / "data" / "ambiguity_classes.csv")
 PAIRS = (("word", "frequency"), ("left", "frequency"), ("sentence", "frequency"), ("left", "word"),
          ("sentence", "word"), ("sentence", "left"))
-SHORT = {"frequency": "Freq.", "word": "Word", "left": "Left", "sentence": "Bil."}
 BPOPS = (("lexicon_ambiguous", "Lex.-amb."), ("class_B", "Class B"))
-boot, bn = {}, {}
+boot = {}
 for t, _ in TESTS:
     rows = preds if t == "soliloquies" else [json.loads(line) for line in open(
         ROOT / "results" / "wikipron" / f"{t}_predictions.jsonl", encoding="utf8")]
     for pop, _ in BPOPS:
         sub = [r for r in rows if r["lexicon_ambiguous"] and (pop == "lexicon_ambiguous" or
                                                               CLASSES.get(r["key"], "unlisted") == "B")]
-        bn[t, pop] = len(sub)
         ok: dict[str, list[float]] = {"frequency": [r["frequency_prediction"] == r["gold_pattern"] for r in sub]}
         for a in ("word", "left", "sentence"):
             ok[a] = [sum(r[f"{a}_seed{k}_prediction"] == r["gold_pattern"] for k in (1, 2, 3)) / 3 for r in sub]
         for x, y in PAIRS:
             boot[t, pop, x, y] = bootstrap_diff([r["sentence_id"] for r in sub], ok[x], ok[y])
-bt = ["\\begin{tabular}{@{}lllll@{}}\n\\toprule\n & \\multicolumn{2}{c}{\\textit{Soliloquies} (prose)} & "
-      "\\multicolumn{2}{c}{\\textit{Beowulf} (verse)} \\\\\n\\cmidrule(lr){2-3}\\cmidrule(l){4-5}\n"
-      "Difference & " + " & ".join(lab for _ in TESTS for _, lab in BPOPS) + " \\\\\n"
-      "\\textit{n} & " + " & ".join(f"{bn[t, p]:,}" for t, _ in TESTS for p, _ in BPOPS) + " \\\\\n\\midrule"]
-for x, y in PAIRS:
-    bt.append(f"{SHORT[x]} $-$ {SHORT[y]} & " + " & ".join(
-        "${:+.2f}\\ [{:+.2f}, {:+.2f}]$".format(*(100 * boot[t, p, x, y][k] for k in ("diff", "lo", "hi")))
-        for t, _ in TESTS for p, _ in BPOPS) + " \\\\")
-(OUT / "tab_bootstrap.tex").write_text("\n".join(bt) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf8")
-
 TAG = {"soliloquies": "Sol", "tauber_beowulf": "Beo", "lexicon_ambiguous": "Lex", "class_B": "ClsB", "frequency": "Freq",
        "word": "Word", "left": "Left", "sentence": "Bil"}
 for (t, p, x, y), r in boot.items():
@@ -513,45 +405,7 @@ with open(OUT / "numbers.tex", "w", encoding="utf8") as f:
         f.write(f"\\newcommand{{\\{name}}}{{{v}}}\n")
 
 
-# ---------------------------------------------------------------- figure (drawn 15 cm wide, its intended printed size)
-# Dot plot (not bars): the left panel needs a zoomed axis, and bars must start at zero.
-plt.rcParams.update({"font.family": "serif", "font.serif": ["Liberation Serif", "Nimbus Roman", "Times New Roman",
-                     "DejaVu Serif"], "font.size": 11, "axes.titlesize": 11, "axes.labelsize": 11,
-                     "xtick.labelsize": 11, "ytick.labelsize": 11, "legend.fontsize": 11, "pdf.fonttype": 42})
-COLORS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100"]  # validated categorical slots 1-4 (dataviz palette)
-MARKERS = ["o", "s", "^", "D"]  # second channel, so identity never relies on colour alone
-fig, axes = plt.subplots(1, 2, figsize=(15 / 2.54, 6.2 / 2.54))
-for ax, pop, title in ((axes[0], "lexicon_ambiguous", "Lexicon-ambiguous tokens"),
-                       (axes[1], "minority_reading", "Minority-reading tokens")):
-    for i, (s, name) in enumerate(SYSTEMS):
-        xs, ys, es = [], [], []
-        for j, (t, _) in enumerate(TESTS):
-            d = W[t]
-            if s == "frequency":
-                y, e = 100 * acc(d["frequency"], pop), 0.0
-            else:
-                y, e = 100 * d["seed_summary"][s][pop]["mean"], 100 * d["seed_summary"][s][pop]["sd"]
-            xs.append(j + (i - 1.5) * 0.16); ys.append(y); es.append(e)
-        ax.errorbar(xs, ys, yerr=es, fmt=MARKERS[i], color=COLORS[i], markersize=6.5, elinewidth=1.2,
-                    capsize=0, label=name, markeredgecolor="white", markeredgewidth=0.8)
-    ax.set_xticks([0, 1], [name for _, name in TESTS])
-    ax.set_xlim(-0.5, 1.5)
-    if pop == "minority_reading":  # the other panel keeps matplotlib's zoomed range around its data
-        ax.set_ylim(bottom=0)
-    ax.set_title(title)
-    ax.set_ylabel("Accuracy (%)")
-    ax.spines[["top", "right"]].set_visible(False)
-    ax.yaxis.grid(True, color="#e6e6e6", linewidth=0.6)
-    ax.set_axisbelow(True)
-handles, labels = axes[0].get_legend_handles_labels()
-fig.legend(handles, labels, loc="lower center", ncol=4, frameon=False, bbox_to_anchor=(0.5, -0.02),
-           handletextpad=0.3, columnspacing=1.2)
-fig.tight_layout(rect=(0, 0.1, 1, 1), w_pad=1.5)
-fig.savefig(OUT / "fig_accuracy.pdf", metadata={"CreationDate": None})  # no timestamp: reruns are byte-identical
-plt.close(fig)
-
-print(f"wrote {len(num)} numbers, 6 tables and the figure to {OUT.relative_to(ROOT)}")
-print("worked examples verified against results/wikipron/soliloquies_predictions.jsonl")
+print(f"wrote {len(num)} numbers and tab_data.tex to {OUT.relative_to(ROOT)}")
 
 # ---------------------------------------------------------------- compile
 if shutil.which("pdflatex"):

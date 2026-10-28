@@ -15,14 +15,14 @@ is recomputed from the data with experiment.flags (see minority()). The tables k
 which for the committed runs is the same.
 local2 and local5 never reach a cap of the grid (see REPLICATES), so their runs at the caps of one config group (the
 configs that differ only in max_bytes) are replicates: summary.json labels them (identical_inputs_at), pools them
-under local_replicates and lists their spread per seed under replicate_spread. The table and the numbers give them,
-like every other arm, at the full cap (the largest cap of their group) over its seeds, and the numbers also give them
+under local_replicates and lists their spread per seed under replicate_spread. The numbers give them, like every
+other arm, at the full cap (the largest cap of their group) over its seeds, and the numbers also give them
 pooled (EncRep...). identical_runs counts the distinct prediction sets among all runs and lists the runs whose
 predictions agree on every token.
-Writes to --report: tab_encoder.tex and numbers_encoder.tex (numbers.tex is left alone).
+Writes to --report: numbers_encoder.tex (numbers.tex is left alone).
 Usage: python -m oevl.encoder_summary --runs DIR --out results/encoder
-       python -m oevl.encoder_summary --from-tsv   (no GPU runs: recomputes summary.json and the .tex files from the
-         committed tables, taking from summary.json the arms and seeds of each config and what the tables cannot
+       python -m oevl.encoder_summary --from-tsv   (no GPU runs: recomputes summary.json and numbers_encoder.tex from
+         the committed tables, taking from summary.json the arms and seeds of each config and what the tables cannot
          hold: settings, collapse flags, losses, most_long_share and prior_agreement. Its per-seed accuracies are
          read only to check the tables against them, and summary.json is overwritten in place. run_all.sh does this.)
 """
@@ -358,7 +358,6 @@ DIGITS = dict(zip("0123456789", ("Zero", "One", "Two", "Three", "Four", "Five", 
 SET_TAG = {"john_ws": "Dev", "soliloquies": "Sol", "tauber_beowulf": "Beo"}
 POP_TAG = {"accuracy": "All", "lexicon_ambiguous": "Lex", "attested_ambiguous": "Att", "minority_reading": "Min",
            "class_A": "ClsA", "class_B": "ClsB", "class_C": "ClsC", "class_unlisted": "ClsU"}
-NAMES = {"frequency": "Frequency", "word": "Word", "left": "Left", "sentence": "Bilateral"}
 
 
 def tag(name: str) -> str:
@@ -458,56 +457,20 @@ def numbers(summary: dict[str, dict[str, Any]]) -> str:
            "do not edit\n" + "".join(f"\\newcommand{{\\N{k}}}{{{v}}}\n" for k, v in sorted(num.items()))
 
 
-def table_tex(summary: dict[str, dict[str, Any]]) -> str:
-    """The LaTeX tabular of tab_encoder.tex: per config the prior and each arm on the two test sets.
-
-    Columns: cap (the config name without "cap"), system, runs, collapsed runs, then for the Soliloquies and Beowulf
-    the accuracy in percent on all, lexicon-ambiguous and class B tokens. The prior's row carries the cap, and each
-    arm's row gives the mean over seeds plus or minus the sample SD. A replicate arm appears only at its full cap.
-    Missing values are left empty."""
-    sets = (("soliloquies", "\\textit{Soliloquies} (prose)"), ("tauber_beowulf", "\\textit{Beowulf} (verse)"))
-    pops = (("accuracy", "All"), ("lexicon_ambiguous", "Lex.-amb."), ("class_B", "Class B"))
-    lines = ["\\begin{tabular}{@{}llrrrrrrrr@{}}", "\\toprule",
-             " & & & & " + " & ".join(f"\\multicolumn{{3}}{{c}}{{{t}}}" for _, t in sets) + " \\\\",
-             "\\cmidrule(lr){5-7}\\cmidrule(l){8-10}",
-             "Cap & System & Runs & Collapsed & " + " & ".join(lab for _ in sets for _, lab in pops) + " \\\\",
-             "\\midrule"]
-
-    def row(a: str, A: dict[str, Any]) -> str:
-        """The row of arm a (its summary entry A), with an empty cap cell."""
-        cells = []
-        for s, _ in sets:
-            for p, _ in pops:
-                r = A["sets"].get(s, {}).get(p, {})
-                cells.append(pct(r.get("mean")) + ("" if r.get("sd") is None else f"$\\pm${pct(r['sd'])}"))
-        name = NAMES.get(a) or f"Local {a[5:]}"
-        return f" & {name} & {len(A['seeds'])} & {A['n_collapsed']} & " + " & ".join(cells) + " \\\\"
-
-    full = full_caps(summary)  # a replicate arm shows only at its full cap, like the numbers
-    for k, (cfg, C) in enumerate(configs(summary).items()):
-        if k:
-            lines.append("\\addlinespace")
-        cells = [pct(C["frequency"].get(s, {}).get(p, {}).get("accuracy")) for s, _ in sets for p, _ in pops]
-        label = cfg.removeprefix("cap").replace("_", "\\_")
-        lines.append(f"{label} & Frequency & & & " + " & ".join(cells) + " \\\\")
-        lines += [row(a, A) for a, A in C["arms"].items() if full.get(a, cfg) == cfg]
-    return "\n".join(lines + ["\\bottomrule", "\\end{tabular}"]) + "\n"
-
-
 def main() -> None:
     """Command line entry point: summarise the runs or the committed tables and write the outputs.
 
     Exactly one of --runs and --from-tsv must be given. With --runs it reads the runs with collect() and writes the
     <set>_predictions.tsv.gz tables to --out (gzip mtime 0, so the bytes are stable). With --from-tsv it reads those
     tables and summary.json from --out and leaves the tables as they are. Either way it recomputes minority_reading
-    (minority()) in memory, writes summary.json to --out and tab_encoder.tex and numbers_encoder.tex to --report
+    (minority()) in memory, writes summary.json to --out and numbers_encoder.tex to --report
     (creating both folders), and prints a warning for every config and arm with collapsed runs. Exits with an error
     if no runs are found."""
     ap = argparse.ArgumentParser()
     ap.add_argument("--runs", help="folder of <config>/<arm>_s<seed> runs")
     ap.add_argument("--from-tsv", action="store_true", help="recompute from the tables and summary.json in --out")
     ap.add_argument("--out", default=str(ROOT / "results" / "encoder"))
-    ap.add_argument("--report", default=str(ROOT / "report" / "generated"), help="where the .tex files go")
+    ap.add_argument("--report", default=str(ROOT / "report" / "generated"), help="where numbers_encoder.tex goes")
     a = ap.parse_args()
     if a.from_tsv == bool(a.runs):
         ap.error("give either --runs DIR or --from-tsv")
@@ -529,9 +492,8 @@ def main() -> None:
     replicates(tables, summary)
     identical_runs(tables, summary)
     (out / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
-    (rep / "tab_encoder.tex").write_text(table_tex(summary), encoding="utf8")
     (rep / "numbers_encoder.tex").write_text(numbers(summary), encoding="utf8")
-    print(f"wrote {out / 'summary.json'}, {len(tables) if a.runs else 0} prediction tables, {rep / 'tab_encoder.tex'} and "
+    print(f"wrote {out / 'summary.json'}, {len(tables) if a.runs else 0} prediction tables and "
           f"{rep / 'numbers_encoder.tex'}")
     for cfg, C in configs(summary).items():
         for arm, A in C["arms"].items():

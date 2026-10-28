@@ -84,7 +84,9 @@ def main() -> None:
     show("Distinct 6-grams shared with each training work", matrix(held, train), train)
 
     out: dict[str, Any]
-    out = {"ngram": N, "text": "bare tokens, lower-cased, ð folded to þ, 6-grams within a sentence",
+    out = {"ngram": N,
+           "text": "bare tokens, lower-cased, ð folded to þ, hyphens and apostrophes dropped, 6-grams within a "
+                   "sentence",
            "train": TRAIN, "excluded": {}, "counts": {}}
     for name in held:
         hit = sorted(s for s, g in held[name].items() if g & seen)

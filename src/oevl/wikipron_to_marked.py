@@ -3,8 +3,8 @@
 Reads a WikiPron TSV (a word, a tab, then its broad IPA with spaces between segments) and writes a CSV whose single
 column, marked_form, lists each distinct spelling with macrons on the long vowels. run_all.sh builds
 data/lex_wikipron.csv from data/ang_latn_broad.tsv this way. build_report.py calls mark() again to recompute the
-alignment counts the paper prints, and charsiu_g2p.py and paper_numbers.py use mark() to read vowel length off
-CharsiuG2P's predicted IPA.
+alignment counts the paper prints, and charsiu_g2p.py, error_typing.py and paper_numbers.py use mark() to read vowel
+length off CharsiuG2P's predicted IPA.
 
 Usage: python -m oevl.wikipron_to_marked IN.tsv OUT.csv
 """

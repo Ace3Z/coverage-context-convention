@@ -63,7 +63,7 @@ class Tests(unittest.TestCase):
    self.assertEqual(run(d/'sub'/'one.csv').returncode,1)  # same name, other content
 
 class RegressionTests(unittest.TestCase):
- def test_full_training_no_cap(self):
+ def test_full_training_ambiguous_tokens(self):
   train,_,_,_=build_data(str(Path(__file__).resolve().parents[1]/'data'))
   lex,counts=lexicon(train)
   eligible=[r for r in train if len(r['gold_pattern'])>0 and len(lex.get(r['key'],set()))>=2]
@@ -78,7 +78,7 @@ class RegressionTests(unittest.TestCase):
    self.assertEqual(rows[0]['gold_pattern'],'1')
  def test_autojunk_alignment(self):
   import inspect
-  self.assertIn('autojunk=False',inspect.getsource(agreement))
+  self.assertIn('autojunk=False',inspect.getsource(align))
  def test_prior_backoff_to_lexicon_sources(self):
   import tempfile
   with tempfile.TemporaryDirectory() as d:

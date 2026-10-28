@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# The GPU runs behind results/encoder/: the 24 selection runs (selection.json), then the 39 grid runs (summary.json).
+# The GPU runs behind results/encoder/: the 24 selection runs (selection.json), then the 39 grid runs (summary.json),
+# 37 trained here and the full-cap sentence runs of seeds 1 and 2 copied from the selection runs.
 # They run one after another on the visible GPU. To spread them over several GPUs, give each process its own
 # CUDA_VISIBLE_DEVICES and a share of the loops. A selection run took 12 to 180 minutes (results/encoder/selection.json
 # records each run's time). GPU training is not bit-for-bit repeatable, so new runs differ slightly

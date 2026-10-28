@@ -25,8 +25,8 @@ def pct(x: float | None) -> float | None:
     return round(100 * x, 2) if x is not None else None
 
 
-def jsonl(p: Path) -> list[dict[str, Any]]:
-    """All records of the JSON-lines file at path p, as a list of dicts."""
+def jsonl(p: str | Path) -> list[dict[str, Any]]:
+    """All records of the JSON-lines file at path p, as a list of dicts (the file must have no blank lines)."""
     with open(p, encoding="utf8") as f:
         return [json.loads(line) for line in f]
 

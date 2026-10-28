@@ -3,7 +3,7 @@
 Three length-marked editions of the poem: Harrison and Sharp (1883), Wyatt (1894) and the Tauber gold (marks
 from the Perseus text of Klaeber 1922, the set the models are scored against). The Harrison and Sharp and Wyatt files
 also hold the Finnsburh Fragment. Each pair is aligned token by token on keys (lower-cased forms without macrons,
-with ð written þ and hyphens and apostrophes dropped), as in experiment.agreement, and aligned tokens are compared on
+with ð written þ and hyphens and apostrophes dropped) with experiment.align, and aligned tokens are compared on
 their vowel-length patterns. Ambiguity and the floor (the prior) use the headline training set and lexicon, as
 results/wikipron: training forms without Zupitza (decision D3) + WikiPron.
 
@@ -19,14 +19,13 @@ were then manually checked, and none was changed.
 """
 import collections
 import csv
-import difflib
 import json
 import random
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from pathlib import Path
 from typing import Any
 
-from oevl.experiment import EXCLUDE_D3, build_data, flags, key, lexicon, load_tauber, predict
+from oevl.experiment import EXCLUDE_D3, align, build_data, flags, kappa, key, lexicon, load_tauber, predict, rate
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "results" / "agreement"
@@ -37,27 +36,6 @@ GATE_RULE = (f"ceiling = editor agreement on ambiguous aligned tokens; floor = m
              f"{GATE_POINTS} points on at least {GATE_N} tokens")
 GATE_NOTE = ("Applied after the fact: the rule was not written down before the agreement numbers were measured. "
              "These fields say which side of the bar each pair lands on. They do not decide the outcome.")
-
-
-def align(a: Sequence[dict[str, Any]], b: Sequence[dict[str, Any]]) -> list[tuple[dict[str, Any], dict[str, Any]]]:
-    """Token pairs (row of a, row of b) from the equal runs of the two key sequences.
-
-    a, b: token rows of two editions in text order (dicts with a key field, as made by experiment.tokens).
-    autojunk is off so that frequent keys are not treated as junk. Tokens in replaced, inserted or deleted runs are
-    left out."""
-    sm = difflib.SequenceMatcher(None, [r["key"] for r in a], [r["key"] for r in b], autojunk=False)
-    return [p for op, i, j, k, m in sm.get_opcodes() if op == "equal" for p in zip(a[i:j], b[k:m])]
-
-
-def rate(x: Sequence[str], y: Sequence[str]) -> float | None:
-    """Share of positions where the two equal-length lists hold the same value, or None when x is empty."""
-    return sum(p == q for p, q in zip(x, y)) / len(x) if x else None
-
-
-def kappa(x: list[str], y: list[str]) -> float | None:
-    """Cohen's kappa of two equal-length label lists, or None when they are empty or hold only one label in all."""
-    from sklearn.metrics import cohen_kappa_score
-    return float(cohen_kappa_score(x, y)) if x and len(set(x + y)) > 1 else None
 
 
 def classes(path: str | Path) -> dict[str, str]:
@@ -71,7 +49,7 @@ def classes(path: str | Path) -> dict[str, str]:
         return {}
     with open(path, encoding="utf8") as f:
         rows = list(csv.DictReader(f))
-    # the committed class file names its label column 'final'; the other names are accepted for older copies
+    # the committed class file names its label column 'final'; tests/test_agreement.py uses final_label
     col = next((c for c in ("final_label", "final", "class", "label") if rows and c in rows[0]), None)
     if col is None:
         raise SystemExit(f"{path}: needs a skeleton column and a final label column (final_label, final, class or label)")
