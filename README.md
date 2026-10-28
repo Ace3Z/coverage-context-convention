@@ -75,7 +75,7 @@ the bare word, takes the length patterns a dictionary lists for it, and picks on
 We built a length-marked corpus from nine editions and hold out one of them, Alfred's *Soliloquies*, as the prose
 test. The verse test is a tenth source, Tauber's token-level *Beowulf*. On exactly the same tokens we compare a
 frequency prior, logistic classifiers, a fine-tuned ByT5 model and CharsiuG2P, and three editions of *Beowulf* show
-how far editors agree. `bash run_all.sh` reproduces every number and table in the report.
+how far editors agree.
 
 | Limit | Question | Where to look |
 |---|---|---|
@@ -109,17 +109,15 @@ with 535 of the 560 labels, and of the 25 it disputed another run kept 18 and co
 manually checked, and none was changed. The guidelines, the item sheets and the labels of the two runs
 (`labels_a.tsv`, `labels_b.tsv`) are in `results/label_review/materials/`, and the blind review is in
 `results/label_review/expert_review.json`. The settled labels are in `data/ambiguity_classes.csv` and
-`results/error_typing/labels.tsv`, and the single run's labels of the disagreements in
-`results/agreement/disagreements_checked.tsv`.
-The [report](report/essentials_final_report.pdf) (source: [report/main.tex](report/main.tex)) has the full tables, the
-caveats and the run-to-run variance.
+`results/error_typing/labels.tsv`, and the disagreement labels in `results/agreement/disagreements_checked.tsv`.
+The [report](report/essentials_final_report.pdf) has the full tables, the caveats and the run-to-run variance.
 
 ---
 
 ## 🧩 Pipeline
 
-The code is the Python package `oevl` in `src/oevl/`. `bash run_all.sh` runs every CPU stage from the committed
-inputs and rebuilds all tables, figures and the numbers the report prints. Rebuilding the corpus or the dictionaries
+The code is the Python package `oevl` in `src/oevl/`. `bash run_all.sh` starts from the committed inputs and
+regenerates every number, table and figure in the report. Rebuilding the corpus or the dictionaries
 from their sources, the CharsiuG2P benchmark and the GPU runs have their own commands in [REPRODUCE.md](REPRODUCE.md).
 
 | # | Stage | Module | Writes |
@@ -129,9 +127,9 @@ from their sources, the CharsiuG2P benchmark and the GPU runs have their own com
 | 3 | Dictionaries | `wikipron_to_marked.py`, `build_lexicons.py` | `data/lex_*.csv` |
 | 4 | Frequency prior and logistic models | `experiment.py` | `results/<setting>/` |
 | 5 | Editor agreement | `agreement.py` | `results/agreement/` |
-| 6 | ByT5 grid and selection (GPU) | `encoder_experiment.py`, `select_config.py`, `encoder_summary.py`, `stats.py`, `scripts/encoder_grid.sh` | `results/encoder/`, `report/generated/tab_encoder.tex` and `numbers_encoder.tex` |
+| 6 | ByT5 grid (GPU), selection and summary | `encoder_experiment.py`, `select_config.py`, `encoder_summary.py`, `stats.py`, `scripts/encoder_grid.sh` | `results/encoder/`, `report/generated/numbers_encoder.tex` |
 | 7 | CharsiuG2P error analysis | `charsiu_g2p.py` | `results/charsiu/` |
-| 8 | Error typing | `error_typing.py` | `results/error_typing/`, `report/generated/tab_errors.tex` |
+| 8 | Error typing | `error_typing.py` | `results/error_typing/` |
 | 9 | Frozen check, paper numbers and report | `check_expected.py`, `paper_numbers.py`, `build_report.py` | `report/generated/`, `REPORT.pdf` |
 
 `try_text.py` adds macrons to your own sentences, `export_hf.py` writes the Hugging Face copy of the data, and
@@ -150,8 +148,7 @@ cd coverage-context-convention
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
-# Step 2. Reproduce every number and table, and REPORT.pdf if pdflatex is installed
-#         (about two minutes). Includes the frozen check of 660 values.
+# Step 2. Reproduce every number and table, and REPORT.pdf if pdflatex is installed.
 bash run_all.sh
 
 # Step 3. Restore macrons in your own sentences: write them one per line to my_tests/sentences.txt.
@@ -167,24 +164,17 @@ explains them.
 ## 💾 Dataset
 
 The Hugging Face dataset [`Ace3Z/old-english-vowel-length`](https://huggingface.co/datasets/Ace3Z/old-english-vowel-length)
-holds the corpus, the dictionaries and the ambiguity class files. Loading it needs the `datasets` package
-(`pip install datasets`), which `requirements.txt` does not include.
-
-| Split | Content | Role |
-|---|---|---|
-| `train` | Bright's *Reader*, Matthew, Sweet's *Primer*, *Physiologus*, Zupitza's *Grammar* | training (the final systems leave Zupitza out, decision D3) |
-| `dev` | Gospel of John (West Saxon) | model selection only |
-| `test_prose` | Alfred's *Soliloquies* | prose test |
-| `test_verse` | Tauber's token-level *Beowulf* | verse test |
-| `agreement` | Harrison & Sharp and Wyatt *Beowulf* | evaluation only: editor agreement and the prior's score against each edition |
+holds the corpus in five splits (`train`, `dev`, `test_prose`, `test_verse` and `agreement`), the dictionaries and the
+ambiguity class files. Loading it needs the `datasets` package (`pip install datasets`), which `requirements.txt` does
+not include.
 
 ```python
 from datasets import load_dataset
 corpus = load_dataset("Ace3Z/old-english-vowel-length")
 ```
 
-The split is by work, and no *Beowulf* text is in `train`. [DATA.md](DATA.md) covers the sources,
-the leakage audit, decision D3 and the licences.
+The split is by work, and no *Beowulf* text is in `train`. [DATA.md](DATA.md#splits) gives the works and token counts of
+each split and covers the sources, the leakage audit, decision D3 and the licences.
 
 ---
 
@@ -195,7 +185,7 @@ the leakage audit, decision D3 and the licences.
 | [REPRODUCE.md](REPRODUCE.md) | installation, the systems and their evaluation, and every command |
 | [DATA.md](DATA.md) | corpus, splits, dev set, leakage audit, decision D3, data layout and licences |
 | [notebooks/README.md](notebooks/README.md) | Kaggle and Colab launchers for the ByT5 pilot |
-| Report | The submitted PDF is [report/essentials_final_report.pdf](report/essentials_final_report.pdf). Its LaTeX source is [report/main.tex](report/main.tex), and `bash run_all.sh` compiles it to `REPORT.pdf` when `pdflatex` is installed. |
+| Report | The submitted PDF is [report/essentials_final_report.pdf](report/essentials_final_report.pdf). Its LaTeX source is [report/main.tex](report/main.tex). |
 | [LICENSE](LICENSE), [data/LICENSE.md](data/LICENSE.md) | code licence (MIT) and the licence of every data file |
 
 ---
@@ -207,17 +197,18 @@ coverage-context-convention/
 ├── README.md                overview and quickstart
 ├── LICENSE                  MIT licence of the code
 ├── pyproject.toml           package metadata (pip install -e .)
-├── REPRODUCE.md             installation, systems, evaluation, every command
-├── DATA.md                  corpus, splits, leakage audit, D3, licences
+├── REPRODUCE.md             see Documentation
+├── DATA.md                  see Documentation
 ├── run_all.sh               the whole CPU pipeline, from inputs to REPORT.pdf
 ├── src/oevl/                the package: one or more modules per pipeline stage
 ├── scripts/encoder_grid.sh  exact GPU commands behind results/encoder/
 ├── tests/                   unit tests, run by run_all.sh
-├── data/                    corpus (by_source/), Tauber and WikiPron inputs, dictionaries, class files
+├── data/                    corpus (by_source/), Tauber, WikiPron and CharsiuG2P inputs, dictionaries,
+│                            class files, licences
 ├── results/                 one folder per experiment: metrics, predictions, logs, labels
 ├── report/                  the submitted PDF, main.tex, references.bib, abbrvurl.bst, the UZH logo and generated/
-│                            tables, numbers and figures
-├── notebooks/               Kaggle and Colab launchers for the ByT5 pilot
+│                            (numbers, Table 1 and Figure 1)
+├── notebooks/               ByT5 pilot notebooks
 ├── release/                 dataset card and licence file for the Hugging Face copy
 ├── media/figures/logos/     logos
 └── requirements.txt         every package, pinned to the tested versions
@@ -227,14 +218,9 @@ coverage-context-convention/
 
 ## 🖥️ Compute
 
-- `bash run_all.sh` takes about two minutes on an Apple M-series laptop, including 90 unit tests (one is skipped unless
-  the Wikisource download is cached), 660 frozen checks and the report.
-- `requirements.txt` pins every package to the tested version. It installs and passes those checks on macOS with
-  Python 3.11, 3.12, 3.13 and 3.14, and on Linux with Python 3.14 and a CUDA GPU.
+- `bash run_all.sh` takes about two minutes on an Apple M-series laptop, tests, frozen checks and the report included.
 - A ByT5-small dev selection run took 12 to 180 minutes on a shared lab GPU (`results/encoder/selection.json` records
   each run's time).
-- CharsiuG2P's own 500-word benchmark takes a few minutes on a recent laptop CPU. Its predictions on our test sets were
-  made on a GPU.
 
 ---
 

@@ -1,5 +1,5 @@
 {
-  "provenance": "Two separate runs of one LLM, Claude Opus 5.5 (model id claude-opus-5-5), labelled the 60 skeletons with the same written guidelines (label_a and label_b, with the guidelines and item sheet in results/label_review/materials/classes), and a third run settled their two disagreements (final, adjudication_note). The final labels were then manually checked, and none was changed (reported 2026-10-20).",
+  "provenance": "Two separate runs of one LLM, Claude Opus 5.5 (model id claude-opus-5-5), labelled the 60 skeletons with the same written guidelines (label_a and label_b, with the guidelines and item sheet in results/label_review/materials/classes), and a third run settled their two disagreements (final, adjudication_note).",
   "classes": {
     "A": "lexical: two different words (god/gōd, man/mān, is/īs)",
     "B": "grammatical: same spelling, different word class or function, both with dictionary backing (þe relative particle vs þē \"thee\")",
@@ -51,7 +51,7 @@
     "tokens": 108
   },
   "caveats": [
-    "Under D3 (Zupitza train-only and left out of ambiguity statistics) the list changes: 53 of the 60 stay, eom, gyt, hi, na, naman, oþrum and þes drop, and eode, hy, hyra, secge, sona, þon and þy come in. The 60 are kept with their labels, and d3 records what changes under the D3 lexicon.",
+    "Under D3 (Zupitza left out of training and of the ambiguity statistics) the list changes: 53 of the 60 stay, eom, gyt, hi, na, naman, oþrum and þes drop, and eode, hy, hyra, secge, sona, þon and þy come in. The 60 are kept with their labels, and d3 records what changes under the D3 lexicon.",
     "The guideline examples (god, man, is, þe, se) are items in the list, so they came pre-labelled. without_guideline_examples gives kappa on the other 55.",
     "Many skeletons are near-unanimous in training (þa 17 short vs 2,690 long, þæt 1,947 short vs 6 long). They count as lexicon-ambiguous but most of that is dictionary noise."
   ],
@@ -79,5 +79,5 @@
       "ambiguous_tokens_outside_list": 4925
     }
   },
-  "expert_review": "2026-10-19: in a blind review, two further runs of the same model relabelled all 60 skeletons and agreed with the final label on 58. Another run upheld the final label for the other two (þis and gyt, both B), so no label changed. The labels of the review runs and the adjudication are in results/label_review/expert_review.json. The labels were then manually checked, and none was changed."
+  "expert_review": "2026-10-19: in a blind review, two further runs of the same model relabelled all 60 skeletons and agreed with the final label on 58. Another run upheld the final label for the other two (þis and gyt, both B), so no label changed. The labels of the review runs and the adjudication are in results/label_review/expert_review.json. The labels were then manually checked, and none was changed (reported 2026-10-20)."
 }

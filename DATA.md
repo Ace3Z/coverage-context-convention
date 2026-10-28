@@ -1,21 +1,23 @@
 # Data, splits and licences
 
-This file describes the corpus, the held-out sets, the decisions behind them, the layout of `data/` and the licence of
-every source. The commands are in [REPRODUCE.md](REPRODUCE.md). Back to the [README](README.md).
+This file describes the corpus, the held-out sets, the decisions behind them and the layout of `data/`. The commands are
+in [REPRODUCE.md](REPRODUCE.md). Back to the [README](README.md).
 
 The corpus, the dictionaries and the class labels are also on Hugging Face as
 [`Ace3Z/old-english-vowel-length`](https://huggingface.co/datasets/Ace3Z/old-english-vowel-length).
 
 ## Splits
 
+The names in brackets are the splits of the Hugging Face copy.
+
 | Role | Works | Tokens |
 |---|---|---|
-| Train | Bright's *Reader*, Matthew (West Saxon), Sweet's *Primer*, *Physiologus* | 69,087 |
-| Train, ablation only | Zupitza's edition of Ælfric's *Grammar* (left out under D3, see below) | 23,940 |
-| Dev | Gospel of John (`john_ws`) | 16,649 of 17,310 scored |
-| Prose test | Alfred's *Soliloquies* | 15,426 of 15,475 scored |
-| Verse test | Tauber's *Beowulf* | 17,361 (some of the 17,244 rows in Tauber's file hold two or three words) |
-| Evaluation only: editor agreement and the prior's score against each edition | Harrison & Sharp and Wyatt *Beowulf*, each with the *Finnsburh Fragment* (Wyatt's file lacks the first 18 lines of the fragment) | 35,250 (17,682 and 17,568) |
+| Train (`train`) | Bright's *Reader*, Matthew (West Saxon), Sweet's *Primer*, *Physiologus* | 69,087 |
+| Train, ablation only (in `train`) | Zupitza's edition of Ælfric's *Grammar* (left out under D3, see below) | 23,940 |
+| Dev (`dev`) | Gospel of John (`john_ws`) | 16,649 of 17,310 scored |
+| Prose test (`test_prose`) | Alfred's *Soliloquies* | 15,426 of 15,475 scored |
+| Verse test (`test_verse`) | Tauber's *Beowulf* | 17,361 (some of the 17,244 rows in Tauber's file hold two or three words) |
+| Evaluation only (`agreement`): editor agreement and the prior's score against each edition | Harrison & Sharp and Wyatt *Beowulf*, each with the *Finnsburh Fragment* (Wyatt's file lacks the first 18 lines of the fragment) | 35,250 (17,682 and 17,568) |
 
 The split is by work, and no *Beowulf* text is used for training. A dev or test sentence that shares a word 6-gram
 (bare, lower-cased, ð folded to þ, hyphens and apostrophes dropped) with a training work is left out of scoring. That
@@ -37,8 +39,9 @@ best one with it (95.70% against 95.21%, seeds 1 and 2), but at the five matched
 change ranges from -7.40 to +0.49 points, so ByT5 gains slightly from the decision in all but its least trained
 setting (1 epoch at learning rate 1e-4).
 
-So every system in `results/<setting>/` trains without Zupitza. So do `oevl.try_text`, the ByT5 default, the coverage
-numbers in the report, the CharsiuG2P populations, and the prior that `oevl.agreement` compares the editors with.
+So the four candidate settings (`results/training_only`, `wikipron`, `proposal` and `all`) train without Zupitza. So
+do `oevl.try_text`, the ByT5 default, the coverage numbers in the report, the CharsiuG2P populations, and the prior
+that `oevl.agreement` compares the editors with.
 `results/wikipron_with_zupitza` repeats the WikiPron setting with Zupitza in training, for comparison. The leakage
 audit still checks all five training works, as the ablation needs. Zupitza shares no 6-gram with the dev or test sets,
 so the exclusions are the same either way.
@@ -72,32 +75,13 @@ data/
 ├── ambiguity_classes.json      label provenance, agreement, counting rule, D3 notes
 ├── leakage_excluded.json       dev and test sentences left out of scoring
 ├── charsiu_ang_test.tsv        CharsiuG2P's Old English test words
-├── charsiu_ang_dict_words.txt  words of CharsiuG2P's Old English pronunciation dictionary
+├── charsiu_ang_dict_words.txt  words of CharsiuG2P's Old English pronunciation dictionary (with its dev and test
+│                               words), used only to split the error analysis
 ├── LICENSE.md                  licence of every file here
 └── raw/                        downloads for rebuilding (gitignored)
 ```
 
 ## Licences
 
-The code is MIT (`LICENSE`). The data is CC BY-SA 4.0 unless `data/LICENSE.md` says otherwise. That file gives the
-licence of every file in `data/` and the licence text or source page that each statement was checked against.
-
-- Corpus: `data/by_source/`, cleaned by `PYTHONPATH=src python -m oevl.clean_corpus` with explicit character mappings that are
-  counted in `data/manifest.json`. It comes from Project Gutenberg editions (public domain in the USA) and Wikisource
-  transcriptions (CC BY-SA 4.0), and is released as CC BY-SA 4.0.
-- Tauber gold: https://github.com/old-english-learner-texts/old-english-texts (CC BY-SA 4.0, attribution to James
-  Tauber).
-- WikiPron: https://github.com/CUNY-CL/wikipron. Its code is Apache-2.0, but the scraped data is Wiktionary content
-  under Wiktionary's own terms, so `data/ang_latn_broad.tsv` and `data/lex_wikipron.csv` are CC BY-SA 4.0.
-- Clark Hall, *A Concise Anglo-Saxon Dictionary* (Project Gutenberg 31543, public domain in the USA), in the TEI
-  conversion by Serg078 (Unlicense): https://github.com/Serg078/Conversion-of-The-Clark-Hall-Dictionary-of-Old-English-to-TEI
-- Wiktionary's Old English entries via kaikki.org (Wiktionary content, CC BY-SA 4.0):
-  https://kaikki.org/dictionary/Old%20English/
-- The Bosworth-Toller data dump by Tichý et al. on LINDAT (CC BY 4.0): http://hdl.handle.net/11234/1-3532
-- The dictionary unions `data/lex_proposal.csv` and `data/lex_all.csv` take the strictest licence of their sources,
-  CC BY-SA 4.0.
-- CharsiuG2P (MIT): https://github.com/lingjzhu/CharsiuG2P. `data/charsiu_ang_dict_words.txt` lists the words of its
-  Old English pronunciation dictionary (`dicts/ang.tsv`, which includes its dev and test words) and is used only to
-  split the error analysis into words in and not in that dictionary.
-  `data/charsiu_ang_test.tsv` is its `data/test/ang.tsv` at commit `0c929390759fb94f8ecdfc05cc0bc5f2ff2dc0f4`.
-  CharsiuG2P took its Old English data from WikiPron, so both files are CC BY-SA 4.0.
+The code is MIT ([LICENSE](LICENSE)). [data/LICENSE.md](data/LICENSE.md) gives the source, licence and attribution of
+every file in `data/`, and the page each statement was checked against.

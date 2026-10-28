@@ -5,7 +5,8 @@ This file lists every command, what it does and where its output goes. The data,
 
 ## Installation
 
-You need Python 3.11 to 3.14 (check with `python3 --version`). The pinned packages have no builds for 3.15 yet.
+You need Python 3.11 to 3.14 (check with `python3 --version`). `run_all.sh` passes on macOS with each of them and on
+Linux with 3.14. The pinned packages have no builds for 3.15 yet.
 
 ```bash
 python3 -m venv .venv
@@ -44,18 +45,14 @@ editable, because the code finds `data/` and `results/` relative to the reposito
 
 Accuracy (a token counts only if every vowel has the gold length) is reported on all tokens and on three harder
 populations: lexicon-ambiguous tokens (two or more candidate patterns), attested-ambiguous tokens (at least two
-patterns, each seen at least twice in training), and minority readings (the gold pattern is seen in training, but
-less often than the most frequent one there). The
-lexicon-ambiguous tokens are also split by ambiguity class (`class_A`, `class_B`, `class_C` in `metrics.json`) for the
-60 skeletons (spellings without macrons) in `data/ambiguity_classes.csv`, with `class_unlisted` for the rest. Two
-separate runs of one LLM, Claude Opus 5.5 (model id `claude-opus-5-5`), assigned the classes with the same written
-guidelines, and a third run settled their two disagreements. A blind review by further runs of the same model agreed
-with 58 of the 60, and another run kept the other two (`results/label_review/`). The labels were then manually
-checked, and none was changed.
-The 60 skeletons were picked by their frequency in the training works (Zupitza included) and both test sets, and they are kept under
-decision D3. With training forms plus WikiPron, the `d3` block of `data/ambiguity_classes.json` records that `hi`
-is no longer lexicon-ambiguous without Zupitza, and that 6,757 of the 36,201 lexicon-ambiguous tokens counted there
-fall outside the list.
+patterns, each seen at least twice in training), and minority readings (the gold pattern is seen in training, but less
+often than the most frequent one there). The lexicon-ambiguous tokens are also split by ambiguity class (`class_A`,
+`class_B`, `class_C` in `metrics.json`) for the 60 skeletons (spellings without macrons) in
+`data/ambiguity_classes.csv`, with `class_unlisted` for the rest. The classes are LLM labels, manually checked, made as
+the [README](README.md#-headline-results) describes. The 60 skeletons are the ones with the most lexicon-ambiguous
+tokens in the training works (Zupitza included) and both test sets, and they are kept under decision D3. With training
+forms plus WikiPron, the `d3` block of `data/ambiguity_classes.json` records that `hi` is no longer lexicon-ambiguous
+without Zupitza, and that 6,757 of the 36,201 lexicon-ambiguous tokens counted there fall outside the list.
 
 Results are the mean and sample standard deviation over seeds. A difference between two systems gets a 95%
 sentence-level bootstrap interval on each token's correctness averaged over seeds (`oevl.stats`). For a few ByT5
@@ -64,11 +61,10 @@ tests are stored as well (per seed for ByT5, seed 1 for the logistic models).
 
 `run_all.sh` runs four candidate settings: training forms only, training forms plus WikiPron (the main setting), the
 three proposal dictionaries, and all four sources together. `check_expected` freezes 660 values from these settings, the
-Zupitza ablation and the editor agreement. It passes on macOS with Python 3.11, 3.12, 3.13 and 3.14 and on Linux with
-Python 3.14. On Linux some McNemar p-values differ from the committed ones in the 15th significant digit, which the
-check tolerates. The committed figures embed Times New Roman, the third serif font they ask for. Where matplotlib finds
-Liberation Serif or Nimbus Roman first, or none of the three and falls back to DejaVu Serif, the figure PDFs differ in
-their bytes.
+Zupitza ablation and the editor agreement. On Linux some McNemar p-values differ from the committed ones in the 15th
+significant digit, which the check tolerates. The committed figures embed Times New Roman, the third serif font they ask
+for. Where matplotlib finds Liberation Serif or Nimbus Roman first, or none of the three and falls back to DejaVu Serif,
+the figure PDFs differ in their bytes.
 
 ## 1. Reproduce everything
 
@@ -90,13 +86,14 @@ It takes about two minutes and has six steps:
    [DATA.md](DATA.md)). One ablation keeps all five training works: `results/wikipron_with_zupitza/` is the WikiPron
    setting with Zupitza, on the same three sets. Then `oevl.charsiu_g2p analyse` runs on the committed CharsiuG2P
    output and `oevl.agreement` writes `results/agreement/`.
-5. `oevl.check_expected` fails if any of the 660 frozen values changes.
-6. `oevl.error_typing`, `oevl.encoder_summary --from-tsv` and `oevl.select_config` rebuild the error table, the
-   ByT5 table and numbers, and `results/encoder/selection.json` from committed files without a GPU (section 5).
+5. `oevl.check_expected` fails if any frozen value changes.
+6. `oevl.error_typing`, `oevl.encoder_summary --from-tsv` and `oevl.select_config` rebuild
+   `results/error_typing/summary.json`, the ByT5 numbers and `results/encoder/selection.json` from committed files
+   without a GPU (section 5).
    `oevl.paper_numbers` computes the other numbers the paper may print into `report/generated/numbers_paper.tex`,
    draws Figure 1 (`report/generated/fig_coverage.pdf`) and stops the run if a worked example no longer holds. Then
-   `oevl.build_report` writes the rest of `report/generated/` (numbers, tables, figure), checks the worked examples
-   against the predictions, and compiles `REPORT.pdf` (pdflatex, bibtex, then pdflatex twice) if `pdflatex` is
+   `oevl.build_report` writes `numbers.tex` and Table 1 (`tab_data.tex`) to `report/generated/` and compiles
+   `REPORT.pdf` (pdflatex, bibtex, then pdflatex twice) if `pdflatex` is
    installed. Without LaTeX, upload `report/` to Overleaf and compile `main.tex`.
 
 ## 2. Run a single experiment
@@ -122,14 +119,11 @@ retrieval date and SHA-256 of each input, and the work's `role` (train, dev, tes
 script is not part of this repository, so the rules were worked out from the files. After `clean_corpus`, `matthew_ws`, `bright_reader`,
 `physiologus`, `hs_beowulf` and `john_ws` rebuild byte for byte. The other four rebuilds contain all but four of their
 65,986 committed tokens in order, but some sentences differ, mostly where the original language filter dropped short
-lines (the module docstring has the details). Those four committed files were kept as they are. `john_ws.jsonl`
-(Gospel of John, the dev set) is built the same way as Matthew. The builder still writes an old sentence-level `split`
-field, which `clean_corpus` removes, because the split is by work as the manifest `role` says. `oevl.build_lexicons`
-rebuilds the three proposal dictionaries from the original sources.
+lines (the module docstring has the details). Those four committed files were kept as they are. The builder
+writes a sentence-level `split` field, which `clean_corpus` removes, because the split is by work as the manifest
+`role` says.
 
 ## 4. ByT5 (GPU)
-
-Training needs a GPU. `requirements.txt` already includes torch and the pinned `transformers==4.57.6`.
 
 ```bash
 PYTHONPATH=src python -m oevl.encoder_experiment --out my_runs/encoder
@@ -144,29 +138,26 @@ the three held-out sets. Without `--out` it writes to `results/encoder/`, next t
 for new runs.
 
 `scripts/encoder_grid.sh` has the exact commands behind `results/encoder/`: 24 dev selection runs, whose rule
-`oevl.select_config` applies (`selection.json`), then 39 runs of the chosen setting with seeds 1 to 3: the left,
-sentence, local2 and local5 arms at byte caps (`--max-bytes`) of 128, 256 and 2,560 (the full cap), and the word arm
-at the full cap only. `oevl.encoder_summary --runs` pools those into `summary.json`, the per-token prediction tables
-(`*_predictions.tsv.gz`), `report/generated/tab_encoder.tex` and `numbers_encoder.tex`. The table and the numbers give
-every arm at the full cap over its three seeds, and the left and sentence arms also at the two smaller caps. The
-inputs of local2 and local5 never reach 128 bytes, so their runs at the three caps are replicates, which
-`summary.json` and `numbers_encoder.tex` also pool over all nine runs. The run folders themselves are not committed.
-GPU training is not bit-for-bit repeatable, so a new run can differ slightly.
+`oevl.select_config` applies (`selection.json`), then 39 runs of the chosen setting with seeds 1 to 3 (37 new, as the
+full-cap sentence runs of seeds 1 and 2 are copied from the selection runs): the left, sentence, local2 and local5 arms
+at byte caps (`--max-bytes`) of 128, 256 and 2,560 (the full cap), and the word arm at the full cap only.
+`oevl.encoder_summary --runs` pools those into `summary.json`, the per-token prediction tables (`*_predictions.tsv.gz`)
+and `report/generated/numbers_encoder.tex`. The numbers give every arm at the full cap over its three seeds, and the
+left and sentence arms also at the two smaller caps. The inputs of local2 and local5 never reach 128 bytes, so their
+runs at the three caps are replicates, which `summary.json` and `numbers_encoder.tex` also pool over all nine runs. The
+run folders themselves are not committed. GPU training is not bit-for-bit repeatable, so a new run can differ slightly.
 
-The ByT5 pilot trains all five arms on 10,000 training examples, using the notebooks in `notebooks/` on Kaggle or
-Colab (see `notebooks/README.md`). Its logic is in `oevl.pilot`. The pilots ran before D3, so `oevl.pilot` still
-trains on all five works.
+The exploratory ByT5 pilot (`oevl.pilot`) runs from the Kaggle and Colab notebooks, see
+[notebooks/README.md](notebooks/README.md).
 
-## 5. ByT5 tables from the committed predictions (no GPU)
+## 5. ByT5 numbers from the committed predictions (no GPU)
 
 ```bash
 PYTHONPATH=src python -m oevl.encoder_summary --from-tsv
 PYTHONPATH=src python -m oevl.select_config
 ```
 
-`run_all.sh` runs both. They rebuild the ByT5 table and numbers and `results/encoder/selection.json` from the
-committed prediction tables and run records. The `minority_reading` columns of the committed tables count only strict
-minority readings, and `encoder_summary` recomputes the same flag from the data.
+`run_all.sh` runs both in step 6.
 
 ```bash
 PYTHONPATH=src python -m oevl.error_typing items --out items.tsv
@@ -225,16 +216,13 @@ PYTHONPATH=src python -m oevl.export_hf --out release/hf
 hf upload Ace3Z/old-english-vowel-length release/hf . --repo-type=dataset
 ```
 
-The export writes `release/hf/`, which git ignores and every run regenerates. It holds one JSONL file per split:
-`train`, `dev`, `test_prose` (the *Soliloquies*), `test_verse` (Tauber's *Beowulf*) and `agreement` (the
-Harrison & Sharp and Wyatt *Beowulf*). It also holds the dictionaries in `lexicons/`, the ambiguity class files,
+The export writes `release/hf/`, which git ignores and every run regenerates. It holds one JSONL file per split
+(see [DATA.md](DATA.md#splits)), the dictionaries in `lexicons/`, the ambiguity class files,
 `release/hf_license.md` as `LICENSE.md`, and the dataset card `README.md`, made from `release/hf_card.md` with the
 token counts read from the written files. Sentences that the leakage audit leaves out of evaluation are kept and
 marked with `leakage_excluded`. `train` holds all five training works, Zupitza included.
 
-The upload needs a Hugging Face account with write access to the `Ace3Z` namespace. Older versions of
-`huggingface_hub` only have `huggingface-cli`. With those, the same upload is
-`huggingface-cli upload Ace3Z/old-english-vowel-length release/hf . --repo-type=dataset`.
+The upload needs a Hugging Face account with write access to the `Ace3Z` namespace.
 
 ## Output data
 
@@ -243,31 +231,18 @@ results/
 ├── training_only/              one folder per candidate setting
 │   ├── metrics.json
 │   ├── <set>_per_word.csv      per-word results, <set> = john_ws, soliloquies, tauber_beowulf
-│   ├── <set>_predictions.jsonl token-level predictions
-│   └── results_training_only_<set>.log
+│   └── <set>_predictions.jsonl token-level predictions
 ├── wikipron/
 ├── proposal/
 ├── all/
 ├── wikipron_with_zupitza/      the Zupitza ablation
 ├── agreement/                  metrics.json, disagreements.tsv, agreement.log, and disagreements_checked.tsv
-│                               (100 disagreements labelled by one run of an LLM, checked by a blind review by
-│                               further runs of the same model, then manually checked)
+│                               (the 100 labelled disagreements)
 ├── encoder/                    selection.json, summary.json, <set>_predictions.tsv.gz
 ├── charsiu/                    benchmark.json, benchmark.tsv, ipa.tsv, metrics.json
-├── error_typing/               labels.tsv, summary.json (400 error types labelled by two runs of one LLM, settled
-│                               by a third run, checked by a blind review, then manually checked)
-└── label_review/               expert_review.json (the blind review of all 560 labels) and materials/ (the
-                                guidelines, the item sheets, and labels_a.tsv and labels_b.tsv of the two runs
-                                that labelled the classes and the error types)
-report/
-├── main.tex
-├── references.bib
-├── abbrvurl.bst
-├── essentials_final_report.pdf
-├── logo_uzh.pdf
-└── generated/                  tables, numbers and figures (build_report, encoder_summary, error_typing,
-                                paper_numbers)
-release/
-├── hf_card.md                  template of the Hugging Face dataset card
-└── hf_license.md               licence file of the Hugging Face copy
+├── error_typing/               labels.tsv (the 400 labelled errors), summary.json
+└── label_review/               expert_review.json (the blind review of all 560 labels) and materials/
+                                (guidelines, item sheets, and the labels of the two runs)
+report/generated/               numbers.tex, tab_data.tex (build_report), numbers_encoder.tex (encoder_summary),
+                                numbers_paper.tex and fig_coverage.pdf (paper_numbers)
 ```

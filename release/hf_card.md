@@ -36,7 +36,7 @@ bare text. It also includes the candidate dictionaries and two ambiguity class f
 Context, Convention: Restoring Vowel Length in Old English* (University of Zurich, 2026). The code is at
 https://github.com/Ace3Z/coverage-context-convention.
 
-Language: Old English (`ang`). Licence: CC BY-SA 4.0.
+Language: Old English (`ang`).
 
 ## Dataset structure
 
@@ -86,18 +86,18 @@ on it. The project's final systems leave `zupitza_grammar` out of training and s
 
 ## Source data
 
-| `source` | Split | Work | Editor, year | URL | Licence of the source |
-|---|---|---|---|---|---|
-| `bright_reader` | train | *Anglo-Saxon Reader* (selections) | Bright, 1913 | https://en.wikisource.org/wiki/Bright%27s_Anglo-Saxon_Reader | Wikisource, CC BY-SA 4.0 |
-| `matthew_ws` | train | Gospel of Matthew (West Saxon) | Bright, 1904 (corrected impression of 1910) | https://en.wikisource.org/wiki/Evangelium_Secundum_Mattheum:_the_Gospel_of_Saint_Matthew_in_West-Saxon | Wikisource, CC BY-SA 4.0 |
-| `sweet_primer` | train | *Anglo-Saxon Primer* (texts) | Sweet, 1905 | https://www.gutenberg.org/ebooks/34316 | Project Gutenberg, public domain in the USA |
-| `physiologus` | train | *Old English Physiologus* | Cook, 1921 | https://www.gutenberg.org/ebooks/14529 | Project Gutenberg, public domain in the USA |
-| `zupitza_grammar` | train | Ælfric's *Grammar* | Zupitza, 1880 | https://www.gutenberg.org/ebooks/45861 | Project Gutenberg, public domain in the USA |
-| `john_ws` | dev | Gospel of John (West Saxon) | Bright, 1904 | https://en.wikisource.org/wiki/Index:Gospel_of_Saint_John_in_West-Saxon.djvu | Wikisource, CC BY-SA 4.0 |
-| `soliloquies` | test_prose | Alfred's *Soliloquies* | Hargrove, 1902 | https://en.wikisource.org/wiki/King_Alfred%27s_Old_English_Version_of_St._Augustine%27s_Soliloquies | Wikisource, CC BY-SA 4.0 |
-| `tauber_beowulf` | test_verse | *Beowulf* | Tauber, with the length marks of the Perseus text of Klaeber's 1922 edition | https://github.com/old-english-learner-texts/old-english-texts (`beowulf/raw-data/brunetti-length.txt`) | CC BY-SA 4.0, attribution to James Tauber |
-| `hs_beowulf` | agreement | *Beowulf*, *Finnsburh Fragment* | Harrison & Sharp, 4th revised edition (first 1883) | https://www.gutenberg.org/ebooks/9701 | Project Gutenberg, public domain in the USA |
-| `wyatt_beowulf` | agreement | *Beowulf*, *Finnsburh Fragment* (without its first 18 lines) | Wyatt, 1894 | https://en.wikisource.org/wiki/Beowulf_(Wyatt) | Wikisource, CC BY-SA 4.0 |
+| `source` | Work | Editor, year | URL | Licence of the source |
+|---|---|---|---|---|
+| `bright_reader` | *Anglo-Saxon Reader* (selections) | Bright, 1913 | https://en.wikisource.org/wiki/Bright%27s_Anglo-Saxon_Reader | Wikisource, CC BY-SA 4.0 |
+| `matthew_ws` | Gospel of Matthew (West Saxon) | Bright, 1904 (corrected impression of 1910) | https://en.wikisource.org/wiki/Evangelium_Secundum_Mattheum:_the_Gospel_of_Saint_Matthew_in_West-Saxon | Wikisource, CC BY-SA 4.0 |
+| `sweet_primer` | *Anglo-Saxon Primer* (texts) | Sweet, 1905 | https://www.gutenberg.org/ebooks/34316 | Project Gutenberg, public domain in the USA |
+| `physiologus` | *Old English Physiologus* | Cook, 1921 | https://www.gutenberg.org/ebooks/14529 | Project Gutenberg, public domain in the USA |
+| `zupitza_grammar` | Ælfric's *Grammar* | Zupitza, 1880 | https://www.gutenberg.org/ebooks/45861 | Project Gutenberg, public domain in the USA |
+| `john_ws` | Gospel of John (West Saxon) | Bright, 1904 | https://en.wikisource.org/wiki/Index:Gospel_of_Saint_John_in_West-Saxon.djvu | Wikisource, CC BY-SA 4.0 |
+| `soliloquies` | Alfred's *Soliloquies* | Hargrove, 1902 | https://en.wikisource.org/wiki/King_Alfred%27s_Old_English_Version_of_St._Augustine%27s_Soliloquies | Wikisource, CC BY-SA 4.0 |
+| `tauber_beowulf` | *Beowulf* | Tauber, with the length marks of the Perseus text of Klaeber's 1922 edition | https://github.com/old-english-learner-texts/old-english-texts (`beowulf/raw-data/brunetti-length.txt`) | CC BY-SA 4.0, attribution to James Tauber |
+| `hs_beowulf` | *Beowulf*, *Finnsburh Fragment* | Harrison & Sharp, 4th revised edition (first 1883) | https://www.gutenberg.org/ebooks/9701 | Project Gutenberg, public domain in the USA |
+| `wyatt_beowulf` | *Beowulf*, *Finnsburh Fragment* (without its first 18 lines) | Wyatt, 1894 | https://en.wikisource.org/wiki/Beowulf_(Wyatt) | Wikisource, CC BY-SA 4.0 |
 
 Each edition's Old English text was extracted, normalised to Unicode NFC with length marked only by macrons
 (Zupitza's circumflexes and those of 12 words in Tauber's file were converted, and other marks such as the dots of
@@ -132,6 +132,7 @@ not read as a missing value.
 
 ## Licence
 
-CC BY-SA 4.0. Please credit the Wikisource contributors (Bright's *Reader*, Matthew, John, the *Soliloquies* and
+CC BY-SA 4.0, except two dictionary files with more permissive terms (`lex_clarkhall.csv` and `lex_bt.csv`, see
+`LICENSE.md`). Please credit the Wikisource contributors (Bright's *Reader*, Matthew, John, the *Soliloquies* and
 Wyatt's *Beowulf*), James Tauber (`test_verse`), and, for the dictionaries, WikiPron, Wiktionary via kaikki.org,
 Tichý et al. (Bosworth-Toller) and Serg078 (Clark Hall). `LICENSE.md` gives the licence of every file.
