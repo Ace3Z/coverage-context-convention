@@ -33,7 +33,8 @@ OUT = ROOT / "results" / "agreement"
 PAIRS = (("hs", "wyatt"), ("hs", "tauber"), ("wyatt", "tauber"))
 GATE_POINTS, GATE_N = 10, 500
 GATE_RULE = (f"ceiling = editor agreement on ambiguous aligned tokens; floor = most-frequent-reading prior scored on "
-             f"the same tokens against one editor of the pair; continue to modelling if ceiling minus floor is at least "
+             f"the same tokens against one editor of the pair; continue to modelling if ceiling minus floor is "
+             f"at least "
              f"{GATE_POINTS} points on at least {GATE_N} tokens")
 GATE_NOTE = ("Applied after the fact: the rule was not written down before the agreement numbers were measured. "
              "These fields say which side of the bar each pair lands on. They do not decide the outcome.")
@@ -68,7 +69,8 @@ def compare(a: Sequence[dict[str, Any]], b: Sequence[dict[str, Any]], na: str, n
            f"alignment_rate_{na}": len(pairs) / len(a), f"alignment_rate_{nb}": len(pairs) / len(b)}
     for pop, keep in pops.items():
         sub = [(x, y) for x, y in pairs if keep(x)]
-        ga, gb, pr = [x["gold_pattern"] for x, _ in sub], [y["gold_pattern"] for _, y in sub], [prior[x["id"]] for x, _ in sub]
+        ga, gb, pr = ([x["gold_pattern"] for x, _ in sub], [y["gold_pattern"] for _, y in sub],
+                      [prior[x["id"]] for x, _ in sub])
         res[pop] = {"n": len(sub), "agreement": rate(ga, gb), "cohen_kappa": kappa(ga, gb),
                     f"prior_vs_{na}": rate(pr, ga), f"prior_vs_{nb}": rate(pr, gb)}
     return pairs, res
@@ -89,7 +91,8 @@ def gate(res: Mapping[str, Any], na: str, nb: str) -> dict[str, dict[str, int | 
         for ref in (na, nb):
             gap = round(100 * (s["agreement"] - s[f"prior_vs_{ref}"]), 9)  # rounded so that exactly 10 points clears
             out[f"{pop}_floor_vs_{ref}"] = {"n": s["n"], "ceiling": s["agreement"], "floor": s[f"prior_vs_{ref}"],
-                                             "gap_points": round(gap, 2), "clears_bar": gap >= GATE_POINTS and s["n"] >= GATE_N}
+                                            "gap_points": round(gap, 2),
+                                            "clears_bar": gap >= GATE_POINTS and s["n"] >= GATE_N}
     return out
 
 
@@ -98,7 +101,8 @@ def context(rows: Sequence[dict[str, Any]], i: int, w: int = 4) -> str:
 
     rows: one edition's token rows in text order, i: the index of the focal row in rows, w: tokens on each side.
     Returns one string. The window crosses sentence boundaries and is cut at the ends of the edition."""
-    return " ".join(f"[{r['gold']}]" if j == i else r["gold"] for j, r in enumerate(rows[max(0, i - w):i + w + 1], max(0, i - w)))
+    return " ".join(f"[{r['gold']}]" if j == i else r["gold"]
+                    for j, r in enumerate(rows[max(0, i - w):i + w + 1], max(0, i - w)))
 
 
 def disagreements(pairs: Iterable[tuple[dict[str, Any], dict[str, Any]]], a: Sequence[dict[str, Any]],
@@ -111,7 +115,8 @@ def disagreements(pairs: Iterable[tuple[dict[str, Any], dict[str, Any]]], a: Seq
     b_id, key, a_form, b_form (the marked forms), a_pattern, b_pattern, lexicon_ambiguous and attested_ambiguous (flags
     of the a-side token as 0 or 1), and a_context and b_context from context()."""
     ia, ib = {r["id"]: i for i, r in enumerate(a)}, {r["id"]: i for i, r in enumerate(b)}
-    return [{"pair": f"{na}-{nb}", "a_id": x["id"], "b_id": y["id"], "key": x["key"], "a_form": x["gold"], "b_form": y["gold"],
+    return [{"pair": f"{na}-{nb}", "a_id": x["id"], "b_id": y["id"], "key": x["key"], "a_form": x["gold"],
+             "b_form": y["gold"],
              "a_pattern": x["gold_pattern"], "b_pattern": y["gold_pattern"],
              **{k: int(v) for k, v in flags(x, lex, counts).items() if k != "minority_reading"},
              "a_context": context(a, ia[x["id"]]), "b_context": context(b, ib[y["id"]])}
@@ -155,8 +160,10 @@ def main() -> None:
     cpath = ROOT / "data/ambiguity_classes.csv"
     cls = load_classes(cpath) if cpath.exists() else {}
     metrics: dict[str, Any]  # JSON: strings and nested dicts
-    metrics = {"editions": {"hs": "Harrison and Sharp 1883", "wyatt": "Wyatt 1894", "tauber": "Tauber gold (Klaeber 1922 via Perseus)"},
-               "lexicon": "training forms without zupitza_grammar (decision D3) + data/lex_wikipron.csv, as results/wikipron",
+    metrics = {"editions": {"hs": "Harrison and Sharp 1883", "wyatt": "Wyatt 1894",
+                            "tauber": "Tauber gold (Klaeber 1922 via Perseus)"},
+               "lexicon": "training forms without zupitza_grammar (decision D3) + data/lex_wikipron.csv, "
+                          "as results/wikipron",
                "classes": "data/ambiguity_classes.csv" if cls else "skipped: data/ambiguity_classes.csv not found",
                "pairs": {}, "gate": {"rule": GATE_RULE, "note": GATE_NOTE}}
     rows = []
@@ -180,7 +187,8 @@ def main() -> None:
               f"{100 * res[f'alignment_rate_{nb}']:.2f}% of {nb})")
         for pop in [k for k in res if isinstance(res[k], dict)]:
             s = res[pop]
-            print(f"  {pop:20} n {s['n']:6}  agreement {show(s['agreement'], '.2f', 100)}%  kappa {show(s['cohen_kappa'], '.3f')}")
+            print(f"  {pop:20} n {s['n']:6}  agreement {show(s['agreement'], '.2f', 100)}%  "
+                  f"kappa {show(s['cohen_kappa'], '.3f')}")
     print("gate:", GATE_NOTE)
     for p, g in metrics["gate"].items():
         if isinstance(g, dict):

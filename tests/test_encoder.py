@@ -76,7 +76,8 @@ class TestScore(unittest.TestCase):
     def test_classes_and_collapse_checks(self):
         lex = {"þe": {"0": set(), "1": set()}, "ge": {"0": set(), "1": set()}, "god": {"1": set()}}
         counts = collections.defaultdict(collections.Counter, {"þe": collections.Counter({"0": 3, "1": 1})})
-        rows = [{"key": k, "gold": k, "gold_pattern": g} for k, g in (("þe", "1"), ("þe", "0"), ("ge", "0"), ("god", "1"))]
+        rows = [{"key": k, "gold": k, "gold_pattern": g}
+                for k, g in (("þe", "1"), ("þe", "0"), ("ge", "0"), ("god", "1"))]
         prior = ["0", "0", "0", "1"]
         out = score(rows, ["1"] * 4, prior, lex, counts, {"þe": "C"})  # always the most long marks
         self.assertEqual(out["accuracy"], {"n": 4, "accuracy": 0.5})
@@ -224,7 +225,8 @@ class TestMinority(unittest.TestCase):
 @unittest.skipUnless(importlib.util.find_spec("transformers"), "needs torch and transformers (requirements.txt)")
 class TestTinySmoke(unittest.TestCase):
     def test_two_seeds_then_summary(self):
-        """The CPU smoke test: tiny random encoder, all arms on two seeds (D3 default) and one run on all five works, then encoder_summary."""
+        """The CPU smoke test: tiny random encoder, all arms on two seeds (D3 default) and one run on all five works,
+        then encoder_summary."""
         from oevl import encoder_experiment
         arms = ("word", "left", "sentence", "local2", "local5")
         with tempfile.TemporaryDirectory() as d:
@@ -254,7 +256,8 @@ class TestTinySmoke(unittest.TestCase):
                 rows = list(csv.DictReader(f, delimiter="\t"))
             amb = [r for r in rows if r["cap128:lexicon_ambiguous"] == "1"]
             self.assertAlmostEqual(sum(r["cap128/sentence_s2"] == r["gold"] for r in amb) / len(amb),
-                                   s["cap128"]["arms"]["sentence"]["sets"]["soliloquies"]["lexicon_ambiguous"]["values"][1])
+                                   s["cap128"]["arms"]["sentence"]["sets"]["soliloquies"]
+                                   ["lexicon_ambiguous"]["values"][1])
             # by default (D3) the encoder's prior is the one run_all.sh wrote
             with open(ROOT / "results/wikipron/soliloquies_predictions.jsonl", encoding="utf8") as f:
                 ref = {x["id"]: x["frequency_prediction"] for x in map(json.loads, f)}

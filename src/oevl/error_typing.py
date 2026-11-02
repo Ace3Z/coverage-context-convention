@@ -70,7 +70,8 @@ def main() -> None:
     names = set(TYPES)
     for r in rows:  # the guideline's hard rules hold
         assert {r["label_a"], r["label_b"], r["final"]} <= names, r["item"]
-        assert r["final"] == r["label_a"] == r["label_b"] or r["note"], r["item"]  # a final that departs from the annotators needs a note
+        # a final that departs from the annotators needs a note
+        assert r["final"] == r["label_a"] == r["label_b"] or r["note"], r["item"]
         assert (r["final"] == "ceiling") == (r["gold_in_candidates"] == "no"), r["item"]
         assert r["final"] != "gold_in_doubt" or r["set"] == "tauber_beowulf", r["item"]
         assert r["final"] not in ("segment", "truncation") or r["system"] == "charsiug2p", r["item"]

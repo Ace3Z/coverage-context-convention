@@ -96,12 +96,15 @@ for tag, m in (("W", W), ("T", T), ("P", P), ("A", A), ("Z", Z)):
             num[f"{tag}{short}A{s}"] = str(mc[key]["a_wrong_b_right"])
             num[f"{tag}{short}B{s}"] = str(mc[key]["a_right_b_wrong"])
         num[f"{tag}{short}MinP"] = p_fmt(min(r["p_exact"] for k, r in mc.items() if k.startswith("frequency_vs")))
-num["BeoGain"] = f"{100 * (W['tauber_beowulf']['frequency']['accuracy'] - T['tauber_beowulf']['frequency']['accuracy']):.2f}"
+num["BeoGain"] = (
+    f"{100 * (W['tauber_beowulf']['frequency']['accuracy'] - T['tauber_beowulf']['frequency']['accuracy']):.2f}"
+)
 num["SolGain"] = f"{100 * (W['soliloquies']['frequency']['accuracy'] - T['soliloquies']['frequency']['accuracy']):.2f}"
 sds = [W[t]["seed_summary"][a][p]["sd"] for t in TESTS for a in ("word", "left", "sentence")
        for p in ("accuracy", "lexicon_ambiguous")]
 num["SdMaxMain"] = f"{100 * max(sds):.2f}"
-num["SdMaxMin"] = f"{100 * max(W[t]['seed_summary'][a]['minority_reading']['sd'] for t in TESTS for a in ('word', 'left', 'sentence')):.2f}"
+num["SdMaxMin"] = f"""{100 * max(W[t]['seed_summary'][a]['minority_reading']['sd']
+                                 for t in TESTS for a in ('word', 'left', 'sentence')):.2f}"""
 
 # ambiguity classes: annotator agreement and final counts
 CLS = json.loads((ROOT / "data" / "ambiguity_classes.json").read_text(encoding="utf8"))
@@ -111,7 +114,9 @@ for c in "ABC":
     num[f"Class{c}"] = str(CLS["counts"]["final"][c])
 
 # D3: what training on Zupitza does to the prior on the prose test (points)
-num["DThreeSolAllCost"] = f"{100 * (Z['soliloquies']['frequency']['accuracy'] - W['soliloquies']['frequency']['accuracy']):.2f}"
+num["DThreeSolAllCost"] = (
+    f"{100 * (Z['soliloquies']['frequency']['accuracy'] - W['soliloquies']['frequency']['accuracy']):.2f}"
+)
 
 
 def rjson(path: str) -> dict[str, Any]:
@@ -157,7 +162,8 @@ CB, CM = rjson("results/charsiu/benchmark.json"), rjson("results/charsiu/metrics
 b20, b50 = CB["max_length_20"], CB["max_length_50"]
 if (b20["wer"], b20["per"]) != (CB["published"]["wer"], CB["published"]["per"]):
     sys.exit("CharsiuG2P: the reproduction no longer matches the published WER and PER")
-num["CharsiuWer"], num["CharsiuPer"], num["CharsiuTrunc"] = f"{b20['wer']:.3f}", f"{b20['per']:.4f}", str(b20["truncation"])
+num["CharsiuWer"], num["CharsiuPer"], num["CharsiuTrunc"] = (f"{b20['wer']:.3f}", f"{b20['per']:.4f}",
+                                                             str(b20["truncation"]))
 num["CharsiuWerFixed"], num["CharsiuLenShare"] = f"{b50['wer']:.3f}", f"{100 * b50['length_only_share']:.1f}"
 num["CharsiuLenOnly"], num["CharsiuWordErrors"] = str(b50["length_only"]), str(b50["word_errors"])
 num["CharsiuN"] = str(b20["n"])
@@ -191,7 +197,8 @@ if len(collapsed) != 1:
     sys.exit(f"selection.json: expected one collapsed run, found {len(collapsed)}")
 num["CollapseSolAll"], num["CollapseSolLex"] = f"{collapsed[0]['sol_all']:.2f}", f"{collapsed[0]['sol_lexamb']:.2f}"
 num["CollapseEpochs"] = str(collapsed[0]["epochs"])
-num["CollapseDevLex"], num["CollapseDevMostLong"] = f"{collapsed[0]['dev_lexamb']:.2f}", f"{collapsed[0]['dev_most_long']:.2f}"
+num["CollapseDevLex"], num["CollapseDevMostLong"] = (f"{collapsed[0]['dev_lexamb']:.2f}",
+                                                     f"{collapsed[0]['dev_most_long']:.2f}")
 from oevl.encoder_summary import configs, read_tables  # noqa: E402
 ENC = configs(rjson("results/encoder/summary.json"))
 num["GridRuns"] = str(sum(len(A["seeds"]) for C in ENC.values() for A in C["arms"].values()))
@@ -257,7 +264,8 @@ def counts(js: str) -> str:
 
 
 # Zupitza is not trained on (decision D3), so the per-word CSVs hold no counts for it: GeZup counts the corpus file
-ZUP = collections.Counter((r["key"], r["gold_pattern"]) for r in E.tokens(E.load(ROOT / "data/by_source/zupitza_grammar.jsonl")))
+ZUP = collections.Counter((r["key"], r["gold_pattern"])
+                          for r in E.tokens(E.load(ROOT / "data/by_source/zupitza_grammar.jsonl")))
 
 
 def zup(w: str) -> str:
@@ -301,18 +309,22 @@ for toks in bysent.values():
         if t["key"] == "þe" and i > 0 and toks[i - 1]["key"] == "to" and t["gold_pattern"] == "1":
             after_to.append(t)
 num["ToTheN"] = str(len(after_to))
-num["ToTheMissed"] = str(sum(t["left_seed1_prediction"] == "0" and t["sentence_seed1_prediction"] == "0" for t in after_to))
+num["ToTheMissed"] = str(sum(t["left_seed1_prediction"] == "0" and t["sentence_seed1_prediction"] == "0"
+                             for t in after_to))
 # the same tokens in the ByT5 runs (results/encoder): fewest and most long þē after tō per arm, over its runs at
 # every cap (128, 256 and full)
 ENC_SOL = {r["id"]: r for r in read_tables(ROOT / "results/encoder")["soliloquies"]}
 enc_runs = [c for c in next(iter(ENC_SOL.values())) if "/" in c]
 for arm, short in (("word", "Word"), ("local2", "LocalTwo"), ("sentence", "Bil")):
-    hits = [sum(ENC_SOL[t["id"]][c] == "1" for t in after_to) for c in enc_runs if c.split("/")[1].startswith(arm + "_")]
+    hits = [sum(ENC_SOL[t["id"]][c] == "1" for t in after_to)
+            for c in enc_runs if c.split("/")[1].startswith(arm + "_")]
     num[f"ToTheEnc{short}Min"], num[f"ToTheEnc{short}Max"] = str(min(hits)), str(max(hits))
     num[f"ToTheEnc{short}Runs"] = str(len(hits))
 for a, short in (("word", "Word"), ("left", "Left"), ("sentence", "Bil")):
-    num[f"SolGain{short}"] = f"{100 * (W['soliloquies']['seed_summary'][a]['accuracy']['mean'] - T['soliloquies']['seed_summary'][a]['accuracy']['mean']):.2f}"
-    num[f"BeoGain{short}"] = f"{100 * (W['tauber_beowulf']['seed_summary'][a]['accuracy']['mean'] - T['tauber_beowulf']['seed_summary'][a]['accuracy']['mean']):.2f}"
+    num[f"SolGain{short}"] = f"""{100 * (W['soliloquies']['seed_summary'][a]['accuracy']['mean']
+                                         - T['soliloquies']['seed_summary'][a]['accuracy']['mean']):.2f}"""
+    num[f"BeoGain{short}"] = f"""{100 * (W['tauber_beowulf']['seed_summary'][a]['accuracy']['mean']
+                                         - T['tauber_beowulf']['seed_summary'][a]['accuracy']['mean']):.2f}"""
 
 # ---------------------------------------------------------------- Table 1 (tab_data.tex)
 ORDER = ["zupitza_grammar", "bright_reader", "matthew_ws", "sweet_primer", "physiologus", "john_ws", "soliloquies",
@@ -321,7 +333,8 @@ TITLES = {"zupitza_grammar": "Ælfric's \\textit{Grammar}", "bright_reader": "\\
           "matthew_ws": "Gospel of Matthew", "sweet_primer": "\\textit{Anglo-Saxon Primer}",
           "physiologus": "\\textit{Physiologus}", "john_ws": "Gospel of John",
           "soliloquies": "Alfred's \\textit{Soliloquies}",
-          "hs_beowulf": "\\textit{Beowulf}", "wyatt_beowulf": "\\textit{Beowulf}", "tauber_beowulf": "\\textit{Beowulf}"}
+          "hs_beowulf": "\\textit{Beowulf}", "wyatt_beowulf": "\\textit{Beowulf}",
+          "tauber_beowulf": "\\textit{Beowulf}"}
 # shown as printed, not as the manifest has it: Matthew was transcribed from the 1910 printing, the Harrison and Sharp
 # text is the 1894 printing of the 4th edition, Cook edited the Physiologus text (Pitman wrote the verse translation),
 # Bright edited John (Harris wrote the glossary), and every text taken from Sweet's Primer is prose
@@ -332,7 +345,8 @@ GENRE = {"sweet_primer": "prose"}
 ROLE = {"zupitza_grammar": "ablation", "john_ws": "dev", "soliloquies": "prose test", "tauber_beowulf": "verse test",
         "hs_beowulf": "agreement", "wyatt_beowulf": "agreement"}
 tauber_meta = {"editor": "Klaeber", "year": 1922, "genre": "verse", "origin": "Tauber"}
-fin = [sum(len(r["tokens"]) for r in E.load(ROOT / "data/by_source" / f"{k}.jsonl") if "finnsburg" in r["section"].lower())
+fin = [sum(len(r["tokens"]) for r in E.load(ROOT / "data/by_source" / f"{k}.jsonl")
+           if "finnsburg" in r["section"].lower())
        for k in ("wyatt_beowulf", "hs_beowulf")]
 rows, sentences = [], len({t["sentence_id"] for t in beo})
 for k in ORDER:
@@ -343,9 +357,11 @@ for k in ORDER:
     role = ROLE.get(k, "train")
     src = "PG" if "gutenberg" in s["origin"] else "WS" if "wikisource" in s["origin"] else "Tauber"
     editor = EDITOR.get(k) or s["editor"].replace("&", r"\&") + f" {s['year']}"
-    rows.append(f"{TITLES[k]} & {editor} & {src} & {GENRE.get(k, s['genre'])} & {len(toks):,} & {long:.2f} & {role} \\\\")
+    rows.append(f"{TITLES[k]} & {editor} & {src} & {GENRE.get(k, s['genre'])} & {len(toks):,} & {long:.2f} & "
+                f"{role} \\\\")
 release = sum(s["tokens"] for s in manifest.values()) + len(beo)
-notes = (f"$^a$Project Gutenberg revision of the 4th edition (first edition 1883). $^b$Its \\textit{{Finnsburh Fragment}} "
+notes = (f"$^a$Project Gutenberg revision of the 4th edition (first edition 1883). $^b$Its "
+         f"\\textit{{Finnsburh Fragment}} "
          f"lacks lines 1 to 18 in our file ({fin[0]} tokens, against {fin[1]} in Harrison and Sharp). "
          f"Scored tokens: dev {W['john_ws']['frequency']['n']:,}, prose "
          f"{n(W, 'soliloquies', 'accuracy'):,}, verse {n(W, 'tauber_beowulf', 'accuracy'):,}. Hugging Face release: "
@@ -353,7 +369,8 @@ notes = (f"$^a$Project Gutenberg revision of the 4th edition (first edition 1883
 (OUT / "tab_data.tex").write_text(
     "\\begin{tabular}{@{}llllrrl@{}}\n\\toprule\nEdition & Editor, printing & Source & Genre & Tokens & \\% long & "
     "Role \\\\\n\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n"
-    f"\\multicolumn{{7}}{{@{{}}p{{\\linewidth}}@{{}}}}{{\\footnotesize {notes}}} \\\\\n\\end{{tabular}}\n", encoding="utf8")
+    f"\\multicolumn{{7}}{{@{{}}p{{\\linewidth}}@{{}}}}{{\\footnotesize {notes}}} \\\\\n\\end{{tabular}}\n",
+    encoding="utf8")
 
 # Paired sentence bootstrap (oevl.stats.bootstrap_diff) of the prior and the logistic models of the + WikiPron run
 # (results/wikipron): each arm's per-token correctness is its mean over seeds 1-3. Differences in points with a 95%
@@ -367,13 +384,14 @@ for t in TESTS:
     trows = preds if t == "soliloquies" else E.load(ROOT / "results" / "wikipron" / f"{t}_predictions.jsonl")
     for pop in BPOPS:
         sub = [r for r in trows if r["lexicon_ambiguous"] and (pop == "lexicon_ambiguous" or
-                                                              CLASSES.get(r["key"], "unlisted") == "B")]
+                                                               CLASSES.get(r["key"], "unlisted") == "B")]
         ok: dict[str, list[float]] = {"frequency": [r["frequency_prediction"] == r["gold_pattern"] for r in sub]}
         for a in ("word", "left", "sentence"):
             ok[a] = [sum(r[f"{a}_seed{k}_prediction"] == r["gold_pattern"] for k in (1, 2, 3)) / 3 for r in sub]
         for x, y in PAIRS:
             boot[t, pop, x, y] = bootstrap_diff([r["sentence_id"] for r in sub], ok[x], ok[y])
-TAG = {"soliloquies": "Sol", "tauber_beowulf": "Beo", "lexicon_ambiguous": "Lex", "class_B": "ClsB", "frequency": "Freq",
+TAG = {"soliloquies": "Sol", "tauber_beowulf": "Beo", "lexicon_ambiguous": "Lex", "class_B": "ClsB",
+       "frequency": "Freq",
        "word": "Word", "left": "Left", "sentence": "Bil"}
 for (t, p, x, y), r in boot.items():
     k = f"Boot{TAG[t]}{TAG[p]}{TAG[x]}Vs{TAG[y]}"

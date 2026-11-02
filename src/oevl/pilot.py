@@ -140,7 +140,8 @@ def restore(src: Path, base: Path) -> list[str]:
         with zipfile.ZipFile(src) as z:
             names = [n for n in z.namelist() if ".." not in Path(n).parts and not Path(n).is_absolute()]
             finished = {Path(n).parts[1] for n in names
-                        if Path(n).parts[0] == base.name and Path(n).name == "COMPLETE.json" and len(Path(n).parts) == 3}
+                        if Path(n).parts[0] == base.name and Path(n).name == "COMPLETE.json"
+                        and len(Path(n).parts) == 3}
             for arm in sorted(finished):
                 if not (base / arm / "COMPLETE.json").exists():
                     shutil.rmtree(base / arm, ignore_errors=True)

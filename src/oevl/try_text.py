@@ -45,7 +45,9 @@ def strip_marks(text: str) -> str:
     """Replace every macron vowel in `text` (ā ē ī ō ū ȳ ǣ, either case) with the plain vowel of the same case.
 
     Only precomposed letters are mapped, so `text` should be NFC: a separate combining macron (U+0304) is kept."""
-    return "".join(c if c.lower() not in LONG else (SHORT[LONG.index(c.lower())].upper() if c.isupper() else SHORT[LONG.index(c)]) for c in text)
+    return "".join(c if c.lower() not in LONG
+                   else (SHORT[LONG.index(c.lower())].upper() if c.isupper() else SHORT[LONG.index(c)])
+                   for c in text)
 
 
 def apply(word: str, pat: str) -> str:
@@ -144,7 +146,8 @@ def main() -> None:
             wr.writerow(["line", "word", "output", "known", "changed", "gold", "correct"])
             for r in test:
                 wr.writerow([r["line"] + 1, r["bare"], apply(r["bare"], r["pred"]), int(r["known"]), int(r["changed"]),
-                             r["gold"] if r["scored"] else "", int(r["pred"] == r["gold_pattern"]) if r["scored"] else ""])
+                             r["gold"] if r["scored"] else "",
+                             int(r["pred"] == r["gold_pattern"]) if r["scored"] else ""])
         print(f"  per-word table: {a.tsv}")
 
 

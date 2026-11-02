@@ -228,7 +228,8 @@ def example_geata(preds: Iterable[dict[str, Any]], enc: dict[str, dict[str, str]
 
     It also asserts that every ByT5 word run (full cap) writes gēata on every token and no full-cap sentence run writes
     it on more than two. preds: the WikiPron prediction rows of Beowulf; enc: its encoder table by token id; lex,
-    counts: the WikiPron lexicon and training counts from experiment.lexicon. The tokens come back as prediction rows."""
+    counts: the WikiPron lexicon and training counts from experiment.lexicon. The tokens come back as prediction
+    rows."""
     g = [p for p in preds if p["key"] == "geata"]
     need(len(g) == 39 and {p["gold_pattern"] for p in g} == {"100"}, "Gēata: 39 tokens, all long in the gold")
     need(not counts.get("geata") and set(lex["geata"]) == {"000", "100"},
@@ -253,7 +254,8 @@ def example_se(tb: Sequence[dict[str, Any]], cols: Sequence[tuple[str, str]], pr
     line = [t for t, (ln, _) in zip(tb, cols) if t["key"] == "se" and ln == "2587"]
     need(len(line) == 1 and line[0]["gold_pattern"] == "0", "Beowulf 2587: one short se")
     p, row = next(x for x in preds if x["id"] == line[0]["id"]), enc[line[0]["id"]]
-    need(p["frequency_prediction"] == "1" and all(row[c] == "1" for c in runs_of(row)), "Beowulf 2587: all mark se long")
+    need(p["frequency_prediction"] == "1" and all(row[c] == "1" for c in runs_of(row)),
+         "Beowulf 2587: all mark se long")
     return se
 
 
@@ -296,7 +298,8 @@ class Context:
         self.preds = {(tag, s): E.load(RES / folder / f"{s}_predictions.jsonl")
                       for tag, folder, _ in SETTINGS for _, s in SETS}
         for (tag, s), p in self.preds.items():
-            need([r["id"] for r in p] == [r["id"] for r in self.held[s]], f"{tag} {s}: the predictions cover the tokens")
+            need([r["id"] for r in p] == [r["id"] for r in self.held[s]],
+                 f"{tag} {s}: the predictions cover the tokens")
         self.metrics = {tag: json.loads((RES / folder / "metrics.json").read_text(encoding="utf8"))
                         for tag, folder, _ in SETTINGS}
         self.enc = {s: {t["id"]: t for t in table} for s, table in read_tables(RES / "encoder").items()}
@@ -581,7 +584,8 @@ def context(put: Numbers, ctx: Context) -> None:
                                         n=TWO_LEVEL_DRAWS)
                 for k in ("Lo", "Hi"):
                     put(f"TwoLevel{st}{name}{arm}VsWord{k}", pts(b[k.lower()]))
-    l2, word = runs_of(next(iter(sol.values())), "local2", "capfull"), runs_of(next(iter(sol.values())), "word", "capfull")
+    l2, word = (runs_of(next(iter(sol.values())), "local2", "capfull"),
+                runs_of(next(iter(sol.values())), "word", "capfull"))
 
     def te(rows: Iterable[dict[str, str]]) -> float:
         """Token-equivalents: local2 minus the word arm (full cap, share of runs right), summed over encoder rows."""
@@ -596,7 +600,8 @@ def context(put: Numbers, ctx: Context) -> None:
     b_sol = [t for t in amb["Sol"] if t["capfull:class"] == "B"]
     for k in ("þe", "ne", "ge"):  # per word, prose class B
         w = [t for t in b_sol if keys[t["id"]] == k]
-        need(all(correct(t, word) == (t["capfull:frequency"] == t["gold"]) for t in w), f"{k}: the word arm is the prior")
+        need(all(correct(t, word) == (t["capfull:frequency"] == t["gold"]) for t in w),
+             f"{k}: the word arm is the prior")
         put(f"PwSol{word_tag(k)}N", num(len(w)))
         put(f"PwSol{word_tag(k)}Prior", pct(share(t["capfull:frequency"] == t["gold"] for t in w), 1))
         put(f"PwSol{word_tag(k)}LocalTwo", pct(sum(correct(t, l2) for t in w) / len(w), 1))
@@ -745,7 +750,8 @@ def conjoined(put: Numbers, ctx: Context) -> None:
     for st, s in SETS:
         test = ctx.held[s]
         runs = [E.predict(ctx.train, test, lex, counts, "conjoined", seed) for seed in (1, 2, 3)]
-        if s == "soliloquies":  # the worked example: every conjoined run gets the pronoun þē long and the relative short
+        # the worked example: every conjoined run gets the pronoun þē long and the relative short
+        if s == "soliloquies":
             ex = [i for i, r in enumerate(test) if r["sentence_id"] == "soliloquies:00026"]
             need(all((p[ex[3]], p[ex[6]]) == ("1", "0") for p in runs), "soliloquies:00026: the conjoined runs")
         ev = [E.evaluate(test, p, lex, counts, ctx.cls) for p in runs]
@@ -812,7 +818,8 @@ def editors(put: Numbers, ctx: Context) -> None:
     need(you and all(sum(p[i]["gold_pattern"] == "1" for p in you) >= 0.95 * len(you) for i in (0, 1)),
          "Wyatt and Klaeber nearly always mark the pronouns þē and gē long")
     beo = ctx.enc["tauber_beowulf"]
-    l2, word = runs_of(next(iter(beo.values())), "local2", "capfull"), runs_of(next(iter(beo.values())), "word", "capfull")
+    l2, word = (runs_of(next(iter(beo.values())), "local2", "capfull"),
+                runs_of(next(iter(beo.values())), "word", "capfull"))
 
     def agree(cols: Sequence[str], pair: tuple[dict[str, Any], dict[str, Any]], gi: int) -> float:
         """Share of the runs cols that give edition gi's pattern (0 Wyatt, 1 Tauber) for the Tauber token of pair."""
@@ -910,7 +917,7 @@ def errors(put: Numbers, ctx: Context) -> None:
     for k in ("þe", "ne", "ge"):
         put(f"ErrEncSolGram{word_tag(k)}", gram[k])
     put("ErrEncBeoHomGeata", sum(E.key(r["gold"]) == "geata" for r in items("encoder_sentence", "tauber_beowulf",
-                                                                             "homograph")))
+                                                                            "homograph")))
     se = [r for r in items("encoder_sentence", "tauber_beowulf", "editorial") if E.key(r["gold"]) == "se"]
     need(all(E.pattern(r["system_form"]) == "1" and E.pattern(r["gold"]) == "0" for r in se), "the se errors write sē")
     put("ErrEncBeoEdSe", len(se))

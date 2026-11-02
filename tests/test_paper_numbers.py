@@ -77,7 +77,8 @@ class TestWorkedExamples(unittest.TestCase):
 
     def test_a_changed_prediction_fails(self):
         enc = dict(self.enc["soliloquies"])
-        enc["soliloquies:00026:3"] = {**enc["soliloquies:00026:3"], "capfull/local2_s3": "0"}  # one local2 run misses þē
+        # one local2 run misses þē
+        enc["soliloquies:00026:3"] = {**enc["soliloquies:00026:3"], "capfull/local2_s3": "0"}
         with self.assertRaises(SystemExit):
             PN.example_soliloquies_00026(self.preds["soliloquies"], enc)
 

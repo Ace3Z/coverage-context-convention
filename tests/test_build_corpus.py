@@ -43,9 +43,11 @@ class TestBuildCorpus(unittest.TestCase):
         self.assertEqual(bc.sentences("G. Heald þonne hys bebodu.", log, speaker=speaker), ["Heald þonne hys bebodu."])
         self.assertEqual(bc.sentences("[A.] Hwilce bebodu? G. Ic gehīre nū.", log, speaker=speaker),
                          ["Hwilce bebodu?", "Ic gehīre nū."])  # bracketed, and after a sentence end
-        note = ("[From the Anglo-Saxon version of the apocryphal Gospel of Nicodemus.  The text follows the Camb. Univ. "
+        # Bright's Reader, The Harrowing of Hell: an English note with a length mark
+        note = ("[From the Anglo-Saxon version of the apocryphal Gospel of Nicodemus.  The text follows the Camb. "
+                "Univ. "
                 "Lib. MS. Ii. 2. 11 (MS. A of the Gospels); selected variants from MS. Cotton Vitellius A. xv. (C, the "
-                "Bēowulf MS.) are given.]")  # Bright's Reader, The Harrowing of Hell: an English note with a length mark
+                "Bēowulf MS.) are given.]")
         self.assertEqual(bc.sentences(note, log), [])
 
     def test_line_lang(self):
@@ -71,7 +73,8 @@ class TestBuildCorpus(unittest.TestCase):
 
     def test_section_and_roman(self):
         title = "Evangelium Secundum Mattheum: the Gospel of Saint Matthew in West-Saxon/Chapter 1"
-        self.assertEqual(bc.section(title), "Evangelium_Secundum_Mattheum__the_Gospel_of_Saint_Matthew_in_West_Saxon_Chapter_1")
+        self.assertEqual(bc.section(title),
+                         "Evangelium_Secundum_Mattheum__the_Gospel_of_Saint_Matthew_in_West_Saxon_Chapter_1")
         self.assertEqual(bc.section("Bright's Anglo-Saxon Reader/Ælfric's Preface to Genesis"),
                          "Bright_s_Anglo_Saxon_Reader_AElfric_s_Preface_to_Genesis")
         self.assertEqual([bc.roman(x) for x in ("I", "IV", "XIV", "XXVIII")], [1, 4, 14, 28])

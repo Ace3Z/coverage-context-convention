@@ -53,7 +53,8 @@ class TestLexicons(unittest.TestCase):
     def test_wiktionary_page_title(self):
         recs = [{"word": "stan", "forms": [{"form": "stān", "tags": ["canonical"]},
                                            {"form": "ang-decl", "tags": ["inflection-template"]},
-                                           {"form": "stānas", "tags": ["nominative", "plural"], "source": "declension"}]},
+                                           {"form": "stānas", "tags": ["nominative", "plural"],
+                                            "source": "declension"}]},
                 {"word": "sccarp", "forms": [{"form": "sċarp", "tags": ["canonical"]}]},
                 {"word": "and", "forms": []}]
         with tempfile.TemporaryDirectory() as d:
@@ -65,7 +66,8 @@ class TestLexicons(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             p = Path(d) / "u.csv"
             write(p, {"gōd", "god"}, {"clarkhall": {"gōd"}, "bt": {"gōd", "god"}})
-            self.assertEqual(p.read_text(encoding="utf8").splitlines(), ["marked_form,sources", "god,bt", "gōd,clarkhall bt"])
+            self.assertEqual(p.read_text(encoding="utf8").splitlines(),
+                             ["marked_form,sources", "god,bt", "gōd,clarkhall bt"])
 
 
 if __name__ == "__main__":

@@ -82,7 +82,8 @@ class TestSplits(unittest.TestCase):
             dev = heldout(d, "john_ws")
             self.assertEqual({r["sentence_id"] for r in dev}, {"john_ws:1"})
 
-            p = run("oevl.experiment", "--data", str(d), "--tauber", tauber, "--out", str(d / "out"), "--tests", "john_ws")
+            p = run("oevl.experiment", "--data", str(d), "--tauber", tauber, "--out", str(d / "out"),
+                    "--tests", "john_ws")
             self.assertEqual(p.returncode, 0, p.stderr)
             metrics = json.loads((d / "out" / "metrics.json").read_text(encoding="utf8"))
             self.assertEqual(metrics["john_ws"]["frequency"]["n"], len(dev))

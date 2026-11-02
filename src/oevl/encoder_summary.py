@@ -112,12 +112,14 @@ def collect(runs: str | Path) -> tuple[dict[str, list[dict[str, str]]],
                 if s not in d["arms"][arm]:
                     continue
                 rows = load(folder / f"{s}_predictions.jsonl")
-                table = tables.setdefault(s, [{"id": r["id"], "sentence_id": r["sentence_id"], "gold": r["gold_pattern"]}
+                table = tables.setdefault(s, [{"id": r["id"], "sentence_id": r["sentence_id"],
+                                               "gold": r["gold_pattern"]}
                                               for r in rows])
                 if [t["id"] for t in table] != [r["id"] for r in rows]:
                     raise SystemExit(f"{folder}: the {s} tokens differ from the other runs")
                 for t, r in zip(table, rows):
-                    pop = {f"{cfg.name}:frequency": r["frequency"], **{f"{cfg.name}:{k}": str(int(r[k])) for k in FLAGS},
+                    pop = {f"{cfg.name}:frequency": r["frequency"],
+                           **{f"{cfg.name}:{k}": str(int(r[k])) for k in FLAGS},
                            f"{cfg.name}:class": r["class"] or ""}
                     for k, v in pop.items():
                         if t.setdefault(k, v) != v:
@@ -174,7 +176,8 @@ def minority(tables: dict[str, list[dict[str, str]]],
         ex = tuple(next(iter(runs.values())).get("exclude_train") or ())
         if ex not in by_ex:
             counts = lexicon(build_data(ROOT / "data", ex)[0])[1]  # the flag needs only the training counts
-            by_ex[ex] = {r["id"]: flags(r, {}, counts)["minority_reading"] for s in tables for r in heldout(ROOT / "data", s)}
+            by_ex[ex] = {r["id"]: flags(r, {}, counts)["minority_reading"]
+                         for s in tables for r in heldout(ROOT / "data", s)}
         for table in tables.values():
             if f"{cfg}:frequency" in table[0]:
                 for t in table:
@@ -205,7 +208,8 @@ def summarise(tables: dict[str, list[dict[str, str]]], metrics: dict[str, dict[t
         arms = sorted({a for a, _ in runs}, key=arm_order)
         seeds = {a: sorted(s for b, s in runs if b == a) for a in arms}
         C = out[cfg] = {"settings": {k: next(iter(runs.values())).get(k) for k in SETTINGS}, "frequency": {},
-                        "arms": {a: {"seeds": seeds[a], "collapsed": [runs[a, s]["arms"][a]["collapsed"] for s in seeds[a]],
+                        "arms": {a: {"seeds": seeds[a],
+                                     "collapsed": [runs[a, s]["arms"][a]["collapsed"] for s in seeds[a]],
                                      "final_train_loss": [runs[a, s]["arms"][a]["final_train_loss"] for s in seeds[a]],
                                      "train_loss_per_epoch": [runs[a, s]["arms"][a]["train_loss_per_epoch"]
                                                               for s in seeds[a]], "sets": {}} for a in arms},
@@ -216,7 +220,8 @@ def summarise(tables: dict[str, list[dict[str, str]]], metrics: dict[str, dict[t
             if f"{cfg}:frequency" not in table[0]:
                 continue
             idx = {p: [i for i, t in enumerate(table) if in_pop(t, cfg, p)] for p in POPS}
-            C["frequency"][s] = {p: {"n": len(ix), "accuracy": acc(table, ix, f"{cfg}:frequency")} for p, ix in idx.items()}
+            C["frequency"][s] = {p: {"n": len(ix), "accuracy": acc(table, ix, f"{cfg}:frequency")}
+                                 for p, ix in idx.items()}
             for a in arms:
                 res = C["arms"][a]["sets"][s] = {k: [runs[a, sd]["arms"][a][s][k] for sd in seeds[a]]
                                                  for k in ("most_long_share", "prior_agreement")}
@@ -227,7 +232,8 @@ def summarise(tables: dict[str, list[dict[str, str]]], metrics: dict[str, dict[t
                             continue
                         own = runs[a, sd]["arms"][a][s][p]["accuracy"]
                         if (v is None) != (own is None) or (v is not None and abs(v - own) > 1e-6):
-                            raise SystemExit(f"{cfg}/{a}_s{sd} {s} {p}: {v} from the predictions, {own} in metrics.json")
+                            raise SystemExit(f"{cfg}/{a}_s{sd} {s} {p}: {v} from the predictions, "
+                                             f"{own} in metrics.json")
                     ok = None not in vals
                     res[p] = {"n": len(ix), "values": vals, "mean": statistics.mean(vals) if ok else None,
                               "sd": statistics.stdev(vals) if ok and len(vals) > 1 else None}
@@ -239,7 +245,8 @@ def summarise(tables: dict[str, list[dict[str, str]]], metrics: dict[str, dict[t
 
                 def col(system: str, sd: int | None) -> list[str]:
                     """The patterns of the population's tokens in run (system, sd), or in the prior for frequency."""
-                    return [table[i][f"{cfg}:frequency" if system == "frequency" else f"{cfg}/{system}_s{sd}"] for i in ix]
+                    return [table[i][f"{cfg}:frequency" if system == "frequency" else f"{cfg}/{system}_s{sd}"]
+                            for i in ix]
 
                 def correct(system: str) -> list[float]:
                     """Each population token's correctness, averaged over the system's seeds (the prior is one run)."""
@@ -252,8 +259,9 @@ def summarise(tables: dict[str, list[dict[str, str]]], metrics: dict[str, dict[t
                         continue
                     both = [sd for sd in seeds[x] if y == "frequency" or sd in seeds[y]]
                     mc = [{"seed": sd, **mcnemar(col(x, sd), col(y, sd), gold)} for sd in both]
-                    res[f"{x}-{y}"] = {"n": len(ix), **(bootstrap_diff([table[i]["sentence_id"] for i in ix], correct(x),
-                                                                       correct(y)) or {"diff": None, "lo": None, "hi": None}),
+                    res[f"{x}-{y}"] = {"n": len(ix),
+                                       **(bootstrap_diff([table[i]["sentence_id"] for i in ix], correct(x),
+                                                         correct(y)) or {"diff": None, "lo": None, "hi": None}),
                                        "mcnemar": mc, "n_seeds_p_below_0.05": int(sum(r["p_exact"] < 0.05 for r in mc))}
     return out
 
@@ -308,7 +316,8 @@ def replicates(tables: dict[str, list[dict[str, str]]], summary: dict[str, dict[
                     if None not in by.values():
                         spread.setdefault(a, {}).setdefault(f"s{sd}", {}).setdefault(s, {})[p] = {
                             "min": min(by.values()), "max": max(by.values()), "by_config": by}
-    word = [f"{c}/word_s{sd}" for c in group if "word" in summary[c]["arms"] for sd in summary[c]["arms"]["word"]["seeds"]]
+    word = [f"{c}/word_s{sd}" for c in group if "word" in summary[c]["arms"]
+            for sd in summary[c]["arms"]["word"]["seeds"]]
     c0 = group[0]
     for s, table in tables.items():
         if f"{c0}:frequency" not in table[0]:
@@ -365,7 +374,7 @@ def tag(name: str) -> str:
     sentence becomes Bil and frequency Freq, as in numbers.tex. Any other name is title-cased, its digits are spelt
     out and every other character that is not a letter is dropped."""
     return {"sentence": "Bil", "frequency": "Freq"}.get(name) or "".join(DIGITS.get(c, c) for c in name.title()
-                                                                        if c.isalnum())
+                                                                         if c.isalnum())
 
 
 def full_caps(summary: dict[str, dict[str, Any]]) -> dict[str, str]:

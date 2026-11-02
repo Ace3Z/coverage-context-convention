@@ -51,7 +51,8 @@ class TestExportHF(unittest.TestCase):
         unflagged = {s: sum(len(r["tokens"]) for r in rows if not r["leakage_excluded"]) for s, rows in files.items()}
         self.assertEqual(unflagged, {"train": len(train), "dev": len(heldout(DATA, "john_ws")),
                                      "test_prose": len(heldout(DATA, "soliloquies")),
-                                     "test_verse": len(heldout(DATA, "tauber_beowulf")), "agreement": len(hs) + len(wy)})
+                                     "test_verse": len(heldout(DATA, "tauber_beowulf")),
+                                     "agreement": len(hs) + len(wy)})
         self.assertIn("license: cc-by-sa-4.0", card)
         self.assertIn("- config_name: corpus\n  default: true", card)
         self.assertNotIn("$", card)

@@ -146,11 +146,13 @@ def main() -> None:
     ap.add_argument("--out", default=str(ROOT / "results" / "encoder"))
     ap.add_argument("--epochs", type=int, default=1)
     ap.add_argument("--batch", type=int, default=32, help="examples per optimizer step (same for every arm)")
-    ap.add_argument("--micro", type=int, default=8, help="examples per forward pass; lower it if the GPU runs out of memory")
+    ap.add_argument("--micro", type=int, default=8,
+                    help="examples per forward pass; lower it if the GPU runs out of memory")
     ap.add_argument("--lr", type=float, default=3e-4)
     ap.add_argument("--max-bytes", type=int, default=256)
     ap.add_argument("--seed", type=int, default=1)
-    ap.add_argument("--arms", default=",".join(ARMS), help="comma list of word, left, sentence, localK (K words each side)")
+    ap.add_argument("--arms", default=",".join(ARMS),
+                    help="comma list of word, left, sentence, localK (K words each side)")
     ap.add_argument("--train-limit", type=int, help="train on a fixed subset of this many examples (see limit())")
     ap.add_argument("--tests", default=",".join(TESTS), help="comma list of john_ws (dev), soliloquies, tauber_beowulf")
     ap.add_argument("--exclude-train", default=",".join(EXCLUDE_D3), help="comma list of training works to leave out: "
@@ -213,7 +215,8 @@ def main() -> None:
     all_preds: dict[str, dict[str, dict[str, str]]] = {t: {r["id"]: {} for r in rows} for t, rows in tests.items()}
     for arm in a.arms.split(","):
         torch.manual_seed(a.seed)
-        model = (T5ForConditionalGeneration(cfg) if a.tiny else T5ForConditionalGeneration.from_pretrained(a.model)).to(device)
+        model = (T5ForConditionalGeneration(cfg) if a.tiny
+                 else T5ForConditionalGeneration.from_pretrained(a.model)).to(device)
         opt = torch.optim.AdamW(model.parameters(), lr=a.lr)
         steps = a.epochs * math.ceil(len(order) / a.batch)
         sched = get_linear_schedule_with_warmup(opt, int(0.05 * steps), steps)
@@ -275,13 +278,14 @@ def main() -> None:
                 all_preds[test][r["id"]][f"encoder_{arm}"] = p
             arm_summary[test] = score(rows, preds, prior[test], lex, counts, cls)
             print(f"[{arm}] {test}: " + ", ".join(f"{n}={d['accuracy'] if isinstance(d, dict) else d}"
-                                                   for n, d in arm_summary[test].items()), flush=True)
+                                                  for n, d in arm_summary[test].items()), flush=True)
         # A run that collapsed to "most long marks" (seen at lr 3e-4) is flagged on the prose test set:
         # most_long_share of at least 0.9 on soliloquies, None when --tests leaves soliloquies out
         sol = arm_summary.get("soliloquies", {}).get("most_long_share")
         arm_summary["collapsed"] = None if sol is None else sol >= 0.9
         summary["arms"][arm] = arm_summary
-        (out / "metrics.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf8")  # save after each arm
+        # save after each arm
+        (out / "metrics.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf8")
         del model, opt
         if device == "cuda":
             torch.cuda.empty_cache()

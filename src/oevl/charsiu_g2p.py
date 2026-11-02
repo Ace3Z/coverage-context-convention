@@ -65,7 +65,8 @@ def load_model(tiny: bool = False) -> "tuple[PreTrainedTokenizerBase, T5ForCondi
     if tiny:  # smoke test: random tiny model, no download
         from transformers import ByT5Tokenizer
         tok = ByT5Tokenizer()
-        model = T5ForConditionalGeneration(T5Config(vocab_size=384, d_model=32, d_ff=64, num_layers=1, num_heads=2, d_kv=16,
+        model = T5ForConditionalGeneration(T5Config(vocab_size=384, d_model=32, d_ff=64, num_layers=1, num_heads=2,
+                                                    d_kv=16,
                                                     decoder_start_token_id=0, pad_token_id=0, eos_token_id=1)).eval()
     else:
         tok = AutoTokenizer.from_pretrained(TOKENIZER)
@@ -171,7 +172,8 @@ def predict(batch_size: int = 64, tiny: bool = False) -> None:
         w.writerow(["word", "ipa"])
         for i in range(0, len(words), batch_size):
             chunk = words[i:i + batch_size]
-            enc = tok([PREFIX + x for x in chunk], padding=True, add_special_tokens=False, return_tensors="pt").to(model.device)
+            enc = tok([PREFIX + x for x in chunk], padding=True, add_special_tokens=False,
+                      return_tensors="pt").to(model.device)
             with torch.no_grad():
                 ids = model.generate(**enc, num_beams=1, max_length=50)  # greedy, as recommended by the authors
             for word, ipa in zip(chunk, tok.batch_decode(ids.tolist(), skip_special_tokens=True)):
@@ -196,7 +198,8 @@ def analyse() -> None:
     with open(OUT / "ipa.tsv", encoding="utf8") as f:
         ipa = {r["word"]: r["ipa"] for r in csv.DictReader(f, delimiter="\t")}
     charsiu_dict = set()
-    dict_path = ROOT / "data/charsiu_ang_dict_words.txt"   # every word of CharsiuG2P's ang dictionary (its train, dev and test words)
+    # every word of CharsiuG2P's ang dictionary (its train, dev and test words)
+    dict_path = ROOT / "data/charsiu_ang_dict_words.txt"
     if dict_path.exists():
         charsiu_dict = set(dict_path.read_text(encoding="utf8").split())
     train, _, _, _ = build_data(ROOT / "data", EXCLUDE_D3)  # populations as in results/wikipron
@@ -256,7 +259,8 @@ def analyse() -> None:
 
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "analyse"
-    if sys.argv[2:] not in ([], ["--tiny"]) or (sys.argv[2:] and cmd != "predict"):  # a typo must not overwrite committed output
+    # a typo must not overwrite committed output
+    if sys.argv[2:] not in ([], ["--tiny"]) or (sys.argv[2:] and cmd != "predict"):
         cmd = "usage"
     if cmd == "predict":
         predict(tiny="--tiny" in sys.argv)

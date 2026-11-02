@@ -157,10 +157,12 @@ def main() -> None:
         raise SystemExit(f"expected the 24 selection runs, found {len(rows)}")
     scored, tied, choice = select(rows)
     rec = {
-        "what": "Model selection for the ByT5 encoder (the selection search and decision D3): sentence arm only, seeds 1 and 2, scored "
+        "what": "Model selection for the ByT5 encoder (the selection search and decision D3): sentence arm only, "
+                "seeds 1 and 2, scored "
                 "on the john_ws dev set. The test sets played no part in the choice.",
         "code_commit": "bad3695",
-        "command": "python -m oevl.encoder_experiment --arms sentence --seed SEED --max-bytes 2560 --batch 32 --micro 8 "
+        "command": "python -m oevl.encoder_experiment --arms sentence --seed SEED --max-bytes 2560 --batch 32 "
+                   "--micro 8 "
                    "--lr LR --epochs EPOCHS [--exclude-train zupitza_grammar] --out "
                    "select/<z|noz>_lr<LR>_ep<EPOCHS>/sentence_s<SEED>",
         "grid": {"zupitza": [True, False], "lr": [0.0001, 0.0003], "epochs": [1, 3, 5], "seeds": [1, 2]},

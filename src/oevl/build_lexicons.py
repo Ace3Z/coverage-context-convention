@@ -24,11 +24,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCES = {
-    "clarkhall": ("https://raw.githubusercontent.com/Serg078/Conversion-of-The-Clark-Hall-Dictionary-of-Old-English-to-TEI/"
-                  "b53fc7db19eea8fa94ac74f00a7e39d14bdd1a98/clark_hall_tei_rdfa.xml", "clark_hall_tei_rdfa.xml", "Unlicense"),
+    "clarkhall": ("https://raw.githubusercontent.com/Serg078/"
+                  "Conversion-of-The-Clark-Hall-Dictionary-of-Old-English-to-TEI/"
+                  "b53fc7db19eea8fa94ac74f00a7e39d14bdd1a98/clark_hall_tei_rdfa.xml",
+                  "clark_hall_tei_rdfa.xml", "Unlicense"),
     "wiktionary": ("https://kaikki.org/dictionary/Old%20English/kaikki.org-dictionary-OldEnglish.jsonl",
                    "kaikki.org-dictionary-OldEnglish.jsonl", "CC BY-SA 4.0 (Wiktionary)"),
-    "bt": ("https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/3010b742-b2c4-4152-870a-716ce1652e7c/content",
+    "bt": ("https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/"
+           "3010b742-b2c4-4152-870a-716ce1652e7c/content",
            "bosworth_entries_export.csv", "CC BY 4.0"),
 }
 WORD = re.compile(r"[abcdefghiklmnopqrstuwxyzþðæāēīōūȳǣ]+")  # Old English letters only (no j, v)
