@@ -180,7 +180,11 @@ def main() -> None:
     if checked.exists():
         metrics["hand_check_hs_wyatt"] = hand_check(checked, [r for r in rows if r["pair"] == "hs-wyatt"])
     (OUT / "metrics.json").write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf8")
-    show = lambda v, f, m=1: "n/a" if v is None else format(m * v, f)  # noqa: E731
+
+    def show(v: float | None, f: str, m: float = 1) -> str:
+        """v times m in format f, or n/a when v is None."""
+        return "n/a" if v is None else format(m * v, f)
+
     for p, res in metrics["pairs"].items():
         na, nb = p.split("-")
         print(f"{p}: aligned {res['aligned']} ({100 * res[f'alignment_rate_{na}']:.2f}% of {na}, "

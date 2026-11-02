@@ -155,24 +155,26 @@ class Tests(unittest.TestCase):
             self.assertEqual(
                 (p.returncode, (d / "d3" / "soliloquies_predictions.jsonl").read_bytes()), (1, before), p.stderr
             )
-            run = lambda lex: subprocess.run(
-                [
-                    sys.executable,
-                    "-m",
-                    "oevl.experiment",
-                    "--data",
-                    str(d),
-                    "--out",
-                    str(d / "lex"),
-                    "--tests",
-                    "soliloquies",
-                    "--lexicon",
-                    str(lex),
-                ],
-                env={**os.environ, "PYTHONPATH": str(root / "src")},
-                capture_output=True,
-                text=True,
-            )
+
+            def run(lex):
+                return subprocess.run(
+                    [
+                        sys.executable,
+                        "-m",
+                        "oevl.experiment",
+                        "--data",
+                        str(d),
+                        "--out",
+                        str(d / "lex"),
+                        "--tests",
+                        "soliloquies",
+                        "--lexicon",
+                        str(lex),
+                    ],
+                    env={**os.environ, "PYTHONPATH": str(root / "src")},
+                    capture_output=True,
+                    text=True,
+                )
             for name in ("one.csv", "two.csv"):
                 (d / name).write_text("marked_form\ngōd\n", encoding="utf8")
             self.assertEqual(
