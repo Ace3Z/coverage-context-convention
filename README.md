@@ -152,7 +152,9 @@ pip install -r requirements.txt
 # Step 2. Reproduce every number and table, and REPORT.pdf if pdflatex is installed.
 bash run_all.sh
 
-# Step 3. Restore macrons in your own sentences: write them one per line to my_tests/sentences.txt.
+# Step 3. Restore macrons in your own sentences, one per line.
+mkdir -p my_tests
+echo 'Ic þe lære þeah þæt þu hyt ongynne' > my_tests/sentences.txt
 PYTHONPATH=src python -m oevl.try_text my_tests/sentences.txt
 ```
 

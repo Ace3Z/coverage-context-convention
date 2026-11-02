@@ -196,6 +196,9 @@ The second runs the whole pilot loop. The third writes `results/charsiu/ipa_tiny
 From the repository root:
 
 ```bash
+mkdir -p my_tests
+echo 'Ic þe lære þeah þæt þu hyt ongynne' > my_tests/sentences.txt
+echo 'Ic þē lǣre þēah þæt þū hyt ongynne' > my_tests/sentences_marked.txt
 PYTHONPATH=src python -m oevl.try_text my_tests/sentences.txt
 PYTHONPATH=src python -m oevl.try_text my_tests/sentences.txt --gold my_tests/sentences_marked.txt --tsv my_tests/words.tsv
 ```
