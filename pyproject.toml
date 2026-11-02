@@ -9,6 +9,10 @@ description = "Old English vowel-length restoration (UZH, Essentials in Text and
 requires-python = ">=3.11,<3.15"  # the pinned numpy/scipy/scikit-learn have no 3.15 wheels
 license = "MIT"  # the code; the data licences are in data/LICENSE.md
 license-files = ["LICENSE"]
+dynamic = ["dependencies"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
 
 [tool.setuptools.packages.find]
 where = ["src"]

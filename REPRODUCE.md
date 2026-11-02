@@ -22,8 +22,9 @@ compile `REPORT.pdf`. The `hf` command for uploading the dataset comes with `hug
 already installs.
 
 `run_all.sh` puts `src` on `PYTHONPATH`, so the `oevl` package itself does not have to be installed. To run modules by
-hand, prefix commands with `PYTHONPATH=src`, or install the package once with `pip install -e .`. The install must be
-editable, because the code finds `data/` and `results/` relative to the repository.
+hand, prefix commands with `PYTHONPATH=src`, or install the package once with `pip install -e .`, which also installs
+the pinned requirements. The install must be editable, because the code finds `data/` and `results/` relative to the
+repository.
 
 ## Systems
 

@@ -38,6 +38,7 @@ PyYAML==6.0.3
 regex==2026.9.29
 requests==2.34.2
 safetensors==0.8.0
+setuptools==84.2.1
 six==1.17.0
 sympy==1.14.0
 threadpoolctl==3.7.0
