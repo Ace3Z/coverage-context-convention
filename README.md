@@ -70,7 +70,7 @@ that see the neighbouring words pick the pronoun* þē *'thee' over the relative
 
 Old English manuscripts do not mark vowel length systematically, so in bare text *god* 'God' and *gōd* 'good' look the same, and so do the
 relative particle *þe* and the pronoun *þē* 'thee'. Modern editions add macrons by hand. A system for this task sees
-the bare word, takes the length patterns a dictionary lists for it, and picks one.
+the bare word, takes the length patterns that the training text and a dictionary list for it, and picks one.
 
 We built a length-marked corpus from nine editions and hold out one of them, Alfred's *Soliloquies*, as the prose
 test. The verse test is a tenth source, Tauber's token-level *Beowulf*. On exactly the same tokens we compare a
@@ -95,10 +95,10 @@ in function.
 
 | Finding | Tokens | Result |
 |---|---|---|
-| Coverage matters most on verse | *Beowulf*, all tokens, frequency prior | 82.26% with training forms, 92.39% with all four dictionaries |
+| Coverage matters most on *Beowulf* | *Beowulf*, all tokens, frequency prior | 82.26% with training forms, 92.39% with all four dictionaries |
 | Context helps five closed-class words (class B) | *Soliloquies*, class B (mostly *þe/þē*), ByT5 | 62.66% from the word alone, 75.40% with two words each side (+12.74, 10.37 to 15.03) |
-| Context helps prose overall | *Soliloquies*, lexicon-ambiguous tokens, ByT5 | 88.88% from the word alone, 91.27% with two words each side (+2.39, 1.96 to 2.88) |
-| On verse the word alone is enough | *Beowulf*, lexicon-ambiguous tokens, ByT5 | 89.97% from the word alone, 90.26% with two words each side (+0.29, −0.11 to +0.64), and +0.78 (0.43 to 1.12) without one unseen name, *Gēata* (39 tokens), both under one point |
+| On all ambiguous prose tokens, almost all the gain is from class B | *Soliloquies*, lexicon-ambiguous tokens, ByT5 | 88.88% from the word alone, 91.27% with two words each side (+2.39, 1.96 to 2.88) |
+| On verse context adds little | *Beowulf*, lexicon-ambiguous tokens, ByT5 | 89.97% from the word alone, 90.26% with two words each side (+0.29, −0.11 to +0.64), and +0.78 (0.43 to 1.12) without one unseen name, *Gēata* (39 tokens, post hoc), both under one point |
 | Editors differ most on whether to mark the class B words long | Wyatt against Klaeber (Tauber), lexicon-ambiguous / class B | 96.08% / 78.07% agreement |
 | CharsiuG2P's errors are mostly about length | its own 500-word Old English test set | word error rate 0.208 as published and 0.188 with 50 decoding steps, where 75.5% of the word errors differ only in vowel length |
 

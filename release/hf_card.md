@@ -35,6 +35,7 @@ editions, each with the editor's long-vowel marks (macrons) and without them. Th
 bare text. It also includes the candidate dictionaries and two ambiguity class files from the project *Coverage,
 Context, Convention: Restoring Vowel Length in Old English* (University of Zurich, 2026). The code is at
 https://github.com/Ace3Z/coverage-context-convention.
+The report is at https://github.com/Ace3Z/coverage-context-convention/blob/main/report/essentials_final_report.pdf.
 
 Language: Old English (`ang`).
 
@@ -67,9 +68,9 @@ $table
 Flagged sentences and tokens are those with `leakage_excluded: true`.
 
 The split is by work, and no *Beowulf* text is in `train`. `agreement` holds two more *Beowulf* editions and is used
-only to measure editor agreement and to score the frequency prior against each edition. Nothing is trained or tuned
-on it. The project's final systems leave `zupitza_grammar` out of training and skip sentences with
-`leakage_excluded: true` when scoring.
+only for evaluation: editor agreement, the frequency prior's score against each edition, ByT5's score against Wyatt,
+and checking whether a sampled error matches another edition. Nothing is trained or tuned on it. The project's final
+systems leave `zupitza_grammar` out of training and skip sentences with `leakage_excluded: true` when scoring.
 
 ### Other files
 

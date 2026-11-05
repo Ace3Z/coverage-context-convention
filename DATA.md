@@ -17,7 +17,7 @@ The names in brackets in the Role column are the splits of the Hugging Face copy
 | Dev (`dev`) | Gospel of John (`john_ws`) | 16,649 of 17,310 scored |
 | Prose test (`test_prose`) | Alfred's *Soliloquies* | 15,426 of 15,475 scored |
 | Verse test (`test_verse`) | Tauber's *Beowulf* | 17,361 (some of the 17,244 rows in Tauber's file hold two or three words) |
-| Evaluation only (`agreement`): editor agreement and the prior's score against each edition | Harrison & Sharp and Wyatt *Beowulf*, each with the *Finnsburh Fragment* (Wyatt's file lacks the first 18 lines of the fragment) | 35,250 (17,682 and 17,568) |
+| Evaluation only (`agreement`): editor agreement, the prior's score against each edition, ByT5's score against Wyatt and the check of sampled errors against other editions | Harrison & Sharp and Wyatt *Beowulf*, each with the *Finnsburh Fragment* (Wyatt's file lacks the first 18 lines of the fragment) | 35,250 (17,682 and 17,568) |
 
 The split is by work, and no *Beowulf* text is used for training. A dev or test sentence that shares a word 6-gram
 (bare, lower-cased, ð folded to þ, hyphens and apostrophes dropped) with a training work is left out of scoring. That
