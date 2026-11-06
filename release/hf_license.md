@@ -25,7 +25,7 @@ Wikisource contributors of each page. The Project Gutenberg header and licence a
 | File | Built from | Licence |
 |---|---|---|
 | `lexicons/lex_wikipron.csv` | WikiPron Old English (`ang_latn_broad.tsv`), https://github.com/CUNY-CL/wikipron. The WikiPron code is Apache-2.0, but the data is Wiktionary content | CC BY-SA 4.0 |
-| `lexicons/lex_clarkhall.csv` | Clark Hall, *A Concise Anglo-Saxon Dictionary*, TEI conversion by Serg078, https://github.com/Serg078/Conversion-of-The-Clark-Hall-Dictionary-of-Old-English-to-TEI (Project Gutenberg ebook 31543, public domain in the USA) | Unlicense, as its source |
+| `lexicons/lex_clarkhall.csv` | Clark Hall, *A Concise Anglo-Saxon Dictionary*, TEI conversion by Stoliarov et al. (LREC 2026), https://github.com/Serg078/Conversion-of-The-Clark-Hall-Dictionary-of-Old-English-to-TEI (Project Gutenberg ebook 31543, public domain in the USA) | Unlicense, as its source |
 | `lexicons/lex_wiktionary.csv` | Old English entries of the English Wiktionary via kaikki.org, https://kaikki.org/dictionary/Old%20English/ (cite Ylonen 2022, *Wiktextract*) | CC BY-SA 4.0 |
 | `lexicons/lex_bt.csv` | Tichý et al. 2021, *Bosworth-Toller's Anglo-Saxon Dictionary online*, LINDAT/CLARIAH-CZ, http://hdl.handle.net/11234/1-3532 | CC BY 4.0, attribution to Tichý et al. |
 | `lexicons/lex_proposal.csv` | union of Clark Hall, Wiktionary and Bosworth-Toller | CC BY-SA 4.0, with the attributions above |
