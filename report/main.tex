@@ -162,7 +162,7 @@ ambiguous keys (ranked before we dropped Zupitza, with test tokens counted but n
 he/hē}), covering most ambiguous tokens.
 
 \paragraph{Labels.} The classes, the types of \NPErrLabels{} sampled errors and a sample of \NCheckN{} editor
-disagreements were labelled by a large language model, Claude Opus 5.5 \cite{claude2026}, with written guidelines. For the classes and the error types, two runs of the model labelled every item
+disagreements were labelled by a large language model (LLM), Claude Opus 5.5 \cite{claude2026}, with written guidelines. For the classes and the error types, two runs of the model labelled every item
 separately (Cohen's $\kappa$ \NClassKappa{} and \NErrKappa{} \cite{cohen1960}), and a third run settled their
 disagreements. A single run labelled the disagreement sample. A blind review by further runs of the same model changed
 \NPReviewChanged{} of the \NPReviewItems{} labels. The labels were then manually checked, and none was changed. As both
@@ -229,7 +229,7 @@ perfect chooser's score (Figure~\ref{fig:coverage}, about 92\%), and a better ch
 at most \NPHeadroomSolPts{} points over the prior on prose and \NPHeadroomBeoPts{} on verse. Dictionaries change the prior only for words
 unseen in training, as a dictionary-only pattern has no training count: on unseen verse tokens all four sources lift it from
 \NPUnseenPriorTBeo\% to \NPUnseenPriorABeo\%, and \NPBeoOnlyGainShare\% of this gain (\NBeoGainDict{} points over all
-verse tokens) falls on \textit{Beowulf}-only word types, so it may not hold for other verse.
+verse tokens) falls on \textit{Beowulf\nocorr}-only word types, so it may not hold for other verse.
 
 \begin{table}[t]
 \centering\footnotesize
